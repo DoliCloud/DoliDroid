@@ -1,0 +1,75 @@
+<resources>
+
+    <string name="app_name">DoliDroid</string>
+    <string name="dolidroidLabel">DoliDroid, Android client pour Dolibarr ERP-CRM</string>
+    <string name="dolidroidUserAgent">DoliDroid - Android client pour Dolibarr ERP-CRM</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main">DoliDroid</string>
+    <string name="dolibarr_for_android">Client Android pour Dolibarr</string>
+    <string name="open">Accéder</string>
+    <string name="dolibarr_url">URL de Dolibarr</string>
+    <string name="logo_dolidroid">Logo DoliDroid</string>
+    <string name="SelectUrl">ou choisir une URL prédéfinie</string>
+    
+    <!-- Activity web -->
+    <string name="title_activity_second"></string>
+    <string name="textBack">Retour</string>
+    <string name="textMenu">Menu</string>
+    <string name="downloadComplete">Téléchargement du fichier terminé</string>
+	<string name="NoPreviousPageAgainToQuit">Pas de page précédente. Arrière à nouveau pour quitter.</string>
+	<string name="notCompatibleWithVersion">La version de Dolibarr sur le serveur (%1$s) est trop ancienne. DoliDroid requiert la version %2$s de Dolibarr ou supérieure.</string>
+	<string name="notification_error_ssl_cert_invalid">Le certificat de sécurité SSL du serveur semble invalide. Poursuivre tout de même (le téléchargement de fichier ne sera pas possible) ?</string>
+		
+    <!-- Activity about -->
+    <string name="title_activity_about"></string>
+    <string name="textAboutA">XXX</string>
+    <string name="textAboutB">XXX</string>
+    <string name="Version">Version</string>
+    <string name="Author">Auteur</string>
+    <string name="Web">Web</string>
+    <string name="Compatibility">Compatibilité</string>
+    <string name="License">Licence</string>
+    <string name="Sources">Sources</string>
+    <string name="JMobileMode">Mode JQuery mobile</string>
+    <string name="DeviceAPILevel">Niveau API du terminal</string>
+	<string name="DeviceHasMenuHardware">Terminal équipé de boutons matériels</string>
+    <string name="DeviceHasDownloadManager">Terminal avec gestionnaire de téléchargement</string>
+    <string name="DownloadDirectory">Répertoire de téléchargement</string>
+    <string name="DeviceHasPDFViewer">Terminal muni de lecteur PDF enregistré</string>
+    <string name="DeviceHasODXViewer">Terminal muni de lecteur OpenOffice enregistré</string>
+    <string name="DeviceSize">Taille écran</string>
+    <string name="savedDolUrlRoot">URL Instance Dolibarr</string>
+    <string name="currentUrl">URL courante</string>
+    <string name="UserAgent">User Agent</string>
+    <string name="SavedLogin">Login sauvegardé</string>
+    <string name="SavedPassword">Mot de passe sauvegardé</string>
+    <string name="BasicAuthLogin">Login authentification Basic</string>
+    <string name="BasicAuthPassword">Mot de passe authentification Basic</string>
+    <string name="Yes">Oui</string>
+    <string name="No">Non</string>
+    
+    <!-- Menu main + web -->
+    <string name="menu_info">A propos de DoliDroid</string>
+    <string name="menu_show_bar_on">Afficher la barre menu (oui)</string>
+    <string name="menu_show_bar_off">Afficher la barre menu (non)</string>
+    <string name="menu_autofill_on">Conserver login/passe (oui)</string>
+    <string name="menu_autofill_off">Conserver login/passe (non)</string>
+    
+    <!-- Menu main page -->
+    <string name="menu_settings">Configuration</string>
+    <string name="menu_add_url">Ajouter URL prédéfinie</string>
+    <string name="menu_remove_url">Supprimer une URL prédéfinie</string>
+    <string name="menu_clear_all_urls">Effacer les URLs prédéfinies</string>
+    
+    <!-- Menu web browser -->
+    <string name="menu_menu">Menu</string>
+    <string name="menu_go_to">Accès rapide</string>
+    <string name="menu_search">Chercher</string>
+    <string name="menu_back">Back</string>
+    <string name="menu_refresh">Recharger page</string>
+    <string name="menu_clearcache">Vider cache</string>
+    <string name="menu_logout">Déconnecter</string>
+    <string name="menu_quit">Quitter</string>
+    
+</resources>

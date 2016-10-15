@@ -1,0 +1,61 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.nltechno.dolidroid"
+    android:versionCode="26"
+    android:versionName="DoliDroid Free 1.5"
+    android:installLocation="auto"
+    >
+	<!-- Remove android:installLocation="preferExternal" to always install on external storage, use "auto" for default internal -->    
+    
+	<!-- Some Chromebooks don't support touch. Although not essential,
+         it's a good idea to explicitly include this declaration. -->
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+    
+    <!-- API Level 8=2.2, 9=2.3, 10=2.3.3, 11=3.0, 13=3.1, 14=4.0=ICS 15=4.0.3 16=4.1 19=4.4.2 21=5.0.0 23=6.0.0 24=7.0.0 -->
+    <uses-sdk
+        android:minSdkVersion="13"
+        android:targetSdkVersion="24" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="com.android.vending.BILLING" />
+    
+    <application
+        android:icon="@drawable/ic_launcher_free"
+        android:label="@string/app_name" android:allowBackup="true" android:name="DoliDroid" android:logo="@drawable/ic_launcher_free" android:description="@string/dolidroidLabel">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/DoliDroidThemeFirst" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SecondActivity"
+            android:label="@string/title_activity_second"
+            android:theme="@style/DoliDroidThemeSecond"
+            android:configChanges="orientation|screenSize" 
+            >
+        </activity>
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/title_activity_about"
+            android:theme="@style/DoliDroidThemeAbout" >
+        </activity>
+        <activity
+            android:name=".InAppActivity"
+            android:label="@string/title_activity_about"
+            android:theme="@style/DoliDroidThemeAbout" >
+        </activity>
+        
+		<receiver android:name="com.nltechno.dolidroid.DownloadBroadcastReceiver">
+    		<intent-filter>
+        		<action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
+    		</intent-filter>
+		</receiver>    
+    </application>
+
+</manifest>

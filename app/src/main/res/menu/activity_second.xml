@@ -1,0 +1,90 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- List of predefined icon on: http://androiddrawableexplorer.appspot.com/ -->
+
+    <!-- 
+    <item android:id="@+id/menu_settings"
+        android:title="@string/menu_settings"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:orderInCategory="100">
+    
+	<menu android:id="@+id/sousmenu">
+     <item android:id="@+id/favoris"
+           android:title="Favoris"   />  
+  
+     <item android:id="@+id/stats"
+           android:title="Stats"  />
+    </menu>
+	</item>
+	 -->
+
+   	<item android:id="@+id/menu_menu"
+   	    android:title="@string/menu_menu"
+   	    android:icon="@android:drawable/ic_menu_agenda"
+   	    android:orderInCategory="10"
+   	    android:showAsAction="always|withText"
+   	    />
+
+	<item android:id="@+id/go_to"
+   	    android:title="@string/menu_go_to"
+   	    android:icon="@android:drawable/ic_menu_search"
+   	    android:orderInCategory="20"
+   	    android:showAsAction="always|withText"
+   	    />
+
+	<item android:id="@+id/menu_back"
+   	    android:title="@string/menu_back"
+   	    android:icon="@android:drawable/ic_menu_revert"
+   	    android:orderInCategory="30"
+   	    android:showAsAction="always"
+        />
+    	
+   	<item android:id="@+id/logout"
+   	    android:title="@string/menu_logout"
+   	    android:icon="@android:drawable/ic_lock_power_off"
+   	    android:menuCategory="secondary"
+   	    android:orderInCategory="100"
+   	    />
+
+   	<item android:id="@+id/quit"
+   	    android:title="@string/menu_quit"
+   	    android:icon="@android:drawable/ic_lock_power_off"
+   	    android:menuCategory="secondary"
+   	    android:orderInCategory="110"
+   	    />
+	
+	<item android:id="@+id/about"
+   	    android:title="@string/menu_info"
+   	    android:icon="@android:drawable/ic_menu_info_details"
+   	    android:menuCategory="secondary"
+   	    android:orderInCategory="120"
+   	    />
+   	
+    <item android:id="@+id/always_show_bar"
+        android:title="@string/menu_show_bar_on"
+   	    android:icon="@android:drawable/ic_menu_preferences"
+   	    android:menuCategory="secondary"
+   	    android:orderInCategory="130"
+   	    />
+		
+    <item android:id="@+id/always_autofill"
+        android:title="@string/menu_autofill_on"
+   	    android:icon="@android:drawable/ic_menu_preferences"
+   	    android:menuCategory="secondary"
+   	    android:orderInCategory="135"
+   	    />
+    
+    <item android:id="@+id/clearcache"
+   	    android:title="@string/menu_clearcache"
+   	    android:icon="@android:drawable/ic_menu_close_clear_cancel"
+   	    android:menuCategory="secondary"
+   	    android:orderInCategory="140"
+   	    />
+	
+   	<item android:id="@+id/refresh"
+   	    android:title="@string/menu_refresh"
+   	    android:icon="@android:drawable/ic_menu_rotate"
+   	    android:menuCategory="secondary"
+   	    android:orderInCategory="150"
+   	    />
+
+</menu>

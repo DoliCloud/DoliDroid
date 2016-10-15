@@ -1,0 +1,110 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .gitignore
+* AndroidManifestFree.xml
+* AndroidManifestPro.xml
+* AndroidManifestProAmazon.xml
+* COPYING
+* ChangeLog
+* README.md
+* README_fr.md
+* build/
+* build/makepack-dolidroid.conf
+* build/makepack-dolidroidsrc.pl
+* doc/
+* doc/DoliDroid text for video.odt
+* doc/README.txt
+* dolibarr_icon.png
+* dolidroid_background.png
+* eclipse_dictionnary.txt
+* img/
+* img/dolidroid.png
+* img/dolidroid.svg
+* img/dolidroid_1024x500_en.png
+* img/dolidroid_1024x500_en.svg
+* img/dolidroid_1024x500_fr.png
+* img/dolidroid_1024x500_fr.svg
+* img/dolidroid_114x114.png
+* img/dolidroid_1280x720_en.png
+* img/dolidroid_1280x720_en.svg
+* img/dolidroid_180x120_en.png
+* img/dolidroid_180x120_en.svg
+* img/dolidroid_180x120_fr.png
+* img/dolidroid_180x120_fr.svg
+* img/dolidroid_320x480.png
+* img/dolidroid_320x480_2.png
+* img/dolidroid_340x480_2_en.svg
+* img/dolidroid_340x480_en.svg
+* img/dolidroid_512x512_en.png
+* img/dolidroid_512x512_en.svg
+* img/dolidroid_512x512_fr.png
+* img/dolidroid_512x512_fr.svg
+* img/dolidroid_screenshot_dashboard_1080x1920.png
+* img/dolidroid_screenshot_home_1080x1920.png
+* img/dolidroid_screenshot_home_720x1280.png
+* img/dolidroid_screenshot_logon_1080x1920.png
+* img/dolidroid_screenshot_menu1_1280x1920.png
+* img/dolidroid_screenshot_menu1_720x1280.png
+* img/dolidroid_screenshot_menu2_1280x1920.png
+* img/dolidroid_screenshot_menu2_720x1280.png
+* img/dolidroid_screenshot_newinvoice_1280x1920.png
+* img/dolidroid_screenshot_newinvoice_720x1280.png
+* img/dolidroid_screenshot_newproposal_1280x1920.png
+* img/dolidroid_screenshot_newthirdparty_1280x1920.png
+* img/dolidroid_screenshot_quickaccess_1280x1920.png
+* img/dolidroid_screenshot_quickaccess_720x1280.png
+* img/dolidroid_screenshot_selecturl_720x1280.png
+* img/dolidroid_screenshot_stats_1280x1920.png
+* img/dolidroid_screenshot_stats_720x1280.png
+* img/dolidroid_screenshot_thirdparty_1280x1920.png
+* img/dolidroid_screenshot_thirdparty_720x1280.png
+* img/dolidroid_screenshot_thirdpartyarea_720x1280.png
+* img/dolidroid_screenshot_viewpdf_720x1280.png
+* img/dolidroid_tablet_screenshot_logon.png
+* img/dolidroid_tablet_screenshot_menu1.png
+* img/dolidroid_tablet_screenshot_menu2.png
+* img/dolidroid_tablet_screenshot_newinvoice.png
+* img/dolidroid_tablet_screenshot_quickaccess.png
+* img/dolidroid_tablet_screenshot_selecturl.png
+* img/dolidroid_tablet_screenshot_stats.png
+* img/dolidroid_tablet_screenshot_thirdparty.png
+* img/ic_launcher.png
+* img/ic_launcher_free.png
+* img/text5484.png
+* proguard-project.txt
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app/src/main/AndroidManifest.xml
+* assets/ => app/src/main/assets/
+* lint.xml => app/lint.xml
+* res/ => app/src/main/res/
+* src/ => app/src/main/java/
+* src/com/android/vending/billing/IInAppBillingService.aidl => app/src/main/aidl/com/android/vending/billing/IInAppBillingService.aidl
+* src/com/nltechno/analyticsapi/OAuth2Sample.javalibko => app/src/main/resources/com/nltechno/analyticsapi/OAuth2Sample.javalibko
+* src/com/nltechno/analyticsapi/client_secrets.json => app/src/main/resources/com/nltechno/analyticsapi/client_secrets.json
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

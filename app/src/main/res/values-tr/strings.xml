@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name">
+    <xliff:g id="app_name">DoliDroid</xliff:g>
+  </string>
+    <string name="dolidroidLabel">DoliDroid, Dolibarr ERP-CRM için Android ön ucu</string>
+    <string name="dolidroidUserAgent">DoliDroid - Dolibarr ERP-CRM için Android ön ucu</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main">
+    <xliff:g id="title_activity_main">DoliDroid</xliff:g>
+  </string>
+    <string name="dolibarr_for_android">Dolibarr için Android istemcisi</string>
+    <string name="open">Başlat</string>
+    <string name="dolibarr_url">Dolibarr URL</string>
+    <string name="logo_dolidroid">Logo DoliDroid</string>
+    <string name="SelectUrl">veya önceden tanımlanmış bir URL seçin</string>
+
+    <!-- Activity web -->
+    <string name="title_activity_second"/>
+    <string name="textBack">Geri</string>
+    <string name="textMenu">Menü</string>
+    <string name="downloadComplete">Dosyanın indirilmesi tamamlandı</string>
+	<string name="NoPreviousPageAgainToQuit">Önceki sayfa yok. Çıkmak için geri düğmesini tekrar kullanın.</string>
+	<string name="notCompatibleWithVersion">Sunucu (%1$s) üzerindeki Dolibarr çok eski. DoliDroid sürümü Dolibarr %2$s veya daha yüksek gerektirir.</string>
+	<string name="notification_error_ssl_cert_invalid">Server SSL Certificate seems invalid. Do you want to continue ?</string>
+			
+    <!-- Activity about -->
+    <string name="title_activity_about"/>
+    <string name="textAboutA">
+    <xliff:g id="textAboutA">XXX</xliff:g>
+  </string>
+    <string name="textAboutB">
+    <xliff:g id="textAboutB">XXX</xliff:g>
+  </string>
+    <string name="Version">Sürüm</string>
+    <string name="Author">Yazar</string>
+    <string name="Web">Web</string>
+    <string name="Compatibility">Uyumluluk</string>
+    <string name="License">Lisans</string>
+    <string name="Sources">Kaynaklar</string>
+    <string name="JMobileMode">JQuery mobil modu</string>
+    <string name="DeviceAPILevel">Cihaz API Düzeyi</string>
+    <string name="DeviceHasMenuHardware">Cihazın donanım düğmeleri var</string>
+    <string name="DeviceHasDownloadManager">Cihazın bir indirme yöneticisi var</string>
+    <string name="DownloadDirectory">Dizin indir</string>
+    <string name="DeviceHasPDFViewer">Cihazın PDF görüntüleyicileri var</string>
+    <string name="DeviceHasODXViewer">Cihazın OpenOffice görüntüleyicileri var</string>
+    <string name="DeviceSize">Cihaz ekran boyutu</string>
+    <string name="savedDolUrlRoot">Dolibarr örnek URL\'si</string>
+    <string name="currentUrl">Geçerli URL</string>
+    <string name="UserAgent">Kullanıcı Aracısı</string>
+    <string name="SavedLogin">Saved login</string>
+    <string name="SavedPassword">Saved password</string>
+    <string name="BasicAuthLogin">Basic auth login</string>
+    <string name="BasicAuthPassword">Basic auth password</string>
+    <string name="Yes">Evet</string>
+    <string name="No">Hayır</string>
+    
+    <!-- Menu main + web -->
+    <string name="menu_info">DoliDroid Hakkında</string>
+    <string name="menu_show_bar_on">Menü çubuğunu göster (evet)</string>
+    <string name="menu_show_bar_off">Menü çubuğunu göster (hayır)</string>
+    <string name="menu_autofill_on">Giriş / parola Keep (evet)</string>
+    <string name="menu_autofill_off">Giriş / parola Keep (hayır)</string>
+     
+    <!-- Menu main page -->
+    <string name="menu_settings">Ayarlar</string>
+    <string name="menu_add_url">Önceden tanımlanmış URL ekle</string>
+    <string name="menu_remove_url">Önceden tanımlanmış bir URL\'yi kaldır</string>
+    <string name="menu_clear_all_urls">Önceden tanımlanmış URL\'leri temizle</string>
+    
+    <!-- Menu web browser -->
+    <string name="menu_menu">Menü</string>
+    <string name="menu_go_to">Hızlı erişim</string>
+    <string name="menu_search">Ara</string>
+    <string name="menu_back">Geri</string>
+    <string name="menu_refresh">Sayfayı yeniden yükle</string>
+    <string name="menu_clearcache">Önbelleği temizle</string>
+    <string name="menu_logout">Oturumu kapat</string>
+    <string name="menu_quit">Çık</string>
+    
+</resources>

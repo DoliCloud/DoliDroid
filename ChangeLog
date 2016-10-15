@@ -1,0 +1,42 @@
+--------------------------------------------------------------
+English DoliDroid ChangeLog
+--------------------------------------------------------------
+
+***** ChangeLog for 1.5 *****
+- Include asset cache files for better performance with Dolibarr 4.0.* and 3.9.*
+
+***** ChangeLog for 1.4 *****
+- Can upload files with Dolibarr 3.8+
+- Include asset cache files for better performance with Dolibarr 3.7.* and 3.8.*
+
+***** ChangeLog for 1.3 *****
+- Removed compatibility with android <= 3.0
+- Compatibility with android lolipop 5
+
+***** ChangeLog for 1.2 *****
+- Include resources for 3.6
+- Fix: Killed application when url contains an invalid char.
+
+***** ChangeLog for 1.1 *****
+- Include option to autofill login form with last login/password (need Dolibarr 3.5+).
+- Clear also history when clearing cache.
+- Better internal logging.
+- Mutualize some code.
+- Perf: Better management of cache for menu and quick search page (need Dolibarr 3.5+).
+- Can install application on external SD card.
+- Add title of last page into the about menu.
+- Detection of pdf/odt readers fixed for odt and shows number of readers.
+- Better suppor for http basic authent. 
+- Fix: minor compatibility issue with Dolibarr 3.5.
+- Fix: better back button management.
+- Fix: mobile mode not lost when session expired on server.
+- Fix: Support download of files from ECM module.
+- Fix: Correct language for menu content when language is autodetect. 
+- Fix: Tab "documents" did not opened when requested.
+
+***** ChangeLog for 1.0 *****
+- New: Add translation for de, es, fr, it, nl, pt, tr
+- New: Check version of Dolibarr. Add a warning if version not compatible (< 3.4+).
+- Fix: About page content is no more truncated.
+- Fix: Add missing images for the cache feature.
+- Qual: Clean code.

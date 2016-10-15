@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name">
+    <xliff:g id="app_name">DoliDroid</xliff:g>
+  </string>
+    <string name="dolidroidLabel">DoliDroid, Android-Frontend für Dolibarr ERP-CRM</string>
+    <string name="dolidroidUserAgent">DoliDroid - Android-Frontend für Dolibarr ERP-CRM</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main">
+    <xliff:g id="title_activity_main">DoliDroid</xliff:g>
+  </string>
+    <string name="dolibarr_for_android">Android-Client für Dolibarr</string>
+    <string name="open">Starten</string>
+    <string name="dolibarr_url">Dolibarr URL</string>
+    <string name="logo_dolidroid">Logo DoliDroid</string>
+    <string name="SelectUrl">oder wählen Sie eine vordefinierte URL</string>
+
+    <!-- Activity web -->
+    <string name="title_activity_second"/>
+    <string name="textBack">Zurück</string>
+    <string name="textMenu">Menü</string>
+    <string name="downloadComplete">Download der Datei abgeschlossen</string>
+	<string name="NoPreviousPageAgainToQuit">Keine vorherige Seite. Verwenden Sie wieder \"Zurück\", um zu beenden.</string>
+	<string name="notCompatibleWithVersion">Die Dolibarr auf dem Server (%1$s) ist zu alt. %2$s Öffnen benötigt.</string>
+	<string name="notification_error_ssl_cert_invalid">Server SSL Certificate seems invalid. Do you want to continue ?</string>
+			
+    <!-- Activity about -->
+    <string name="title_activity_about"/>
+    <string name="textAboutA">
+    <xliff:g id="textAboutA">XXX</xliff:g>
+  </string>
+    <string name="textAboutB">
+    <xliff:g id="textAboutB">XXX</xliff:g>
+  </string>
+    <string name="Version">Version</string>
+    <string name="Author">Autor</string>
+    <string name="Web">Web</string>
+    <string name="Compatibility">Kompatibilität</string>
+    <string name="License">Lizenz</string>
+    <string name="Sources">Quellen</string>
+    <string name="JMobileMode">JQuery Mobil-Modus</string>
+    <string name="DeviceAPILevel">Gerät API Niveau</string>
+    <string name="DeviceHasMenuHardware">Das Gerät hat Hardware-Tasten</string>
+    <string name="DeviceHasDownloadManager">Das Gerät hat einen Download-Manager</string>
+    <string name="DownloadDirectory">Laden Verzeichnis</string>
+    <string name="DeviceHasPDFViewer">Das Gerät hat PDF-Betrachter</string>
+    <string name="DeviceHasODXViewer">Das Gerät hat OpenOffice-Betrachter</string>
+    <string name="DeviceSize">Gerätbildschirmgröße</string>
+    <string name="savedDolUrlRoot">Dolibarr Instanz URL</string>
+    <string name="currentUrl">Aktuelle URL</string>
+    <string name="UserAgent">Benutzeragent</string>
+    <string name="SavedLogin">Saved login</string>
+    <string name="SavedPassword">Saved password</string>
+    <string name="BasicAuthLogin">Basic auth login</string>
+    <string name="BasicAuthPassword">Basic auth password</string>
+    <string name="Yes">Ja</string>
+    <string name="No">Nein</string>
+    
+    <!-- Menu main + web -->
+    <string name="menu_info">Über DoliDroid</string>
+    <string name="menu_show_bar_on">Menüleiste anzeigen (ja)</string>
+    <string name="menu_show_bar_off">Menüleiste anzeigen (nein)</string>
+    <string name="menu_autofill_on">Save Login / Passwort (ja)</string>
+    <string name="menu_autofill_off">Save Login / Passwort (nein)</string>
+    
+    <!-- Menu main page -->
+    <string name="menu_settings">Einstellungen</string>
+    <string name="menu_add_url">Hinzufügen der vordefinierten URL</string>
+    <string name="menu_remove_url">Entfernen einer vordefinierten URL</string>
+    <string name="menu_clear_all_urls">Klar vordefinierte URLs</string>
+    
+    <!-- Menu web browser -->
+    <string name="menu_menu">Menü</string>
+    <string name="menu_go_to">Schneller Zugriff</string>
+    <string name="menu_search">Suchen</string>
+    <string name="menu_back">Zurück</string>
+    <string name="menu_refresh">Seite neu laden</string>
+    <string name="menu_clearcache">Cache löschen</string>
+    <string name="menu_logout">Ausloggen</string>
+    <string name="menu_quit">Beenden</string>
+    
+</resources>

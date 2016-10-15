@@ -1,0 +1,33 @@
+<resources>
+
+    <style name="AppTheme" parent="android:Theme.Light" />
+	<!-- To use Material Design, use parent="android:Theme.Material" for 5.0+ only or
+	parent="android:Theme.AppCompat" for 21+ -->
+    
+    <!-- Theme for DoliDroid first page -->
+    <!-- parent="@android:style/Theme.NoTitleBar" = old menu without ActionBar -->
+    <!-- parent="@android:style/Theme.Holo" (need min sdk=11) will enabled ActionBar  -->
+    <style name="DoliDroidThemeFirst" parent="@android:style/Theme.NoTitleBar">
+		<item name="android:windowBackground">@drawable/dolidroid_backgroundxml</item>
+		<item name="android:textColor">@color/white</item>		
+	</style>
+	
+    <!-- Theme for DoliDroid second page -->
+    <!-- parent="@android:style/Theme.NoTitleBar" = old menu without ActionBar -->
+    <!-- parent="@android:style/Theme.Holo" (need min sdk=11) will enabled ActionBar  -->
+    <style name="DoliDroidThemeSecond" parent="@android:style/Theme.NoTitleBar">
+		<item name="android:colorBackground">@color/black</item>
+		<!-- Do not force background here, we need some widget black and other whites <item name="android:background">@color/white</item> -->
+		<!-- Do not force background here, we need some widget black and other whites <item name="android:textColor">@color/white</item> -->		
+	</style>
+
+    <!-- Theme for DoliDroid about page -->
+    <!-- parent="@android:style/Theme.NoTitleBar" = old menu without ActionBar -->
+    <!-- parent="@android:style/Theme.Holo" (need min sdk=11) will enabled ActionBar  -->
+    <style name="DoliDroidThemeAbout" parent="@android:style/Theme.NoTitleBar">
+		<item name="android:colorBackground">@color/black</item>
+		<!-- Do not force background here, we need some widget black and other whites <item name="android:background">@color/white</item> -->
+		<!-- Do not force background here, we need some widget black and other whites <item name="android:textColor">@color/white</item> -->		
+	</style>
+	    
+</resources>

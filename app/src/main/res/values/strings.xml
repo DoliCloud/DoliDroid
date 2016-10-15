@@ -1,0 +1,76 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name"><xliff:g id="app_name">DoliDroid</xliff:g></string>
+    <string name="dolidroidLabel">DoliDroid, Android front-end for Dolibarr ERP-CRM</string>
+    <string name="dolidroidUserAgent">DoliDroid - Android front-end for Dolibarr ERP-CRM</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main"><xliff:g id="title_activity_main">DoliDroid</xliff:g></string>
+    <string name="dolibarr_for_android">Android client for Dolibarr</string>
+    <string name="open">Start</string>
+    <string name="dolibarr_url">Dolibarr URL</string>
+    <string name="logo_dolidroid">Logo DoliDroid</string>
+    <string name="SelectUrl">or select a predefined URL</string>
+
+    <!-- Activity web -->
+    <string name="title_activity_second"></string>
+    <string name="downloadComplete">Download of file complete</string>
+	<string name="NoPreviousPageAgainToQuit">No previous page. Use back again to quit.</string>
+	<string name="notCompatibleWithVersion">Dolibarr version on server (%1$s) is too old. DoliDroid need Dolibar version %2$s or higher.</string>
+	<string name="notification_error_ssl_cert_invalid">Server security SSL Certificate seems invalid. Do you want to continue (download of files would not be possible) ?</string>
+    
+    <!-- Activity about -->
+    <string name="title_activity_about"></string>
+    <string name="textBack">Back</string>
+    <string name="textMenu">Menu</string>
+    <string name="textAboutA"><xliff:g id="textAboutA">XXX</xliff:g></string>
+    <string name="textAboutB"><xliff:g id="textAboutB">XXX</xliff:g></string>
+    <string name="Version">Version</string>
+    <string name="Author">Author</string>
+    <string name="Web">Web</string>
+    <string name="Compatibility">Compatibility</string>
+    <string name="License">License</string>
+    <string name="Sources">Sources</string>
+    <string name="JMobileMode">JQuery mobile mode</string>
+    <string name="DeviceAPILevel">Device API Level</string>
+    <string name="DeviceHasMenuHardware">Device has hardware buttons</string>
+    <string name="DeviceHasDownloadManager">Device has a download manager</string>
+    <string name="DownloadDirectory">Download directory</string>
+    <string name="DeviceHasPDFViewer">Device has PDF viewers</string>
+    <string name="DeviceHasODXViewer">Device has OpenOffice viewers</string>
+    <string name="DeviceSize">Device screen size</string>
+    <string name="savedDolUrlRoot">Dolibarr instance Url</string>
+    <string name="currentUrl">Current Url</string>
+    <string name="UserAgent">User Agent</string>
+    <string name="SavedLogin">Saved login</string>
+    <string name="SavedPassword">Saved password</string>
+    <string name="BasicAuthLogin">Basic auth login</string>
+    <string name="BasicAuthPassword">Basic auth password</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    
+    <!-- Menu main + web -->
+    <string name="menu_info">About DoliDroid</string>
+    <string name="menu_show_bar_on">Show menu bar (yes)</string>
+    <string name="menu_show_bar_off">Show menu bar (no)</string>
+    <string name="menu_autofill_on">Save login/password (yes)</string>
+    <string name="menu_autofill_off">Save login/password (no)</string>
+    
+    <!-- Menu main page -->
+    <string name="menu_settings">Settings</string>
+    <string name="menu_add_url">Add predefined URL</string>
+    <string name="menu_remove_url">Remove a predefined URL</string>
+    <string name="menu_clear_all_urls">Clear predefined URLs</string>
+    <string name="dolicloud_register"><a href="https://www.on.dolicloud.com/signUp/index?origin=dolidroid&amp;planCode=basic">I have no ERP CRM hosted instance yet, create it on DoliCloud</a></string>
+
+    <!-- Menu web browser -->
+    <string name="menu_menu">Menu</string>
+    <string name="menu_go_to">Quick access</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_back">Back</string>
+    <string name="menu_refresh">Reload page</string>
+    <string name="menu_clearcache">Clear cache</string>
+    <string name="menu_logout">Logout</string>
+    <string name="menu_quit">Quit</string>
+
+</resources>
