@@ -61,7 +61,8 @@
     <string name="menu_add_url">Ajouter URL prédéfinie</string>
     <string name="menu_remove_url">Supprimer une URL prédéfinie</string>
     <string name="menu_clear_all_urls">Effacer les URLs prédéfinies</string>
-    
+    <string name="dolicloud_register"><a href="https://www.on.dolicloud.com/signUp/index?origin=dolidroid&amp;planCode=basic">Je n\'ai pas d\'instance ERP CRM encore, j\'en crée une sur DoliCloud</a></string>
+
     <!-- Menu web browser -->
     <string name="menu_menu">Menu</string>
     <string name="menu_go_to">Accès rapide</string>

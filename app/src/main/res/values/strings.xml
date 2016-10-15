@@ -61,7 +61,7 @@
     <string name="menu_add_url">Add predefined URL</string>
     <string name="menu_remove_url">Remove a predefined URL</string>
     <string name="menu_clear_all_urls">Clear predefined URLs</string>
-    <string name="dolicloud_register"><a href="https://www.on.dolicloud.com/signUp/index?origin=dolidroid&amp;planCode=basic">I have no ERP CRM hosted instance yet, create it on DoliCloud</a></string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://www.on.dolicloud.com/signUp/index?origin=dolidroid&amp;planCode=basic">I have no ERP CRM hosted instance yet, create it on DoliCloud</a></string>
 
     <!-- Menu web browser -->
     <string name="menu_menu">Menu</string>
