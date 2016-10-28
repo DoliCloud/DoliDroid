@@ -125,10 +125,11 @@ public class AboutActivity extends Activity {
 			s1+=getString(R.string.Web)+": http://www.nltechno.com</b><br />\n";
 			s1+=getString(R.string.Compatibility)+": <b>Dolibarr 3.5+</b><br />\n";
 			s1+=getString(R.string.License)+": <b>GPL v3+</b><br />\n";
-			s1+=getString(R.string.Sources)+": http://www.nltechno.com/services/<br />\n";
+			//s1+=getString(R.string.Sources)+": http://www.nltechno.com/services/<br />\n";
+			s1+=getString(R.string.Sources)+": https://framagit.org/eldy/dolidroid.git<br />\n";
 			// This download key allow to download file with name src_dolidroid-info.versionName-downloadkey
-			String downloadkey=Utils.MD5Hex("dolidroid"+info.versionName.replaceAll("[^0-9.]", "")+"saltnltechno").substring(0, 8);
-			s1+=getString(R.string.Sources)+" Download Key: dolidroid-"+info.versionName.replaceAll("[^0-9.]", "")+"-"+downloadkey+"<br />\n";
+			//String downloadkey=Utils.MD5Hex("dolidroid"+info.versionName.replaceAll("[^0-9.]", "")+"saltnltechno").substring(0, 8);
+			//s1+=getString(R.string.Sources)+" Download Key: dolidroid-"+info.versionName.replaceAll("[^0-9.]", "")+"-"+downloadkey+"<br />\n";
 
 			s1+="<br />\n";
 			

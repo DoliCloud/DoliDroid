@@ -21,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
+        android:textColorLink="@color/blue"
         android:text="@string/dolicloud_register"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="6dp"
