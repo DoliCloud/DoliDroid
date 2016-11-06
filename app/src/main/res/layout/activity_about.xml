@@ -2,14 +2,15 @@
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="fill_parent"
-android:layout_height="wrap_content">
+android:layout_height="wrap_content"
+android:theme="@style/DoliDroidThemeAbout">
 
-<RelativeLayout 
-    
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="4dp"
-    android:theme="@style/DoliDroidThemeFirst" >
+    android:theme="@style/DoliDroidThemeAbout" >
 
 	<TextView
         android:id="@+id/TextAbout01"

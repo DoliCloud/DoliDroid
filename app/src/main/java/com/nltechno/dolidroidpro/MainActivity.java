@@ -178,6 +178,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		this.nbOfEntries=0;
 		try {
 			FileInputStream fis = openFileInput(FILENAME);
+			Log.d(LOG_TAG, "Open data file "+FILENAME+" in directory "+getApplicationContext().getFilesDir().toString());
 			// Get the object of DataInputStream
 			DataInputStream in = new DataInputStream(fis);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -202,12 +203,19 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 		// Show combo list if there is at least 1 choice
 		Spinner spinner1 = (Spinner) findViewById(R.id.spinner1);
+		TextView texviewlink = (TextView) findViewById(R.id.textViewLink);
+
 		if (this.nbOfEntries > 0)
 		{
 			spinner1.setAdapter(adapter);
 			spinner1.setVisibility(View.VISIBLE);
+			texviewlink.setVisibility(View.INVISIBLE);
 		}
-		else spinner1.setVisibility(View.INVISIBLE);
+		else
+		{
+			spinner1.setVisibility(View.INVISIBLE);
+			texviewlink.setVisibility(View.VISIBLE);
+		}
 		spinner1.setOnItemSelectedListener(this);	// Enable handler with onItemSelected and onNothingSelected
 
 		// Init url with hard coded value
@@ -355,13 +363,16 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	    		Log.d(LOG_TAG, "Remove predefined URL");
 	    		return true;*/
 	    	case R.id.clear_all_urls:
-	    		Log.d(LOG_TAG, "Clear predefined URL list");
-	    		File file = new File(FILENAME);
-	    		file.delete();
-	    		this.listOfRootUrl = new ArrayList<String>();
+				File file = new File(getApplicationContext().getFilesDir().toString() + "/" + FILENAME);
+				Log.d(LOG_TAG, "Clear predefined URL list "+FILENAME+" full path="+file.getAbsolutePath());
+	    		Boolean result = file.delete();
+				Log.d(LOG_TAG, result.toString());
+				this.listOfRootUrl = new ArrayList<String>();
 	    		// Hide combo
 	    		Spinner spinner1 = (Spinner) findViewById(R.id.spinner1);
 	    		spinner1.setVisibility(View.INVISIBLE);
+				TextView texviewlink = (TextView) findViewById(R.id.textViewLink);
+				texviewlink.setVisibility(View.VISIBLE);
 	    	    return true;
 		    case R.id.about:
 	    		Log.d(LOG_TAG, "Click onto Info");
@@ -452,7 +463,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		FileOutputStream fos = null;
 		try
 		{
-			Log.d(LOG_TAG, "Write into file " + FILENAME);
+			Log.d(LOG_TAG, "Write into file " + FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());
 
 			fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
 			for (int i = 0; i < this.listOfRootUrl.size(); i++)
