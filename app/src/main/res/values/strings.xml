@@ -26,6 +26,7 @@
     <string name="textAboutA"><xliff:g id="textAboutA">XXX</xliff:g></string>
     <string name="textAboutB"><xliff:g id="textAboutB">XXX</xliff:g></string>
     <string name="Version">Version</string>
+    <string name="VersionStaticResources">Version of local static resources</string>
     <string name="Author">Author</string>
     <string name="Web">Web</string>
     <string name="Compatibility">Compatibility</string>
@@ -55,7 +56,9 @@
     <string name="menu_show_bar_off">Show menu bar (no)</string>
     <string name="menu_autofill_on">Save login/password (yes)</string>
     <string name="menu_autofill_off">Save login/password (no)</string>
-    
+    <string name="menu_uselocalresources_on">Use local static resources (yes)</string>
+    <string name="menu_uselocalresources_off">Use local static resources (no)</string>
+
     <!-- Menu main page -->
     <string name="menu_settings">Settings</string>
     <string name="menu_add_url">Add predefined URL</string>

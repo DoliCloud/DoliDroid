@@ -110,6 +110,8 @@ import android.widget.Toast;
 public class SecondActivity extends Activity {
 
 	private static final String LOG_TAG = "DoliDroidActivity";
+	public static final String VERSION_RESOURCES = "5.0";
+
 	private WebView myWebView;
 	private WebViewClientDoliDroid myWebViewClientDoliDroid;
 	private WebChromeClientDoliDroid myWebChromeClientDoliDroid;
@@ -126,9 +128,13 @@ public class SecondActivity extends Activity {
 	private String savedAuthuser=null;
 	private String savedAuthpass=null;
 	private String savedUserAgent=null;
-	
+
+	private boolean prefAlwaysUseLocalResources=true;
+
 	private String lastversionfound;
-	
+	private String lastversionfoundforasset;
+
+
 	// Variables used to manage cache and error retry
 	private boolean tagToOverwriteLoginPass=true;
 	private boolean tagLastLoginPassToSavedLoginPass=false;	// This is set to true after submitting login form
@@ -140,6 +146,7 @@ public class SecondActivity extends Activity {
 	private String cacheForMenu;
 	private String cacheForQuickAccess;
 	private String lastLoadUrl;
+
 	private String menuAre="hardwareonly";
 	private Menu savMenu;
 	private boolean noPreviousPageShown=false;
@@ -192,10 +199,11 @@ public class SecondActivity extends Activity {
     	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     	boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
     	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
-    	Log.d(LOG_TAG, "onCreate prefAlwaysShowBar="+prefAlwaysShowBar+" prefAlwaysAutoFill="+prefAlwaysAutoFill); 
+		prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
+    	Log.d(LOG_TAG, "onCreate prefAlwaysShowBar="+prefAlwaysShowBar+" prefAlwaysAutoFill="+prefAlwaysAutoFill+" prefAlwaysUseLocResouces="+prefAlwaysUseLocalResources);
     	
     	tagToOverwriteLoginPass=prefAlwaysAutoFill;
-    	
+
     	// Define kind of menu we want to use
         boolean hasMenuHardware = Utils.hasMenuHardware(this);
         if (! hasMenuHardware || prefAlwaysShowBar)
@@ -266,7 +274,7 @@ public class SecondActivity extends Activity {
         progress = (ProgressBar) findViewById(R.id.progressBar1);
         progress.setMax(100);
         Drawable d=getResources().getDrawable(R.drawable.progressbar_style);
-        ClipDrawable cd = new ClipDrawable(d, Gravity.LEFT, ClipDrawable.HORIZONTAL);
+        ClipDrawable cd = new ClipDrawable(d, Gravity.START, ClipDrawable.HORIZONTAL);
         progress.setProgressDrawable(cd);
       
         myWebView = (WebView) findViewById(R.id.webViewContent);
@@ -388,11 +396,17 @@ public class SecondActivity extends Activity {
         // Hide menu show bar if phone too old, change label otherwise
 		MenuItem menuItem2 = menu.findItem(R.id.always_autofill);
    		boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
-   		Log.d(LOG_TAG, "prefAlwaysAutoFill value is "+prefAlwaysAutoFill);
+		Log.d(LOG_TAG, "prefAlwaysAutoFill value is "+prefAlwaysAutoFill);
    		if (prefAlwaysAutoFill) menuItem2.setTitle(getString(R.string.menu_autofill_on));
    		else menuItem2.setTitle(getString(R.string.menu_autofill_off));
 
-	    this.savMenu = menu;
+		MenuItem menuItem4 = menu.findItem(R.id.always_uselocalresources);
+		//boolean prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
+		Log.d(LOG_TAG, "prefAlwaysUseLocalResources value is "+prefAlwaysUseLocalResources);
+		if (prefAlwaysUseLocalResources) menuItem4.setTitle(getString(R.string.menu_uselocalresources_on));
+		else menuItem4.setTitle(getString(R.string.menu_uselocalresources_off));
+
+		this.savMenu = menu;
     	
         return true;
     }
@@ -426,7 +440,7 @@ public class SecondActivity extends Activity {
 	    		prefAlwaysShowBar=!prefAlwaysShowBar;
 	    		editor = sharedPrefs.edit();
 	        	editor.putBoolean("prefAlwaysShowBar", prefAlwaysShowBar);
-	        	editor.commit();
+	        	editor.apply();
 	    		Log.d(LOG_TAG, "Switched value is now "+prefAlwaysShowBar);
 	    		// Update show bar or not
 	        	if (prefAlwaysShowBar) 
@@ -457,7 +471,7 @@ public class SecondActivity extends Activity {
 	    		prefAlwaysAutoFill=!prefAlwaysAutoFill;
 	    		editor = sharedPrefs.edit();
 	        	editor.putBoolean("prefAlwaysAutoFill", prefAlwaysAutoFill);
-	        	editor.commit();
+	        	editor.apply();
 	    		Log.d(LOG_TAG, "Switched value is now "+prefAlwaysAutoFill);
 	    		// Update show bar or not
 	        	if (prefAlwaysAutoFill) 
@@ -471,6 +485,28 @@ public class SecondActivity extends Activity {
 	        		invalidateOptionsMenu();
 	        	}
 	    		return true;
+			case R.id.always_uselocalresources:
+				sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+				//boolean prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
+				Log.i(LOG_TAG, "Click onto switch uselocalresources, prefAlwaysUseLocalResources is "+prefAlwaysUseLocalResources);
+				prefAlwaysUseLocalResources=!prefAlwaysUseLocalResources;
+				editor = sharedPrefs.edit();
+				editor.putBoolean("prefAlwaysUseLocalResources", prefAlwaysUseLocalResources);
+				editor.apply();
+				Log.d(LOG_TAG, "Switched value is now "+prefAlwaysUseLocalResources);
+				//savedPrefAlwaysUseLocalResources=prefAlwaysUseLocalResources;
+				// Update men label
+				if (prefAlwaysUseLocalResources)
+				{
+					this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_on));
+					invalidateOptionsMenu();
+				}
+				else
+				{
+					this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_off));
+					invalidateOptionsMenu();
+				}
+				return true;
 		    case R.id.about:
 	    		Log.i(LOG_TAG, "Start activity About");
 	    		myWebView = (WebView) findViewById(R.id.webViewContent);
@@ -478,7 +514,8 @@ public class SecondActivity extends Activity {
 	    		intent.putExtra("currentUrl", myWebView.getOriginalUrl());
 	    		intent.putExtra("userAgent", myWebView.getSettings().getUserAgentString());
 	    		intent.putExtra("savedDolRootUrl", this.savedDolRootUrl);
-	    		intent.putExtra("lastversionfound", this.lastversionfound);
+				intent.putExtra("lastversionfound", this.lastversionfound);
+				intent.putExtra("lastversionfoundforasset", this.lastversionfoundforasset);
 	    		intent.putExtra("title", myWebView.getTitle());
 	    		intent.putExtra("savedAuthuser", this.savedAuthuser);
 	    		intent.putExtra("savedAuthpass", this.savedAuthpass);
@@ -591,7 +628,7 @@ public class SecondActivity extends Activity {
     {
     	String mode;
     	
-    	public DownloadWebPageTask(String mode)
+    	DownloadWebPageTask(String mode)
     	{
     		super();
     		this.mode=mode;
@@ -1039,6 +1076,7 @@ public class SecondActivity extends Activity {
 		 */
 		@Override
 		public WebResourceResponse shouldInterceptRequest(WebView view, String url)
+		//public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest url)	from API21
 		{
 			// Get url relative to Dolibarr root.
 			String host=null;
@@ -1077,77 +1115,71 @@ public class SecondActivity extends Activity {
 
 			if (fileName != null)
 			{
-				try {
-					/* Example to return empty for files instead of some files */
-					/*
-					if (fileName.endsWith("datepicker.js.php")
-							|| fileName.contains("viewimage.php") || fileName.contains("ajax-loader.gif") || fileName.contains("headbg2.jpg") || fileName.contains("lib_head.js") 
-							|| fileName.contains("js/dst.js") || fileName.contains("tipTip")|| fileName.contains("tablednd")|| fileName.contains("jnotify")|| fileName.contains("flot.")
-							|| fileName.contains("jquery.mobile") 
-							//|| fileName.contains("jquery-latest")
-							//|| fileName.contains("jquery-ui-latest")
-							|| fileName.contains("button_")
-							|| fileName.contains("dolibarr_logo.png")
-							 ) 
-					{
-						Log.i(LOG_TAG, "Filename "+fileName+" discarded");
-						return new WebResourceResponse("text/css", "UTF-8", new ByteArrayInputStream("".getBytes("UTF-8"))); 
-					}*/
-					
-					String versionimg="4.0";							// Set to the default value we want to use. Set "" to disable assets usage for img.
-					String versionjscss=(version==null?"":version);		// Set to "" to disable assets usage for js and css
+				if (prefAlwaysUseLocalResources) {
+					try {
+						/* Example to return empty for files instead of some files */
+						/*
+						if (fileName.endsWith("datepicker.js.php")
+								|| fileName.contains("viewimage.php") || fileName.contains("ajax-loader.gif") || fileName.contains("headbg2.jpg") || fileName.contains("lib_head.js")
+								|| fileName.contains("js/dst.js") || fileName.contains("tipTip")|| fileName.contains("tablednd")|| fileName.contains("jnotify")|| fileName.contains("flot.")
+								|| fileName.contains("jquery.mobile")
+								//|| fileName.contains("jquery-latest")
+								//|| fileName.contains("jquery-ui-latest")
+								|| fileName.contains("button_")
+								|| fileName.contains("dolibarr_logo.png")
+								 )
+						{
+							Log.i(LOG_TAG, "Filename "+fileName+" discarded");
+							return new WebResourceResponse("text/css", "UTF-8", new ByteArrayInputStream("".getBytes("UTF-8")));
+						}*/
 
-			        // Check if file need to be replaced by an asset file (if open file fails, throw exception and load from web).
-					if ((fileName.startsWith("theme/") || fileName.startsWith("core/js/") || fileName.startsWith("includes/") || fileName.startsWith("public/demo/")))
-					{
-						if (! versionimg.equals("") && (fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".gif")))
-						{
-							Log.d(LOG_TAG, "shouldInterceptRequest Filename "+fileName+" intercepted. Replaced with image assets file into "+versionimg);
-							return new WebResourceResponse(null, null, getAssets().open(versionimg+"/"+fileName));
-						}
-						else if (! versionjscss.equals("") && fileName.endsWith(".js"))
-						{
-							Log.d(LOG_TAG, "shouldInterceptRequest Filename "+fileName+" intercepted. Replaced with js assets file into "+versionjscss);
-							return new WebResourceResponse("application/x-javascript", "UTF-8", getAssets().open(versionjscss+"/"+fileName));
-						}
-						else if (! versionjscss.equals("") && fileName.endsWith(".css"))
-						{
-							Log.d(LOG_TAG, "shouldInterceptRequest Filename "+fileName+" intercepted. Replaced with css assets file into "+versionjscss);
-							return new WebResourceResponse("text/css", "UTF-8", getAssets().open(versionjscss+"/"+fileName));
-						}
-					}
-					else if (fileName.startsWith("&ui-page=") || fileName.equals(""))
-					{
-						Log.d(LOG_TAG, "shouldInterceptRequest We make a back to go to a bad history url fileName="+fileName);
+						String versionimg = VERSION_RESOURCES;                         // Set to the default value we want to use. Set "" to disable assets usage for img.
+						//if (lastversionfoundforasset != null) versionimg = lastversionfoundforasset;
+						String versionjscss = (version == null ? "" : version);        // Set to "" to disable assets usage for js and css
 
-						// Return last page that fails found into altHistoryStack
-						if (altHistoryStack != null && altHistoryStack.size() > 0)
-						{
-							String lastelem=altHistoryStack.get(altHistoryStack.size() - 1);
-
-							if ("menu".equals(lastelem) && cacheForMenu != null)
-							{
-								nextAltHistoryStack="menu";
-								altHistoryStack.remove(altHistoryStack.size() - 1);
-								Log.d(LOG_TAG, "shouldInterceptRequest Return instead content of cacheForMenu");
-								return new WebResourceResponse("text/html", "UTF-8", new ByteArrayInputStream(cacheForMenu.getBytes("UTF-8")));
+						// Check if file need to be replaced by an asset file (if open file fails, throw exception and load from web).
+						if ((fileName.startsWith("theme/") || fileName.startsWith("core/js/") || fileName.startsWith("includes/") || fileName.startsWith("public/demo/"))) {
+							if (!versionimg.equals("") && (fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".gif"))) {
+								Log.d(LOG_TAG, "shouldInterceptRequest Filename " + fileName + " intercepted. Replaced with image assets file into " + versionimg);
+								return new WebResourceResponse(null, null, getAssets().open(versionimg + "/" + fileName));
+							} else if (!versionjscss.equals("") && fileName.endsWith(".js")) {
+								Log.d(LOG_TAG, "shouldInterceptRequest Filename " + fileName + " intercepted. Replaced with js assets file into " + versionjscss);
+								return new WebResourceResponse("application/x-javascript", "UTF-8", getAssets().open(versionjscss + "/" + fileName));
+							} else if (!versionjscss.equals("") && fileName.endsWith(".css")) {
+								Log.d(LOG_TAG, "shouldInterceptRequest Filename " + fileName + " intercepted. Replaced with css assets file into " + versionjscss);
+								return new WebResourceResponse("text/css", "UTF-8", getAssets().open(versionjscss + "/" + fileName));
 							}
-							if ("quickaccess".equals(lastelem) && cacheForQuickAccess != null)
-							{
-								nextAltHistoryStack="quickaccess";
-								altHistoryStack.remove(altHistoryStack.size() - 1);
-								Log.d(LOG_TAG, "shouldInterceptRequest Return instead content of cacheQuickAccess");
-								return new WebResourceResponse("text/html", "UTF-8", new ByteArrayInputStream(cacheForQuickAccess.getBytes("UTF-8")));
+						} else if (fileName.startsWith("&ui-page=") || fileName.equals("")) {
+							Log.d(LOG_TAG, "shouldInterceptRequest We make a back to go to a bad history url fileName=" + fileName);
+
+							// Return last page that fails found into altHistoryStack
+							if (altHistoryStack != null && altHistoryStack.size() > 0) {
+								String lastelem = altHistoryStack.get(altHistoryStack.size() - 1);
+
+								if ("menu".equals(lastelem) && cacheForMenu != null) {
+									nextAltHistoryStack = "menu";
+									altHistoryStack.remove(altHistoryStack.size() - 1);
+									Log.d(LOG_TAG, "shouldInterceptRequest Return instead content of cacheForMenu");
+									return new WebResourceResponse("text/html", "UTF-8", new ByteArrayInputStream(cacheForMenu.getBytes("UTF-8")));
+								}
+								if ("quickaccess".equals(lastelem) && cacheForQuickAccess != null) {
+									nextAltHistoryStack = "quickaccess";
+									altHistoryStack.remove(altHistoryStack.size() - 1);
+									Log.d(LOG_TAG, "shouldInterceptRequest Return instead content of cacheQuickAccess");
+									return new WebResourceResponse("text/html", "UTF-8", new ByteArrayInputStream(cacheForQuickAccess.getBytes("UTF-8")));
+								}
 							}
+
+							Log.w(LOG_TAG, "shouldInterceptRequest Nothing to return instead");
 						}
-						
-						Log.w(LOG_TAG, "shouldInterceptRequest Nothing to return instead");
+
+					} catch (IOException e) {
+						Log.w(LOG_TAG, "shouldInterceptRequest Filename " + fileName + " intercepted but failed to find/open it from assets, we will process standard download.");
 					}
-					
-				} 
-				catch (IOException e) 
+				}
+				else
 				{
-					Log.w(LOG_TAG, "shouldInterceptRequest Filename "+fileName+" intercepted but failed to find/open it from assets, we will process standard download.");
+					Log.v(LOG_TAG, "shouldInterceptRequest option is off");
 				}
 			}
 			
@@ -1341,7 +1373,8 @@ public class SecondActivity extends Activity {
 				    if (m.find())	// if title ends with " Dolibarr x.y.z", this is login page or home page
 				    {
 				    	lastversionfound=m.group(1) + ", " + m.group(2) + ", " + m.group(3);
-						Log.i(LOG_TAG, "Title of page is: "+this.webViewtitle+" - url="+url+" - Found login or home page + version: " + lastversionfound);
+						lastversionfoundforasset=m.group(1) + "." + m.group(2);
+						Log.i(LOG_TAG, "Title of page is: "+this.webViewtitle+" - url="+url+" - Found login or home page + version: " + lastversionfound+" - Sugget to use asset: "+lastversionfoundforasset);
 				    }
 				    
 				    if (patternLoginPage.matcher(this.webViewtitle).find() || patternLoginPage2.matcher(this.webViewtitle).find())	// if title ends with "Login Dolixxx x.y.z", this is login page or home page
@@ -1357,10 +1390,10 @@ public class SecondActivity extends Activity {
 								boolean versionOk=true;	// Will be false if Dolibarr is < 3.4.*
 								if (m.group(1).compareTo("3") < 0) versionOk=false;
 								if (m.group(1).compareTo("3") == 0 && m.group(2).compareTo("4") < 0) versionOk=false;
-								if (versionOk) Log.d(LOG_TAG, "Dolidroid is compatible with Dolibarr "+lastversionfound);
+								if (versionOk) Log.d(LOG_TAG, "Dolidroid is compatible with your Dolibarr "+lastversionfound);
 								else 
 								{
-									Log.w(LOG_TAG, "Dolidroid is NOT compatible with Dolibarr "+lastversionfound);
+									Log.w(LOG_TAG, "Dolidroid is NOT compatible with your Dolibarr "+lastversionfound);
 									final Toast aToast = Toast.makeText(activity, getString(R.string.notCompatibleWithVersion, lastversionfound, "3.4"), Toast.LENGTH_SHORT);
 									new CountDownTimer(5000, 1000)	// 5 seconds
 									{
@@ -1792,8 +1825,6 @@ public class SecondActivity extends Activity {
 
 	/**
 	 * onResume
-	 * 
-	 * @return	void
 	 */
 	@Override
 	protected void onResume()
@@ -1805,8 +1836,6 @@ public class SecondActivity extends Activity {
 	
 	/**
 	 * onPause
-	 * 
-	 * @return	void
 	 */
 	@Override
 	protected void onPause()
@@ -1817,9 +1846,7 @@ public class SecondActivity extends Activity {
 	}
 	
 	/**
-	 * Return code 
-	 * 
-	 * @return	int		RESULT_WEBVIEW = 2
+	 * onStop
 	 */
 	@Override
 	protected void onStop() 
@@ -1829,9 +1856,7 @@ public class SecondActivity extends Activity {
 	}
 	
 	/**
-	 * Return code 
-	 * 
-	 * @return	int		RESULT_WEBVIEW = 2
+	 * onDestroy
 	 */
 	@Override
 	protected void onDestroy() 
@@ -1909,7 +1934,7 @@ public class SecondActivity extends Activity {
 	    			}
     			}
     		}
-    		editor.commit();
+    		editor.apply();
     	}
     }
 
@@ -1950,7 +1975,6 @@ public class SecondActivity extends Activity {
 
         mFilePathCallback.onReceiveValue(results);
         mFilePathCallback = null;
-        return;
     }
     
 }

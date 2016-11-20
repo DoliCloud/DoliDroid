@@ -12,9 +12,11 @@
      <item android:id="@+id/always_show_bar"
            android:title="@string/menu_show_bar_on"   />  
      <item android:id="@+id/always_autofill"
-           android:title="@string/menu_autofill_on"   />  
-     <item android:id="@+id/clear_all_urls"
-           android:title="@string/menu_clear_all_urls"   />  
+           android:title="@string/menu_autofill_on"   />
+	<item android:id="@+id/always_uselocalresources"
+ 		   android:title="@string/menu_uselocalresources_on"   />
+	<item android:id="@+id/clear_all_urls"
+           android:title="@string/menu_clear_all_urls"   />
      <!-- <item android:id="@+id/add_url"
            android:title="@string/menu_add_url"   /> -->
      <!-- <item android:id="@+id/remove_url"

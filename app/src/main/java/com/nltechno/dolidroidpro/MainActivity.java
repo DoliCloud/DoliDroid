@@ -81,8 +81,6 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 	/**
 	 * Called when activity is created
-	 *
-	 * @return	void
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -158,8 +156,6 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 	/**
 	 * Called when activity start
-	 *
-	 * @return	void
 	 */
 	@Override
 	public void onStart() {
@@ -293,6 +289,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
     	MenuItem menuItem  = menu.findItem(R.id.always_show_bar);
     	MenuItem menuItem2 = menu.findItem(R.id.always_autofill);
+		MenuItem menuItem4 = menu.findItem(R.id.always_uselocalresources);
     	MenuItem menuItem3 = menu.findItem(R.id.clear_all_urls);
 
         // Hide menu show bar if there is no hardware
@@ -313,6 +310,9 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
    		Log.d(LOG_TAG, "prefAlwaysAutoFill value is "+prefAlwaysAutoFill);
    		if (prefAlwaysAutoFill) menuItem2.setTitle(getString(R.string.menu_autofill_on));
    		else menuItem2.setTitle(getString(R.string.menu_autofill_off));
+
+		if (prefAlwaysAutoFill) menuItem4.setTitle(getString(R.string.menu_uselocalresources_on));
+		else menuItem4.setTitle(getString(R.string.menu_uselocalresources_off));
 
     	menuItem3.setTitle(getString(R.string.menu_clear_all_urls)+" ("+this.nbOfEntries+")");
 
@@ -356,6 +356,17 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	        	if (prefAlwaysAutoFill) this.savMenu.findItem(R.id.always_autofill).setTitle(getString(R.string.menu_autofill_on));
 	        	else this.savMenu.findItem(R.id.always_autofill).setTitle(getString(R.string.menu_autofill_off));
 	    		return true;
+			case R.id.always_uselocalresources:
+				boolean prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
+				Log.d(LOG_TAG, "Click onto switch uselocalresources, prefAlwaysUseLocalResources is "+prefAlwaysUseLocalResources);
+				prefAlwaysUseLocalResources=!prefAlwaysUseLocalResources;
+				editor.putBoolean("prefAlwaysUseLocalResources", prefAlwaysUseLocalResources);
+				editor.commit();
+				Log.d(LOG_TAG, "Switched value is now "+prefAlwaysUseLocalResources);
+				// Update men label
+				if (prefAlwaysUseLocalResources) this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_on));
+				else this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_off));
+				return true;
 	    	/*case R.id.add_url:
 	    		Log.d(LOG_TAG, "Add predefined URL");
 	    		return true;*/
@@ -392,8 +403,6 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 	/**
 	 * Handler to manage event onto select combobox
-	 *
-	 * @return	void
 	 */
 	public void onItemSelected(AdapterView<?> parent, View v, int position, long id)
 	{
@@ -417,8 +426,6 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 	/**
 	 * Handler to manage event onto select combobox
-	 *
-	 * @return	void
 	 */
     public void onNothingSelected(AdapterView<?> parent)
     {
@@ -440,7 +447,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		// Do click handling here
 
 		final EditText freeUrl = (EditText) findViewById(R.id.editText1);
-		String dolRequestUrl = freeUrl.getText().toString();;
+		String dolRequestUrl = freeUrl.getText().toString();
 		String dolRootUrl = freeUrl.getText().toString();
 		dolRequestUrl = dolRequestUrl.replace("\\", "/").trim();
 		dolRootUrl = dolRootUrl.replace("\\", "/").trim();

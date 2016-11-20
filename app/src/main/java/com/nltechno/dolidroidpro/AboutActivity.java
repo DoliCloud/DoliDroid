@@ -63,8 +63,6 @@ public class AboutActivity extends Activity {
 	
 	/**
 	 * Called when activity is created
-	 * 
-	 * @return	void
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -118,8 +116,10 @@ public class AboutActivity extends Activity {
 		try
 		{
 			PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-			
+
 			s1+=getString(R.string.Version)+": <b>"+info.versionName+" (build "+info.versionCode+")</b><br />\n";
+			s1+=getString(R.string.VersionStaticResources)+": <b>"+SecondActivity.VERSION_RESOURCES+"</b><br />\n";
+
 			//s+= "PackageName = " + info.packageName + "\n";
 			s1+=getString(R.string.Author)+": <b>Laurent Destailleur</b><br />\n";
 			s1+=getString(R.string.Web)+": http://www.nltechno.com</b><br />\n";
@@ -180,7 +180,7 @@ public class AboutActivity extends Activity {
         String savedDolRootUrl = intent.getStringExtra("savedDolRootUrl");
         if (savedDolRootUrl != null && ! "".equals(savedDolRootUrl))
         {
-        	s2+=getString(R.string.savedDolUrlRoot)+":<br />\n"+savedDolRootUrl+"<br />\n";
+        	s2+="<font color='#660066'><b>"+getString(R.string.savedDolUrlRoot)+":</b></font><br />\n"+savedDolRootUrl+"<br />\n";
         
 	        // Saved user/pass
 	        String username=null;
@@ -202,14 +202,17 @@ public class AboutActivity extends Activity {
 	        String savedAuthpass = intent.getStringExtra("savedAuthpass");
 	        if (savedAuthpass != null) s2+=getString(R.string.BasicAuthPassword)+": "+savedAuthpass.replaceAll(".", "*")+"<br />";
         }
-        
+
+		// Current url
         String currentUrl = intent.getStringExtra("currentUrl");
         String title = intent.getStringExtra("title");
-        if (currentUrl != null && ! "".equals(currentUrl)) s2+="<br /><br />\n"+getString(R.string.currentUrl)+":<br />\n"+title+"<br />\n"+currentUrl;
-        String lastversionfound = intent.getStringExtra("lastversionfound");
+        if (currentUrl != null && ! "".equals(currentUrl)) s2+="<br /><br />\n<font color='#660066'><b>"+getString(R.string.currentUrl)+":</b></font><br />\n"+title+"<br />\n"+currentUrl;
+		String lastversionfound = intent.getStringExtra("lastversionfound");
         if (lastversionfound != null && ! "".equals(lastversionfound)) s2+="<br />\nDolibarr "+getString(R.string.Version)+": "+lastversionfound;
+
+		// User agent
         String userAgent = intent.getStringExtra("userAgent");
-        if (userAgent != null && ! "".equals(userAgent)) s2+="<br /><br />\n"+getString(R.string.UserAgent)+":<br />\n"+userAgent;
+        if (userAgent != null && ! "".equals(userAgent)) s2+="<br /><br /><font color='#660066'><b>\n"+getString(R.string.UserAgent)+":</b></font><br />\n"+userAgent;
 
 		textViewAbout2.setText(Html.fromHtml(s2));
 	}
@@ -271,8 +274,6 @@ public class AboutActivity extends Activity {
 	
     /**
      * Click onto text Back
-     * 
-     * @param v
      */
     @SuppressLint("SetJavaScriptEnabled")
 	public void onClickToBack(View v) 
@@ -282,7 +283,9 @@ public class AboutActivity extends Activity {
     	finish();
     } 
     
-    
+	/**
+	 * onActivityResult
+	 */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
