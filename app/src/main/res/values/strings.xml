@@ -11,6 +11,7 @@
     <string name="dolibarr_url">Dolibarr URL</string>
     <string name="logo_dolidroid">Logo DoliDroid</string>
     <string name="SelectUrl">or select a predefined URL</string>
+    <string name="enterNewUrl">or enter a new URL</string>
 
     <!-- Activity web -->
     <string name="title_activity_second"></string>

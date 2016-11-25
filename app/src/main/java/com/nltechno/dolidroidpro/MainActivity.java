@@ -68,6 +68,9 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	private final static String HOME_URL = "";
 	private List<String> listOfRootUrl = null;
 	int nbOfEntries = 0;
+
+	private boolean allowChangeText=Boolean.FALSE;
+
 	private Menu savMenu;
 	private String menuAre="hardwareonly";
 	static final int REQUEST_ABOUT = 0;
@@ -162,7 +165,10 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		Log.i(LOG_TAG, "onStart MainActivity");
 		super.onStart();
 
-    	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		String homeUrlToSuggest = HOME_URL;
+		String homeUrlFirstFound = "";
+
+		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
     	this.listOfRootUrl = new ArrayList<String>();
 
@@ -170,7 +176,6 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		//adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		ArrayAdapter <CharSequence> adapter = new ArrayAdapter <CharSequence> (this, R.layout.main_spinner_item); // Set style for selected visible value
 		adapter.setDropDownViewResource(R.layout.main_spinner_item);	// Set style for dropdown box
-		adapter.add(getString(R.string.SelectUrl)+"...");
 		this.nbOfEntries=0;
 		try {
 			FileInputStream fis = openFileInput(FILENAME);
@@ -185,9 +190,12 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				Log.d(LOG_TAG, "Found entry " + this.nbOfEntries + " : " + strLine);
 				if (! this.listOfRootUrl.contains(strLine))
 				{
-					this.listOfRootUrl.add(strLine);
-					adapter.add(strLine);
 					this.nbOfEntries++;
+					if (this.nbOfEntries == 1)
+					{
+						homeUrlFirstFound = strLine;
+					}
+					this.listOfRootUrl.add(strLine);
 				}
 				else Log.d(LOG_TAG, "Duplicate");
 			}
@@ -195,6 +203,20 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			in.close();
 		} catch (Exception e) {// Catch exception if any
 			Log.d(LOG_TAG, "Can't read file " + FILENAME + " " + e.getMessage());
+		}
+
+		// Loop on this.listOfRootUrl
+		if (this.listOfRootUrl.size() == 0 || this.listOfRootUrl.size() > 1) {
+			adapter.add(getString(R.string.SelectUrl) + "...");
+		}
+		else {
+			//adapter.add(getString(R.string.enterNewUrl) + "...");
+			adapter.add(getString(R.string.SelectUrl) + "...");
+		}
+		// Set entries to adapter
+		for(int i = 0; i < this.listOfRootUrl.size(); i++)
+		{
+			adapter.add(this.listOfRootUrl.get(i));
 		}
 
 		// Show combo list if there is at least 1 choice
@@ -206,6 +228,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			spinner1.setAdapter(adapter);
 			spinner1.setVisibility(View.VISIBLE);
 			texviewlink.setVisibility(View.INVISIBLE);
+
+			if (this.nbOfEntries == 1)
+			{
+				Log.d(LOG_TAG, "Set selection to = "+homeUrlFirstFound);
+				// Only one URL known, we autoselect it
+				//spinner1.setSelection(1, false);
+				homeUrlToSuggest=homeUrlFirstFound;
+			}
 		}
 		else
 		{
@@ -215,7 +245,6 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		spinner1.setOnItemSelectedListener(this);	// Enable handler with onItemSelected and onNothingSelected
 
 		// Init url with hard coded value
-		String homeUrlToSuggest = HOME_URL;
 		EditText editText1 = (EditText) findViewById(R.id.editText1);
 		editText1.setText(homeUrlToSuggest);
 
@@ -402,7 +431,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
     }
 
 	/**
-	 * Handler to manage event onto select combobox
+	 * Handler to manage event onto the select of combobox
 	 */
 	public void onItemSelected(AdapterView<?> parent, View v, int position, long id)
 	{
@@ -414,13 +443,19 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 		if (position > 0)
 		{
-			freeUrl.setText(dolRootUrl);	// If not empty choice
 			//startButton.setEnabled(true);
+			freeUrl.setText(dolRootUrl);	// If not empty choice
+
+			this.allowChangeText=Boolean.FALSE;
+			spinnerUrl.setSelection(0, false);	// This call the onItemSelected. Tje this.allowChangeText prevent to change text a second time
 		}
 		else
 		{
-			freeUrl.setText("");
 			//startButton.setEnabled(false);
+			if (this.allowChangeText) {		// We come here because we have selected an entry
+				freeUrl.setText("");
+			}
+			this.allowChangeText=Boolean.TRUE;
 		}
     }
 

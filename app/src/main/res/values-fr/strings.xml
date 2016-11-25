@@ -72,7 +72,7 @@
     <string name="menu_clearcache">Vider cache</string>
     <string name="menu_logout">Déconnecter</string>
     <string name="menu_quit">Quitter</string>
-    <string name="menu_uselocalresources_off">Utiliser les ressources locales statiques (non)</string>
-    <string name="menu_uselocalresources_on">Utiliser les ressources locales statiques (oui)</string>
+    <string name="menu_uselocalresources_off">Utiliser les ressources locales (non)</string>
+    <string name="menu_uselocalresources_on">Utiliser les ressources locales (oui)</string>
 
 </resources>
