@@ -1138,8 +1138,8 @@ public class SecondActivity extends Activity {
 						String versionjscss = (version == null ? "" : version);        // Set to "" to disable assets usage for js and css
 
 						// Check if file need to be replaced by an asset file (if open file fails, throw exception and load from web).
-						if ((fileName.startsWith("theme/") || fileName.startsWith("core/js/") || fileName.startsWith("includes/") || fileName.startsWith("public/demo/"))) {
-							if (!versionimg.equals("") && (fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".gif"))) {
+						if ((fileName.endsWith("favicon.ico") || fileName.startsWith("theme/") || fileName.startsWith("core/js/") || fileName.startsWith("includes/") || fileName.startsWith("public/demo/"))) {
+							if (!versionimg.equals("") && (fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".gif") || fileName.endsWith(".ico"))) {
 								Log.d(LOG_TAG, "shouldInterceptRequest Filename " + fileName + " intercepted. Replaced with image assets file into " + versionimg);
 								return new WebResourceResponse(null, null, getAssets().open(versionimg + "/" + fileName));
 							} else if (!versionjscss.equals("") && fileName.endsWith(".js")) {
