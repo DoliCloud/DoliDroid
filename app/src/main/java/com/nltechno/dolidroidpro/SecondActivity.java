@@ -94,6 +94,7 @@ import android.webkit.ValueCallback;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceResponse;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.CookieSyncManager;
@@ -110,7 +111,7 @@ import android.widget.Toast;
 public class SecondActivity extends Activity {
 
 	private static final String LOG_TAG = "DoliDroidActivity";
-	public static final String VERSION_RESOURCES = "5.0";
+	public static final String VERSION_RESOURCES = "6.0";
 
 	private WebView myWebView;
 	private WebViewClientDoliDroid myWebViewClientDoliDroid;
@@ -288,9 +289,11 @@ public class SecondActivity extends Activity {
 		//myWebView.getSettings().setSavePassword(false);
 		//myWebView.getSettings().setSaveFormData(false);
 		myWebView.getSettings().setUserAgentString(this.savedUserAgent);
+		// Cache for no network (we don't want it, so we use default)
 		//myWebView.getSettings().setAppCacheMaxSize(1024 * 1024 * 8);
 		//myWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //LOAD_DEFAULT
 		//myWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+		myWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
 		//myWebView.getSettings().setRenderPriority(RenderPriority.HIGH);
 		//myWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 		final MyJavaScriptInterface myJavaScriptInterface = new MyJavaScriptInterface(activity);
@@ -1174,7 +1177,7 @@ public class SecondActivity extends Activity {
 						}
 
 					} catch (IOException e) {
-						Log.w(LOG_TAG, "shouldInterceptRequest Filename " + fileName + " intercepted but failed to find/open it from assets, we will process standard download.");
+						Log.w(LOG_TAG, "shouldInterceptRequest Filename " + fileName + " intercepted but failed to find/open it from assets, we do standard process (so use cache of webview browser if not expired or download).");
 					}
 				}
 				else
