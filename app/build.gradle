@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 21
+    compileSdkVersion 23
     buildToolsVersion '25.0.0'
 
     defaultConfig {
@@ -21,7 +21,12 @@ android {
 
     aaptOptions {
     }
+
+    // Add support for the org.apache.http package
+    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
+    // Add entry to support ContextCompat.checkSelfPermission for API 23+ even when building for target 21
+    //compile 'com.android.support:support-v4:23'
 }

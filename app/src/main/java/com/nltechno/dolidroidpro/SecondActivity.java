@@ -57,6 +57,8 @@ import com.nltechno.inapp.Inventory;
 import com.nltechno.inapp.Purchase;
 */
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.AsyncTask;
@@ -130,6 +132,10 @@ public class SecondActivity extends Activity {
 	private String savedAuthpass=null;
 	private String savedUserAgent=null;
 
+	private String saveQueryForonRequestPermissionsResult;
+	private String saveUrlForonRequestPermissionsResult;
+	private String saveListOfCookiesForonRequestPermissionsResult;
+
 	private boolean prefAlwaysUseLocalResources=true;
 
 	private String lastversionfound;
@@ -162,6 +168,9 @@ public class SecondActivity extends Activity {
 	static final int RESULT_LOGOUT =   RESULT_FIRST_USER+0;	// We don't want to quit completely
 	static final int RESULT_WEBVIEW =  RESULT_FIRST_USER+1;
 	static final int RESULT_ABOUT =    RESULT_FIRST_USER+2;
+
+	static final int REQUEST_CODE_ASK_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 123;
+
 	// For inapp purchases (public key is found into menu "Services and API" for application into Google play publish center).
     //IabHelper iabHelper;
     final String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtKWPkZ1rys0aYT9qQ7gHytljus58x9ZNwFUabsXgRAua2RwVkHnFfc8L2p68ojIb2tNHiRvMV6hYH2qViylftEMSYLFoKnuHzpL4tc+Ic+cTv/KtubP+ehUfISPQfYrZrukp3E8y0zM795Agsy8mefc2mmuOFJny/IZFLNyM5J+vjhoE6mO2l3jBmo08zu/3tz8Mbo/VYqJSs+P9UTppwF8ovB6u3fGPFeqblAdGize9WQ1L4SXNYblIjCklYj0rbXHFN3aJCjV9sSo0U+qdi6i+mT+CZgj09W1+U7RpkNJ6OczspTwhFh7/1nEev3Zci17TIFXNyP2v5aGMoBuCPwIDAQAB";	// key dolidroid pro
@@ -999,8 +1008,70 @@ public class SecondActivity extends Activity {
 		}
 	};
 	*/
-	
-	
+
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode,
+										   String permissions[], int[] grantResults) {
+		Log.d(LOG_TAG, "onRequestPermissionsResult override");
+		switch (requestCode) {
+			case REQUEST_CODE_ASK_PERMISSIONS_WRITE_EXTERNAL_STORAGE: {
+				// If request is cancelled, the result arrays are empty.
+				if (grantResults.length > 0
+						&& grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+					// permission was granted, yay! Do the task we need to do.
+					putDownloadInQueue(saveQueryForonRequestPermissionsResult, saveUrlForonRequestPermissionsResult, saveListOfCookiesForonRequestPermissionsResult);
+				} else {
+					// permission denied, boo! Disable the
+					// functionality that depends on this permission.
+					Log.d(LOG_TAG, "Sorry, permission was not granted by user to do so.");
+				}
+				return;
+			}
+			default:
+				super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+				// other 'case' lines to check for other
+				// permissions this app might request
+		}
+	}
+
+
+	public boolean putDownloadInQueue(String query, String url, String listOfCookies)
+	{
+		Log.d(LOG_TAG, "putDownloadInQueue url to download = " + url);
+		DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+		request.setDescription(query);
+		request.setTitle(query);
+		request.addRequestHeader("Cookie", listOfCookies);
+		if (savedAuthuser != null) request.addRequestHeader("Authorization", "Basic " + Base64.encodeToString((savedAuthuser+":"+savedAuthpass).getBytes(), Base64.NO_WRAP));	// Add user/pass for basic authentication
+		//request.setVisibleInDownloadsUi(isVisible);
+		request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
+		request.setAllowedOverRoaming(true);
+		request.setVisibleInDownloadsUi(true);
+		request.allowScanningByMediaScanner();
+		request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+
+		Log.d(LOG_TAG, "putDownloadInQueue Set output dirType=" + Environment.DIRECTORY_DOWNLOADS + " subPath="+query);
+		request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, query);
+		//request.setDestinationInExternalFilesDir(getApplicationContext(), null, query);
+
+		// Get download service and enqueue file
+		// Complete tutorial on download manager on http://www.101apps.co.za/index.php/articles/using-the-downloadmanager-to-manage-your-downloads.html
+		DownloadManager dmanager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+		long id = dmanager.enqueue(request);
+
+		// Save the request id
+			/*
+			SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+			SharedPreferences.Editor editor = sharedPrefs.edit();
+			editor.putLong(strPref_Download_ID, id);
+			editor.commit();
+			*/
+		return true;
+	}
+
+
 	
 	/* ************************* */
 	/* SUB-CLASSES WEBVIEW       */
@@ -1188,7 +1259,7 @@ public class SecondActivity extends Activity {
 			
 			return super.shouldInterceptRequest(view, url);
 		}
-		
+
 		/**
 		 * Handler to manage downloads
 		 * 
@@ -1253,7 +1324,26 @@ public class SecondActivity extends Activity {
 
 				// This call url and save content into a file
 				try {
+					saveQueryForonRequestPermissionsResult = query;
+					saveUrlForonRequestPermissionsResult = url;
+					saveListOfCookiesForonRequestPermissionsResult = listOfCookies;
+
+					// Test if Build.VERSION.SDK_INT (the version that run application is API level 23 or +)
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+					{
+						// If API 23 or+, we ask permission to user
+						int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+						if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+							requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+									REQUEST_CODE_ASK_PERMISSIONS_WRITE_EXTERNAL_STORAGE);
+							return false;
+						}
+					}
+
 					Log.d(LOG_TAG, "shouldOverrideUrlLoading url to download = " + url);
+
+					putDownloadInQueue(query, url, listOfCookies);
+/*
 					DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
 					request.setDescription(query);
 					request.setTitle(query);
@@ -1274,7 +1364,7 @@ public class SecondActivity extends Activity {
 	    			// Complete tutorial on download manager on http://www.101apps.co.za/index.php/articles/using-the-downloadmanager-to-manage-your-downloads.html
 					DownloadManager dmanager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
 					long id = dmanager.enqueue(request);
-					
+*/
 					// Save the request id
 					/*
 					SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -1282,7 +1372,7 @@ public class SecondActivity extends Activity {
 					editor.putLong(strPref_Download_ID, id);
 					editor.commit();
 					*/
-					
+
 					Log.d(LOG_TAG, "shouldOverrideUrlLoading URI has been added in queue");
 				}
 				catch(IllegalArgumentException ie)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nltechno.dolidroidpro"
-    android:versionCode="29"
+    android:versionCode="30"
     android:versionName="DoliDroid Pro 1.7"
     android:installLocation="auto"
     >
@@ -11,15 +11,19 @@
          it's a good idea to explicitly include this declaration. -->
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
         
-    <!-- API Level 8=2.2, 9=2.3, 10=2.3.3, 11=3.0, 13=3.1, 14=4.0=ICS 15=4.0.3 16=4.1 19=4.4.2 21=5.0.0 23=6.0.0 24=7.0.0 -->
+    <!-- API Level
+        8=2.2, 9=2.3, 10=2.3.3, 11=3.0, 13=3.1, 14=4.0=ICS 15=4.0.3 16=4.1 19=4.4.2
+       21=5.0.0 22=5.1.1 23=6.0.0 (android M, need permission requests) 24=7.0.0 -->
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="24" />
 
+    <!-- Normal permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	
+    <!-- Dangerous permissions -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />    <!-- Permission in group android.permission-group.STORAGE -->
+
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" android:allowBackup="true" android:name="DoliDroid" android:logo="@drawable/ic_launcher" android:description="@string/dolidroidLabel">
