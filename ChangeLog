@@ -2,6 +2,13 @@
 English DoliDroid ChangeLog
 --------------------------------------------------------------
 
+***** ChangeLog for 1.7 *****
+- Include asset cache files for better performance with Dolibarr 6.0
+- Compatible with the permissions requests of Android 6.0 M and +
+
+***** ChangeLog for 1.6 *****
+- Include asset cache files for better performance with Dolibarr 5.0
+
 ***** ChangeLog for 1.5 *****
 - Include asset cache files for better performance with Dolibarr 4.0.* and 3.9.*
 
