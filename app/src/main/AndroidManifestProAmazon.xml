@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nltechno.dolidroidpro"
     android:versionCode="30"
-    android:versionName="1.7"
+    android:versionName="1.8"
     android:installLocation="auto"
     >
 	<!-- Remove android:installLocation="preferExternal" to always install on external storage, use "auto" for default internal -->    
