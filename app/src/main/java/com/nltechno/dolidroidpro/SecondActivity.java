@@ -113,7 +113,7 @@ import android.widget.Toast;
 public class SecondActivity extends Activity {
 
 	private static final String LOG_TAG = "DoliDroidActivity";
-	public static final String VERSION_RESOURCES = "6.0";
+	public static final String VERSION_RESOURCES = "7.0";
 
 	private WebView myWebView;
 	private WebViewClientDoliDroid myWebViewClientDoliDroid;
