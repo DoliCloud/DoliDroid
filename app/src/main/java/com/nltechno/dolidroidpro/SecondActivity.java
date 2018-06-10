@@ -137,6 +137,7 @@ public class SecondActivity extends Activity {
 	private String saveListOfCookiesForonRequestPermissionsResult;
 
 	private boolean prefAlwaysUseLocalResources=true;
+	public boolean sslErrorWasAccepted=false;
 
 	private String lastversionfound;
 	private String lastversionfoundforasset;
@@ -187,8 +188,8 @@ public class SecondActivity extends Activity {
 	// To store data for the download manager
 	SharedPreferences preferenceManager;
 	final String strPref_Download_ID = "PREF_DOWNLOAD_ID";
-	
-	
+
+
     // This is a UI Thread
     //@SuppressWarnings("deprecation")
 	@SuppressLint("SetJavaScriptEnabled")
@@ -1050,7 +1051,7 @@ public class SecondActivity extends Activity {
 		request.setAllowedOverRoaming(true);
 		request.setVisibleInDownloadsUi(true);
 		request.allowScanningByMediaScanner();
-		request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+		request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 
 		Log.d(LOG_TAG, "putDownloadInQueue Set output dirType=" + Environment.DIRECTORY_DOWNLOADS + " subPath="+query);
 		request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, query);
@@ -1672,7 +1673,7 @@ public class SecondActivity extends Activity {
             }
             if (counthttpauth == 2) 
             {
-		    	Log.d(LOG_TAG, "We try to proceed with infor from URL username="+savedAuthuser+" password="+savedAuthpass);
+		    	Log.d(LOG_TAG, "We try to proceed with info from URL username="+savedAuthuser+" password="+savedAuthpass);
 				handler.proceed(savedAuthuser, savedAuthpass);
             }
 	    	//webview.setHttpAuthUsernamePassword(host, realm, username, password);
@@ -1709,13 +1710,41 @@ public class SecondActivity extends Activity {
 		 */		
 		@Override
 		public void onReceivedSslError (WebView view, SslErrorHandler handler, SslError error) {
-			Log.w(LOG_TAG, "onReceivedSslError error string = " + error);
+			String message = "SSL Certificate error.";
+			switch (error.getPrimaryError()) {
+				case SslError.SSL_UNTRUSTED:
+					message = "The certificate authority is not trusted.";
+					break;
+				case SslError.SSL_EXPIRED:
+					message = "The certificate has expired.";
+					break;
+				case SslError.SSL_IDMISMATCH:
+					message = "The certificate Hostname mismatch.";
+					break;
+				case SslError.SSL_NOTYETVALID:
+					message = "The certificate is not yet valid.";
+					break;
+				default:
+					message = "Unknown certificate error " + error.getPrimaryError();
+					break;
+			}
+
+			Log.w(LOG_TAG, "onReceivedSslError error message = " + message + " string = " + error);
 			/*handler.proceed() ;
 			handler.cancel(); */
-			
-			// Code to ask user how to handle error
-			SslAlertDialog dialog = new SslAlertDialog(handler, this.secondActivity);
-		    dialog.show();
+
+
+			if (! this.secondActivity.sslErrorWasAccepted) {
+				// Code to ask user how to handle error
+				SslAlertDialog dialog = new SslAlertDialog(handler, this.secondActivity, message);
+				dialog.show();
+			}
+			else
+			{
+				Log.w(LOG_TAG, "onReceivedSslError SSL error already accepted");
+				handler.proceed();
+			}
+
 		}
 		
 

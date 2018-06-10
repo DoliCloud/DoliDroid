@@ -24,8 +24,9 @@
     <string name="downloadComplete">Download completato</string>
 	<string name="NoPreviousPageAgainToQuit">Nessuna pagina precedente. Premi di nuovo indietro per uscire</string>
 	<string name="notCompatibleWithVersion">Il Dolibarr sul server (%1$s) è troppo vecchio. DoliDroid richiede Dolibarr versione %2$s o superiore.</string>
-	<string name="notification_error_ssl_cert_invalid">Server SSL Certificate seems invalid. Do you want to continue ?</string>
-	
+  <string name="notification_error_ssl_cert_invalid">Server SSL Certificate seems invalid:</string>
+  <string name="notification_error_ssl_cert_invalidbis">Do you want to continue ?</string>
+
     <!-- Activity about -->
     <string name="title_activity_about"/>
     <string name="textAboutA">

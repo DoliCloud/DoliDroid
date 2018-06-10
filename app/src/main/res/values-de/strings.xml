@@ -24,8 +24,9 @@
     <string name="downloadComplete">Download der Datei abgeschlossen</string>
 	<string name="NoPreviousPageAgainToQuit">Keine vorherige Seite. Verwenden Sie wieder \"Zurück\", um zu beenden.</string>
 	<string name="notCompatibleWithVersion">Die Dolibarr auf dem Server (%1$s) ist zu alt. %2$s Öffnen benötigt.</string>
-	<string name="notification_error_ssl_cert_invalid">Server SSL Certificate seems invalid. Do you want to continue ?</string>
-			
+  <string name="notification_error_ssl_cert_invalid">Server SSL Certificate seems invalid:</string>
+  <string name="notification_error_ssl_cert_invalidbis">Do you want to continue ?</string>
+
     <!-- Activity about -->
     <string name="title_activity_about"/>
     <string name="textAboutA">

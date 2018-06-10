@@ -18,8 +18,9 @@
     <string name="downloadComplete">Download of file complete</string>
 	<string name="NoPreviousPageAgainToQuit">No previous page. Use back again to quit.</string>
 	<string name="notCompatibleWithVersion">Dolibarr version on server (%1$s) is too old. DoliDroid need Dolibar version %2$s or higher.</string>
-	<string name="notification_error_ssl_cert_invalid">Server security SSL Certificate seems invalid. Do you want to continue (download of files would not be possible) ?</string>
-    
+    <string name="notification_error_ssl_cert_invalid">Server security SSL Certificate seems invalid:</string>
+    <string name="notification_error_ssl_cert_invalidbis">Do you want to continue (download of files would not be possible) ?</string>
+
     <!-- Activity about -->
     <string name="title_activity_about"></string>
     <string name="textBack">Back</string>
@@ -65,7 +66,7 @@
     <string name="menu_add_url">Add predefined URL</string>
     <string name="menu_remove_url">Remove a predefined URL</string>
     <string name="menu_clear_all_urls">Clear predefined URLs</string>
-    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://www.on.dolicloud.com/signUp/index?origin=dolidroid&amp;planCode=basic">I have no ERP CRM hosted instance yet, create it on DoliCloud</a></string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid">I have no ERP CRM hosted instance yet, create it on DoliCloud</a></string>
 
     <!-- Menu web browser -->
     <string name="menu_menu">Menu</string>

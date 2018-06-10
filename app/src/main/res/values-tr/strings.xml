@@ -24,8 +24,9 @@
     <string name="downloadComplete">Dosyanın indirilmesi tamamlandı</string>
 	<string name="NoPreviousPageAgainToQuit">Önceki sayfa yok. Çıkmak için geri düğmesini tekrar kullanın.</string>
 	<string name="notCompatibleWithVersion">Sunucu (%1$s) üzerindeki Dolibarr çok eski. DoliDroid sürümü Dolibarr %2$s veya daha yüksek gerektirir.</string>
-	<string name="notification_error_ssl_cert_invalid">Server SSL Certificate seems invalid. Do you want to continue ?</string>
-			
+  <string name="notification_error_ssl_cert_invalid">Server SSL Certificate seems invalid:</string>
+  <string name="notification_error_ssl_cert_invalidbis">Do you want to continue ?</string>
+
     <!-- Activity about -->
     <string name="title_activity_about"/>
     <string name="textAboutA">

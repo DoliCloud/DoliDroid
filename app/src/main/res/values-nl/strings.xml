@@ -24,8 +24,9 @@
     <string name="downloadComplete">Downloaden van het bestand voltooid</string>
 	<string name="NoPreviousPageAgainToQuit">Geen vorige pagina. Gebruik terug opnieuw om te stoppen.</string>
 	<string name="notCompatibleWithVersion">De Dolibarr op de server (%1$s) is te oud. DoliDroid vereist Dolibarr versie (%2$s) of hoger.</string>
-	<string name="notification_error_ssl_cert_invalid">Server SSL Certificate seems invalid. Do you want to continue ?</string>
-			
+  <string name="notification_error_ssl_cert_invalid">Server SSL Certificate seems invalid:</string>
+  <string name="notification_error_ssl_cert_invalidbis">Do you want to continue ?</string>
+
     <!-- Activity about -->
     <string name="title_activity_about"/>
     <string name="textAboutA">

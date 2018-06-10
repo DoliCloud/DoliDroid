@@ -23,9 +23,10 @@
     <string name="textMenu">Menú</string>
     <string name="downloadComplete">Descarga completa de archivo</string>
 	<string name="NoPreviousPageAgainToQuit">No hay página anterior. Presione Atrás de nuevo para salir.</string>
-	<string name="notCompatibleWithVersion">Versión Dolibarr en el servidor (%1$s) es demasiado antigua. DoliDroid necesita Dolibar versión %2$s o superior.</string>		
-	<string name="notification_error_ssl_cert_invalid">Server SSL Certificate seems invalid. Do you want to continue ?</string>
-	
+	<string name="notCompatibleWithVersion">Versión Dolibarr en el servidor (%1$s) es demasiado antigua. DoliDroid necesita Dolibar versión %2$s o superior.</string>
+  <string name="notification_error_ssl_cert_invalid">Server SSL Certificate seems invalid:</string>
+  <string name="notification_error_ssl_cert_invalidbis">Do you want to continue ?</string>
+
 	<!-- Activity about -->
     <string name="title_activity_about"/>
     <string name="textAboutA">
@@ -70,7 +71,7 @@
     <string name="menu_add_url">Añadir URL predefinida</string>
     <string name="menu_remove_url">Quitar una URL predefinida</string>
     <string name="menu_clear_all_urls">Borrar URL predefinidas</string>
-    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://www.on.dolicloud.com/signUp/index?origin=dolidroid&amp;planCode=basic">No tengo ninguna ERP CRM instancia alojado, crear en DoliCloud</a></string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid">No tengo ninguna ERP CRM instancia alojado, crear en DoliCloud</a></string>
 
   <!-- Menu web browser -->
     <string name="menu_menu">Menú</string>

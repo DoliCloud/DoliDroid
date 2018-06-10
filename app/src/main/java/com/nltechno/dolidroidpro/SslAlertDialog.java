@@ -28,15 +28,16 @@ public class SslAlertDialog {
 
     private SslErrorHandler handler = null;
     private AlertDialog dialog = null;
-    public Activity savedactivity;
+    public SecondActivity savedactivity;
     
     /**
      * Constructor
      * 
      * @param errorHandler
      * @param activity
+     * @param errorcode
      */
-    public SslAlertDialog(SslErrorHandler errorHandler, Activity activity) {
+    public SslAlertDialog(SslErrorHandler errorHandler, SecondActivity activity, String errorcode) {
 
         if (errorHandler == null || activity == null) return;
 
@@ -45,11 +46,12 @@ public class SslAlertDialog {
         handler = errorHandler;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setMessage(R.string.notification_error_ssl_cert_invalid);
+        builder.setMessage(activity.getString(R.string.notification_error_ssl_cert_invalid) + "\n" + errorcode + "\n" + activity.getString(R.string.notification_error_ssl_cert_invalidbis));
         builder.setPositiveButton(R.string.Yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 handler.proceed();	// Once we proceed, error will also no more be triggered
+                savedactivity.sslErrorWasAccepted = true;
             }
         });
         builder.setNegativeButton(R.string.No, new DialogInterface.OnClickListener() {
