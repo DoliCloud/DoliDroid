@@ -53,8 +53,7 @@ android:theme="@style/DoliDroidThemeAbout">
         android:layout_marginTop="12dp"
         android:maxLines="20"
         android:text="@string/textAboutB"
-        android:textSize="12sp"
-        tools:context=".MainActivity" />
+        tools:context=".MainActivity"/>
         
 </RelativeLayout>
 
