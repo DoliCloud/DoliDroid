@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nltechno.dolidroid"
-    android:versionCode="31"
-    android:versionName="DoliDroid Free 1.8"
+    android:versionCode="32"
+    android:versionName="DoliDroid Free 1.9"
     android:installLocation="auto"
     >
 	<!-- Remove android:installLocation="preferExternal" to always install on external storage, use "auto" for default internal -->    
@@ -18,8 +18,10 @@
         android:minSdkVersion="16"
         android:targetSdkVersion="24" />
 
+    <!-- Normal permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- Dangerous permissions -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="com.android.vending.BILLING" />
     

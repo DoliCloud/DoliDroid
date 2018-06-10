@@ -8,7 +8,6 @@ English DoliDroid ChangeLog
 - When there is a SSL error, show confirm message only once
 - Replace link to create instance on DoliCloud to DoliCloud v2
 
-
 ***** ChangeLog for 1.8 *****
 - Include asset cache files for better performance with Dolibarr 7.0
 
