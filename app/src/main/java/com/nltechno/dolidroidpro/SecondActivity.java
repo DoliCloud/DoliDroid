@@ -154,6 +154,7 @@ public class SecondActivity extends Activity {
 	private String cacheForMenu;
 	private String cacheForQuickAccess;
 	private String lastLoadUrl;
+	private boolean	isMulticompanyOn=false;
 
 	private String menuAre="hardwareonly";
 	private Menu savMenu;
@@ -176,8 +177,9 @@ public class SecondActivity extends Activity {
     //IabHelper iabHelper;
     final String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtKWPkZ1rys0aYT9qQ7gHytljus58x9ZNwFUabsXgRAua2RwVkHnFfc8L2p68ojIb2tNHiRvMV6hYH2qViylftEMSYLFoKnuHzpL4tc+Ic+cTv/KtubP+ehUfISPQfYrZrukp3E8y0zM795Agsy8mefc2mmuOFJny/IZFLNyM5J+vjhoE6mO2l3jBmo08zu/3tz8Mbo/VYqJSs+P9UTppwF8ovB6u3fGPFeqblAdGize9WQ1L4SXNYblIjCklYj0rbXHFN3aJCjV9sSo0U+qdi6i+mT+CZgj09W1+U7RpkNJ6OczspTwhFh7/1nEev3Zci17TIFXNyP2v5aGMoBuCPwIDAQAB";	// key dolidroid pro
     public static final String ITEM_SKU = "android.test.purchased";
-    
+
     private final Pattern patternLoginHomePageForVersion = Pattern.compile(" (?:Doli[a-zA-Z]+|@) (\\d+)\\.(\\d+)\\.([^\\s]+)$");	// Regex to extract version
+    private final Pattern patternLoginHomePageForMulticompany = Pattern.compile("multicompany");	    							// Regex to know if multicompany module is on
     private final Pattern patternLoginPage = Pattern.compile("Login Doli[a-zA-Z]+ (\\d+)\\.(\\d+)\\.([^\\s]+)$");					// To know page is login page with dolibarr <= 3.6
     private final Pattern patternLoginPage2 = Pattern.compile("@ (?:Doli[a-zA-Z]+ |)(\\d+)\\.(\\d+)\\.([^\\s]+)$");					// To know page is login page with dolibarr >= 3.7
     
@@ -380,16 +382,18 @@ public class SecondActivity extends Activity {
 
         if (this.menuAre.equals("actionbar"))
         {
+			menu.findItem(R.id.menu_menu).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
     		menu.findItem(R.id.go_to).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        	menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        	menu.findItem(R.id.menu_menu).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+			menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+			menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
         if (this.menuAre.equals("hardwareonly"))
         {
         	// Move entries from actionbar to list
+			menu.findItem(R.id.menu_menu).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
       		menu.findItem(R.id.go_to).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         	menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-        	menu.findItem(R.id.menu_menu).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+			menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         }
 
         // Hide menu show bar if there is no hardware, change label otherwise
@@ -446,6 +450,8 @@ public class SecondActivity extends Activity {
 				return this.codeForQuickAccess();
 	    	case R.id.menu_back:
 	    		return this.codeForBack();
+			case R.id.menu_multicompany:
+				return this.codeForMultiCompany();
     		case R.id.always_show_bar:	// Switch menu bar on/off
     			sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     			boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
@@ -915,7 +921,31 @@ public class SecondActivity extends Activity {
 		}
 		return true;
 	}
-    
+
+	/**
+	 * Common code for MultiCompany
+	 * codeForMultiCompany is in a UI thread
+	 *
+	 * @return	boolean		true
+	 */
+	private boolean codeForMultiCompany()
+	{
+		myWebView = (WebView) findViewById(R.id.webViewContent);
+
+		String urlToGo = myWebView.getOriginalUrl();
+		if (urlToGo.contains("?")) urlToGo=urlToGo+"&";
+		else urlToGo=urlToGo+"?";
+		urlToGo += "switchentityautoopen=1&dol_invisible_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
+
+		// If not found into cache, call URL
+		Log.d(LOG_TAG, "We called codeForMultiCompany after click on MultiCompany : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
+
+		myWebView.loadUrl(urlToGo);
+
+		return true;
+	}
+
+
     /**
      * Dump content of backforward webview list
      * 
@@ -1464,12 +1494,26 @@ public class SecondActivity extends Activity {
 				if (this.webViewtitle != null)
 				{
 					Matcher m = patternLoginHomePageForVersion.matcher(this.webViewtitle);
-				    if (m.find())	// if title ends with " Dolibarr x.y.z", this is login page or home page
+				    if (m.find())	// if title ends with " Dolibarr x.y.z" or " Dolibarr x.y.z - multicompany or anytext from module hook setTitleHtml", this is login page or home page
 				    {
 				    	lastversionfound=m.group(1) + ", " + m.group(2) + ", " + m.group(3);
 						lastversionfoundforasset=m.group(1) + "." + m.group(2);
-						Log.i(LOG_TAG, "Title of page is: "+this.webViewtitle+" - url="+url+" - Found login or home page + version: " + lastversionfound+" - Sugget to use asset: "+lastversionfoundforasset);
-				    }
+						Log.i(LOG_TAG, "Title of page is: "+this.webViewtitle+" - url="+url+" - Found login or home page + version: " + lastversionfound+" - Suggest to use asset: "+lastversionfoundforasset);
+
+                        Matcher multicompanyRegex = patternLoginHomePageForMulticompany.matcher(this.webViewtitle);
+						isMulticompanyOn = multicompanyRegex.find();
+						//isMulticompanyOn=true;
+						if (isMulticompanyOn)
+						{
+							savMenu.findItem(R.id.menu_multicompany).setVisible(true);
+                            Log.d(LOG_TAG, "Module multicompany was found");
+                        }
+                        else
+						{
+							savMenu.findItem(R.id.menu_multicompany).setVisible(false);
+							Log.d(LOG_TAG, "Module multicompany was NOT found");
+						}
+					}
 				    
 				    if (patternLoginPage.matcher(this.webViewtitle).find() || patternLoginPage2.matcher(this.webViewtitle).find())	// if title ends with "Login Dolixxx x.y.z", this is login page or home page
 				    {

@@ -77,5 +77,6 @@
     <string name="menu_clearcache">Clear cache</string>
     <string name="menu_logout">Logout</string>
     <string name="menu_quit">Quit</string>
+    <string name="menu_multicompany">Switch company</string>
 
 </resources>

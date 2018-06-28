@@ -37,7 +37,15 @@
    	    android:orderInCategory="30"
    	    android:showAsAction="always"
         />
-    	
+
+	<item android:id="@+id/menu_multicompany"
+		  android:title="@string/menu_multicompany"
+		  android:icon="@mipmap/ic_action_multicompany"
+		  android:orderInCategory="32"
+		  android:showAsAction="always"
+		  android:visible="false"
+		/>
+
     <item android:id="@+id/always_show_bar"
         android:title="@string/menu_show_bar_on"
    	    android:icon="@android:drawable/ic_menu_preferences"
