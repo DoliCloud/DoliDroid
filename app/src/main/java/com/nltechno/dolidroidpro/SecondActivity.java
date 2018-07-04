@@ -178,10 +178,10 @@ public class SecondActivity extends Activity {
     final String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtKWPkZ1rys0aYT9qQ7gHytljus58x9ZNwFUabsXgRAua2RwVkHnFfc8L2p68ojIb2tNHiRvMV6hYH2qViylftEMSYLFoKnuHzpL4tc+Ic+cTv/KtubP+ehUfISPQfYrZrukp3E8y0zM795Agsy8mefc2mmuOFJny/IZFLNyM5J+vjhoE6mO2l3jBmo08zu/3tz8Mbo/VYqJSs+P9UTppwF8ovB6u3fGPFeqblAdGize9WQ1L4SXNYblIjCklYj0rbXHFN3aJCjV9sSo0U+qdi6i+mT+CZgj09W1+U7RpkNJ6OczspTwhFh7/1nEev3Zci17TIFXNyP2v5aGMoBuCPwIDAQAB";	// key dolidroid pro
     public static final String ITEM_SKU = "android.test.purchased";
 
-    private final Pattern patternLoginHomePageForVersion = Pattern.compile(" (?:Doli[a-zA-Z]+|@) (\\d+)\\.(\\d+)\\.([^\\s]+)$");	// Regex to extract version
+    private final Pattern patternLoginHomePageForVersion = Pattern.compile(" (?:Doli[a-zA-Z]+|@) (\\d+)\\.(\\d+)\\.([^\\s]+)");		// Regex to extract version
     private final Pattern patternLoginHomePageForMulticompany = Pattern.compile("multicompany");	    							// Regex to know if multicompany module is on
-    private final Pattern patternLoginPage = Pattern.compile("Login Doli[a-zA-Z]+ (\\d+)\\.(\\d+)\\.([^\\s]+)$");					// To know page is login page with dolibarr <= 3.6
-    private final Pattern patternLoginPage2 = Pattern.compile("@ (?:Doli[a-zA-Z]+ |)(\\d+)\\.(\\d+)\\.([^\\s]+)$");					// To know page is login page with dolibarr >= 3.7
+    private final Pattern patternLoginPage = Pattern.compile("Login Doli[a-zA-Z]+ (\\d+)\\.(\\d+)\\.([^\\s]+)");					// To know page is login page with dolibarr <= 3.6
+    private final Pattern patternLoginPage2 = Pattern.compile("@ (?:Doli[a-zA-Z]+ |)(\\d+)\\.(\\d+)\\.([^\\s]+)");					// To know page is login page with dolibarr >= 3.7
     
     private String nextAltHistoryStack = "";
     private String nextAltHistoryStackBis = "";
@@ -353,7 +353,7 @@ public class SecondActivity extends Activity {
 	{	
     	Log.i(LOG_TAG, "onStart");
     	super.onStart();
-    	
+
     	// We must reload menu (it may have been changed into other activities
 		invalidateOptionsMenu();
 	}
@@ -422,6 +422,16 @@ public class SecondActivity extends Activity {
 		Log.d(LOG_TAG, "prefAlwaysUseLocalResources value is "+prefAlwaysUseLocalResources);
 		if (prefAlwaysUseLocalResources) menuItem4.setTitle(getString(R.string.menu_uselocalresources_on));
 		else menuItem4.setTitle(getString(R.string.menu_uselocalresources_off));
+
+		if (isMulticompanyOn) {
+			Log.d(LOG_TAG, "Module multicompany was found, we show picto");
+			MenuItem menuItem5 = menu.findItem(R.id.menu_multicompany);
+			if (menuItem5 != null) menuItem5.setVisible(true);
+		} else {
+			Log.d(LOG_TAG, "Module multicompany was NOT found, we hide picto");
+			MenuItem menuItem5 = menu.findItem(R.id.menu_multicompany);
+			if (menuItem5 != null) menuItem5.setVisible(false);
+		}
 
 		this.savMenu = menu;
     	
@@ -1494,7 +1504,8 @@ public class SecondActivity extends Activity {
 				if (this.webViewtitle != null)
 				{
 					Matcher m = patternLoginHomePageForVersion.matcher(this.webViewtitle);
-				    if (m.find())	// if title ends with " Dolibarr x.y.z" or " Dolibarr x.y.z - multicompany or anytext from module hook setTitleHtml", this is login page or home page
+				    Boolean foundVersion = m.find();
+					if (foundVersion)	// if title ends with " Dolibarr x.y.z" or " Dolibarr x.y.z - multicompany or anytext from module hook setTitleHtml", this is login page or home page
 				    {
 				    	lastversionfound=m.group(1) + ", " + m.group(2) + ", " + m.group(3);
 						lastversionfoundforasset=m.group(1) + "." + m.group(2);
@@ -1526,13 +1537,19 @@ public class SecondActivity extends Activity {
 							synchronized (this) 
 							{
 								boolean versionOk=true;	// Will be false if Dolibarr is < 3.4.*
-								if (m.group(1).compareTo("3") < 0) versionOk=false;
-								if (m.group(1).compareTo("3") == 0 && m.group(2).compareTo("4") < 0) versionOk=false;
+								if (foundVersion) {
+									if (m.group(1).compareTo("3") < 0) versionOk = false;
+									if (m.group(1).compareTo("3") == 0 && m.group(2).compareTo("4") < 0)
+										versionOk = false;
+								}
+								else {
+									versionOk = false;
+								}
 								if (versionOk) Log.d(LOG_TAG, "Dolidroid is compatible with your Dolibarr "+lastversionfound);
 								else 
 								{
 									Log.w(LOG_TAG, "Dolidroid is NOT compatible with your Dolibarr "+lastversionfound);
-									final Toast aToast = Toast.makeText(activity, getString(R.string.notCompatibleWithVersion, lastversionfound, "3.4"), Toast.LENGTH_SHORT);
+									final Toast aToast = Toast.makeText(activity, getString(R.string.notCompatibleWithVersion, (lastversionfound == null ? this.webViewtitle : lastversionfound), "3.4"), Toast.LENGTH_SHORT);
 									new CountDownTimer(5000, 1000)	// 5 seconds
 									{
 									    public void onTick(long millisUntilFinished) {aToast.show();}

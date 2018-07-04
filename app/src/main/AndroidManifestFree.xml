@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nltechno.dolidroid"
-    android:versionCode="32"
-    android:versionName="DoliDroid Free 1.9"
+    android:versionCode="33"
+    android:versionName="DoliDroid Free 2.0"
     android:installLocation="auto"
     >
 	<!-- Remove android:installLocation="preferExternal" to always install on external storage, use "auto" for default internal -->    

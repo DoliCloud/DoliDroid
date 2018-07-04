@@ -3,7 +3,7 @@
 
 	<item android:id="@+id/menu_back"
    	    android:title="@string/menu_back"
-   	    android:icon="@android:drawable/ic_menu_revert"
+   	    android:icon="@mipmap/ic_action_back"
    	    android:orderInCategory="60"
    	    android:showAsAction="always"
         />
