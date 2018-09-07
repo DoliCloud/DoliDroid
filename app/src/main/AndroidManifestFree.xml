@@ -18,11 +18,12 @@
         android:minSdkVersion="16"
         android:targetSdkVersion="24" />
 
-    <!-- Normal permissions -->
+    <!-- Normal permissions (PROTECTION_NORMAL) -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- Dangerous permissions -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Dangerous permissions -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="com.android.vending.BILLING" />
     
     <application
