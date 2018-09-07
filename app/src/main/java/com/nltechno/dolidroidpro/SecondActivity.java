@@ -1965,7 +1965,9 @@ public class SecondActivity extends Activity {
             return true;
         }
 		
-		
+
+        // TODO Support camera capture of file
+		// See https://stackoverflow.com/questions/29290940/open-camera-for-input-type-file-in-webview-not-opening-android
 /*		  
         //The undocumented magic method override  
         //Eclipse will swear at you if you try to put @Override here  
