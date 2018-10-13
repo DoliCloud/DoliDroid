@@ -1,6 +1,6 @@
 [main]
 host = https://www.transifex.com
-lang_map = fr_FR: fr, es_ES: es, de_DE: de, it_IT: it, nl_NL: nl, pt_PT: pt, tr_TR: tr
+lang_map = fr_FR: fr, es_ES: es, de_DE: de, it_IT: it, nl_NL: nl, pt_PT: pt, tr_TR: tr, pt_BR: pr-rBR, el_GR: el
 
 [dolidroid.strings]
 file_filter = app/src/main/res/values-<lang>/strings.xml

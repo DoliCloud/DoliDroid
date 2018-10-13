@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">
@@ -13,22 +12,20 @@
   </string>
     <string name="dolibarr_for_android">Cliente Android para Dolibarr</string>
     <string name="open">Início</string>
-    <string name="dolibarr_url">URL Dolibarr</string>
-    <string name="logo_dolidroid">Logo DoliDroid</string>
+    <string name="dolibarr_url">URL do Dolibarr</string>
+    <string name="logo_dolidroid">Logótipo do DoliDroid</string>
     <string name="SelectUrl">ou selecione um URL predefinido</string>
+    <string name="enterNewUrl">ou insira um novo URL</string>
 
     <!-- Activity web -->
-    <string name="title_activity_second"/>
+    <string name="title_activity_second"></string>
+    <string name="downloadComplete">Transferência do ficheiro concluída</string>
+	<string name="NoPreviousPageAgainToQuit">Nenhuma página anterior. Use novamente \'Anterior\' para sair.</string>
+	<string name="notCompatibleWithVersion">Aversão do Dolibarr no servidor (%1$s) é muito antiga. DoliDroid requer a versão %2$s do Dolibarr ou superior.</string>
+    <!-- Activity about -->
+    <string name="title_activity_about"></string>
     <string name="textBack">Anterior</string>
     <string name="textMenu">Menu</string>
-    <string name="downloadComplete">Download do arquivo completo</string>
-	<string name="NoPreviousPageAgainToQuit">Nenhuma página anterior. Use Anterior para sair.</string>
-	<string name="notCompatibleWithVersion">O Dolibarr no servidor (%1$s) é muito antiga. DoliDroid requer Dolibarr versão %2$s ou superior.</string>
-  <string name="notification_error_ssl_cert_invalid">Server SSL Certificate seems invalid:</string>
-  <string name="notification_error_ssl_cert_invalidbis">Do you want to continue ?</string>
-
-    <!-- Activity about -->
-    <string name="title_activity_about"/>
     <string name="textAboutA">
     <xliff:g id="textAboutA">XXX</xliff:g>
   </string>
@@ -36,26 +33,27 @@
     <xliff:g id="textAboutB">XXX</xliff:g>
   </string>
     <string name="Version">Versão</string>
+    <string name="VersionStaticResources">Versão dos recursos estáticos locais</string>
     <string name="Author">Autor</string>
     <string name="Web">Web</string>
     <string name="Compatibility">Compatibilidade</string>
     <string name="License">Licença</string>
     <string name="Sources">Fontes</string>
-    <string name="JMobileMode">Modo celular JQuery</string>
-    <string name="DeviceAPILevel">Nível API do dispositivo</string>
+    <string name="JMobileMode">Modo móvel JQuery</string>
+    <string name="DeviceAPILevel">Nível API do Dispositivo</string>
     <string name="DeviceHasMenuHardware">O dispositivo tem botões de hardware</string>
-    <string name="DeviceHasDownloadManager">O dispositivo tem um gerenciador de downloads</string>
-    <string name="DownloadDirectory">Baixar diretório</string>
-    <string name="DeviceHasPDFViewer">Dispositivo tem visualizadores de PDF</string>
-    <string name="DeviceHasODXViewer">O dispositivo tem visualizadores OpenOffice</string>
-    <string name="DeviceSize">Tamanho da tela do dispositivo</string>
-    <string name="savedDolUrlRoot">Url de instância Dolibarr</string>
-    <string name="currentUrl">Url atual</string>
-    <string name="UserAgent">Agente Usuário</string>
-    <string name="SavedLogin">Saved login</string>
-    <string name="SavedPassword">Saved password</string>
-    <string name="BasicAuthLogin">Basic auth login</string>
-    <string name="BasicAuthPassword">Basic auth password</string>
+    <string name="DeviceHasDownloadManager">O dispositivo tem um gestor de transferências</string>
+    <string name="DownloadDirectory">Transferir diretoria</string>
+    <string name="DeviceHasPDFViewer">O dispositivo tem visualizadores de PDF</string>
+    <string name="DeviceHasODXViewer">O dispositivo tem visualizadores de OpenOffice</string>
+    <string name="DeviceSize">Tamanho do ecrã do dispositivo</string>
+    <string name="savedDolUrlRoot">Url de instância do Dolibarr</string>
+    <string name="currentUrl">Url Atual</string>
+    <string name="UserAgent">Agente do Utilizador</string>
+    <string name="SavedLogin">Sessão guardada</string>
+    <string name="SavedPassword">Palavra-passe guardada</string>
+    <string name="BasicAuthLogin">Sessão de autenticação básica</string>
+    <string name="BasicAuthPassword">Palavra-passe de autenticação básica</string>
     <string name="Yes">Sim</string>
     <string name="No">Não</string>
     
@@ -63,23 +61,23 @@
     <string name="menu_info">Sobre o DoliDroid</string>
     <string name="menu_show_bar_on">Mostrar barra de menu (sim)</string>
     <string name="menu_show_bar_off">Mostrar barra de menu (não)</string>
-    <string name="menu_autofill_on">Mantenha login/password (sim)</string>
-    <string name="menu_autofill_off">Mantenha login/password (não)</string>
-     
+    <string name="menu_autofill_on">Guardar sessão/palavra-passe (sim)</string>
+    <string name="menu_autofill_off">Guardar sessão/palavra-passe (não)</string>
+    <string name="menu_uselocalresources_on">Usar recursos estáticos locais (sim)</string>
+    <string name="menu_uselocalresources_off">Usar recursos estáticos locais (não)</string>
+
     <!-- Menu main page -->
     <string name="menu_settings">Definições</string>
     <string name="menu_add_url">Adicionar URL predefinido</string>
     <string name="menu_remove_url">Remover um URL predefinido</string>
     <string name="menu_clear_all_urls">Limpar URLs predefinidos</string>
-    
     <!-- Menu web browser -->
     <string name="menu_menu">Menu</string>
     <string name="menu_go_to">Acesso rápido</string>
     <string name="menu_search">Pesquisar</string>
     <string name="menu_back">Anterior</string>
     <string name="menu_refresh">Recarregar página</string>
-    <string name="menu_clearcache">Limpar o cache</string>
+    <string name="menu_clearcache">Limpar cache</string>
     <string name="menu_logout">Terminar sessão</string>
     <string name="menu_quit">Sair</string>
-
-</resources>
+    </resources>

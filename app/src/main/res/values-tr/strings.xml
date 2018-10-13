@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">
@@ -16,19 +15,15 @@
     <string name="dolibarr_url">Dolibarr URL</string>
     <string name="logo_dolidroid">Logo DoliDroid</string>
     <string name="SelectUrl">veya önceden tanımlanmış bir URL seçin</string>
-
     <!-- Activity web -->
-    <string name="title_activity_second"/>
-    <string name="textBack">Geri</string>
-    <string name="textMenu">Menü</string>
+    <string name="title_activity_second"></string>
     <string name="downloadComplete">Dosyanın indirilmesi tamamlandı</string>
 	<string name="NoPreviousPageAgainToQuit">Önceki sayfa yok. Çıkmak için geri düğmesini tekrar kullanın.</string>
 	<string name="notCompatibleWithVersion">Sunucu (%1$s) üzerindeki Dolibarr çok eski. DoliDroid sürümü Dolibarr %2$s veya daha yüksek gerektirir.</string>
-  <string name="notification_error_ssl_cert_invalid">Server SSL Certificate seems invalid:</string>
-  <string name="notification_error_ssl_cert_invalidbis">Do you want to continue ?</string>
-
     <!-- Activity about -->
-    <string name="title_activity_about"/>
+    <string name="title_activity_about"></string>
+    <string name="textBack">Geri</string>
+    <string name="textMenu">Menü</string>
     <string name="textAboutA">
     <xliff:g id="textAboutA">XXX</xliff:g>
   </string>
@@ -65,13 +60,11 @@
     <string name="menu_show_bar_off">Menü çubuğunu göster (hayır)</string>
     <string name="menu_autofill_on">Giriş / parola Keep (evet)</string>
     <string name="menu_autofill_off">Giriş / parola Keep (hayır)</string>
-     
     <!-- Menu main page -->
     <string name="menu_settings">Ayarlar</string>
     <string name="menu_add_url">Önceden tanımlanmış URL ekle</string>
     <string name="menu_remove_url">Önceden tanımlanmış bir URL\'yi kaldır</string>
     <string name="menu_clear_all_urls">Önceden tanımlanmış URL\'leri temizle</string>
-    
     <!-- Menu web browser -->
     <string name="menu_menu">Menü</string>
     <string name="menu_go_to">Hızlı erişim</string>
@@ -81,5 +74,4 @@
     <string name="menu_clearcache">Önbelleği temizle</string>
     <string name="menu_logout">Oturumu kapat</string>
     <string name="menu_quit">Çık</string>
-
-</resources>
+    </resources>

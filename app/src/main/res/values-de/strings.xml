@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">
@@ -16,19 +15,17 @@
     <string name="dolibarr_url">Dolibarr URL</string>
     <string name="logo_dolidroid">Logo DoliDroid</string>
     <string name="SelectUrl">oder wählen Sie eine vordefinierte URL</string>
+    <string name="enterNewUrl">oder geben Sie eine neue URL ein</string>
 
     <!-- Activity web -->
-    <string name="title_activity_second"/>
-    <string name="textBack">Zurück</string>
-    <string name="textMenu">Menü</string>
+    <string name="title_activity_second"></string>
     <string name="downloadComplete">Download der Datei abgeschlossen</string>
 	<string name="NoPreviousPageAgainToQuit">Keine vorherige Seite. Verwenden Sie wieder \"Zurück\", um zu beenden.</string>
 	<string name="notCompatibleWithVersion">Die Dolibarr auf dem Server (%1$s) ist zu alt. %2$s Öffnen benötigt.</string>
-  <string name="notification_error_ssl_cert_invalid">Server SSL Certificate seems invalid:</string>
-  <string name="notification_error_ssl_cert_invalidbis">Do you want to continue ?</string>
-
     <!-- Activity about -->
-    <string name="title_activity_about"/>
+    <string name="title_activity_about"></string>
+    <string name="textBack">Zurück</string>
+    <string name="textMenu">Menü</string>
     <string name="textAboutA">
     <xliff:g id="textAboutA">XXX</xliff:g>
   </string>
@@ -36,6 +33,7 @@
     <xliff:g id="textAboutB">XXX</xliff:g>
   </string>
     <string name="Version">Version</string>
+    <string name="VersionStaticResources">Version der lokalen statischen Ressourcen</string>
     <string name="Author">Autor</string>
     <string name="Web">Web</string>
     <string name="Compatibility">Kompatibilität</string>
@@ -65,13 +63,14 @@
     <string name="menu_show_bar_off">Menüleiste anzeigen (nein)</string>
     <string name="menu_autofill_on">Save Login / Passwort (ja)</string>
     <string name="menu_autofill_off">Save Login / Passwort (nein)</string>
-    
+    <string name="menu_uselocalresources_on">Verwende lokale statische Ressourcen (ja)</string>
+    <string name="menu_uselocalresources_off">Verwende lokale statische Ressourcen (nein)</string>
+
     <!-- Menu main page -->
     <string name="menu_settings">Einstellungen</string>
     <string name="menu_add_url">Hinzufügen der vordefinierten URL</string>
     <string name="menu_remove_url">Entfernen einer vordefinierten URL</string>
     <string name="menu_clear_all_urls">Klar vordefinierte URLs</string>
-    
     <!-- Menu web browser -->
     <string name="menu_menu">Menü</string>
     <string name="menu_go_to">Schneller Zugriff</string>
@@ -81,5 +80,4 @@
     <string name="menu_clearcache">Cache löschen</string>
     <string name="menu_logout">Ausloggen</string>
     <string name="menu_quit">Beenden</string>
-
-</resources>
+    </resources>
