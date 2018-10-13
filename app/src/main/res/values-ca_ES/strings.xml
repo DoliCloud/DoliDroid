@@ -1,0 +1,75 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name"><xliff:g id=\"app_name\">DoliDroid</xliff:g></string>
+    <string name="dolidroidLabel">DoliDroid, front-end d\'Android per l\'ERP-CRM Dolibarr</string>
+    <string name="dolidroidUserAgent">DoliDroid - front-end d\'Android per l\'ERP-CRM Dolibarr</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main"><xliff:g id=\"title_activity_main\">DoliDroid</xliff:g></string>
+    <string name="dolibarr_for_android">Client d\'Android per Dolibarr</string>
+    <string name="open">Inici</string>
+    <string name="dolibarr_url">URL Dolibarr</string>
+    <string name="logo_dolidroid">Logo DoliDroid</string>
+    <string name="SelectUrl">o selecciona una URL predefinida</string>
+    <string name="enterNewUrl">o introdueix una URL nova</string>
+
+    <!-- Activity web -->
+    <string name="title_activity_second"></string>
+    <string name="downloadComplete">Descàrrega del fitxer completada</string>
+	<string name="NoPreviousPageAgainToQuit">Sense pàgina anterior. Fes enrera de nou per sortir.</string>
+	<string name="notCompatibleWithVersion">La versió de Dolibarr del servidor (%1$s) és massa antiga. DoliDroid necessita la versió de Dolibarr %2$s o superior.</string>
+    <!-- Activity about -->
+    <string name="title_activity_about"></string>
+    <string name="textBack">Enrera</string>
+    <string name="textMenu">Menú</string>
+    <string name="textAboutA"><xliff:g id=\"textAboutA\">XXX</xliff:g></string>
+    <string name="textAboutB"><xliff:g id=\"textAboutB\">XXX</xliff:g></string>
+    <string name="Version">Versió</string>
+    <string name="VersionStaticResources">Versió de recursos estàtics locals</string>
+    <string name="Author">Autor</string>
+    <string name="Web">Web</string>
+    <string name="Compatibility">Compatibilitat</string>
+    <string name="License">Llicència</string>
+    <string name="Sources">Fonts</string>
+    <string name="JMobileMode">Mode JQuery mòbil</string>
+    <string name="DeviceAPILevel">Nivell de l\'API del dispositiu</string>
+    <string name="DeviceHasMenuHardware">El dispositiu té botons del maquinari</string>
+    <string name="DeviceHasDownloadManager">El dispositiu té un gestor de baixades</string>
+    <string name="DownloadDirectory">Descarrega el directori</string>
+    <string name="DeviceHasPDFViewer">El dispositiu té visors de PDF</string>
+    <string name="DeviceHasODXViewer">El dispositiu té visors d\'OpenOffice</string>
+    <string name="DeviceSize">Mida de la pantalla del dispositiu</string>
+    <string name="savedDolUrlRoot">Url d\'instància de Dolibarr</string>
+    <string name="currentUrl">Url actual</string>
+    <string name="UserAgent">Agent d\'usuari</string>
+    <string name="SavedLogin">Inici de sessió desat</string>
+    <string name="SavedPassword">Contrasenya desada</string>
+    <string name="BasicAuthLogin">Accés d\'autenticació bàsic</string>
+    <string name="BasicAuthPassword">Contrasenya d\'autenticació bàsica</string>
+    <string name="Yes">Sí</string>
+    <string name="No">No</string>
+    
+    <!-- Menu main + web -->
+    <string name="menu_info">Sobre DoliDroid</string>
+    <string name="menu_show_bar_on">Mostra la barra de menú (sí)</string>
+    <string name="menu_show_bar_off">Mostra la barra de menú (no)</string>
+    <string name="menu_autofill_on">Desa el nom d\'usuari / contrasenya (sí)</string>
+    <string name="menu_autofill_off">Desa el nom d\'usuari / contrasenya (no)</string>
+    <string name="menu_uselocalresources_on">Utilitza recursos estàtics locals (sí)</string>
+    <string name="menu_uselocalresources_off">Utilitza recursos estàtics locals (no)</string>
+
+    <!-- Menu main page -->
+    <string name="menu_settings">Configuració</string>
+    <string name="menu_add_url">Afegeix una URL predefinida</string>
+    <string name="menu_remove_url">Elimina una URL predefinida</string>
+    <string name="menu_clear_all_urls">Esborra les URL predefinides</string>
+    <!-- Menu web browser -->
+    <string name="menu_menu">Menú</string>
+    <string name="menu_go_to">Accés ràpid</string>
+    <string name="menu_search">Cerca</string>
+    <string name="menu_back">Enrera</string>
+    <string name="menu_refresh">Recarrega la pàgina</string>
+    <string name="menu_clearcache">Neteja memòria cau</string>
+    <string name="menu_logout">Tancar sessió</string>
+    <string name="menu_quit">Surt</string>
+    </resources>

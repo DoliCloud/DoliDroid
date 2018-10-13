@@ -1,0 +1,77 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name">
+    <xliff:g id="app_name">DoliDroid</xliff:g>
+  </string>
+    <string name="dolidroidLabel">DoliDroid, Android front-end para Dolibarr ERP, CRM</string>
+    <string name="dolidroidUserAgent">DoliDroid - Android front-end para Dolibarr ERP, CRM</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main">
+    <xliff:g id="title_activity_main">DoliDroid</xliff:g>
+  </string>
+    <string name="dolibarr_for_android">Cliente Android para Dolibarr</string>
+    <string name="open">Início</string>
+    <string name="dolibarr_url">URL Dolibarr</string>
+    <string name="logo_dolidroid">Logo DoliDroid</string>
+    <string name="SelectUrl">ou selecione um URL predefinido</string>
+    <!-- Activity web -->
+    <string name="title_activity_second"></string>
+    <string name="downloadComplete">Download do arquivo completo</string>
+	<string name="NoPreviousPageAgainToQuit">Nenhuma página anterior. Use Anterior para sair.</string>
+	<string name="notCompatibleWithVersion">O Dolibarr no servidor (%1$s) é muito antiga. DoliDroid requer Dolibarr versão %2$s ou superior.</string>
+    <!-- Activity about -->
+    <string name="title_activity_about"></string>
+    <string name="textBack">Anterior</string>
+    <string name="textMenu">Menu</string>
+    <string name="textAboutA">
+    <xliff:g id="textAboutA">XXX</xliff:g>
+  </string>
+    <string name="textAboutB">
+    <xliff:g id="textAboutB">XXX</xliff:g>
+  </string>
+    <string name="Version">Versão</string>
+    <string name="Author">Autor</string>
+    <string name="Web">Web</string>
+    <string name="Compatibility">Compatibilidade</string>
+    <string name="License">Licença</string>
+    <string name="Sources">Fontes</string>
+    <string name="JMobileMode">Modo celular JQuery</string>
+    <string name="DeviceAPILevel">Nível API do dispositivo</string>
+    <string name="DeviceHasMenuHardware">O dispositivo tem botões de hardware</string>
+    <string name="DeviceHasDownloadManager">O dispositivo tem um gerenciador de downloads</string>
+    <string name="DownloadDirectory">Baixar diretório</string>
+    <string name="DeviceHasPDFViewer">Dispositivo tem visualizadores de PDF</string>
+    <string name="DeviceHasODXViewer">O dispositivo tem visualizadores OpenOffice</string>
+    <string name="DeviceSize">Tamanho da tela do dispositivo</string>
+    <string name="savedDolUrlRoot">Url de instância Dolibarr</string>
+    <string name="currentUrl">Url atual</string>
+    <string name="UserAgent">Agente Usuário</string>
+    <string name="SavedLogin">Saved login</string>
+    <string name="SavedPassword">Saved password</string>
+    <string name="BasicAuthLogin">Basic auth login</string>
+    <string name="BasicAuthPassword">Basic auth password</string>
+    <string name="Yes">Sim</string>
+    <string name="No">Não</string>
+    
+    <!-- Menu main + web -->
+    <string name="menu_info">Sobre o DoliDroid</string>
+    <string name="menu_show_bar_on">Mostrar barra de menu (sim)</string>
+    <string name="menu_show_bar_off">Mostrar barra de menu (não)</string>
+    <string name="menu_autofill_on">Mantenha login/password (sim)</string>
+    <string name="menu_autofill_off">Mantenha login/password (não)</string>
+    <!-- Menu main page -->
+    <string name="menu_settings">Definições</string>
+    <string name="menu_add_url">Adicionar URL predefinido</string>
+    <string name="menu_remove_url">Remover um URL predefinido</string>
+    <string name="menu_clear_all_urls">Limpar URLs predefinidos</string>
+    <!-- Menu web browser -->
+    <string name="menu_menu">Menu</string>
+    <string name="menu_go_to">Acesso rápido</string>
+    <string name="menu_search">Pesquisar</string>
+    <string name="menu_back">Anterior</string>
+    <string name="menu_refresh">Recarregar página</string>
+    <string name="menu_clearcache">Limpar o cache</string>
+    <string name="menu_logout">Terminar sessão</string>
+    <string name="menu_quit">Sair</string>
+    </resources>

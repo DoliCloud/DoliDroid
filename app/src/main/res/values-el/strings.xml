@@ -1,0 +1,46 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="dolibarr_for_android">Πρόγραμμα πελάτης για Dolibarr σε Android</string>
+    <string name="open">Έναρξη</string>
+    <string name="logo_dolidroid">Λογότυπο DoliDroid</string>
+    <string name="SelectUrl">ή επέλεξε προκαθορισμένο URL</string>
+    <string name="enterNewUrl">ή πληκτρολόγησε νέο URL</string>
+
+    <!-- Activity web -->
+    <string name="title_activity_second"></string>
+    <string name="downloadComplete">Η λήψη του αρχείου ολοκληρώθηκε</string>
+	<string name="NoPreviousPageAgainToQuit">Δεν υπάρχει προηγούμενη σελίδα. Πάτα το πίσω πάλι για έξοδο.</string>
+	<!-- Activity about -->
+    <string name="title_activity_about"></string>
+    <string name="textBack">Πίσω</string>
+    <string name="textMenu">Μενού</string>
+    <string name="Version">Έκδοση</string>
+    <string name="Author">Συντάκτης</string>
+    <string name="Compatibility">Συμβατότητα</string>
+    <string name="License">Άδεια</string>
+    <string name="Sources">Πηγές</string>
+    <string name="DeviceHasPDFViewer">Στη συσκευή υπάρχουν προγράμματα προβολής PDF</string>
+    <string name="DeviceHasODXViewer">Στη συσκευή υπάρχουν προγράμματα προβολής OpenOffice</string>
+    <string name="DeviceSize">Μέγεθος οθόνης συσκευής</string>
+    <string name="currentUrl">Τρέχουσα διεύθυνση Url</string>
+    <string name="SavedPassword">Αποθήκευση κωδικού</string>
+    <string name="Yes">Ναι</string>
+    <string name="No">Όχι</string>
+    
+    <!-- Menu main + web -->
+    <string name="menu_info">Σχετικά με το DoliDroid</string>
+    <!-- Menu main page -->
+    <string name="menu_settings">Ρυθμίσιες</string>
+    <string name="menu_add_url">Προσθήκη προκαθορισμένου URL</string>
+    <string name="menu_remove_url">Απομάκρυνση ενός προκαθορισμένου URL</string>
+    <string name="menu_clear_all_urls">Καθαρισμός προκαθορισμένων URLs</string>
+    <!-- Menu web browser -->
+    <string name="menu_menu">Μενού</string>
+    <string name="menu_go_to">Γρήγορη πρόσβαση</string>
+    <string name="menu_search">Αναζήτηση</string>
+    <string name="menu_back">Πίσω</string>
+    <string name="menu_refresh">Ανανέωη σελίδας</string>
+    <string name="menu_clearcache">Καθαρισμός προσωρινής μνήμης</string>
+    <string name="menu_logout">Αποσύνδεση</string>
+    <string name="menu_quit">Έξοδος</string>
+    </resources>
