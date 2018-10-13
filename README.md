@@ -20,6 +20,7 @@ The advantage of DoliDroid are :
   * When the popup calendar is opened, the keyword is no more opened if not required like it is on a common browser (Dolibarr v7 required).
   * Components that provide help information on mouse hover are hidden to save space (they are useless without a mouse).
   * A lot of other not useful information are hidden.
+- DoliDroid is an OpenSource software (License GPLv3)
 
 WARNING ! 
 

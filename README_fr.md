@@ -20,7 +20,7 @@ Voici les avantages de DoliDroid :
   * Quand la popup d'un calendrier est ouverte, le clavier ne s'ouvre plus si ce n'est pas nécessaire, comme avec une navigation classique (Dolibarr v7 requis).
   * Les composants qui fournissent des informations d'aide sur passage de la souris sont cachées pour sauver de la place (ils sont inutiles sans souris).
   * De nombreuses autres informations inutiles et génantes sur de petis terminaux sont cachées.
-
+- DoliDroid est un logiciel OpenSource (Licence GPLv3)
 
 ATTENTION !
 

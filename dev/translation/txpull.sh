@@ -47,5 +47,5 @@ else
 	tx pull -l $1 $2 $3 $4 $5
 fi
 
-echo Think to launch also: 
-echo "> dev/tools/fixaltlanguages.sh fix all"
+#echo Think to launch also: 
+#echo "> dev/tools/fixaltlanguages.sh fix all"
