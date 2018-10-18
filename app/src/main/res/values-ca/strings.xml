@@ -1,11 +1,11 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <string name="app_name"><xliff:g id=\"app_name\">DoliDroid</xliff:g></string>
+    <string name="app_name">DoliDroid</string>
     <string name="dolidroidLabel">DoliDroid, front-end d\'Android per l\'ERP-CRM Dolibarr</string>
     <string name="dolidroidUserAgent">DoliDroid - front-end d\'Android per l\'ERP-CRM Dolibarr</string>
     
     <!-- Activity main -->
-    <string name="title_activity_main"><xliff:g id=\"title_activity_main\">DoliDroid</xliff:g></string>
+    <string name="title_activity_main">DoliDroid</string>
     <string name="dolibarr_for_android">Client d\'Android per Dolibarr</string>
     <string name="open">Inici</string>
     <string name="dolibarr_url">URL Dolibarr</string>
@@ -22,8 +22,8 @@
     <string name="title_activity_about"></string>
     <string name="textBack">Enrera</string>
     <string name="textMenu">Menú</string>
-    <string name="textAboutA"><xliff:g id=\"textAboutA\">XXX</xliff:g></string>
-    <string name="textAboutB"><xliff:g id=\"textAboutB\">XXX</xliff:g></string>
+    <string name="textAboutA">XXX</string>
+    <string name="textAboutB">XXX</string>
     <string name="Version">Versió</string>
     <string name="VersionStaticResources">Versió de recursos estàtics locals</string>
     <string name="Author">Autor</string>

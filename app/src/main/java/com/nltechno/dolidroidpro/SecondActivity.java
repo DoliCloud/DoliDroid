@@ -1488,7 +1488,7 @@ public class SecondActivity extends Activity {
 				
 				myWebView.loadData(myMessage0+"<br><br>\n"+myMessage1+"<br>\n"+myMessage1b+"<br>\n"+myMessage2+"<br>\n<br>\n"+myMessage5+"<br><br><br>\n"+myMessage6, "text/html", "UTF-8");
 			}
-		    else if (tagToShowMessage.length() > 0 && tagToShowCounter > 0)	//onConsoleMessage is increased by onConsoleMessage function (javascript error)
+		    else if (tagToShowMessage.length() > 0 && tagToShowCounter > 0)	// tagToShowCounter is increased by onConsoleMessage function (javascript error)
 			{
 				Toast.makeText(activity, tagToShowMessage, Toast.LENGTH_LONG).show();
 
