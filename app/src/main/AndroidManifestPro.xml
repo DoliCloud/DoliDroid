@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nltechno.dolidroidpro"
-    android:versionCode="33"
+    android:versionCode="34"
     android:versionName="DoliDroid Pro 2.0"
     android:installLocation="auto"
     >
@@ -10,12 +10,6 @@
 	<!-- Some Chromebooks don't support touch. Although not essential,
          it's a good idea to explicitly include this declaration. -->
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
-
-    <!-- API Level
-        8=2.2, 9=2.3, 10=2.3.3, 11=3.0, 13=3.1, 14=4.0=ICS 15=4.0.3 16=4.1 19=4.4.2
-       21=5.0.0 22=5.1.1 23=6.0.0 (android M, need permission requests) 24=7.0.0 26=8.0.0 -->
-    <uses-sdk
-        android:targetSdkVersion="26" />
 
     <!-- Normal permissions (PROTECTION_NORMAL) -->
     <uses-permission android:name="android.permission.INTERNET" />

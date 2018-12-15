@@ -113,7 +113,7 @@ import android.widget.Toast;
 public class SecondActivity extends Activity {
 
 	private static final String LOG_TAG = "DoliDroidActivity";
-	public static final String VERSION_RESOURCES = "8.0";
+	public static final String VERSION_RESOURCES = "9.0";
 
 	private WebView myWebView;
 	private WebViewClientDoliDroid myWebViewClientDoliDroid;
@@ -1536,11 +1536,17 @@ public class SecondActivity extends Activity {
 				    	{
 							synchronized (this) 
 							{
-								boolean versionOk=true;	// Will be false if Dolibarr is < 3.4.*
+								boolean versionOk=true;	// Will be false if Dolibarr is < 3.6.*
 								if (foundVersion) {
-									if (m.group(1).compareTo("3") < 0) versionOk = false;
-									if (m.group(1).compareTo("3") == 0 && m.group(2).compareTo("4") < 0)
+									try {
+										if (Integer.parseInt(m.group(1)) < 3) versionOk = false;
+										if (Integer.parseInt(m.group(1)) < 3 && Integer.parseInt(m.group(2)) < 6)
+											versionOk = false;
+									}
+									catch(Exception e)
+									{
 										versionOk = false;
+									}
 								}
 								else {
 									versionOk = false;
