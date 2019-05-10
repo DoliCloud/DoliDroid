@@ -4,6 +4,8 @@ English DoliDroid ChangeLog
 
 ***** ChangeLog for 2.0 *****
 - Compatibility with Multicompany module
+- Fix open external URL
+- Include asset cache files for better performance with Dolibarr 9.0 and 10.0
 
 ***** ChangeLog for 1.9 *****
 - Include asset cache files for better performance with Dolibarr 8.0

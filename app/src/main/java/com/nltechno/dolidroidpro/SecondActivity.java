@@ -113,7 +113,7 @@ import android.widget.Toast;
 public class SecondActivity extends Activity {
 
 	private static final String LOG_TAG = "DoliDroidActivity";
-	public static final String VERSION_RESOURCES = "9.0";
+	public static final String VERSION_RESOURCES = "10.0";
 
 	private WebView myWebView;
 	private WebViewClientDoliDroid myWebViewClientDoliDroid;
@@ -717,7 +717,7 @@ public class SecondActivity extends Activity {
         {
 			String historyUrl = null;
 			
-        	Log.i(LOG_TAG, "onPostExecute mode="+this.mode+" result="+result);
+        	Log.i(LOG_TAG, "onPostExecute mode="+this.mode+" result="+result+" result.length="+result.length());
         	if ("menu".equals(this.mode)) 
         	{
         		cacheForMenu=result;
@@ -1226,9 +1226,9 @@ public class SecondActivity extends Activity {
 			}
 				
 			
-			Log.v(LOG_TAG, "shouldInterceptRequest url="+url+" host="+host+" fileName="+fileName+" version in url param (for js or css pages)="+version);
+			Log.v(LOG_TAG, "shouldInterceptRequest url="+url+", host="+host+", fileName="+fileName+", savedDolBasedUrl="+savedDolBasedUrl+" version in url param (for js or css pages)="+version);
 
-			if (fileName != null)
+			if (fileName != null && url.startsWith(savedDolBasedUrl))
 			{
 				if (prefAlwaysUseLocalResources) {
 					try {
@@ -1253,7 +1253,7 @@ public class SecondActivity extends Activity {
 						String versionjscss = (version == null ? "" : version);        // Set to "" to disable assets usage for js and css
 
 						// Check if file need to be replaced by an asset file (if open file fails, throw exception and load from web).
-						if ((fileName.endsWith("favicon.ico") || fileName.startsWith("theme/") || fileName.startsWith("core/js/") || fileName.startsWith("includes/") || fileName.startsWith("public/demo/"))) {
+						if ((fileName.endsWith("favicon.ico") || fileName.startsWith("theme/") || fileName.startsWith("includes/") || fileName.startsWith("public/demo/"))) {
 							if (!versionimg.equals("") && (fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".gif") || fileName.endsWith(".ico"))) {
 								Log.d(LOG_TAG, "shouldInterceptRequest Filename " + fileName + " intercepted. Replaced with image assets file into " + versionimg);
 								return new WebResourceResponse(null, null, getAssets().open(versionimg + "/" + fileName));
@@ -1341,8 +1341,13 @@ public class SecondActivity extends Activity {
                 catch (Exception ex) {}
 				return true;
 			}
+			else if (! url.startsWith(savedDolBasedUrl)) {	// This is an external url
+				// Open in Chrome
+				Log.d(LOG_TAG, "Launch external url : " + url);
+				return false;
+			}
 
-			// Without this, we got "telechargement non pris en charge"
+			// Without this, we got "download not supported" ("telechargement non pris en charge")
 			if (((url.endsWith(".pdf") || url.endsWith(".odt") || url.endsWith(".ods")) && ! url.contains("action=")) 	// Old way to detect a download (we do not make a download of link to delete or print or presend a file)
 					|| url.startsWith(savedDolRootUrl+"document.php?")													// The default wrapper to download files
 					|| url.contains("output=file"))																		// The new recommanded parameter for files like export.php that generate file output
