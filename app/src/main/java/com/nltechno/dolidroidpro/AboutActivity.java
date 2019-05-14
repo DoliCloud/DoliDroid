@@ -180,7 +180,7 @@ public class AboutActivity extends Activity {
         String savedDolRootUrl = intent.getStringExtra("savedDolRootUrl");
         if (savedDolRootUrl != null && ! "".equals(savedDolRootUrl))
         {
-        	s2+="<font color='#440066'><b>"+getString(R.string.savedDolUrlRoot)+":</b></font><br />\n"+savedDolRootUrl+"<br />\n";
+        	s2+="<font color='#440066'><b>"+getString(R.string.savedDolUrlRoot)+":</b></font><br /><br />\n"+savedDolRootUrl+"<br />\n";
         
 	        // Saved user/pass
 	        String username=null;
@@ -192,7 +192,8 @@ public class AboutActivity extends Activity {
 				username=sharedPrefs.getString(savedDolRootUrl+"-username", "");
 				password=sharedPrefs.getString(savedDolRootUrl+"-password", "");
 			}
-	
+
+			s2+="<br />";
 	        s2+=getString(R.string.SavedLogin)+": "+(username != null ? username : "")+"<br />\n";
 	        s2+=getString(R.string.SavedPassword)+": "+(password != null ? password.replaceAll(".", "*") : "")+"<br />\n";
 	                
@@ -206,13 +207,13 @@ public class AboutActivity extends Activity {
 		// Current url
         String currentUrl = intent.getStringExtra("currentUrl");
         String title = intent.getStringExtra("title");
-        if (currentUrl != null && ! "".equals(currentUrl)) s2+="<br /><br />\n<font color='#440066'><b>"+getString(R.string.currentUrl)+":</b></font><br />\n"+title+"<br />\n"+currentUrl;
+        if (currentUrl != null && ! "".equals(currentUrl)) s2+="<br /><br />\n<font color='#440066'><b>"+getString(R.string.currentUrl)+":</b></font><br /><br />\n"+title+"<br />\n"+currentUrl;
 		String lastversionfound = intent.getStringExtra("lastversionfound");
-        if (lastversionfound != null && ! "".equals(lastversionfound)) s2+="<br />\nDolibarr "+getString(R.string.Version)+": "+lastversionfound+"<br />\n";
+        if (lastversionfound != null && ! "".equals(lastversionfound)) s2+="<br /><br />\nDolibarr "+getString(R.string.Version)+": "+lastversionfound+"<br />\n";
 
 		// User agent
         String userAgent = intent.getStringExtra("userAgent");
-        if (userAgent != null && ! "".equals(userAgent)) s2+="<br /><br />\n<font color='#440066'><b>\n"+getString(R.string.UserAgent)+":</b></font><br />\n"+userAgent;
+        if (userAgent != null && ! "".equals(userAgent)) s2+="<br /><br />\n<font color='#440066'><b>\n"+getString(R.string.UserAgent)+":</b></font><br /><br />\n"+userAgent;
 
 		textViewAbout2.setText(Html.fromHtml(s2));
 	}
