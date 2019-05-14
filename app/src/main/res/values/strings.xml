@@ -51,7 +51,8 @@
     <string name="BasicAuthPassword">Basic auth password</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
-    
+    <string name="Warning">Warning</string>
+
     <!-- Menu main + web -->
     <string name="menu_info">About DoliDroid</string>
     <string name="menu_show_bar_on">Show menu bar (yes)</string>

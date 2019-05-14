@@ -51,7 +51,8 @@
     <string name="BasicAuthPassword">Mot de passe authentification Basic</string>
     <string name="Yes">Oui</string>
     <string name="No">Non</string>
-    
+    <string name="Warning">Alerte</string>
+
     <!-- Menu main + web -->
     <string name="menu_info">A propos de DoliDroid</string>
     <string name="menu_show_bar_on">Afficher la barre menu (oui)</string>

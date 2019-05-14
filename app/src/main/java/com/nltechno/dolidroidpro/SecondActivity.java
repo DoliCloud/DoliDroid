@@ -58,6 +58,7 @@ import com.nltechno.inapp.Purchase;
 */
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.net.http.SslError;
@@ -103,6 +104,7 @@ import android.webkit.CookieSyncManager;
 import android.webkit.WebViewDatabase;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.app.AlertDialog;
 
 
 /**
@@ -243,12 +245,12 @@ public class SecondActivity extends Activity {
         Intent intent = getIntent();
         String dolRootUrl = intent.getStringExtra("dolRootUrl");        
         String dolRequestUrl = intent.getStringExtra("dolRequestUrl");        
-        this.savedDolRootUrl = dolRootUrl;
-        this.savedDolScheme=Uri.parse(this.savedDolRootUrl).getScheme();
+        this.savedDolRootUrl = dolRootUrl;																														// Example: http://testldr1.with.dolicloud.com/
+        this.savedDolScheme=Uri.parse(this.savedDolRootUrl).getScheme();																						// Example: http
         this.savedDolPort=Uri.parse(this.savedDolRootUrl).getPort();
         this.savedDolHost=Uri.parse(this.savedDolRootUrl).getHost();
-        this.savedDolBasedUrl = this.savedDolScheme+"://"+this.savedDolHost+((this.savedDolPort > 0 && this.savedDolPort != 80) ? ":"+this.savedDolPort : "");
-        this.savedDolRootUrlRel = dolRootUrl.replace(this.savedDolBasedUrl, "");	// rest of url
+        this.savedDolBasedUrl = this.savedDolScheme+"://"+this.savedDolHost+((this.savedDolPort > 0 && this.savedDolPort != 80) ? ":"+this.savedDolPort : "");	// Example: http://testldr1.with.dolicloud.com
+        this.savedDolRootUrlRel = dolRootUrl.replace(this.savedDolBasedUrl, "");	// rest of url														// Example: /
         
         try {
 	        URL uri=new URL(dolRootUrl);
@@ -279,7 +281,7 @@ public class SecondActivity extends Activity {
         else urlToGo = dolRequestUrl+"?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
         
         Log.d(LOG_TAG, "onCreate isDownloadManagerAvailable="+Utils.isDownloadManagerAvailable(this));
-        Log.d(LOG_TAG, "onCreate We will load URL in onCreate urlToGo=" + urlToGo);
+        Log.d(LOG_TAG, "onCreate We are in onCreate and will load URL urlToGo=" + urlToGo);
 
         // To have the view SecondActivity with WebView included:
         setContentView(R.layout.activity_second);
@@ -376,7 +378,7 @@ public class SecondActivity extends Activity {
     	// When there is hardware button and not using "actionbar", we remove the back from menu
         if (Utils.hasMenuHardware(activity) && ! this.menuAre.equals("actionbar"))
         {
-        	Log.d(LOG_TAG, "Hide button back because there is hardware and this.menuAre="+this.menuAre);
+        	Log.d(LOG_TAG, "onCreateOptionsMenu Hide button back because there is hardware and this.menuAre="+this.menuAre);
         	menu.findItem(R.id.menu_back).setVisible(false);
         }
 
@@ -401,7 +403,7 @@ public class SecondActivity extends Activity {
     	if (Utils.hasMenuHardware(activity))
     	{
 	    	boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
-	    	Log.d(LOG_TAG, "prefAlwaysShowBar value is "+prefAlwaysShowBar);
+	    	Log.d(LOG_TAG, "onCreateOptionsMenu prefAlwaysShowBar value is "+prefAlwaysShowBar);
 	    	if (prefAlwaysShowBar) menuItem.setTitle(getString(R.string.menu_show_bar_on));
 	    	else menuItem.setTitle(getString(R.string.menu_show_bar_off));
     	}
@@ -413,22 +415,22 @@ public class SecondActivity extends Activity {
         // Hide menu show bar if phone too old, change label otherwise
 		MenuItem menuItem2 = menu.findItem(R.id.always_autofill);
    		boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
-		Log.d(LOG_TAG, "prefAlwaysAutoFill value is "+prefAlwaysAutoFill);
+		Log.d(LOG_TAG, "onCreateOptionsMenu prefAlwaysAutoFill value is "+prefAlwaysAutoFill);
    		if (prefAlwaysAutoFill) menuItem2.setTitle(getString(R.string.menu_autofill_on));
    		else menuItem2.setTitle(getString(R.string.menu_autofill_off));
 
 		MenuItem menuItem4 = menu.findItem(R.id.always_uselocalresources);
 		//boolean prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
-		Log.d(LOG_TAG, "prefAlwaysUseLocalResources value is "+prefAlwaysUseLocalResources);
+		Log.d(LOG_TAG, "onCreateOptionsMenu prefAlwaysUseLocalResources value is "+prefAlwaysUseLocalResources);
 		if (prefAlwaysUseLocalResources) menuItem4.setTitle(getString(R.string.menu_uselocalresources_on));
 		else menuItem4.setTitle(getString(R.string.menu_uselocalresources_off));
 
 		if (isMulticompanyOn) {
-			Log.d(LOG_TAG, "Module multicompany was found, we show picto");
+			Log.d(LOG_TAG, "onCreateOptionsMenu Module multicompany was found, we show picto");
 			MenuItem menuItem5 = menu.findItem(R.id.menu_multicompany);
 			if (menuItem5 != null) menuItem5.setVisible(true);
 		} else {
-			Log.d(LOG_TAG, "Module multicompany was NOT found, we hide picto");
+			Log.d(LOG_TAG, "onCreateOptionsMenu Module multicompany was NOT found, we hide picto");
 			MenuItem menuItem5 = menu.findItem(R.id.menu_multicompany);
 			if (menuItem5 != null) menuItem5.setVisible(false);
 		}
@@ -1113,7 +1115,7 @@ public class SecondActivity extends Activity {
 	}
 
 
-	
+
 	/* ************************* */
 	/* SUB-CLASSES WEBVIEW       */
 	/* ************************* */ 
@@ -1177,10 +1179,31 @@ public class SecondActivity extends Activity {
 		@Override  
 		public void onPageStarted(WebView view, String url, Bitmap favicon)
 		{  
-		    Log.d(LOG_TAG, "onPageStarted url="+url+" originalUrl="+view.getOriginalUrl());
+		    Log.d(LOG_TAG, "onPageStarted url="+url+" originalUrl="+view.getOriginalUrl()+" view.getUrl="+view.getUrl()+" savedDolBasedUrl="+savedDolBasedUrl);
+			if (view.getUrl().startsWith("http:") && view.getUrl().startsWith(savedDolBasedUrl)) {
+				Log.d(LOG_TAG, "https:" + view.getUrl().substring(5));
+				Log.d(LOG_TAG, url);
+				if (("https:" + view.getUrl().substring(5)).equals(url)) {
+					Log.d(LOG_TAG, "onPageStarted value of url is value of view.getUrl with a s added, we change the savedDolRootUrl");
+					//Toast.makeText(activity, "Warning: It seems your server forced a redirect to HTTPS page. Please check your connection URL and use the https directly if you can.", Toast.LENGTH_SHORT).show();
+
+					// Use Dialog instead of Toast for a longer message
+					AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+					alertDialog.setTitle(getString(R.string.Warning));
+					alertDialog.setMessage("It seems your server forced a redirect to a HTTPS page. Please check your Dolibarr URL and use the https URL directly if you can (URL starting with https:// instead of http://).");
+					alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int which) {
+									dialog.dismiss();
+								}
+							});
+					alertDialog.show();
+				}
+			}
 		    //super.onPageStarted(view, url, favicon);
-		}  
-		
+		}
+
+
 		/**
 		 * Return if we must intercept HTTP Request for pages (not called when cache is used)
 		 * This method is called into a non-UI Thread (Android >= 3.0) so UI Thread function are not allowed.
