@@ -6,6 +6,7 @@ English DoliDroid ChangeLog
 - Compatibility with Multicompany module
 - Fix open external URL
 - Include asset cache files for better performance with Dolibarr 9.0 and 10.0
+- Autofix url if url start with /
 
 ***** ChangeLog for 1.9 *****
 - Include asset cache files for better performance with Dolibarr 8.0
