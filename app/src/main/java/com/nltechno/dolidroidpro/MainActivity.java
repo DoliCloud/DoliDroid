@@ -487,11 +487,11 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		dolRequestUrl = dolRequestUrl.replace("\\", "/").trim();
 		dolRootUrl = dolRootUrl.replace("\\", "/").trim();
 
-		if (! dolRequestUrl.toLowerCase(Locale.ENGLISH).contains("http://") && ! dolRequestUrl.toLowerCase(Locale.ENGLISH).contains("https://")) dolRequestUrl = "http://".concat(dolRootUrl);
+		if (! dolRequestUrl.toLowerCase(Locale.ENGLISH).contains("http://") && ! dolRequestUrl.toLowerCase(Locale.ENGLISH).contains("https://")) dolRequestUrl = "http://".concat(dolRootUrl.replaceAll("^/", ""));
 		dolRequestUrl = dolRequestUrl.replaceAll("(?i)/index.php$", "");
 		if (! dolRequestUrl.endsWith("/") && ! dolRequestUrl.contains("?") && ! dolRequestUrl.endsWith(".php")) dolRequestUrl = dolRequestUrl.concat("/");
 
-		if (! dolRootUrl.toLowerCase(Locale.ENGLISH).contains("http://") && ! dolRootUrl.toLowerCase(Locale.ENGLISH).contains("https://")) dolRootUrl = "http://".concat(dolRootUrl);
+		if (! dolRootUrl.toLowerCase(Locale.ENGLISH).contains("http://") && ! dolRootUrl.toLowerCase(Locale.ENGLISH).contains("https://")) dolRootUrl = "http://".concat(dolRootUrl.replaceAll("^/", ""));
 		dolRootUrl = dolRootUrl.replaceAll("(?i)/index.php$", "");
 		if (dolRootUrl.contains("?") || dolRootUrl.endsWith(".php"))
 		{
