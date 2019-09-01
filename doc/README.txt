@@ -4,7 +4,7 @@
 
 
 ----- GUIDE FOR DEVELOPER
-This tutorial explain how to start to develop onot dolidroid.
+This tutorial explain how to start to develop onto DoliDroid.
 1) Install Eclipse
 2) Install Android SDK + Other optionnal SDK (AdMobs SDK, Analytics SDK, Play Billing Library)
 3) Setup Eclipse to use the Android SDK.
