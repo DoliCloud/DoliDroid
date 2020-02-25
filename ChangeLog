@@ -3,10 +3,18 @@ English DoliDroid ChangeLog
 --------------------------------------------------------------
 
 ***** ChangeLog for 2.0 *****
+
+2.035
+- NEW Add static resources for v11
+- NEW Add warning if bad scheme (http vs https) used.
+- FIX Truncation of user agent in about page
+
+2.0.34
 - Compatibility with Multicompany module
 - Fix open external URL
 - Include asset cache files for better performance with Dolibarr 9.0 and 10.0
 - Autofix url if url start with /
+
 
 ***** ChangeLog for 1.9 *****
 - Include asset cache files for better performance with Dolibarr 8.0
@@ -14,30 +22,38 @@ English DoliDroid ChangeLog
 - When there is a SSL error, show confirm message only once
 - Replace link to create instance on DoliCloud to DoliCloud v2
 
+
 ***** ChangeLog for 1.8 *****
 - Include asset cache files for better performance with Dolibarr 7.0
+
 
 ***** ChangeLog for 1.7 *****
 - Include asset cache files for better performance with Dolibarr 6.0
 - Compatible with the permissions requests of Android 6.0 M and +
 
+
 ***** ChangeLog for 1.6 *****
 - Include asset cache files for better performance with Dolibarr 5.0
 
+
 ***** ChangeLog for 1.5 *****
 - Include asset cache files for better performance with Dolibarr 4.0.* and 3.9.*
+
 
 ***** ChangeLog for 1.4 *****
 - Can upload files with Dolibarr 3.8+
 - Include asset cache files for better performance with Dolibarr 3.7.* and 3.8.*
 
+
 ***** ChangeLog for 1.3 *****
 - Removed compatibility with android <= 3.0
 - Compatibility with android lolipop 5
 
+
 ***** ChangeLog for 1.2 *****
 - Include resources for 3.6
 - Fix: Killed application when url contains an invalid char.
+
 
 ***** ChangeLog for 1.1 *****
 - Include option to autofill login form with last login/password (need Dolibarr 3.5+).
@@ -55,6 +71,7 @@ English DoliDroid ChangeLog
 - Fix: Support download of files from ECM module.
 - Fix: Correct language for menu content when language is autodetect. 
 - Fix: Tab "documents" did not opened when requested.
+
 
 ***** ChangeLog for 1.0 *****
 - New: Add translation for de, es, fr, it, nl, pt, tr
