@@ -6,7 +6,7 @@
     <!-- parent="@android:style/Theme.NoTitleBar" = old menu without ActionBar -->
     <!-- parent="@android:style/Theme.Holo" (need min sdk=11) will enabled ActionBar  -->
     <style name="DoliDroidThemeFirst" parent="@android:style/Theme.Holo.Light.DarkActionBar">
-		<item name="android:windowBackground">@drawable/dolidroid_backgroundxml</item>
+		<item name="android:colorBackground">@color/white</item>
 		<item name="android:textColor">@color/black</item>
 	</style>
 

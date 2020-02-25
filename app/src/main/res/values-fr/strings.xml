@@ -12,6 +12,7 @@
     <string name="logo_dolidroid">Logo DoliDroid</string>
     <string name="SelectUrl">ou choisir une URL prédéfinie</string>
     <string name="enterNewUrl">ou entrez une nouvelle URL</string>
+    <string name="AlertHTTPS">Il semble que votre serveur ait forcer une redirection sur une page HTTPS. Merci de vérifier votre URL Dolibarr et utiliser directement la forme en https plutot que http (URL commençant par https:// au lieu de http://). Garder une URL sans le s provoquera des disfonctionnement comme des problèmes pour accéder aux menus ou des téléchargements impossibles.</string>
 
     <!-- Activity web -->
     <string name="title_activity_second"></string>

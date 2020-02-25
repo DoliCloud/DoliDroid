@@ -498,6 +498,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			String parttoremove = dolRootUrl.replaceAll("http(s|)://([^/]+)/", "");
 			dolRootUrl = dolRootUrl.replace(parttoremove, "");
 		}
+		dolRootUrl = dolRootUrl.replace(":///", "://");
 		if (! dolRootUrl.endsWith("/")) dolRootUrl = dolRootUrl.concat("/");
 
 		Log.d(LOG_TAG, "We clicked 'Start' with dolRootUrl=" + dolRootUrl+" dolRequestUrl=" + dolRequestUrl);

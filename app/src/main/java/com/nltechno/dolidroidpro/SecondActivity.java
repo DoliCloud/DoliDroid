@@ -115,7 +115,7 @@ import android.app.AlertDialog;
 public class SecondActivity extends Activity {
 
 	private static final String LOG_TAG = "DoliDroidActivity";
-	public static final String VERSION_RESOURCES = "10.0";
+	public static final String VERSION_RESOURCES = "11.0";
 
 	private WebView myWebView;
 	private WebViewClientDoliDroid myWebViewClientDoliDroid;
@@ -130,6 +130,7 @@ public class SecondActivity extends Activity {
 	private int savedDolPort;
 	private String savedDolHost;
 	private String savedDolBasedUrl;
+	private String savedDolBasedUrlWithSForced;
 	private String savedAuthuser=null;
 	private String savedAuthpass=null;
 	private String savedUserAgent=null;
@@ -250,6 +251,7 @@ public class SecondActivity extends Activity {
         this.savedDolPort=Uri.parse(this.savedDolRootUrl).getPort();
         this.savedDolHost=Uri.parse(this.savedDolRootUrl).getHost();
         this.savedDolBasedUrl = this.savedDolScheme+"://"+this.savedDolHost+((this.savedDolPort > 0 && this.savedDolPort != 80) ? ":"+this.savedDolPort : "");	// Example: http://testldr1.with.dolicloud.com
+		this.savedDolBasedUrlWithSForced = "https:"+this.savedDolBasedUrl.replace("http:", "").replace("https:", "");
         this.savedDolRootUrlRel = dolRootUrl.replace(this.savedDolBasedUrl, "");	// rest of url														// Example: /
         
         try {
@@ -273,7 +275,7 @@ public class SecondActivity extends Activity {
         catch (MalformedURLException e) {
             Log.w(LOG_TAG, e.getMessage());
         }
-        Log.d(LOG_TAG, "onCreate We have root URL : savedDolRootUrl=" + dolRootUrl + " => savedDolBasedUrl=" + this.savedDolBasedUrl + " + savedDolRootUrlRel=" + this.savedDolRootUrlRel);
+        Log.d(LOG_TAG, "onCreate We have root URL : savedDolRootUrl=" + dolRootUrl + " => savedDolBasedUrl=" + this.savedDolBasedUrl + " savedDolBasedUrlWithSForced=" + this.savedDolBasedUrlWithSForced + " + savedDolRootUrlRel=" + this.savedDolRootUrlRel);
 
         String urlToGo = ""; 
         if (! dolRequestUrl.contains("?") && ! dolRequestUrl.contains(".php")) urlToGo = dolRequestUrl+"index.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
@@ -1171,26 +1173,27 @@ public class SecondActivity extends Activity {
 		/**
 		 * onPageStarted
 		 * 
-		 * @param view
-		 * @param url
-		 * @param favicon
+		 * @param view		View
+		 * @param url		URL
+		 * @param favicon	Favicon
 		 * @return void
 		 */
 		@Override  
 		public void onPageStarted(WebView view, String url, Bitmap favicon)
 		{  
 		    Log.d(LOG_TAG, "onPageStarted url="+url+" originalUrl="+view.getOriginalUrl()+" view.getUrl="+view.getUrl()+" savedDolBasedUrl="+savedDolBasedUrl);
-			if (view.getUrl().startsWith("http:") && view.getUrl().startsWith(savedDolBasedUrl)) {
-				Log.d(LOG_TAG, "https:" + view.getUrl().substring(5));
-				Log.d(LOG_TAG, url);
-				if (("https:" + view.getUrl().substring(5)).equals(url)) {
-					Log.d(LOG_TAG, "onPageStarted value of url is value of view.getUrl with a s added, we change the savedDolRootUrl");
+			if (view.getOriginalUrl().startsWith("http:") && view.getOriginalUrl().startsWith(savedDolBasedUrl)) {
+				//Log.d(LOG_TAG, "https:" + view.getUrl().substring(5));
+				//Log.d(LOG_TAG, url);
+				if (("https:" + view.getOriginalUrl().substring(5)).equals(url)) {
+					Log.w(LOG_TAG, "onPageStarted value of url is value of view.getUrl with a s added, we change the savedDolRootUrl");
 					//Toast.makeText(activity, "Warning: It seems your server forced a redirect to HTTPS page. Please check your connection URL and use the https directly if you can.", Toast.LENGTH_SHORT).show();
+					//savedDolBasedUrl = "http://"+savedDolBasedUrl.substring(4);
 
 					// Use Dialog instead of Toast for a longer message
 					AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
 					alertDialog.setTitle(getString(R.string.Warning));
-					alertDialog.setMessage("It seems your server forced a redirect to a HTTPS page. Please check your Dolibarr URL and use the https URL directly if you can (URL starting with https:// instead of http://).");
+					alertDialog.setMessage(getString(R.string.AlertHTTPS));
 					alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog, int which) {
@@ -1250,6 +1253,11 @@ public class SecondActivity extends Activity {
 				
 			
 			Log.v(LOG_TAG, "shouldInterceptRequest url="+url+", host="+host+", fileName="+fileName+", savedDolBasedUrl="+savedDolBasedUrl+" version in url param (for js or css pages)="+version);
+
+			if (fileName.equals("document.php") && ! url.startsWith(savedDolBasedUrl) && url.startsWith(savedDolBasedUrlWithSForced)) {
+				Log.w(LOG_TAG, "Bad savedDolBasedUrl that does not allow download");
+				// Can't make interaction here
+			}
 
 			if (fileName != null && url.startsWith(savedDolBasedUrl))
 			{
@@ -1373,7 +1381,7 @@ public class SecondActivity extends Activity {
 			// Without this, we got "download not supported" ("telechargement non pris en charge")
 			if (((url.endsWith(".pdf") || url.endsWith(".odt") || url.endsWith(".ods")) && ! url.contains("action=")) 	// Old way to detect a download (we do not make a download of link to delete or print or presend a file)
 					|| url.startsWith(savedDolRootUrl+"document.php?")													// The default wrapper to download files
-					|| url.contains("output=file"))																		// The new recommanded parameter for files like export.php that generate file output
+					|| url.contains("output=file"))																		// The new recommended parameter for files like export.php that generate file output
 	        {
 				String query=Uri.parse(url).getQuery().replaceAll(".*file=", "").replaceAll("&.*", "").replaceAll(".*/", "");
 				Log.d(LOG_TAG, "shouldOverrideUrlLoading Start activity to download file="+query);

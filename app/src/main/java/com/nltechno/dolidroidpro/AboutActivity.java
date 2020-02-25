@@ -213,7 +213,8 @@ public class AboutActivity extends Activity {
 
 		// User agent
         String userAgent = intent.getStringExtra("userAgent");
-        if (userAgent != null && ! "".equals(userAgent)) s2+="<br /><br />\n<font color='#440066'><b>\n"+getString(R.string.UserAgent)+":</b></font><br /><br />\n"+userAgent;
+        Log.d(LOG_TAG,"userAgent="+userAgent);
+        if (userAgent != null && ! "".equals(userAgent)) s2+="<br /><br />\n<font color='#440066'><b>"+getString(R.string.UserAgent)+":</b></font><br /><br />\n"+userAgent+"<br />\n";
 
 		textViewAbout2.setText(Html.fromHtml(s2));
 	}

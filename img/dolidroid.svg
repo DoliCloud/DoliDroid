@@ -11,11 +11,11 @@
    viewBox="-147 -68 300 340"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.3.1 r9886"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
    width="100%"
    height="100%"
    sodipodi:docname="dolidroid.svg"
-   inkscape:export-filename="/home/ldestailleur/git/androidapp/img/dolidroid.png"
+   inkscape:export-filename="/home/ldestailleur/git/dolidroid/img/dolidroid.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <metadata
@@ -26,7 +26,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -56,14 +56,25 @@
     </linearGradient>
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient3865"
+       xlink:href="#linearGradient888"
        id="linearGradient3871"
        x1="67.314468"
        y1="128.72421"
        x2="223.01129"
        y2="287.50412"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.99152531,0,0,0.95882352,-142.00278,-59.871919)" />
+       gradientTransform="matrix(0.99152531,0,0,0.95882352,-142.51663,-61.927323)" />
+    <linearGradient
+       id="linearGradient888">
+      <stop
+         style="stop-color:#373d5a;stop-opacity:1"
+         offset="0"
+         id="stop884" />
+      <stop
+         style="stop-color:#373d5a;stop-opacity:1"
+         offset="1"
+         id="stop886" />
+    </linearGradient>
   </defs>
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -74,16 +85,16 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1027"
+     inkscape:window-width="1468"
+     inkscape:window-height="929"
      id="namedview29"
      showgrid="false"
      inkscape:zoom="1.9460898"
-     inkscape:cx="140.7189"
+     inkscape:cx="102.74624"
      inkscape:cy="160.65114"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
+     inkscape:window-x="1963"
+     inkscape:window-y="61"
+     inkscape:window-maximized="0"
      inkscape:current-layer="svg2" />
   <g
      id="use6"
@@ -99,8 +110,7 @@
        sodipodi:cx="0"
        sodipodi:cy="41"
        sodipodi:rx="91"
-       sodipodi:ry="84"
-       d="m 91,41 c 0,46.391919 -40.742088,84 -91,84 -50.257912,0 -91,-37.608081 -91,-84 0,-46.391919 40.742088,-84 91,-84 50.257912,0 91,37.608081 91,84 z" />
+       sodipodi:ry="84" />
     <rect
        style="fill:#a4c639"
        rx="22"
@@ -186,7 +196,6 @@
        cx="-42"
        r="4"
        id="circle25"
-       d="m -38,0 c 0,2.209139 -1.790861,4 -4,4 -2.209139,0 -4,-1.790861 -4,-4 0,-2.209139 1.790861,-4 4,-4 2.209139,0 4,1.790861 4,4 z"
        cy="0"
        sodipodi:cx="-42"
        sodipodi:cy="0"
@@ -196,7 +205,6 @@
        cx="42"
        r="4"
        id="circle27"
-       d="m 46,0 c 0,2.209139 -1.790861,4 -4,4 -2.209139,0 -4,-1.790861 -4,-4 0,-2.209139 1.790861,-4 4,-4 2.209139,0 4,1.790861 4,4 z"
        cy="0"
        sodipodi:cx="42"
        sodipodi:cy="0"
@@ -204,26 +212,13 @@
        sodipodi:ry="4" />
   </g>
   <rect
-     style="fill:url(#linearGradient3871);fill-opacity:1;stroke:none"
+     style="fill:url(#linearGradient3871);fill-opacity:1.0;stroke:none"
      id="rect3074"
      width="180.36166"
      height="167.5154"
-     x="-85.448708"
-     y="55.668777"
+     x="-85.962555"
+     y="53.613373"
      rx="11.764445" />
-  <text
-     xml:space="preserve"
-     style="font-size:175.77445984px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-     x="-61.754402"
-     y="197.81151"
-     id="text3873"
-     sodipodi:linespacing="125%"
-     transform="scale(0.99196321,1.0081019)"><tspan
-       sodipodi:role="line"
-       id="tspan3875"
-       x="-61.754402"
-       y="197.81151"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#ffffff;fill-opacity:1;font-family:Bauhaus 93;-inkscape-font-specification:Bauhaus 93 Bold">D</tspan></text>
   <rect
      style="fill:#a4c639;stroke:#ffffff;stroke-width:5.54694271"
      id="c-0"
@@ -232,4 +227,17 @@
      width="28.645239"
      y="44.950008"
      x="121.18457" />
+  <path
+     sodipodi:nodetypes="cccccscsssccsssc"
+     d="m -17.603849,114.70621 v 85.87256 l -37.588778,-0.35148 V 200.57877 80.251657 H -6.21611 c 21.479312,0 38.298586,4.629101 50.457849,13.88729 14.44298,11.074663 21.664472,26.104583 21.664472,45.089733 0,18.1648 -6.17222,32.98962 -18.516644,44.47447 -12.344428,11.48485 -27.917197,16.95352 -47.35968329,16.95352 -2.28372081,0 -6.40270711,-0.0624 -11.52322871,-0.0778 v -35.24558 l 10.3531478,-0.0474 C 20.770858,165.18536 27.3916,156.63183 27.3916,139.22877 c 0,-16.34832 -10.770514,-24.52249 -32.3115434,-24.52249 z"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:194.85823059px;line-height:125%;font-family:'Bauhaus 93';-inkscape-font-specification:'Bauhaus 93';text-align:start;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.61869848;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.18431373"
+     id="path8463"
+     inkscape:connector-curvature="0" />
+  <ellipse
+     style="display:inline;fill:#007179;fill-opacity:1;stroke:none;stroke-width:0.85459781;stroke-opacity:1"
+     id="path957"
+     cx="52.631073"
+     cy="102.94305"
+     rx="14.864956"
+     ry="14.648856" />
 </svg>

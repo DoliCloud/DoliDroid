@@ -35,10 +35,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText1"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="3dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="1dp"
-         />
+        android:layout_marginRight="10dp" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -76,11 +75,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="3dp"
+        android:layout_marginRight="10dp"
         android:ems="10"
-        android:inputType="textUri" >
+        android:inputType="textUri">
 
         <requestFocus />
     </EditText>
