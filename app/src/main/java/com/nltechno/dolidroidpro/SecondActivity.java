@@ -1182,10 +1182,13 @@ public class SecondActivity extends Activity {
 		public void onPageStarted(WebView view, String url, Bitmap favicon)
 		{  
 		    Log.d(LOG_TAG, "onPageStarted url="+url+" originalUrl="+view.getOriginalUrl()+" view.getUrl="+view.getUrl()+" savedDolBasedUrl="+savedDolBasedUrl);
-			if (view.getOriginalUrl().startsWith("http:") && view.getOriginalUrl().startsWith(savedDolBasedUrl)) {
+			String urltotest = view.getOriginalUrl();
+			if (urltotest == null) urltotest = view.getUrl();
+
+		    if (urltotest.startsWith("http:") && urltotest.startsWith(savedDolBasedUrl)) {
 				//Log.d(LOG_TAG, "https:" + view.getUrl().substring(5));
 				//Log.d(LOG_TAG, url);
-				if (("https:" + view.getOriginalUrl().substring(5)).equals(url)) {
+				if (("https:" + urltotest.substring(5)).equals(url)) {
 					Log.w(LOG_TAG, "onPageStarted value of url is value of view.getUrl with a s added, we change the savedDolRootUrl");
 					//Toast.makeText(activity, "Warning: It seems your server forced a redirect to HTTPS page. Please check your connection URL and use the https directly if you can.", Toast.LENGTH_SHORT).show();
 					//savedDolBasedUrl = "http://"+savedDolBasedUrl.substring(4);

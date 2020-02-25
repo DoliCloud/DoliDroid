@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
     buildToolsVersion '28.0.3'
 
     // API Level
@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "com.nltechno.dolidroidpro"
         minSdkVersion 16
-        targetSdkVersion 26
+        targetSdkVersion 28
     }
 
     buildTypes {
