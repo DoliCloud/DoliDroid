@@ -4,6 +4,10 @@ English DoliDroid ChangeLog
 
 ***** ChangeLog for 2.0 *****
 
+2.036
+- FIX Hang on some Android 8+ when downloading
+- Restore ability to use with test sites (http)
+
 2.035
 - NEW Add static resources for v11
 - NEW Add warning if bad scheme (http vs https) used.
