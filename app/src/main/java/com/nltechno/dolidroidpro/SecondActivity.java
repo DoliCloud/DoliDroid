@@ -1260,6 +1260,7 @@ public class SecondActivity extends Activity {
 			if (fileName.equals("document.php") && ! url.startsWith(savedDolBasedUrl) && url.startsWith(savedDolBasedUrlWithSForced)) {
 				Log.w(LOG_TAG, "Bad savedDolBasedUrl that does not allow download");
 				// Can't make interaction here
+				//Toast.makeText(activity, "Bad savedDolBasedUrl that does not allow download", Toast.LENGTH_LONG);
 			}
 
 			if (fileName != null && url.startsWith(savedDolBasedUrl))
