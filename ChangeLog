@@ -4,6 +4,12 @@ English DoliDroid ChangeLog
 
 ***** ChangeLog for 2.0 *****
 
+2.039
+- FIX a not null exception if url is null
+
+2.037-2.0.38
+- FIX Hang during access on menu.
+
 2.036
 - FIX Hang on some Android 8+ when downloading
 - Restore ability to use with test sites (http)
