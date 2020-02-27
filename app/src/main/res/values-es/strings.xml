@@ -39,7 +39,6 @@
     <string name="Compatibility">Compatibilidad</string>
     <string name="License">Licencia</string>
     <string name="Sources">Fuentes</string>
-    <string name="JMobileMode">Modo móvil jQuery</string>
     <string name="DeviceAPILevel">Nivel API del dispositivo</string>
     <string name="DeviceHasMenuHardware">El dispositivo tiene botones de hardware</string>
     <string name="DeviceHasDownloadManager">El dispositivo tiene un gestor de descargas</string>

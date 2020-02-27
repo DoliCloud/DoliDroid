@@ -35,7 +35,6 @@
     <string name="Compatibility">Compatibilité</string>
     <string name="License">Licence</string>
     <string name="Sources">Sources</string>
-    <string name="JMobileMode">Mode JQuery mobile</string>
     <string name="DeviceAPILevel">Niveau API du terminal</string>
     <string name="DeviceHasMenuHardware">Terminal équipé de boutons matériels</string>
     <string name="DeviceHasDownloadManager">Terminal avec gestionnaire de téléchargement</string>

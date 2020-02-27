@@ -39,7 +39,6 @@
     <string name="Compatibility">Compatibiliteit</string>
     <string name="License">Licentie</string>
     <string name="Sources">Bronnen</string>
-    <string name="JMobileMode">JQuery mobiele modus</string>
     <string name="DeviceAPILevel">Apparaat API-niveau</string>
     <string name="DeviceHasMenuHardware">Apparaat heeft hardware-knoppen</string>
     <string name="DeviceHasDownloadManager">Apparaat heeft een download manager</string>

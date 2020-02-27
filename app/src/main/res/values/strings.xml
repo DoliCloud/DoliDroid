@@ -34,7 +34,6 @@
     <string name="Compatibility">Compatibility</string>
     <string name="License">License</string>
     <string name="Sources">Sources</string>
-    <string name="JMobileMode">JQuery mobile mode</string>
     <string name="DeviceAPILevel">Device API Level</string>
     <string name="DeviceHasMenuHardware">Device has hardware buttons</string>
     <string name="DeviceHasDownloadManager">Device has a download manager</string>

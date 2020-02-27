@@ -36,7 +36,6 @@
     <string name="Compatibility">Uyumluluk</string>
     <string name="License">Lisans</string>
     <string name="Sources">Kaynaklar</string>
-    <string name="JMobileMode">JQuery mobil modu</string>
     <string name="DeviceAPILevel">Cihaz API Düzeyi</string>
     <string name="DeviceHasMenuHardware">Cihazın donanım düğmeleri var</string>
     <string name="DeviceHasDownloadManager">Cihazın bir indirme yöneticisi var</string>

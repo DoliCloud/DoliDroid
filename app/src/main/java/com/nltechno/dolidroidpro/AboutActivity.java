@@ -172,10 +172,6 @@ public class AboutActivity extends Activity {
 		TextView textViewAbout2 = (TextView) findViewById(R.id.TextAbout02);
 		String s2="";
 
-        // DoliDroid.useJMobileAjax is true to force dol_use_jmobile=2, otherwise dol_use_jmobile is 1.
-		//s2+=getString(R.string.JMobileMode)+": <b>"+(DoliDroid.useJMobileAjax?"Ajax":"No ajax")+"</b><br />\n";
-		//s2+="<br />";
-
 		Intent intent = getIntent();
         String savedDolRootUrl = intent.getStringExtra("savedDolRootUrl");
         if (savedDolRootUrl != null && ! "".equals(savedDolRootUrl))
