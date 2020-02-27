@@ -1,5 +1,7 @@
 package com.nltechno.utils;
 
+import android.annotation.SuppressLint;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -29,9 +31,11 @@ public class MySSLSocketFactory extends SSLSocketFactory {
         super(truststore);
 
         TrustManager tm = new X509TrustManager() {
+            @SuppressLint("TrustAllX509TrustManager")
             public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
             }
 
+            @SuppressLint("TrustAllX509TrustManager")
             public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
             }
 

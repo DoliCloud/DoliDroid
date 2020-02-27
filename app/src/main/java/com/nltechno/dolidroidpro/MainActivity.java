@@ -368,7 +368,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	    		Log.d(LOG_TAG, "Click onto switch show bar, prefAlwaysShowBar is "+prefAlwaysShowBar);
 	    		prefAlwaysShowBar=!prefAlwaysShowBar;
 	        	editor.putBoolean("prefAlwaysShowBar", prefAlwaysShowBar);
-	        	editor.commit();
+	        	editor.apply();
 	    		Log.d(LOG_TAG, "Switched value is now "+prefAlwaysShowBar);
 	    		// Update men label
 	        	if (prefAlwaysShowBar) this.savMenu.findItem(R.id.always_show_bar).setTitle(getString(R.string.menu_show_bar_on));
@@ -474,8 +474,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	/**
 	 * openDolUrl
 	 *
-	 * @param button
-	 * @throws IOException
+	 * @param View	button
+	 * @throws IOException IOException
 	 */
 	public void openDolUrl(View button) throws IOException
 	{
@@ -503,7 +503,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 		Log.d(LOG_TAG, "We clicked 'Start' with dolRootUrl=" + dolRootUrl+" dolRequestUrl=" + dolRequestUrl);
 
-		FileOutputStream fos = null;
+		FileOutputStream fos;
 		try
 		{
 			Log.d(LOG_TAG, "Write into file " + FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());

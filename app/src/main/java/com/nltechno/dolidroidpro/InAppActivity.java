@@ -50,8 +50,6 @@ public class InAppActivity extends Activity {
 	
 	/**
 	 * Called when activity is created
-	 * 
-	 * @return	void
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -99,8 +97,6 @@ public class InAppActivity extends Activity {
 
 	/**
 	 * Called when activity start
-	 * 
-	 * @return	void
 	 */
 	@Override
 	public void onStart() {

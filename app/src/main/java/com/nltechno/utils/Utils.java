@@ -38,14 +38,14 @@ public class Utils {
 
 	public static String bytesToString(byte[] newStuff) 
 	{
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		
 		for (int j = 0; j < newStuff.length; j++) 
 		{
-			result = result + (char)newStuff[j];
+			result.append((char) newStuff[j]);
 		}
 
-		return result;
+		return result.toString();
 	}
 
 
@@ -97,8 +97,8 @@ public class Utils {
 	/**
 	 * MD5Hex
 	 * 
-	 * @param s
-	 * @return
+	 * @param 	String	string to encode
+	 * @return	String	Result
 	 */
     public static String MD5Hex(String s) 
     {
@@ -117,8 +117,8 @@ public class Utils {
     /**
      * toHex
      * 
-     * @param a
-     * @return
+     * @param 	byte[]	a	Array of bytes
+     * @return	String		String
      */
     public static String toHex(byte[] a) 
     {

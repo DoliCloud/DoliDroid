@@ -33,9 +33,9 @@ public class SslAlertDialog {
     /**
      * Constructor
      * 
-     * @param errorHandler
-     * @param activity
-     * @param errorcode
+     * @param SslErrorHandler   errorHandler
+     * @param SecondActivity    activity
+     * @param String            errorcode
      */
     public SslAlertDialog(SslErrorHandler errorHandler, SecondActivity activity, String errorcode) {
 

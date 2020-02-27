@@ -34,9 +34,6 @@ package com.nltechno.inapp;
 /**
  * Base64 converter class. This code is not a complete MIME encoder;
  * it simply converts binary data to base64 data and back.
- *
- * <p>Note {@link CharBase64} is a GWT-compatible implementation of this
- * class.
  */
 public class Base64 {
     /** Specify encoding (value is {@code true}). */
@@ -439,7 +436,7 @@ public class Base64 {
      * @param source The Base64 encoded data
      * @return decoded data
      * @since 1.3
-     * @throws Base64DecoderException
+     * @throws Base64DecoderException Base64DecoderException
      */
     public static byte[] decode(byte[] source) throws Base64DecoderException {
         return decode(source, 0, source.length);
@@ -467,7 +464,7 @@ public class Base64 {
      * @param len    the length of characters to decode
      * @return decoded data
      * @since 1.3
-     * @throws Base64DecoderException
+     * @throws Base64DecoderException Base64DecoderException
      */
     public static byte[] decode(byte[] source, int off, int len)
             throws Base64DecoderException {

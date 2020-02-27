@@ -1,9 +1,5 @@
 <resources>
 
-    <style name="AppTheme" parent="android:Theme.Light" />
-	<!-- To use Material Design, use parent="android:Theme.Material" for 5.0+ only or
-	parent="android:Theme.AppCompat" for 21+ -->
-    
     <!-- Theme for DoliDroid first page -->
     <!-- parent="@android:style/Theme.NoTitleBar" = old menu without ActionBar -->
     <!-- parent="@android:style/Theme.Holo" (need min sdk=11) will enabled ActionBar  -->

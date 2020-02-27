@@ -349,8 +349,6 @@ public class SecondActivity extends Activity {
 	
 	/**
 	 * Called when activity start
-	 * 
-	 * @return	void
 	 */
 	@Override
     public void onStart() 
@@ -361,8 +359,8 @@ public class SecondActivity extends Activity {
     	// We must reload menu (it may have been changed into other activities
 		invalidateOptionsMenu();
 	}
-		
-   
+
+
     /**
      *	Load SmartPhone menu
      *
@@ -673,7 +671,7 @@ public class SecondActivity extends Activity {
         @Override
         protected String doInBackground(String... urls) 
         {
-          String response = "";
+          StringBuilder response = new StringBuilder();
           
           if (listOfCookiesAfterLogon != null)		// We do not try to load url if cookies are not yet set
           {
@@ -698,7 +696,7 @@ public class SecondActivity extends Activity {
 	        		  BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
 	        		  String s = "";
 	        		  while ((s = buffer.readLine()) != null) {
-	        			  response += s;
+	        			  response.append(s);
 	        		  }
 	        	  }
 	        	  catch (Exception e) 
@@ -708,7 +706,7 @@ public class SecondActivity extends Activity {
 	          }
           }
           
-          return response;
+          return response.toString();
         }
         
     	/**
@@ -766,7 +764,7 @@ public class SecondActivity extends Activity {
     /**
      * Click onto text Back
      * 
-     * @param v
+     * @param View v
      */
     @SuppressLint("SetJavaScriptEnabled")
 	public void onClickToBack(View v) 
@@ -777,7 +775,7 @@ public class SecondActivity extends Activity {
     /**
      * Click onto text Menu
      * 
-     * @param v
+     * @param View v
      */
     @SuppressLint("SetJavaScriptEnabled")
 	public void onClickToMenu(View v) 
@@ -788,7 +786,7 @@ public class SecondActivity extends Activity {
     /**
      * Click onto text Search
      * 
-     * @param v
+     * @param View v
      */
     @SuppressLint("SetJavaScriptEnabled")
 	public void onClickToSearch(View v) 
@@ -962,8 +960,6 @@ public class SecondActivity extends Activity {
 
     /**
      * Dump content of backforward webview list
-     * 
-     * @return void
      */
 	public void dumpBackForwardList(WebView myWebView) 
 	{
@@ -1176,7 +1172,6 @@ public class SecondActivity extends Activity {
 		 * @param view		View
 		 * @param url		URL
 		 * @param favicon	Favicon
-		 * @return void
 		 */
 		@Override  
 		public void onPageStarted(WebView view, String url, Bitmap favicon)
@@ -1214,9 +1209,9 @@ public class SecondActivity extends Activity {
 		 * Return if we must intercept HTTP Request for pages (not called when cache is used)
 		 * This method is called into a non-UI Thread (Android >= 3.0) so UI Thread function are not allowed.
 		 * 
-		 * @param 	view
-		 * @param 	url			For example "http://192.168.0.1/xxx" or "data:image/png;base64,..."
-		 * @return	boolean		True or false if we must send request or not
+		 * @param 	WebView		view
+		 * @param 	String		url			For example "http://192.168.0.1/xxx" or "data:image/png;base64,..."
+		 * @return	boolean					True or false if we must send request or not
 		 */
 		@Override
 		public WebResourceResponse shouldInterceptRequest(WebView view, String url)
@@ -1260,7 +1255,7 @@ public class SecondActivity extends Activity {
 			if ("document.php".equals(fileName) && url != null && ! url.startsWith(savedDolBasedUrl) && url.startsWith(savedDolBasedUrlWithSForced)) {
 				Log.w(LOG_TAG, "Bad savedDolBasedUrl that does not allow download");
 				// Can't make interaction here
-				//Toast.makeText(activity, "Bad savedDolBasedUrl that does not allow download", Toast.LENGTH_LONG);
+				//Toast.makeText(activity, R.string.AlertDownloadBadHTTPS, Toast.LENGTH_LONG).show();
 			}
 
 			if (fileName != null && url.startsWith(savedDolBasedUrl))
@@ -1478,7 +1473,6 @@ public class SecondActivity extends Activity {
 		 * 
 		 * @param	WebView		view		Web view
 		 * @param	String		url			Url
-		 * @return	void
 		 */
 		@Override
 		public void onLoadResource(WebView view, String url)
@@ -1490,8 +1484,6 @@ public class SecondActivity extends Activity {
 		/**
 		 * onPageFinished: Execute code just after a page was completely loaded
 		 * Note: When using jmobile ajax cache, this method may be called before or after JMobile has run, so before or after any onConsoleMessage of JMobile error.
-		 * 
-		 * @return void
 		 */
 		@Override
 	    public void onPageFinished(WebView view, String url)
@@ -1657,7 +1649,7 @@ public class SecondActivity extends Activity {
 									editor.putString(savedDolRootUrl+"-username", username);
 									Log.d(LOG_TAG,"Save "+savedDolRootUrl+"-password="+password);
 									editor.putString(savedDolRootUrl+"-password", password);
-									editor.commit();
+									editor.apply();
 								}
 					    	}
 					    	else Log.d(LOG_TAG, "We don't save form fields (prefAlwaysAutoFill is false).");
@@ -1742,10 +1734,9 @@ public class SecondActivity extends Activity {
 		
 		/**
 		 * onReceivedHttpAuthRequest
-		 * 
-		 * @return	void
 		 */
-	    @Override 
+	    @SuppressLint("AuthLeak")
+		@Override
 	    public void onReceivedHttpAuthRequest  (WebView view, HttpAuthHandler handler, String host, String realm)
 	    { 
 	    	Log.i(LOG_TAG, "A request to send http basic auth has been received");
@@ -1799,8 +1790,6 @@ public class SecondActivity extends Activity {
 		/**
 		 * onReceivedError
 		 * This method is only called when network errors occur, but never when HTTP errors are received by WebView.
-		 * 
-		 * @return	void
 		 */
 		@Override
 	    public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) 
@@ -1812,9 +1801,7 @@ public class SecondActivity extends Activity {
 		
 		/**
 		 * onReceivedSslError
-		 * 
-		 * @return	void
-		 */		
+		 */
 		@Override
 		public void onReceivedSslError (WebView view, SslErrorHandler handler, SslError error) {
 			String message = "SSL Certificate error.";

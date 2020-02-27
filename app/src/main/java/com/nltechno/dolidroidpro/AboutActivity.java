@@ -85,7 +85,7 @@ public class AboutActivity extends Activity {
         // menuAre is defined to 'buttonsbar', 'actionbar' or 'hardware'
         if (menuAre.equals("actionbar"))
         {
-        	
+        	// Nothing
         }
         else {	// Menu are hardware
         	requestWindowFeature(Window.FEATURE_NO_TITLE);	// Hide title with menus
@@ -97,8 +97,6 @@ public class AboutActivity extends Activity {
 	
 	/**
 	 * Called when activity start
-	 * 
-	 * @return	void
 	 */
 	@Override
 	public void onStart() {
@@ -123,7 +121,7 @@ public class AboutActivity extends Activity {
 			//s+= "PackageName = " + info.packageName + "\n";
 			s1+=getString(R.string.Author)+": <b>Laurent Destailleur</b><br />\n";
 			s1+=getString(R.string.Web)+": https://www.nltechno.com</b><br />\n";
-			s1+=getString(R.string.Compatibility)+": <b>Dolibarr 3.5+</b><br />\n";
+			s1+=getString(R.string.Compatibility)+": <b>Dolibarr 7+</b><br />\n";
 			s1+=getString(R.string.License)+": <b>GPL v3+</b><br />\n";
 			//s1+=getString(R.string.Sources)+": https://www.nltechno.com/services/<br />\n";
 			s1+=getString(R.string.Sources)+": https://framagit.org/eldy/dolidroid.git<br />\n";
