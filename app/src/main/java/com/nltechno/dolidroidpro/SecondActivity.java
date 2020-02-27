@@ -1257,7 +1257,7 @@ public class SecondActivity extends Activity {
 			
 			Log.v(LOG_TAG, "shouldInterceptRequest url="+url+", host="+host+", fileName="+fileName+", savedDolBasedUrl="+savedDolBasedUrl+" version in url param (for js or css pages)="+version);
 
-			if ("document.php".equals(fileName) && ! url.startsWith(savedDolBasedUrl) && url.startsWith(savedDolBasedUrlWithSForced)) {
+			if ("document.php".equals(fileName) && url != null && ! url.startsWith(savedDolBasedUrl) && url.startsWith(savedDolBasedUrlWithSForced)) {
 				Log.w(LOG_TAG, "Bad savedDolBasedUrl that does not allow download");
 				// Can't make interaction here
 				//Toast.makeText(activity, "Bad savedDolBasedUrl that does not allow download", Toast.LENGTH_LONG);
