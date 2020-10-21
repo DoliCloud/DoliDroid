@@ -2,6 +2,9 @@
 English DoliDroid ChangeLog
 --------------------------------------------------------------
 
+***** ChangeLog for 2.1 *****
+- Disable cache for the quick search page because it is not compatible with CSRF protection
+
 ***** ChangeLog for 2.0 *****
 - Compatibility with Multicompany module
 - Fix open external URL
