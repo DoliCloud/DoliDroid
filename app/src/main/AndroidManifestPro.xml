@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nltechno.dolidroidpro"
     android:versionCode="39"
-    android:versionName="DoliDroid Pro 2.0"
+    android:versionName="DoliDroid Pro 2.1"
     android:installLocation="auto"
     >
 	<!-- Remove android:installLocation="preferExternal" to always install on external storage, use "auto" for default internal -->    
@@ -16,7 +16,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- Dangerous permissions -->
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />    <!-- Permission in group android.permission-group.STORAGE -->
 	
     <application
         android:icon="@drawable/ic_launcher"
