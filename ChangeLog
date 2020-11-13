@@ -4,6 +4,7 @@ English DoliDroid ChangeLog
 
 ***** ChangeLog for 2.1 *****
 - Disable cache for the quick search page because it is not compatible with CSRF protection
+- Include static resources for v12
 
 
 ***** ChangeLog for 2.0 *****
