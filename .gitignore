@@ -51,3 +51,4 @@ obj/
 
 /build/android-profile/
 /app/release/output.json
+/app/release/output-metadata.json
