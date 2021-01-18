@@ -120,11 +120,11 @@ public class AboutActivity extends Activity {
 
 			//s+= "PackageName = " + info.packageName + "\n";
 			s1+=getString(R.string.Author)+": <b>Laurent Destailleur</b><br />\n";
-			s1+=getString(R.string.Web)+": https://www.nltechno.com</b><br />\n";
+			s1+=getString(R.string.Web)+": <b>https://www.dolicloud.com</b><br />\n";
 			s1+=getString(R.string.Compatibility)+": <b>Dolibarr 7+</b><br />\n";
 			s1+=getString(R.string.License)+": <b>GPL v3+</b><br />\n";
 			//s1+=getString(R.string.Sources)+": https://www.nltechno.com/services/<br />\n";
-			s1+=getString(R.string.Sources)+": https://framagit.org/eldy/dolidroid.git<br />\n";
+			s1+=getString(R.string.Sources)+": https://github.com/eldy/dolidroid.git<br />\n";
 			// This download key allow to download file with name src_dolidroid-info.versionName-downloadkey
 			//String downloadkey=Utils.MD5Hex("dolidroid"+info.versionName.replaceAll("[^0-9.]", "")+"saltnltechno").substring(0, 8);
 			//s1+=getString(R.string.Sources)+" Download Key: dolidroid-"+info.versionName.replaceAll("[^0-9.]", "")+"-"+downloadkey+"<br />\n";
