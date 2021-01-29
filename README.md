@@ -3,6 +3,9 @@
 ## TITLE
 DoliDroid is the Android front-end client for Dolibarr ERP & CRM web software.
 
+[<img src="img/DoliDroid_video.webp">](https://www.youtube.com/watch?v=hJSXQj_KeE0)
+
+
 ## DESCRIPTION
 This application is not a standalone program. It is a front end client to use a your online hosted instance of Dolibarr ERP & CRM software (Open-source web software to manage your business).
 
