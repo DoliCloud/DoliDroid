@@ -3,8 +3,10 @@
 ## TITLE
 DoliDroid est un client Android du logiciel web Dolibarr ERP & CRM (en français PGI & GRC).
 
+[<img src="img/DoliDroid_video.webp">](https://www.youtube.com/watch?v=hJSXQj_KeE0)
+
 ## DESCRIPTION
-DoliDroid n'est pas un programme autonome. C'est un logiciel client qui accède à une instance, hébergée en ligne, de votre logiciel OpenSource Dolibarr ERP & CRM (logiciel de gestion de votre activité professionnelle, www.dolibarr.org).
+DoliDroid n'est pas un programme autonome. C'est un logiciel client qui accède à une instance, hébergée en ligne, de votre logiciel OpenSource Dolibarr ERP & CRM (logiciel de gestion de votre activité professionnelle, voir https://www.dolibarr.org).
 
 Voici les avantages de DoliDroid :
 - DoliDroid n'est pas une duplication du code de Dolibarr sur Android, mais une interface se branchant sur une installation web existante, aussi, toutes les fonctionnalités existante en ligne sont intégrées. Ceci est également vrai pour les modules externes.
@@ -24,4 +26,4 @@ Voici les avantages de DoliDroid :
 
 ATTENTION !
 
-Cette application requiert Android 4.0+ ainsi q'un Dolibarr ERP & CRM hébergé en version 3. ou plus et accessible par internet (comme, par exemple, lorsque vous êtes hébergé par l'offre SaaS DoliCloud - https://www.dolicloud.com)
+Cette application requiert Android 6.0+ ainsi q'un Dolibarr ERP & CRM hébergé en version 9 ou plus et accessible par internet (comme, par exemple, lorsque vous êtes hébergé par l'offre SaaS DoliCloud - https://www.dolicloud.com)

@@ -7,7 +7,7 @@ DoliDroid is the Android front-end client for Dolibarr ERP & CRM web software.
 
 
 ## DESCRIPTION
-This application is not a standalone program. It is a front end client to use a your online hosted instance of Dolibarr ERP & CRM software (Open-source web software to manage your business).
+This application is not a standalone program. It is a front end client to use a your online hosted instance of Dolibarr ERP & CRM software (Open-source web software to manage your business, see https://www.dolibarr.org).
 
 The advantage of DoliDroid are :
 - DoliDroid is not a duplicated code of Dolibarr for Android, but rewamps your Dolibarr web installation, so all your online existing features are supported by this application. This is also true for external modules features.
@@ -27,5 +27,5 @@ The advantage of DoliDroid are :
 
 WARNING ! 
 
-This application need Android 4.0+ and a hosted Dolibarr ERP & CRM version 3.6 or newer, accessible by internet
+This application need Android 6.0+ and a hosted Dolibarr ERP & CRM version 9 or newer, accessible by internet
 (For example, when hosted on any SaaS solution like DoliCloud - https://www.dolicloud.com).
