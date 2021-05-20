@@ -115,7 +115,7 @@ import android.app.AlertDialog;
 public class SecondActivity extends Activity {
 
 	private static final String LOG_TAG = "DoliDroidActivity";
-	public static final String VERSION_RESOURCES = "12.0";
+	public static final String VERSION_RESOURCES = "14.0";
 
 	private WebView myWebView;
 	private WebViewClientDoliDroid myWebViewClientDoliDroid;
