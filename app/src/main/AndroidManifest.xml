@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nltechno.dolidroidpro"
-    android:versionCode="39"
+    android:versionCode="41"
     android:versionName="DoliDroid Pro 2.1"
     android:installLocation="auto"
     >
-	<!-- Remove android:installLocation="preferExternal" to always install on external storage, use "auto" for default internal -->
+    <!-- Remove android:installLocation="preferExternal" to always install on external storage, use "auto" for default internal -->
 
-	<!-- Some Chromebooks don't support touch. Although not essential,
+    <!-- Some Chromebooks don't support touch. Although not essential,
          it's a good idea to explicitly include this declaration. -->
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
 
     <!-- Normal permissions (PROTECTION_NORMAL) -->
     <uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- Dangerous permissions -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />    <!-- Permission in group android.permission-group.STORAGE -->
@@ -42,7 +42,7 @@
             android:name=".SecondActivity"
             android:label="@string/title_activity_second"
             android:theme="@style/DoliDroidThemeSecond"
-            android:configChanges="orientation|screenSize" 
+            android:configChanges="orientation|screenSize"
             >
         </activity>
         <activity
@@ -55,12 +55,12 @@
             android:label="@string/title_activity_about"
             android:theme="@style/DoliDroidThemeAbout" >
         </activity>
-        
-		<receiver android:name="com.nltechno.dolidroidpro.DownloadBroadcastReceiver">
-    		<intent-filter>
-        		<action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
-    		</intent-filter>
-		</receiver>
+
+        <receiver android:name="com.nltechno.dolidroidpro.DownloadBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
