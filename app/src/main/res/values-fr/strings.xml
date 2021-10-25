@@ -56,11 +56,11 @@
     <!-- Menu main + web -->
     <string name="menu_info">A propos de DoliDroid</string>
     <string name="menu_info_short">A propos</string>
-    <string name="menu_show_bar_on">Afficher la barre menu (oui)</string>
+    <string name="menu_show_bar_on">Afficher la barre menu</string>
     <string name="menu_show_bar_off">Afficher la barre menu (non)</string>
-    <string name="menu_autofill_on">Conserver login/passe (oui)</string>
+    <string name="menu_autofill_on">Conserver login/passe</string>
     <string name="menu_autofill_off">Conserver login/passe (non)</string>
-    <string name="menu_uselocalresources_on">Utiliser ressources locales (oui)</string>
+    <string name="menu_uselocalresources_on">Utiliser ressources locales</string>
     <string name="menu_uselocalresources_off">Utiliser ressources locales (non)</string>
 
     <!-- Menu main page -->
@@ -68,7 +68,7 @@
     <string name="menu_add_url">Ajouter URL prédéfinie</string>
     <string name="menu_remove_url">Supprimer une URL prédéfinie</string>
     <string name="menu_clear_all_urls">Effacer les URLs prédéfinies</string>
-    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">Je n\'ai pas d\'instance ERP CRM encore, j\'en crée une sur DoliCloud</a></string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">Je n\'ai pas d\'instance ERP CRM encore, j\'en crée une sur DoliCloud</a>...</string>
 
     <!-- Menu web browser -->
     <string name="menu_menu">Menu</string>

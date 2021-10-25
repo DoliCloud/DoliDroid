@@ -13,84 +13,95 @@
         android:textColor="@color/black" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textAndroidClient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/dolibarr_for_android"
-        android:textColor="@color/black"
+        android:textColor="@color/grey"
+        android:textSize="12sp"
         tools:context=".MainActivity" />
 
     <TextView
         android:id="@+id/textViewLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/imageView2"
+        android:layout_alignTop="@id/buttonStart"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="6dp"
+        android:layout_marginTop="44dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="@string/dolicloud_register"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textColorLink="@color/blue" />
+        android:textColorLink="@color/blue"
+        android:textSize="12sp"
+        tools:ignore="TextContrastCheck" />
 
     <Spinner
-        android:id="@+id/spinner1"
+        android:id="@+id/combo_list_of_urls"
+        style="@android:style/Widget.Material.Spinner.Underlined"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText1"
+        android:layout_height="48dp"
+        android:layout_below="@+id/url_of_instance"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="10dp"
+        android:spinnerMode="dialog" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView1"
+        android:layout_above="@+id/textAndroidClient"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="1dp"
         android:contentDescription="@string/logo_dolidroid"
         android:src="@drawable/ic_launcher" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/buttonStart"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
-        android:layout_below="@+id/editText1"
+        android:layout_below="@id/url_of_instance"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="48dp"
         android:background="#009688"
-        android:minWidth="80dip"
+        android:minWidth="120dip"
         android:text="@string/open"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textDolibarrURL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="28dp"
         android:text="@string/dolibarr_url"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/black" />
+        android:textColor="@color/yellow"
+        android:textSize="16sp" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/url_of_instance"
+        style="@android:style/Widget.Holo.AutoCompleteTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/textDolibarrURL"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="10dp"
         android:ems="10"
-        android:inputType="textUri"
+        android:hint="https://..."
         android:importantForAutofill="no"
+        android:inputType="textUri"
+        android:minHeight="32dp"
+        android:singleLine="true"
+        android:textSize="15sp"
         tools:ignore="LabelFor">
 
         <requestFocus />

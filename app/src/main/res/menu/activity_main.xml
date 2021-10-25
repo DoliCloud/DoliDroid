@@ -2,6 +2,14 @@
     <!-- List of predefined icon on: http://androiddrawableexplorer.appspot.com/ -->
 
 	<item
+		android:id="@+id/quit"
+		android:icon="@drawable/ic_baseline_exit_to_app_24"
+		android:menuCategory="secondary"
+		android:orderInCategory="200"
+		android:showAsAction="withText"
+		android:title="@string/menu_quit" />
+
+	<item
 		android:id="@+id/menu_settings"
 		android:menuCategory="secondary"
 		android:orderInCategory="300"
@@ -40,13 +48,6 @@
 
 	</item>
 
-	<item
-		android:id="@+id/quit"
-		android:icon="@drawable/ic_baseline_exit_to_app_24"
-		android:menuCategory="secondary"
-		android:orderInCategory="400"
-		android:showAsAction="withText"
-		android:title="@string/menu_quit" />
 	<item
 		android:id="@+id/about"
 		android:icon="@android:drawable/ic_menu_info_details"

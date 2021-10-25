@@ -141,7 +141,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		// Create listener to respond to click on button
 		// Not using the android:onClick tag is bugged.
 		// Declaring listener is also faster.
-		Button btn = (Button) findViewById(R.id.button1);
+		Button btn = (Button) findViewById(R.id.buttonStart);
 		btn.setOnClickListener(new View.OnClickListener()
 		{
 		    @Override
@@ -220,7 +220,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		}
 
 		// Show combo list if there is at least 1 choice
-		Spinner spinner1 = (Spinner) findViewById(R.id.spinner1);
+		Spinner spinner1 = (Spinner) findViewById(R.id.combo_list_of_urls);
 		TextView texviewlink = (TextView) findViewById(R.id.textViewLink);
 
 		if (this.nbOfEntries > 0)
@@ -245,11 +245,11 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		spinner1.setOnItemSelectedListener(this);	// Enable handler with onItemSelected and onNothingSelected
 
 		// Init url with hard coded value
-		EditText editText1 = (EditText) findViewById(R.id.editText1);
+		EditText editText1 = (EditText) findViewById(R.id.url_of_instance);
 		editText1.setText(homeUrlToSuggest);
 
 		// Init with button disabled
-		Button startButton = (Button) findViewById(R.id.button1);
+		Button startButton = (Button) findViewById(R.id.buttonStart);
 		if (editText1.getText().toString().equals("")) startButton.setEnabled(false);
 
 		editText1.addTextChangedListener(fieldValidatorTextWatcher);
@@ -302,7 +302,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
         }
 
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-    		Button startButton = (Button) findViewById(R.id.button1);
+    		Button startButton = (Button) findViewById(R.id.buttonStart);
             Log.d(LOG_TAG, "onTextChanged s="+s);
             if (s.equals("") || "http://".contains(s.toString().toLowerCase(Locale.ENGLISH)) || "https://".contains(s.toString().toLowerCase(Locale.ENGLISH))) startButton.setEnabled(false);
             else startButton.setEnabled(true);
@@ -444,7 +444,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				Log.d(LOG_TAG, result.toString());
 				this.listOfRootUrl = new ArrayList<String>();
 	    		// Hide combo
-	    		Spinner spinner1 = (Spinner) findViewById(R.id.spinner1);
+	    		Spinner spinner1 = (Spinner) findViewById(R.id.combo_list_of_urls);
 	    		spinner1.setVisibility(View.INVISIBLE);
 				TextView texviewlink = (TextView) findViewById(R.id.textViewLink);
 				texviewlink.setVisibility(View.VISIBLE);
@@ -471,8 +471,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	public void onItemSelected(AdapterView<?> parent, View v, int position, long id)
 	{
         Log.d(LOG_TAG, "onItemSelected position="+position+" id="+id);
-		EditText freeUrl = (EditText) findViewById(R.id.editText1);
-		Spinner spinnerUrl = (Spinner) findViewById(R.id.spinner1);
+		EditText freeUrl = (EditText) findViewById(R.id.url_of_instance);
+		Spinner spinnerUrl = (Spinner) findViewById(R.id.combo_list_of_urls);
 		String dolRootUrl = (spinnerUrl.getSelectedItem() == null ? "": spinnerUrl.getSelectedItem().toString());
 		//Button startButton = (Button) findViewById(R.id.button1);
 
@@ -482,7 +482,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			freeUrl.setText(dolRootUrl);	// If not empty choice
 
 			this.allowChangeText=Boolean.FALSE;
-			spinnerUrl.setSelection(0, false);	// This call the onItemSelected. Tje this.allowChangeText prevent to change text a second time
+			spinnerUrl.setSelection(0, false);	// This call the onItemSelected. The this.allowChangeText prevent to change text a second time
 		}
 		else
 		{
@@ -500,9 +500,9 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
     public void onNothingSelected(AdapterView<?> parent)
     {
         Log.d(LOG_TAG, "onNothingSelected");
-		EditText freeUrl = (EditText) findViewById(R.id.editText1);
+		EditText freeUrl = (EditText) findViewById(R.id.url_of_instance);
 		freeUrl.setText("");
-		Button startButton = (Button) findViewById(R.id.button1);
+		Button startButton = (Button) findViewById(R.id.buttonStart);
 		startButton.setEnabled(false);
     }
 
@@ -516,7 +516,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	{
 		// Do click handling here
 
-		final EditText freeUrl = (EditText) findViewById(R.id.editText1);
+		final EditText freeUrl = (EditText) findViewById(R.id.url_of_instance);
 		String dolRequestUrl = freeUrl.getText().toString();
 		String dolRootUrl = freeUrl.getText().toString();
 		dolRequestUrl = dolRequestUrl.replace("\\", "/").trim();

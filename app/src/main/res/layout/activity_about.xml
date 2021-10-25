@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:theme="@style/DoliDroidThemeAbout"
+    android:theme="@style/DoliDroidThemeFirst"
     tools:context=".AboutActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="4dp"
-        android:theme="@style/DoliDroidThemeAbout"
+        android:theme="@style/DoliDroidThemeFirst"
         android:background="@color/white"
         android:textColor="@color/black">
 
@@ -28,11 +28,9 @@
             android:id="@+id/TextAbout01"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView1"
+            android:layout_below="@+id/textAndroidClient"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_marginStart="14dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="42dp"
@@ -41,16 +39,17 @@
             android:maxLines="30"
             android:text="@string/textAboutA"
             android:textSize="14sp"
-            tools:context=".MainActivity" />
+            tools:context=".AboutActivity" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textAndroidClient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageView2"
             android:layout_centerHorizontal="true"
             android:text="@string/dolibarr_for_android"
-            tools:context=".MainActivity" />
+            android:textColor="@color/grey"
+            tools:context=".AboutActivity" />
 
         <TextView
             android:id="@+id/TextAbout02"
@@ -58,9 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/TextAbout01"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_marginStart="14dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
@@ -69,7 +66,7 @@
             android:maxLines="50"
             android:text="@string/textAboutB"
             android:textSize="14sp"
-            tools:context=".MainActivity" />
+            tools:context=".AboutActivity" />
 
     </RelativeLayout>
 
