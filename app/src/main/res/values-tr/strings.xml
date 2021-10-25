@@ -55,9 +55,9 @@
     
     <!-- Menu main + web -->
     <string name="menu_info">DoliDroid Hakkında</string>
-    <string name="menu_show_bar_on">Menü çubuğunu göster (evet)</string>
+    <string name="menu_show_bar_on">Menü çubuğunu göster</string>
     <string name="menu_show_bar_off">Menü çubuğunu göster (hayır)</string>
-    <string name="menu_autofill_on">Giriş / parola Keep (evet)</string>
+    <string name="menu_autofill_on">Giriş / parola Keep</string>
     <string name="menu_autofill_off">Giriş / parola Keep (hayır)</string>
     <!-- Menu main page -->
     <string name="menu_settings">Ayarlar</string>

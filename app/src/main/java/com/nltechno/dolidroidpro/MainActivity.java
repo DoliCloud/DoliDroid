@@ -260,10 +260,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	    	MenuItem menuItem = this.savMenu.findItem(R.id.always_show_bar);
 	    	if (Utils.hasMenuHardware(activity))
 	    	{
+				menuItem.setVisible(true);
 		    	boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
 		    	Log.d(LOG_TAG, "prefAlwaysShowBar value is "+prefAlwaysShowBar);
-		    	if (prefAlwaysShowBar) menuItem.setTitle(getString(R.string.menu_show_bar_on));
-		    	else menuItem.setTitle(getString(R.string.menu_show_bar_off));
+		    	if (prefAlwaysShowBar) {
+		    		menuItem.setTitle(getString(R.string.menu_show_bar_on));
+				} else {
+		    		menuItem.setTitle(getString(R.string.menu_show_bar_off));
+				}
 	    	}
 	    	else
 	    	{
@@ -274,8 +278,13 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			MenuItem menuItem2 = this.savMenu.findItem(R.id.always_autofill);
     		boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
     		Log.d(LOG_TAG, "prefAlwaysAutoFill value is "+prefAlwaysAutoFill);
-    		if (prefAlwaysAutoFill) menuItem2.setTitle(getString(R.string.menu_autofill_on));
-    		else menuItem2.setTitle(getString(R.string.menu_autofill_off));
+    		if (prefAlwaysAutoFill) {
+    			//menuItem2.setTitle(getString(R.string.menu_autofill_on));
+				menuItem2.setChecked(true);
+			} else {
+    			//menuItem2.setTitle(getString(R.string.menu_autofill_off));
+				menuItem2.setChecked(false);
+			}
 		}
 	}
 
@@ -324,6 +333,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
         // Hide menu show bar if there is no hardware
         if (Utils.hasMenuHardware(activity))
         {
+			menuItem.setVisible(true);
         	boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
         	Log.d(LOG_TAG, "prefAlwaysShowBar value is "+prefAlwaysShowBar);
         	if (prefAlwaysShowBar) menuItem.setTitle(getString(R.string.menu_show_bar_on));
@@ -337,11 +347,21 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
    		boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
    		Log.d(LOG_TAG, "prefAlwaysAutoFill value is "+prefAlwaysAutoFill);
-   		if (prefAlwaysAutoFill) menuItem2.setTitle(getString(R.string.menu_autofill_on));
-   		else menuItem2.setTitle(getString(R.string.menu_autofill_off));
+   		if (prefAlwaysAutoFill) {
+   			//menuItem2.setTitle(getString(R.string.menu_autofill_on));
+			menuItem2.setChecked(true);
+		} else {
+   			//menuItem2.setTitle(getString(R.string.menu_autofill_off));
+			menuItem2.setChecked(false);
+		}
 
-		if (prefAlwaysAutoFill) menuItem4.setTitle(getString(R.string.menu_uselocalresources_on));
-		else menuItem4.setTitle(getString(R.string.menu_uselocalresources_off));
+		if (prefAlwaysAutoFill) {
+			//menuItem4.setTitle(getString(R.string.menu_uselocalresources_on));
+			menuItem4.setChecked(true);
+		} else {
+			//menuItem4.setTitle(getString(R.string.menu_uselocalresources_off));
+			menuItem4.setChecked(false);
+		}
 
     	menuItem3.setTitle(getString(R.string.menu_clear_all_urls)+" ("+this.nbOfEntries+")");
 
@@ -371,8 +391,13 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	        	editor.apply();
 	    		Log.d(LOG_TAG, "Switched value is now "+prefAlwaysShowBar);
 	    		// Update men label
-	        	if (prefAlwaysShowBar) this.savMenu.findItem(R.id.always_show_bar).setTitle(getString(R.string.menu_show_bar_on));
-	        	else this.savMenu.findItem(R.id.always_show_bar).setTitle(getString(R.string.menu_show_bar_off));
+	        	if (prefAlwaysShowBar) {
+	        		//this.savMenu.findItem(R.id.always_show_bar).setTitle(getString(R.string.menu_show_bar_on));
+					this.savMenu.findItem(R.id.always_show_bar).setChecked(true);
+				} else {
+	        		//this.savMenu.findItem(R.id.always_show_bar).setTitle(getString(R.string.menu_show_bar_off));
+					this.savMenu.findItem(R.id.always_show_bar).setChecked(false);
+				}
 	    		return true;
     		case R.id.always_autofill:
 	        	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
@@ -382,8 +407,13 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	        	editor.commit();
 	    		Log.d(LOG_TAG, "Switched value is now "+prefAlwaysAutoFill);
 	    		// Update men label
-	        	if (prefAlwaysAutoFill) this.savMenu.findItem(R.id.always_autofill).setTitle(getString(R.string.menu_autofill_on));
-	        	else this.savMenu.findItem(R.id.always_autofill).setTitle(getString(R.string.menu_autofill_off));
+	        	if (prefAlwaysAutoFill) {
+	        		//this.savMenu.findItem(R.id.always_autofill).setTitle(getString(R.string.menu_autofill_on));
+					this.savMenu.findItem(R.id.always_autofill).setChecked(true);
+				} else {
+	        		//this.savMenu.findItem(R.id.always_autofill).setTitle(getString(R.string.menu_autofill_off));
+					this.savMenu.findItem(R.id.always_autofill).setChecked(false);
+				}
 	    		return true;
 			case R.id.always_uselocalresources:
 				boolean prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
@@ -393,8 +423,13 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				editor.commit();
 				Log.d(LOG_TAG, "Switched value is now "+prefAlwaysUseLocalResources);
 				// Update men label
-				if (prefAlwaysUseLocalResources) this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_on));
-				else this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_off));
+				if (prefAlwaysUseLocalResources) {
+					//this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_on));
+					this.savMenu.findItem(R.id.always_uselocalresources).setChecked(true);
+				} else {
+					//this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_off));
+					this.savMenu.findItem(R.id.always_uselocalresources).setChecked(false);
+				}
 				return true;
 	    	/*case R.id.add_url:
 	    		Log.d(LOG_TAG, "Add predefined URL");

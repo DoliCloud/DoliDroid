@@ -54,11 +54,12 @@
 
     <!-- Menu main + web -->
     <string name="menu_info">About DoliDroid</string>
-    <string name="menu_show_bar_on">Show menu bar (yes)</string>
+    <string name="menu_info_short">About</string>
+    <string name="menu_show_bar_on">Show menu bar</string>
     <string name="menu_show_bar_off">Show menu bar (no)</string>
-    <string name="menu_autofill_on">Save login/password (yes)</string>
+    <string name="menu_autofill_on">Save login/password</string>
     <string name="menu_autofill_off">Save login/password (no)</string>
-    <string name="menu_uselocalresources_on">Use local static resources (yes)</string>
+    <string name="menu_uselocalresources_on">Use local static resources</string>
     <string name="menu_uselocalresources_off">Use local static resources (no)</string>
     <string name="AlertHTTPS">It seems your server forced a redirect to a HTTPS page. Please check your Dolibarr URL and use the https URL form directly (URL starting with https:// instead of http://). Keeping using an URL without the s will result, for security puroposes, in features not working like no menu access or broken downloading files.</string>
     <string name="AlertDownloadBadHTTPS">Download is not possible when you used a bad value of scheme to connect (http vs https)</string>
@@ -74,6 +75,7 @@
     <string name="menu_menu">Menu</string>
     <string name="menu_go_to">Quick access</string>
     <string name="menu_search">Search</string>
+    <string name="menu_bookmarks">Bookmarks</string>
     <string name="menu_back">Back</string>
     <string name="menu_refresh">Reload page</string>
     <string name="menu_clearcache">Clear cache</string>

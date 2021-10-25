@@ -50,11 +50,11 @@
     
     <!-- Menu main + web -->
     <string name="menu_info">Sobre DoliDroid</string>
-    <string name="menu_show_bar_on">Mostra la barra de menú (sí)</string>
+    <string name="menu_show_bar_on">Mostra la barra de menú</string>
     <string name="menu_show_bar_off">Mostra la barra de menú (no)</string>
-    <string name="menu_autofill_on">Desa el nom d\'usuari / contrasenya (sí)</string>
+    <string name="menu_autofill_on">Desa el nom d\'usuari / contrasenya</string>
     <string name="menu_autofill_off">Desa el nom d\'usuari / contrasenya (no)</string>
-    <string name="menu_uselocalresources_on">Utilitza recursos estàtics locals (sí)</string>
+    <string name="menu_uselocalresources_on">Utilitza recursos estàtics locals</string>
     <string name="menu_uselocalresources_off">Utilitza recursos estàtics locals (no)</string>
 
     <!-- Menu main page -->

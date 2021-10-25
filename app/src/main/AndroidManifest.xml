@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nltechno.dolidroidpro"
-    android:versionCode="41"
-    android:versionName="DoliDroid Pro 2.1"
+    android:versionCode="42"
+    android:versionName="DoliDroid Pro 2.2"
     android:installLocation="auto"
     >
     <!-- Remove android:installLocation="preferExternal" to always install on external storage, use "auto" for default internal -->
@@ -41,7 +41,7 @@
         <activity
             android:name=".SecondActivity"
             android:label="@string/title_activity_second"
-            android:theme="@style/DoliDroidThemeSecond"
+            android:theme="@style/DoliDroidThemeFirst"
             android:configChanges="orientation|screenSize"
             >
         </activity>

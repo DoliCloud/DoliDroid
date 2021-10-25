@@ -55,6 +55,7 @@
 
     <!-- Menu main + web -->
     <string name="menu_info">A propos de DoliDroid</string>
+    <string name="menu_info_short">A propos</string>
     <string name="menu_show_bar_on">Afficher la barre menu (oui)</string>
     <string name="menu_show_bar_off">Afficher la barre menu (non)</string>
     <string name="menu_autofill_on">Conserver login/passe (oui)</string>

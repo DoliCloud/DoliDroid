@@ -58,11 +58,11 @@
     
     <!-- Menu main + web -->
     <string name="menu_info">Over DoliDroid</string>
-    <string name="menu_show_bar_on">Toon menubalk (ja)</string>
+    <string name="menu_show_bar_on">Toon menubalk</string>
     <string name="menu_show_bar_off">Toon menubalk (nee)</string>
-    <string name="menu_autofill_on">Houd login/wachtwoord (ja)</string>
+    <string name="menu_autofill_on">Houd login/wachtwoord</string>
     <string name="menu_autofill_off">Houd login/wachtwoord (nee)</string>
-    <string name="menu_uselocalresources_on">Gebruik locale statische bronnen (Ja)</string>
+    <string name="menu_uselocalresources_on">Gebruik locale statische bronnen</string>
     <string name="menu_uselocalresources_off">Gebruik locale statische bronnen (Nee)</string>
 
     <!-- Menu main page -->

@@ -56,9 +56,7 @@ public class InAppActivity extends Activity {
 		Log.d(LOG_TAG, "onCreate");
 		super.onCreate(savedInstanceState);
 
-		
-		
-		
+
 		String base64EncodedPublicKey = APP_LICENCE_KEY;
 		   
 		// compute your public key and store it in base64EncodedPublicKey

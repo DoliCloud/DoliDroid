@@ -60,9 +60,9 @@
     
     <!-- Menu main + web -->
     <string name="menu_info">Sobre o DoliDroid</string>
-    <string name="menu_show_bar_on">Mostrar barra de menu (sim)</string>
+    <string name="menu_show_bar_on">Mostrar barra de menu</string>
     <string name="menu_show_bar_off">Mostrar barra de menu (não)</string>
-    <string name="menu_autofill_on">Mantenha login/password (sim)</string>
+    <string name="menu_autofill_on">Mantenha login/password</string>
     <string name="menu_autofill_off">Mantenha login/password (não)</string>
      
     <!-- Menu main page -->

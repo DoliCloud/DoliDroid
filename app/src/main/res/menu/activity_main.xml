@@ -1,42 +1,59 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- List of predefined icon on: http://androiddrawableexplorer.appspot.com/ -->
-    
-    <item android:id="@+id/menu_settings"
-        android:title="@string/menu_settings"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:orderInCategory="100"
-		android:menuCategory="secondary"
-        >
 
-	<menu android:id="@+id/sousmenu">
-     <item android:id="@+id/always_show_bar"
-           android:title="@string/menu_show_bar_on"   />  
-     <item android:id="@+id/always_autofill"
-           android:title="@string/menu_autofill_on"   />
-	<item android:id="@+id/always_uselocalresources"
- 		   android:title="@string/menu_uselocalresources_on"   />
-	<item android:id="@+id/clear_all_urls"
-           android:title="@string/menu_clear_all_urls"   />
-     <!-- <item android:id="@+id/add_url"
+	<item
+		android:id="@+id/menu_settings"
+		android:menuCategory="secondary"
+		android:orderInCategory="300"
+		android:title="@string/menu_settings">
+
+		<menu android:id="@+id/sousmenu">
+			<item
+				android:id="@+id/always_show_bar"
+				android:checkable="true"
+				android:menuCategory="secondary"
+				android:orderInCategory="120"
+				android:title="@string/menu_show_bar_on"
+				android:visible="false" />
+			<item
+				android:id="@+id/always_autofill"
+				android:checkable="true"
+				android:menuCategory="secondary"
+				android:orderInCategory="130"
+				android:title="@string/menu_autofill_on" />
+			<item
+				android:id="@+id/always_uselocalresources"
+				android:checkable="true"
+				android:menuCategory="secondary"
+				android:orderInCategory="135"
+				android:title="@string/menu_uselocalresources_on" />
+			<item
+				android:id="@+id/clear_all_urls"
+				android:menuCategory="secondary"
+				android:orderInCategory="137"
+				android:title="@string/menu_clear_all_urls" />
+			<!-- <item android:id="@+id/add_url"
            android:title="@string/menu_add_url"   /> -->
-     <!-- <item android:id="@+id/remove_url"
-           android:title="@string/menu_remove_url"   /> -->  
-    </menu>
+			<!-- <item android:id="@+id/remove_url"
+           android:title="@string/menu_remove_url"   /> -->
+		</menu>
 
 	</item>
-	
-    <item android:id="@+id/about"
-           android:title="@string/menu_info" 
-   	    	android:icon="@android:drawable/ic_menu_info_details"
-			android:menuCategory="secondary"
-   	    	android:orderInCategory="110"
-   	    	 />  
 
-    <item android:id="@+id/quit"
-   	    android:title="@string/menu_quit"
-   	    android:icon="@android:drawable/ic_lock_power_off"
+	<item
+		android:id="@+id/quit"
+		android:icon="@drawable/ic_baseline_exit_to_app_24"
 		android:menuCategory="secondary"
-   	    android:orderInCategory="120"
-   	     />
+		android:orderInCategory="400"
+		android:showAsAction="withText"
+		android:title="@string/menu_quit" />
+	<item
+		android:id="@+id/about"
+		android:icon="@android:drawable/ic_menu_info_details"
+		android:menuCategory="secondary"
+		android:orderInCategory="500"
+		android:showAsAction="withText"
+		android:title="@string/menu_info"
+		android:titleCondensed="@string/menu_info_short" />
 
 </menu>

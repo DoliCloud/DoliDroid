@@ -18,16 +18,13 @@ package com.nltechno.dolidroidpro;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.KeyStore;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,7 +44,6 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 
-import com.nltechno.dolidroidpro.DoliDroid;
 import com.nltechno.utils.MySSLSocketFactory;
 import com.nltechno.utils.Utils;
 /*
@@ -73,7 +69,6 @@ import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DownloadManager;
-import android.app.DownloadManager.Request;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -110,7 +105,7 @@ import android.app.AlertDialog;
 /**
  * Second activity class
  */
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+@TargetApi(Build.VERSION_CODES.M)
 @SuppressLint("SetJavaScriptEnabled")
 public class SecondActivity extends Activity {
 
@@ -156,6 +151,7 @@ public class SecondActivity extends Activity {
 	private int tagToShowCounter=0;
 	private String cacheForMenu;
 	private String cacheForQuickAccess;
+    private String cacheForBookmarks;
 	private String lastLoadUrl;
 	private boolean	isMulticompanyOn=false;
 
@@ -293,7 +289,7 @@ public class SecondActivity extends Activity {
         Drawable d=getResources().getDrawable(R.drawable.progressbar_style);
         ClipDrawable cd = new ClipDrawable(d, Gravity.START, ClipDrawable.HORIZONTAL);
         progress.setProgressDrawable(cd);
-      
+
         myWebView = (WebView) findViewById(R.id.webViewContent);
 
         this.savedUserAgent = myWebView.getSettings().getUserAgentString() + " - " + getString(R.string.dolidroidUserAgent);
@@ -385,16 +381,18 @@ public class SecondActivity extends Activity {
         if (this.menuAre.equals("actionbar"))
         {
             menu.findItem(R.id.menu_menu).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            menu.findItem(R.id.go_to).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            menu.findItem(R.id.menu_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            menu.findItem(R.id.menu_bookmarks).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
         if (this.menuAre.equals("hardwareonly"))
         {
             // Move entries from actionbar to list
             menu.findItem(R.id.menu_menu).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-            menu.findItem(R.id.go_to).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            menu.findItem(R.id.menu_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            menu.findItem(R.id.menu_bookmarks).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         }
 
@@ -402,10 +400,16 @@ public class SecondActivity extends Activity {
         MenuItem menuItem = menu.findItem(R.id.always_show_bar);
         if (Utils.hasMenuHardware(activity))
         {
+            menuItem.setVisible(true);
             boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
             Log.d(LOG_TAG, "onCreateOptionsMenu prefAlwaysShowBar value is "+prefAlwaysShowBar);
-            if (prefAlwaysShowBar) menuItem.setTitle(getString(R.string.menu_show_bar_on));
-            else menuItem.setTitle(getString(R.string.menu_show_bar_off));
+            if (prefAlwaysShowBar) {
+                //menuItem.setTitle(getString(R.string.menu_show_bar_on));
+                menuItem.setChecked(true);
+            } else {
+                //menuItem.setTitle(getString(R.string.menu_show_bar_off));
+                menuItem.setChecked(false);
+            }
         }
         else
         {
@@ -416,14 +420,24 @@ public class SecondActivity extends Activity {
         MenuItem menuItem2 = menu.findItem(R.id.always_autofill);
         boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
         Log.d(LOG_TAG, "onCreateOptionsMenu prefAlwaysAutoFill value is "+prefAlwaysAutoFill);
-        if (prefAlwaysAutoFill) menuItem2.setTitle(getString(R.string.menu_autofill_on));
-        else menuItem2.setTitle(getString(R.string.menu_autofill_off));
+        if (prefAlwaysAutoFill) {
+            //menuItem2.setTitle(getString(R.string.menu_autofill_on));
+            menuItem2.setChecked(true);
+        } else {
+            //menuItem2.setTitle(getString(R.string.menu_autofill_off));
+            menuItem2.setChecked(false);
+        }
 
         MenuItem menuItem4 = menu.findItem(R.id.always_uselocalresources);
         //boolean prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
         Log.d(LOG_TAG, "onCreateOptionsMenu prefAlwaysUseLocalResources value is "+prefAlwaysUseLocalResources);
-        if (prefAlwaysUseLocalResources) menuItem4.setTitle(getString(R.string.menu_uselocalresources_on));
-        else menuItem4.setTitle(getString(R.string.menu_uselocalresources_off));
+        if (prefAlwaysUseLocalResources) {
+            //menuItem4.setTitle(getString(R.string.menu_uselocalresources_on));
+            menuItem4.setChecked(true);
+        } else {
+            //menuItem4.setTitle(getString(R.string.menu_uselocalresources_off));
+            menuItem4.setChecked(false);
+        }
 
         if (isMulticompanyOn) {
             Log.d(LOG_TAG, "onCreateOptionsMenu Module multicompany was found, we show picto");
@@ -458,10 +472,12 @@ public class SecondActivity extends Activity {
         {
             case R.id.menu_menu:
                 return this.codeForMenu();
-            case R.id.go_to:
+            case R.id.menu_search:
                 return this.codeForQuickAccess();
             case R.id.menu_back:
                 return this.codeForBack();
+            case R.id.menu_bookmarks:
+                return this.codeForBookmarks();
             case R.id.menu_multicompany:
                 return this.codeForMultiCompany();
             case R.id.always_show_bar:  // Switch menu bar on/off
@@ -476,7 +492,8 @@ public class SecondActivity extends Activity {
                 // Update show bar or not
                 if (prefAlwaysShowBar) 
                 {
-                    this.savMenu.findItem(R.id.always_show_bar).setTitle(getString(R.string.menu_show_bar_on));
+                    //this.savMenu.findItem(R.id.always_show_bar).setTitle(getString(R.string.menu_show_bar_on));
+                    this.savMenu.findItem(R.id.always_show_bar).setChecked(true);
                     this.menuAre="actionbar";
                     // Reload menu
                     invalidateOptionsMenu();
@@ -486,7 +503,8 @@ public class SecondActivity extends Activity {
                 }
                 else
                 {
-                    this.savMenu.findItem(R.id.always_show_bar).setTitle(getString(R.string.menu_show_bar_off));
+                    //this.savMenu.findItem(R.id.always_show_bar).setTitle(getString(R.string.menu_show_bar_off));
+                    this.savMenu.findItem(R.id.always_show_bar).setChecked(false);
                     this.menuAre="hardwareonly";
                     // Disable menu from screen
                     ActionBar actionBar = getActionBar();
@@ -589,6 +607,7 @@ public class SecondActivity extends Activity {
                 myWebView.clearHistory();
                 this.cacheForMenu=null;
                 this.cacheForQuickAccess=null;
+                this.cacheForBookmarks=null;
                 //Log.d(LOG_TAG,"Clear also cookies");
                 //this.myWebViewClientDoliDroid.deleteSessionCookies();
                 return true;
@@ -929,6 +948,39 @@ public class SecondActivity extends Activity {
         }
         return true;
     }
+
+    /**
+     * Common code for Back
+     * codeForBack is in a UI thread
+     *
+     * @return  boolean             True
+     */
+    private boolean codeForBookmarks() {
+        String urlToGo = "";
+
+        urlToGo = this.savedDolRootUrl+"core/bookmarks_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
+
+        // If not found into cache, call URL
+        Log.d(LOG_TAG, "We called codeForBookmarks after click on Bookmarks : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
+        myWebView = (WebView) findViewById(R.id.webViewContent);
+
+        if (this.cacheForBookmarks != null && this.cacheForBookmarks.length() > 0)
+        {
+            String historyUrl = urlToGo;
+            Log.d(LOG_TAG, "Got content from app cache this.cacheForBookmarks savedDolBasedUrl="+this.savedDolBasedUrl+" historyUrl="+historyUrl);
+            //altHistoryStack.add("bookmarks");   // TODO Do not add same history url twice
+            nextAltHistoryStack="bookmarks";
+            myWebView.loadDataWithBaseURL(this.savedDolBasedUrl, this.cacheForBookmarks, "text/html", "UTF-8", historyUrl);
+
+            return true;
+        }
+
+        DownloadWebPageTask task = new DownloadWebPageTask("bookmarks");
+        task.execute(new String[] { urlToGo });
+
+        return true;
+    }
+
 
     /**
      * Common code for MultiCompany
@@ -1539,6 +1591,7 @@ public class SecondActivity extends Activity {
 						lastversionfoundforasset=m.group(1) + "." + m.group(2);
 						Log.i(LOG_TAG, "Title of page is: "+this.webViewtitle+" - url="+url+" - Found login or home page + version: " + lastversionfound+" - Suggest to use asset: "+lastversionfoundforasset);
 
+						// Enable or disable menu entry for Mumticompany
                         Matcher multicompanyRegex = patternLoginHomePageForMulticompany.matcher(this.webViewtitle);
                         isMulticompanyOn = multicompanyRegex.find();
                         //isMulticompanyOn=true;
@@ -1552,6 +1605,19 @@ public class SecondActivity extends Activity {
 							savMenu.findItem(R.id.menu_multicompany).setVisible(false);
 							Log.d(LOG_TAG, "Module multicompany was NOT found");
 						}
+
+                        // Enable or disable menu entry for Bookmarks (available from Dolibarr v15)
+                        Log.d(LOG_TAG, "Version major found = " + m.group(1));
+                        MenuItem menuItemBookmarks = savMenu.findItem(R.id.menu_bookmarks);
+                        try {
+                            if (Integer.parseInt(m.group(1)) >= 15) {
+                                menuItemBookmarks.setVisible(true);
+                            } else {
+                                menuItemBookmarks.setVisible(false);
+                            }
+                        } catch(Exception e) {
+                            menuItemBookmarks.setVisible(false);
+                        }
 					}
 				    
 				    if (patternLoginPage.matcher(this.webViewtitle).find() || patternLoginPage2.matcher(this.webViewtitle).find())	// if title ends with "Login Dolixxx x.y.z", this is login page or home page

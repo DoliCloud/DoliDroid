@@ -58,11 +58,11 @@
     
     <!-- Menu main + web -->
     <string name="menu_info">Über DoliDroid</string>
-    <string name="menu_show_bar_on">Menüleiste anzeigen (ja)</string>
+    <string name="menu_show_bar_on">Menüleiste anzeigen</string>
     <string name="menu_show_bar_off">Menüleiste anzeigen (nein)</string>
-    <string name="menu_autofill_on">Save Login / Passwort (ja)</string>
+    <string name="menu_autofill_on">Save Login / Passwort</string>
     <string name="menu_autofill_off">Save Login / Passwort (nein)</string>
-    <string name="menu_uselocalresources_on">Verwende lokale statische Ressourcen (ja)</string>
+    <string name="menu_uselocalresources_on">Verwende lokale statische Ressourcen</string>
     <string name="menu_uselocalresources_off">Verwende lokale statische Ressourcen (nein)</string>
 
     <!-- Menu main page -->
