@@ -5,8 +5,10 @@ English DoliDroid ChangeLog
 ***** ChangeLog for 2.2 *****
 
 2.242
-- Use checkboxes to select options
-- Add support for the bookmarks pages into DoliDroid menu (need Dolibarr v15+)
+- Use checkboxes to select options.
+- Add support for the bookmarks pages into DoliDroid menu (need Dolibarr v15+).
+- Url entry is not lost when leaving and going back on app.
+- Can click on links into the About page.
 
 
 ***** ChangeLog for 2.1 *****

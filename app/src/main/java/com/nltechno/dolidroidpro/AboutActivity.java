@@ -131,7 +131,7 @@ public class AboutActivity extends Activity {
 
 			//s+= "PackageName = " + info.packageName + "\n";
 			s1+=getString(R.string.Author)+": <b>Laurent Destailleur</b><br />\n";
-			s1+=getString(R.string.Web)+": <b>https://www.dolicloud.com</b><br />\n";
+			s1+=getString(R.string.Web)+": <a href=\"https://www.dolicloud.com?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile\">https://www.dolicloud.com</a><br />\n";
 			s1+=getString(R.string.Compatibility)+": <b>Dolibarr 7+</b><br />\n";
 			s1+=getString(R.string.License)+": <b>GPL v3+</b><br />\n";
 			//s1+=getString(R.string.Sources)+": https://www.nltechno.com/services/<br />\n";
