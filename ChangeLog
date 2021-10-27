@@ -9,6 +9,7 @@ English DoliDroid ChangeLog
 - Add support for the bookmarks pages into DoliDroid menu (need Dolibarr v15+).
 - Url entry is not lost when leaving and going back on app.
 - Can click on links into the About page.
+- Can delete a saved predefined URL to connect to from list of saved URLs.
 
 
 ***** ChangeLog for 2.1 *****

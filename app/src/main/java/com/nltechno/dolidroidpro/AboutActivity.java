@@ -17,10 +17,19 @@
 
 package com.nltechno.dolidroidpro;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.nltechno.utils.Utils;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -43,6 +52,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -55,7 +66,9 @@ public class AboutActivity extends Activity {
 
 	private static final String LOG_TAG = "DoliDroidActivity";
 	private String menuAre="hardwareonly";
-	
+	private List<String> listOfRootUrl = null;
+	int nbOfEntries = 0;
+
 	static final int REQUEST_ABOUT = 0;
 	static final int REQUEST_WEBVIEW = 1;
 	static final int RESULT_LOGOUT =  RESULT_FIRST_USER+0;
@@ -103,6 +116,83 @@ public class AboutActivity extends Activity {
 
 		TextView t2 = (TextView) findViewById(R.id.TextAbout02);
 		t2.setMovementMethod(LinkMovementMethod.getInstance());
+
+
+		Log.d(LOG_TAG, "Open file " + MainActivity.FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());
+
+		listOfRootUrl = new ArrayList<String>();
+
+		// Load the list of entries into this.listOfRootUrl
+		// TODO Share this into a method with MainActivity
+		nbOfEntries=0;
+		try {
+			FileInputStream fis = openFileInput(MainActivity.FILENAME);
+			Log.d(LOG_TAG, "Open data file "+MainActivity.FILENAME+" in directory "+getApplicationContext().getFilesDir().toString());
+			// Get the object of DataInputStream
+			DataInputStream in = new DataInputStream(fis);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String strLine;
+			// Read File Line By Line
+			while ((strLine = br.readLine()) != null) {
+				// Print the content on the console
+				Log.d(LOG_TAG, "Found entry " + nbOfEntries + " : " + strLine);
+				if (! listOfRootUrl.contains(strLine))
+				{
+					nbOfEntries++;
+					if (nbOfEntries == 1)
+					{
+						//homeUrlFirstFound = strLine;
+					}
+					listOfRootUrl.add(strLine);
+				}
+				else Log.d(LOG_TAG, "Duplicate");
+			}
+			// Close the input stream
+			in.close();
+		} catch (Exception e) {// Catch exception if any
+			Log.d(LOG_TAG, "Can't read file " + MainActivity.FILENAME + " " + e.getMessage());
+		}
+
+
+		// Create listener to respond to click on button
+		// Not using the android:onClick tag is bugged.
+		// Declaring listener is also faster.
+		Button btn = (Button) findViewById(R.id.buttonDeletePredefinedUrl);
+		btn.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v) {
+				Log.d(LOG_TAG, "We click on Delete predefined Url");
+
+				FileOutputStream fos;
+				try
+				{
+					Intent intent = getIntent();
+					String savedDolRootUrl = intent.getStringExtra("savedDolRootUrl");
+
+					// Now loop of each entry and rewrite or exclude it
+					fos = openFileOutput(MainActivity.FILENAME, Context.MODE_PRIVATE);
+					for (int i = 0; i < listOfRootUrl.size(); i++)
+					{
+						String s=listOfRootUrl.get(i);
+						if (! s.equals(savedDolRootUrl))	// Add new value into saved list
+						{
+							Log.d(LOG_TAG, "write " + s);
+							fos.write((s+"\n").getBytes());
+						} else {
+							Log.d(LOG_TAG, "exclude entry " + s);
+							btn.setEnabled(false);
+							btn.setTextColor(Color.LTGRAY);
+						}
+					}
+					fos.close();
+				}
+				catch(Exception ioe)
+				{
+					Log.e(LOG_TAG, "Error");
+				}
+			}
+		});
 	}
 
 	
@@ -118,7 +208,11 @@ public class AboutActivity extends Activity {
     	//boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
     	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
 
-        TextView textViewAbout1 = (TextView) findViewById(R.id.TextAbout01);
+		Button btn = (Button) findViewById(R.id.buttonDeletePredefinedUrl);
+
+
+		// Show text section 1
+		TextView textViewAbout1 = (TextView) findViewById(R.id.TextAbout01);
 		String s1="";
 
 		PackageManager manager = this.getPackageManager();
@@ -175,9 +269,9 @@ public class AboutActivity extends Activity {
 			Log.e(LOG_TAG, e.getMessage());
 		}
 
-        // Show info
 		textViewAbout1.setText(Html.fromHtml(s1));
 
+		// Show text section 2
 		TextView textViewAbout2 = (TextView) findViewById(R.id.TextAbout02);
 		String s2="";
 
@@ -185,8 +279,12 @@ public class AboutActivity extends Activity {
         String savedDolRootUrl = intent.getStringExtra("savedDolRootUrl");
         if (savedDolRootUrl != null && ! "".equals(savedDolRootUrl))
         {
-        	s2+="<font color='#440066'><b>"+getString(R.string.savedDolUrlRoot)+":</b></font><br /><br />\n"+savedDolRootUrl+"<br />\n";
-        
+			btn.setVisibility(View.VISIBLE);
+			btn.setEnabled(true);
+
+        	s2+="<font color='#440066'><b>"+getString(R.string.savedDolUrlRoot)+":</b></font><br /><br />\n";
+        	s2+=savedDolRootUrl+"<br />\n";
+
 	        // Saved user/pass
 	        String username=null;
 	        String password=null;
@@ -200,28 +298,71 @@ public class AboutActivity extends Activity {
 
 			s2+="<br />";
 	        s2+=getString(R.string.SavedLogin)+": "+(username != null ? username : "")+"<br />\n";
-	        s2+=getString(R.string.SavedPassword)+": "+(password != null ? password.replaceAll(".", "*") : "")+"<br />\n";
+	        s2+=getString(R.string.SavedPassword)+": "+(password != null ? password.replaceAll(".", "*") : "")+"\n";
 	                
 	        // Basic auth user/pass used ? 
 	        String savedAuthuser = intent.getStringExtra("savedAuthuser");
-	        if (savedAuthuser != null) s2+="<br />"+getString(R.string.BasicAuthLogin)+": "+savedAuthuser+"<br />";
+	        if (savedAuthuser != null) s2+="<br /><br />"+getString(R.string.BasicAuthLogin)+": "+savedAuthuser+"<br />";
 	        String savedAuthpass = intent.getStringExtra("savedAuthpass");
-	        if (savedAuthpass != null) s2+=getString(R.string.BasicAuthPassword)+": "+savedAuthpass.replaceAll(".", "*")+"<br />\n";
-        }
+	        if (savedAuthpass != null) s2+=getString(R.string.BasicAuthPassword)+": "+savedAuthpass.replaceAll(".", "*")+"\n";
+        } else {
+        	// No need to show the button, we don't know the predefined url used.
+			btn.setVisibility(View.INVISIBLE);
+			btn.setEnabled(false);
+		}
+
+		textViewAbout2.setText(Html.fromHtml(s2));
+
+
+        // Show btn or not
+		// Check if url is inside predefined URL
+		boolean savedDolRootUrlFoundIntoPredefinedLoginUrl = false;
+		try
+		{
+			Log.d(LOG_TAG, "Loop on listOfRootUrl "+listOfRootUrl.size());
+			// Now loop of each entry and rewrite or exclude it
+			for (int i = 0; i < listOfRootUrl.size(); i++)
+			{
+				String s=listOfRootUrl.get(i);
+				Log.d(LOG_TAG, "Check for s="+s+" equal to savedDolRootUrl="+savedDolRootUrl);
+				if (s.equals(savedDolRootUrl))	// Add new value into saved list
+				{
+					Log.d(LOG_TAG, "We found the savedDolRootUrl into the list of predefined URL, so we will show the button to remove it");
+					savedDolRootUrlFoundIntoPredefinedLoginUrl = true;
+				}
+			}
+		}
+		catch(Exception ioe)
+		{
+			Log.e(LOG_TAG, "Error");
+		}
+		if (savedDolRootUrlFoundIntoPredefinedLoginUrl) {
+			btn.setVisibility(View.VISIBLE);
+			btn.setEnabled(true);
+			btn.setTextColor(Color.WHITE);
+		} else {
+			//btn.setVisibility(View.INVISIBLE);
+			btn.setEnabled(false);
+			btn.setTextColor(Color.LTGRAY);
+		}
+
+		// Show text section 3
+		TextView textViewAbout3 = (TextView) findViewById(R.id.TextAbout03);
+		String s3="";
 
 		// Current url
         String currentUrl = intent.getStringExtra("currentUrl");
         String title = intent.getStringExtra("title");
-        if (currentUrl != null && ! "".equals(currentUrl)) s2+="<br /><br />\n<font color='#440066'><b>"+getString(R.string.currentUrl)+":</b></font><br /><br />\n"+title+"<br />\n"+currentUrl;
+        if (currentUrl != null && ! "".equals(currentUrl)) s3+="<br /><font color='#440066'><b>"+getString(R.string.currentUrl)+":</b></font><br /><br />\n"+title+"<br />\n"+currentUrl;
 		String lastversionfound = intent.getStringExtra("lastversionfound");
-        if (lastversionfound != null && ! "".equals(lastversionfound)) s2+="<br /><br />\nDolibarr "+getString(R.string.Version)+": "+lastversionfound+"<br />\n";
+        if (lastversionfound != null && ! "".equals(lastversionfound)) s3+="<br /><br />\nDolibarr "+getString(R.string.Version)+": "+lastversionfound+"<br />\n";
 
 		// User agent
         String userAgent = intent.getStringExtra("userAgent");
         Log.d(LOG_TAG,"userAgent="+userAgent);
-        if (userAgent != null && ! "".equals(userAgent)) s2+="<br /><br />\n<font color='#440066'><b>"+getString(R.string.UserAgent)+":</b></font><br /><br />\n"+userAgent+"<br />\n";
+        if (userAgent != null && ! "".equals(userAgent)) s3+="<br /><br />\n<font color='#440066'><b>"+getString(R.string.UserAgent)+":</b></font><br /><br />\n"+userAgent+"<br />\n";
 
-		textViewAbout2.setText(Html.fromHtml(s2));
+		textViewAbout3.setText(Html.fromHtml(s3));
 	}
 	
     /**

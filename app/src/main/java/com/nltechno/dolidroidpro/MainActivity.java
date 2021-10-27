@@ -65,7 +65,7 @@ import android.widget.TextView;
 public class MainActivity extends Activity implements OnItemSelectedListener {
 
 	private static final String LOG_TAG = "DoliDroidActivity";
-	private final static String FILENAME = "dolidroid_prefs";		// File will be into
+	public final static String FILENAME = "dolidroid_prefs";		// File will be into
 	private final static String HOME_URL = "";
 	private List<String> listOfRootUrl = null;
 	int nbOfEntries = 0;
@@ -562,7 +562,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		FileOutputStream fos;
 		try
 		{
-			Log.d(LOG_TAG, "Write into file " + FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());
+			Log.d(LOG_TAG, "Open file " + FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());
 
 			fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
 			for (int i = 0; i < this.listOfRootUrl.size(); i++)

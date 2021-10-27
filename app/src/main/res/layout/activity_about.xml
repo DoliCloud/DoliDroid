@@ -25,23 +25,6 @@
             android:src="@drawable/ic_launcher" />
 
         <TextView
-            android:id="@+id/TextAbout01"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textAndroidClient"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="14dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="42dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginRight="10dp"
-            android:maxLines="30"
-            android:text="@string/textAboutA"
-            android:textSize="14sp"
-            tools:context=".AboutActivity" />
-
-        <TextView
             android:id="@+id/textAndroidClient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,6 +32,22 @@
             android:layout_centerHorizontal="true"
             android:text="@string/dolibarr_for_android"
             android:textColor="@color/grey"
+            tools:context=".AboutActivity"
+            tools:ignore="TextContrastCheck" />
+
+        <TextView
+            android:id="@+id/TextAbout01"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textAndroidClient"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="42dp"
+            android:layout_marginEnd="14dp"
+            android:maxLines="30"
+            android:text="@string/textAboutA"
+            android:textSize="14sp"
             tools:context=".AboutActivity" />
 
         <TextView
@@ -58,15 +57,43 @@
             android:layout_below="@+id/TextAbout01"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="14dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
+            android:layout_marginStart="14dp"
             android:layout_marginEnd="14dp"
-            android:layout_marginRight="10dp"
             android:maxLines="50"
             android:text="@string/textAboutB"
             android:textSize="14sp"
             tools:context=".AboutActivity" />
+
+        <Button
+            android:id="@+id/buttonDeletePredefinedUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/TextAbout02"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="14dp"
+            android:background="#009688"
+            android:text="@string/DeletePredefinedUrl"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/TextAbout03"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/buttonDeletePredefinedUrl"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="14dp"
+            android:maxLines="50"
+            android:text="@string/textAboutB"
+            android:textSize="14sp"
+            tools:context=".AboutActivity" />
+
 
     </RelativeLayout>
 
