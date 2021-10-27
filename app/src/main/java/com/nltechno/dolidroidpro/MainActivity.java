@@ -29,6 +29,7 @@ import java.util.Locale;
 
 import com.nltechno.utils.Utils;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -68,6 +69,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	private final static String HOME_URL = "";
 	private List<String> listOfRootUrl = null;
 	int nbOfEntries = 0;
+	private boolean firstCallToOnStart = Boolean.TRUE;
 
 	private boolean allowChangeText=Boolean.FALSE;
 
@@ -221,13 +223,13 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 		// Show combo list if there is at least 1 choice
 		Spinner spinner1 = (Spinner) findViewById(R.id.combo_list_of_urls);
-		TextView texviewlink = (TextView) findViewById(R.id.textViewLink);
+		TextView texViewLink = (TextView) findViewById(R.id.textViewLink);
 
 		if (this.nbOfEntries > 0)
 		{
 			spinner1.setAdapter(adapter);
 			spinner1.setVisibility(View.VISIBLE);
-			texviewlink.setVisibility(View.INVISIBLE);
+			texViewLink.setVisibility(View.INVISIBLE);
 
 			if (this.nbOfEntries == 1)
 			{
@@ -240,19 +242,29 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		else
 		{
 			spinner1.setVisibility(View.INVISIBLE);
-			texviewlink.setVisibility(View.VISIBLE);
+			texViewLink.setVisibility(View.VISIBLE);
 		}
-		spinner1.setOnItemSelectedListener(this);	// Enable handler with onItemSelected and onNothingSelected
 
 		// Init url with hard coded value
 		EditText editText1 = (EditText) findViewById(R.id.url_of_instance);
-		editText1.setText(homeUrlToSuggest);
+		//editText1.setText(homeUrlToSuggest);
+
+		// If listener was not already added, we add one
+		if (firstCallToOnStart) {
+			Log.d(LOG_TAG, "First call to onStart");
+			spinner1.setOnItemSelectedListener(this);	// Enable handler with onItemSelected and onNothingSelected
+			firstCallToOnStart = false;
+			editText1.addTextChangedListener(fieldValidatorTextWatcher);
+			editText1.setText(homeUrlToSuggest);
+		}
 
 		// Init with button disabled
-		Button startButton = (Button) findViewById(R.id.buttonStart);
-		if (editText1.getText().toString().equals("")) startButton.setEnabled(false);
-
-		editText1.addTextChangedListener(fieldValidatorTextWatcher);
+		if (editText1.getText().toString().equals("")) {
+			Button startButton = (Button) findViewById(R.id.buttonStart);
+			startButton.setEnabled(false);
+			startButton.setClickable(false);
+			startButton.setTextColor(Color.LTGRAY);
+		}
 
 		if (this.savMenu != null)	// Menu may not be initialized yet
 		{
@@ -304,8 +316,15 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
         public void onTextChanged(CharSequence s, int start, int before, int count) {
     		Button startButton = (Button) findViewById(R.id.buttonStart);
             Log.d(LOG_TAG, "onTextChanged s="+s);
-            if (s.equals("") || "http://".contains(s.toString().toLowerCase(Locale.ENGLISH)) || "https://".contains(s.toString().toLowerCase(Locale.ENGLISH))) startButton.setEnabled(false);
-            else startButton.setEnabled(true);
+            if (s.equals("") || "http://".contains(s.toString().toLowerCase(Locale.ENGLISH)) || "https://".contains(s.toString().toLowerCase(Locale.ENGLISH))) {
+				startButton.setEnabled(false);
+				startButton.setClickable(false);
+				startButton.setTextColor(Color.LTGRAY);
+			} else {
+            	startButton.setEnabled(true);
+				startButton.setClickable(true);
+				startButton.setTextColor(Color.WHITE);
+			}
         }
     };
 
@@ -446,8 +465,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	    		// Hide combo
 	    		Spinner spinner1 = (Spinner) findViewById(R.id.combo_list_of_urls);
 	    		spinner1.setVisibility(View.INVISIBLE);
-				TextView texviewlink = (TextView) findViewById(R.id.textViewLink);
-				texviewlink.setVisibility(View.VISIBLE);
+				TextView texViewLink = (TextView) findViewById(R.id.textViewLink);
+				texViewLink.setVisibility(View.VISIBLE);
 	    	    return true;
 		    case R.id.about:
 	    		Log.d(LOG_TAG, "Click onto Info");
@@ -470,25 +489,27 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	 */
 	public void onItemSelected(AdapterView<?> parent, View v, int position, long id)
 	{
-        Log.d(LOG_TAG, "onItemSelected position="+position+" id="+id);
+        Log.d(LOG_TAG, "onItemSelected position="+position+" id="+id+" this.allowChangeText="+this.allowChangeText);
 		EditText freeUrl = (EditText) findViewById(R.id.url_of_instance);
 		Spinner spinnerUrl = (Spinner) findViewById(R.id.combo_list_of_urls);
 		String dolRootUrl = (spinnerUrl.getSelectedItem() == null ? "": spinnerUrl.getSelectedItem().toString());
-		//Button startButton = (Button) findViewById(R.id.button1);
+		Button startButton = (Button) findViewById(R.id.buttonStart);
 
 		if (position > 0)
 		{
 			//startButton.setEnabled(true);
 			freeUrl.setText(dolRootUrl);	// If not empty choice
+			startButton.setTextColor(Color.WHITE);
 
-			this.allowChangeText=Boolean.FALSE;
-			spinnerUrl.setSelection(0, false);	// This call the onItemSelected. The this.allowChangeText prevent to change text a second time
+			this.allowChangeText=Boolean.FALSE;					// We set a flag because after we will make an action that will call same method
+			spinnerUrl.setSelection(0, false);	// This call the onItemSelected. The this.allowChangeText prevent to change the text a second time
 		}
 		else
 		{
 			//startButton.setEnabled(false);
 			if (this.allowChangeText) {		// We come here because we have selected an entry
-				freeUrl.setText("");
+				//freeUrl.setText("");
+				//startButton.setTextColor(Color.WHITE);
 			}
 			this.allowChangeText=Boolean.TRUE;
 		}

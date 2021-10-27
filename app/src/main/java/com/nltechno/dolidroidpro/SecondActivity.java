@@ -891,10 +891,11 @@ public class SecondActivity extends Activity {
         currentUrl = myWebView.getUrl();
 
         WebBackForwardList mWebBackForwardList = myWebView.copyBackForwardList();
-        if (mWebBackForwardList.getCurrentIndex() > 0) 
-            previousUrl = mWebBackForwardList.getItemAtIndex(mWebBackForwardList.getCurrentIndex()-1).getUrl();
-        
-        Log.d(LOG_TAG, "We called codeForBack. Can go back is "+b+", current URL is "+currentUrl+", previous URL is "+previousUrl);
+        if (mWebBackForwardList.getCurrentIndex() > 0) {
+            previousUrl = mWebBackForwardList.getItemAtIndex(mWebBackForwardList.getCurrentIndex() - 1).getUrl();
+        }
+
+        Log.d(LOG_TAG, "We called codeForBack. canGoBack = "+b+", currentUrl = "+currentUrl+", previousUrl = "+previousUrl);
         if (b) 
         {
             if (previousUrl.equals(savedDolBasedUrl+"/") || previousUrl.contains("&ui-page="))
@@ -919,12 +920,11 @@ public class SecondActivity extends Activity {
                         //altHistoryStack.remove(altHistoryStack.size() - 1);
                     }
                 }
-            }
-            else
-            {
+            } else {
                 Log.d(LOG_TAG, "We clear nextAltHistoryStack"); 
                 nextAltHistoryStack="";
             }
+
             Log.d(LOG_TAG, "We clear nextAltHistoryStackBis"); 
             nextAltHistoryStackBis="";
             myWebView.goBack(); // This will call shouldInterceptRequest
@@ -1387,39 +1387,43 @@ public class SecondActivity extends Activity {
 		 * @return	boolean					True to mean URL has been handled by code, False to ask webview to handle it.
 		 */
 		@Override
-		public boolean shouldOverrideUrlLoading(WebView view, String url)
-		{
-			Log.d(LOG_TAG, "shouldOverrideUrlLoading url="+url+" originalUrl="+view.getOriginalUrl()+" savedDolRootUrl="+savedDolRootUrl);
+		public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            Log.d(LOG_TAG, "shouldOverrideUrlLoading url=" + url + " originalUrl=" + view.getOriginalUrl() + " savedDolRootUrl=" + savedDolRootUrl);
 
-			// TODO Optimize performance by disabling loading of some url (ie: jquery plugin tipTip)
-			
-			if (url.startsWith("tel:")) {  // Intercept phone urls
-				Log.d(LOG_TAG, "Launch dialer : " + url);
-				Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
-				startActivity(intent);
-				return true;
-			}
-			else if (url.startsWith("geo:")) {  // Intercept geoloc url (map)
-				Log.d(LOG_TAG, "Launch geo : " + url);
-				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-				startActivity(intent);
-				return true;
-			}
-			else if (url.startsWith("mailto:")) {  // Intercept mailto urls
-				Log.d(LOG_TAG, "Launch mailto : " + url);
-				try {
+            // TODO Optimize performance by disabling loading of some url (ie: jquery plugin tipTip)
+
+            if (url.startsWith("tel:")) {  // Intercept phone urls
+                Log.d(LOG_TAG, "Launch dialer : " + url);
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
+                startActivity(intent);
+                return true;
+            } else if (url.startsWith("geo:")) {  // Intercept geoloc url (map)
+                Log.d(LOG_TAG, "Launch geo : " + url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent);
+                return true;
+            } else if (url.startsWith("mailto:")) {  // Intercept mailto urls
+                Log.d(LOG_TAG, "Launch mailto : " + url);
+                try {
                     Intent emailIntent = new Intent(Intent.ACTION_SEND, Uri.parse(url));
                     emailIntent.setType("message/rfc822");
-                    String recipient = url.substring( url.indexOf(":")+1 );
+                    String recipient = url.substring(url.indexOf(":") + 1);
                     emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{recipient});
                     //emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, mContext.getString(R.string.email_subject));
                     //emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, mContext.getString(R.string.email_message, " "));
                     startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+                } catch (Exception ex) {
                 }
-                catch (Exception ex) {}
-				return true;
-			}
-			else if (! url.startsWith(savedDolBasedUrl)) {	// This is an external url
+                return true;
+            } else if (url.startsWith("eeeeeeee")) {    // Intercept some urls
+                Log.d(LOG_TAG, "Launch url in default browser : " + url);
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                } catch (Exception ex) {
+                }
+                return true;
+            } else if (! url.startsWith(savedDolBasedUrl)) {	// This is an external url
 				// Open in Chrome
 				Log.d(LOG_TAG, "Launch external url : " + url);
 				return false;

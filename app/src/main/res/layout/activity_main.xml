@@ -34,7 +34,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="@string/dolicloud_register"
-        android:textAlignment="center"
+        android:textAlignment="gravity"
         android:textColor="@color/black"
         android:textColorLink="@color/blue"
         android:textSize="12sp"

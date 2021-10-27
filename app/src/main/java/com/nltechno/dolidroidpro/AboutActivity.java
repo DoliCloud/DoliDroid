@@ -35,6 +35,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Point;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -92,6 +93,16 @@ public class AboutActivity extends Activity {
         }
 
 		setContentView(R.layout.activity_about);
+
+		// text2 has links specified by putting <a> tags in the string
+		// resource.  By default these links will appear but not
+		// respond to user input.  To make them active, you need to
+		// call setMovementMethod() on the TextView object.
+		TextView t1 = (TextView) findViewById(R.id.TextAbout01);
+		t1.setMovementMethod(LinkMovementMethod.getInstance());
+
+		TextView t2 = (TextView) findViewById(R.id.TextAbout02);
+		t2.setMovementMethod(LinkMovementMethod.getInstance());
 	}
 
 	
@@ -124,7 +135,7 @@ public class AboutActivity extends Activity {
 			s1+=getString(R.string.Compatibility)+": <b>Dolibarr 7+</b><br />\n";
 			s1+=getString(R.string.License)+": <b>GPL v3+</b><br />\n";
 			//s1+=getString(R.string.Sources)+": https://www.nltechno.com/services/<br />\n";
-			s1+=getString(R.string.Sources)+": https://github.com/eldy/dolidroid.git<br />\n";
+			s1+=getString(R.string.Sources)+": <a href=\"https://github.com/eldy/dolidroid.git\">https://github.com/eldy/dolidroid.git</a><br />\n";
 			// This download key allow to download file with name src_dolidroid-info.versionName-downloadkey
 			//String downloadkey=Utils.MD5Hex("dolidroid"+info.versionName.replaceAll("[^0-9.]", "")+"saltnltechno").substring(0, 8);
 			//s1+=getString(R.string.Sources)+" Download Key: dolidroid-"+info.versionName.replaceAll("[^0-9.]", "")+"-"+downloadkey+"<br />\n";
