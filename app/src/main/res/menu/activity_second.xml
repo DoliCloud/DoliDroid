@@ -88,6 +88,11 @@
 				android:menuCategory="secondary"
 				android:orderInCategory="137"
 				android:title="@string/menu_uselocalresources_on" />
+			<item
+				android:id="@+id/clear_all_urls"
+				android:menuCategory="secondary"
+				android:orderInCategory="138"
+				android:title="@string/menu_clear_all_urls" />
 		</menu>
 	</item>
 

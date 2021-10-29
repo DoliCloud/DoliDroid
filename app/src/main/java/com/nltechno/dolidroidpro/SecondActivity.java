@@ -18,6 +18,8 @@ package com.nltechno.dolidroidpro;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -352,7 +354,7 @@ public class SecondActivity extends Activity {
     	Log.i(LOG_TAG, "onStart");
     	super.onStart();
 
-    	// We must reload menu (it may have been changed into other activities
+    	// We must reload menu (it may have been changed into other activities)
 		invalidateOptionsMenu();
 	}
 
@@ -416,6 +418,7 @@ public class SecondActivity extends Activity {
             menuItem.setVisible(false);
         }
 
+
         // Hide menu show bar if phone too old, change label otherwise
         MenuItem menuItem2 = menu.findItem(R.id.always_autofill);
         boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
@@ -428,6 +431,11 @@ public class SecondActivity extends Activity {
             menuItem2.setChecked(false);
         }
 
+
+        MenuItem menuItem3 = menu.findItem(R.id.clear_all_urls);
+        menuItem3.setTitle(getString(R.string.menu_clear_all_urls)+" ("+MainActivity.listOfRootUrl.size()+")");
+
+
         MenuItem menuItem4 = menu.findItem(R.id.always_uselocalresources);
         //boolean prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
         Log.d(LOG_TAG, "onCreateOptionsMenu prefAlwaysUseLocalResources value is "+prefAlwaysUseLocalResources);
@@ -439,6 +447,7 @@ public class SecondActivity extends Activity {
             menuItem4.setChecked(false);
         }
 
+
         if (isMulticompanyOn) {
             Log.d(LOG_TAG, "onCreateOptionsMenu Module multicompany was found, we show picto");
             MenuItem menuItem5 = menu.findItem(R.id.menu_multicompany);
@@ -448,6 +457,7 @@ public class SecondActivity extends Activity {
             MenuItem menuItem5 = menu.findItem(R.id.menu_multicompany);
             if (menuItem5 != null) menuItem5.setVisible(false);
         }
+
 
         this.savMenu = menu;
         

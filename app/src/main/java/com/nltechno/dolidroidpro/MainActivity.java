@@ -67,8 +67,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	private static final String LOG_TAG = "DoliDroidActivity";
 	public final static String FILENAME = "dolidroid_prefs";		// File will be into
 	private final static String HOME_URL = "";
-	private List<String> listOfRootUrl = null;
-	int nbOfEntries = 0;
+	public static List<String> listOfRootUrl = null;
+	public static int nbOfEntries = 0;
 	private boolean firstCallToOnStart = Boolean.TRUE;
 
 	private boolean allowChangeText=Boolean.FALSE;
@@ -198,8 +198,9 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 						homeUrlFirstFound = strLine;
 					}
 					this.listOfRootUrl.add(strLine);
+				} else {
+					Log.d(LOG_TAG, "Duplicate");
 				}
-				else Log.d(LOG_TAG, "Duplicate");
 			}
 			// Close the input stream
 			in.close();
@@ -297,6 +298,11 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
     			//menuItem2.setTitle(getString(R.string.menu_autofill_off));
 				menuItem2.setChecked(false);
 			}
+
+    		if (this.listOfRootUrl != null) {
+				MenuItem menuItem3 = this.savMenu.findItem(R.id.clear_all_urls);
+				menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (" + this.listOfRootUrl.size() + ")");
+			}
 		}
 	}
 
@@ -345,9 +351,6 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
     	Log.d(LOG_TAG, "onCreateOptionsMenu");
 
     	MenuItem menuItem  = menu.findItem(R.id.always_show_bar);
-    	MenuItem menuItem2 = menu.findItem(R.id.always_autofill);
-		MenuItem menuItem4 = menu.findItem(R.id.always_uselocalresources);
-    	MenuItem menuItem3 = menu.findItem(R.id.clear_all_urls);
 
         // Hide menu show bar if there is no hardware
         if (Utils.hasMenuHardware(activity))
@@ -364,6 +367,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
         	menuItem.setVisible(false);
         }
 
+		MenuItem menuItem2 = menu.findItem(R.id.always_autofill);
    		boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
    		Log.d(LOG_TAG, "prefAlwaysAutoFill value is "+prefAlwaysAutoFill);
    		if (prefAlwaysAutoFill) {
@@ -374,6 +378,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			menuItem2.setChecked(false);
 		}
 
+
+		if (this.listOfRootUrl != null) {
+			MenuItem menuItem3 = menu.findItem(R.id.clear_all_urls);
+			menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
+		}
+
+
+		MenuItem menuItem4 = menu.findItem(R.id.always_uselocalresources);
 		if (prefAlwaysAutoFill) {
 			//menuItem4.setTitle(getString(R.string.menu_uselocalresources_on));
 			menuItem4.setChecked(true);
@@ -381,8 +393,6 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			//menuItem4.setTitle(getString(R.string.menu_uselocalresources_off));
 			menuItem4.setChecked(false);
 		}
-
-    	menuItem3.setTitle(getString(R.string.menu_clear_all_urls)+" ("+this.nbOfEntries+")");
 
         this.savMenu=menu;
 
@@ -458,15 +468,18 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	    		return true;*/
 	    	case R.id.clear_all_urls:
 				File file = new File(getApplicationContext().getFilesDir().toString() + "/" + FILENAME);
-				Log.d(LOG_TAG, "Clear predefined URL list "+FILENAME+" full path="+file.getAbsolutePath());
+				Log.d(LOG_TAG, "Clear predefined URL list "+FILENAME+" by deleting file with full path="+file.getAbsolutePath());
 	    		Boolean result = file.delete();
 				Log.d(LOG_TAG, result.toString());
-				this.listOfRootUrl = new ArrayList<String>();
 	    		// Hide combo
 	    		Spinner spinner1 = (Spinner) findViewById(R.id.combo_list_of_urls);
 	    		spinner1.setVisibility(View.INVISIBLE);
 				TextView texViewLink = (TextView) findViewById(R.id.textViewLink);
 				texViewLink.setVisibility(View.VISIBLE);
+				// Now update menu entry
+				this.listOfRootUrl = new ArrayList<String>();	// Clear array of menu entry
+				MenuItem menuItem3 = this.savMenu.findItem(R.id.clear_all_urls);
+				menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (" + this.listOfRootUrl.size() + ")");
 	    	    return true;
 		    case R.id.about:
 	    		Log.d(LOG_TAG, "Click onto Info");
@@ -573,8 +586,11 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			}
 			if (! this.listOfRootUrl.contains(dolRootUrl))	// Add new value into saved list
 			{
+				// Add entry into file on disk
 				Log.d(LOG_TAG, "write new value " + Utils.bytesToString(dolRootUrl.getBytes()));
 				fos.write(dolRootUrl.getBytes());
+				// Add entry also into this.listOfRootUrl
+				this.listOfRootUrl.add(dolRootUrl);
 			}
 			fos.close();
 		}

@@ -66,8 +66,6 @@ public class AboutActivity extends Activity {
 
 	private static final String LOG_TAG = "DoliDroidActivity";
 	private String menuAre="hardwareonly";
-	private List<String> listOfRootUrl = null;
-	int nbOfEntries = 0;
 
 	static final int REQUEST_ABOUT = 0;
 	static final int REQUEST_WEBVIEW = 1;
@@ -120,39 +118,6 @@ public class AboutActivity extends Activity {
 
 		Log.d(LOG_TAG, "Open file " + MainActivity.FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());
 
-		listOfRootUrl = new ArrayList<String>();
-
-		// Load the list of entries into this.listOfRootUrl
-		// TODO Share this into a method with MainActivity
-		nbOfEntries=0;
-		try {
-			FileInputStream fis = openFileInput(MainActivity.FILENAME);
-			Log.d(LOG_TAG, "Open data file "+MainActivity.FILENAME+" in directory "+getApplicationContext().getFilesDir().toString());
-			// Get the object of DataInputStream
-			DataInputStream in = new DataInputStream(fis);
-			BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			String strLine;
-			// Read File Line By Line
-			while ((strLine = br.readLine()) != null) {
-				// Print the content on the console
-				Log.d(LOG_TAG, "Found entry " + nbOfEntries + " : " + strLine);
-				if (! listOfRootUrl.contains(strLine))
-				{
-					nbOfEntries++;
-					if (nbOfEntries == 1)
-					{
-						//homeUrlFirstFound = strLine;
-					}
-					listOfRootUrl.add(strLine);
-				}
-				else Log.d(LOG_TAG, "Duplicate");
-			}
-			// Close the input stream
-			in.close();
-		} catch (Exception e) {// Catch exception if any
-			Log.d(LOG_TAG, "Can't read file " + MainActivity.FILENAME + " " + e.getMessage());
-		}
-
 
 		// Create listener to respond to click on button
 		// Not using the android:onClick tag is bugged.
@@ -172,9 +137,11 @@ public class AboutActivity extends Activity {
 
 					// Now loop of each entry and rewrite or exclude it
 					fos = openFileOutput(MainActivity.FILENAME, Context.MODE_PRIVATE);
-					for (int i = 0; i < listOfRootUrl.size(); i++)
+					int itoremove = -1;
+					int sizeofarray = MainActivity.listOfRootUrl.size();
+					for (int i = 0; i < sizeofarray; i++)
 					{
-						String s=listOfRootUrl.get(i);
+						String s=MainActivity.listOfRootUrl.get(i);
 						if (! s.equals(savedDolRootUrl))	// Add new value into saved list
 						{
 							Log.d(LOG_TAG, "write " + s);
@@ -183,9 +150,15 @@ public class AboutActivity extends Activity {
 							Log.d(LOG_TAG, "exclude entry " + s);
 							btn.setEnabled(false);
 							btn.setTextColor(Color.LTGRAY);
+							itoremove = i;
 						}
 					}
 					fos.close();
+
+					// If success, we can remove entry from memory array listOfRootUrl
+					if (itoremove >= 0) {
+						MainActivity.listOfRootUrl.remove(itoremove);
+					}
 				}
 				catch(Exception ioe)
 				{
@@ -319,11 +292,11 @@ public class AboutActivity extends Activity {
 		boolean savedDolRootUrlFoundIntoPredefinedLoginUrl = false;
 		try
 		{
-			Log.d(LOG_TAG, "Loop on listOfRootUrl "+listOfRootUrl.size());
+			Log.d(LOG_TAG, "Loop on listOfRootUrl "+MainActivity.listOfRootUrl.size());
 			// Now loop of each entry and rewrite or exclude it
-			for (int i = 0; i < listOfRootUrl.size(); i++)
+			for (int i = 0; i < MainActivity.listOfRootUrl.size(); i++)
 			{
-				String s=listOfRootUrl.get(i);
+				String s=MainActivity.listOfRootUrl.get(i);
 				Log.d(LOG_TAG, "Check for s="+s+" equal to savedDolRootUrl="+savedDolRootUrl);
 				if (s.equals(savedDolRootUrl))	// Add new value into saved list
 				{
