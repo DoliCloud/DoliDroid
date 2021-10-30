@@ -599,8 +599,12 @@ public class SecondActivity extends Activity {
             case R.id.refresh:
                 myWebView = (WebView) findViewById(R.id.webViewContent);
                 urlToGo = myWebView.getUrl();
-                if (urlToGo != null)
-                {
+                Log.d(LOG_TAG, "urlToGo="+urlToGo);
+                if (urlToGo != null) {
+                    if (urlToGo.startsWith("data:text") || urlToGo.startsWith("about:blank")) {
+                        urlToGo = savedDolRootUrl;
+                    }
+
                     if (! urlToGo.contains("dol_hide_topmenu=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_hide_topmenu=1";
                     if (! urlToGo.contains("dol_hide_leftmenu=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_hide_leftmenu=1";
                     if (! urlToGo.contains("dol_optimize_smallscreen=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_optimize_smallscreen=1";
@@ -1005,14 +1009,28 @@ public class SecondActivity extends Activity {
         myWebView = (WebView) findViewById(R.id.webViewContent);
 
         String urlToGo = myWebView.getOriginalUrl();
-        if (urlToGo.contains("?")) urlToGo=urlToGo+"&";
-        else urlToGo=urlToGo+"?";
-        urlToGo += "switchentityautoopen=1&dol_invisible_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
 
-        // If not found into cache, call URL
-        Log.d(LOG_TAG, "We called codeForMultiCompany after click on MultiCompany : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
+        if (urlToGo != null) {
+            if (urlToGo.startsWith("data:text") || urlToGo.startsWith("about:blank")) {
+                urlToGo = savedDolRootUrl;
+            }
+            if (urlToGo.contains("?")) urlToGo = urlToGo + "&";
+            else urlToGo = urlToGo + "?";
 
-        myWebView.loadUrl(urlToGo);
+            //if (! urlToGo.contains("dol_hide_topmenu=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_hide_topmenu=1";
+            urlToGo.replace("&dol_hide_leftmenu=1", "");
+            if (! urlToGo.contains("dol_hide_leftmenu=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_hide_leftmenu=1";
+            if (! urlToGo.contains("dol_optimize_smallscreen=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_optimize_smallscreen=1";
+            if (! urlToGo.contains("dol_no_mouse_hover=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_no_mouse_hover=1";
+            if (! urlToGo.contains("dol_use_jmobile=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
+
+            urlToGo += "switchentityautoopen=1&dol_invisible_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=" + (DoliDroid.useJMobileAjax ? '2' : '1');
+
+            // If not found into cache, call URL
+            Log.d(LOG_TAG, "We called codeForMultiCompany after click on MultiCompany : savedDolBasedUrl=" + this.savedDolBasedUrl + " urlToGo=" + urlToGo);
+
+            myWebView.loadUrl(urlToGo);
+        }
 
         return true;
     }
@@ -1182,12 +1200,12 @@ public class SecondActivity extends Activity {
      * WebViewClientDoliDroid
      * 
      * Sequence of trigger called when we do myWebView.loadUrl(url):
-     * 0) onPageStarted is called when we need to load a page (in cache or not, but not called by Ajax JMobile)
+     * 0) onPageStarted is called when we need to load a page (in cache or not)
      * 0) shouldInterceptRequest is called for all HTTP requests of pages and images (.php, .css, .js, .png, but not called when cache is used)
      * 1) shouldOverrideUrlLoading is called for HTTP requests of pages only (.php, .css, .js, but not called when cache is used). Also note that a redirect triggers this method but not if redirect is done with javascript window.location. 
      * 2) onLoadResource is called for all HTTP requests, even Ajax (but not called when cache is used)
      * 3) onReceivedError or onReceivedSslError
-     * 4) onPageFinished is called when page with its resources are loaded (in cache or not, even for call by Ajax JMobile)
+     * 4) onPageFinished is called when page with its resources are loaded (in cache or not)
      */
 	class WebViewClientDoliDroid extends WebViewClient
 	{
@@ -1556,7 +1574,7 @@ public class SecondActivity extends Activity {
 			
 			if (listOfCookiesAfterLogon == null)
 			{
-				Log.d(LOG_TAG, "Save session cookies for the download manager into var listOfCookiesAfterLogon");
+				Log.d(LOG_TAG, "onPageFinished Save session cookies for the download manager into var listOfCookiesAfterLogon");
 				listOfCookiesAfterLogon=this.listCookies();	// Save cookie for
 			}
 
@@ -1599,50 +1617,56 @@ public class SecondActivity extends Activity {
 				this.webViewtitle = myWebView.getTitle();
 				if (this.webViewtitle != null)
 				{
-					Matcher m = patternLoginHomePageForVersion.matcher(this.webViewtitle);
-				    Boolean foundVersion = m.find();
-                    MenuItem menuItemBookmarks = savMenu.findItem(R.id.menu_bookmarks);
-					if (foundVersion)	// if title ends with " Dolibarr x.y.z" or " Dolibarr x.y.z - multicompany or anytext from module hook setTitleHtml", this is login page or home page
-				    {
-				    	lastversionfound=m.group(1) + ", " + m.group(2) + ", " + m.group(3);
-						lastversionfoundforasset=m.group(1) + "." + m.group(2);
-						Log.i(LOG_TAG, "Title of page is: "+this.webViewtitle+" - url="+url+" - Found login or home page + version: " + lastversionfound+" - Suggest to use asset: "+lastversionfoundforasset);
+                    Matcher m = patternLoginHomePageForVersion.matcher(this.webViewtitle);
+                    Boolean foundVersion = m.find();
 
-						// Enable or disable menu entry for Mumticompany
-                        Matcher multicompanyRegex = patternLoginHomePageForMulticompany.matcher(this.webViewtitle);
-                        isMulticompanyOn = multicompanyRegex.find();
-                        //isMulticompanyOn=true;
-                        if (isMulticompanyOn)
+				    if (savMenu != null) {
+                        MenuItem menuItemBookmarks = savMenu.findItem(R.id.menu_bookmarks);
+                        if (foundVersion)    // if title ends with " Dolibarr x.y.z" or " Dolibarr x.y.z - multicompany or anytext from module hook setTitleHtml", this is login page or home page
                         {
-                            savMenu.findItem(R.id.menu_multicompany).setVisible(true);
-                            Log.d(LOG_TAG, "Module multicompany was found");
-                        }
-                        else
-						{
-							savMenu.findItem(R.id.menu_multicompany).setVisible(false);
-							Log.d(LOG_TAG, "Module multicompany was NOT found");
-						}
+                            lastversionfound = m.group(1) + ", " + m.group(2) + ", " + m.group(3);
+                            lastversionfoundforasset = m.group(1) + "." + m.group(2);
+                            Log.i(LOG_TAG, "onPageFinished Title of page is: " + this.webViewtitle + " - url=" + url + " - Found login or home page + version: " + lastversionfound + " - Suggest to use asset: " + lastversionfoundforasset);
 
-                        // Enable or disable menu entry for Bookmarks (available from Dolibarr v15)
-                        Log.d(LOG_TAG, "Version major found = " + m.group(1));
-                        try {
-                            if (Integer.parseInt(m.group(1)) >= 15) {
-                                menuItemBookmarks.setVisible(true);
-                            } else {
+                            // Enable or disable menu entry for Mumticompany
+                            Matcher multicompanyRegex = patternLoginHomePageForMulticompany.matcher(this.webViewtitle);
+                            isMulticompanyOn = multicompanyRegex.find();
+                            //isMulticompanyOn=true;
+                            MenuItem menuItemMultiCompany = savMenu.findItem(R.id.menu_multicompany);
+                            if (menuItemMultiCompany != null) {
+                                if (isMulticompanyOn) {
+                                    menuItemMultiCompany.setVisible(true);
+                                    Log.d(LOG_TAG, "onPageFinished Module multicompany was found");
+                                } else {
+                                    menuItemMultiCompany.setVisible(false);
+                                    Log.d(LOG_TAG, "onPageFinished Module multicompany was NOT found");
+                                }
+                            }
+
+                            // Enable or disable menu entry for Bookmarks (available from Dolibarr v15)
+                            try {
+                                if (Integer.parseInt(m.group(1)) >= 15) {
+                                    Log.d(LOG_TAG, "onPageFinished Version major found >= 15, we enable the bookmark menu entry");
+                                    menuItemBookmarks.setVisible(true);
+                                } else {
+                                    Log.d(LOG_TAG, "onPageFinished Version major found < 15, we disable the bookmark menu entry");
+                                    menuItemBookmarks.setVisible(false);
+                                }
+                            } catch (Exception e) {
+                                Log.d(LOG_TAG, "onPageFinished Failed to parse version found = " + m.group(1));
                                 menuItemBookmarks.setVisible(false);
                             }
-                        } catch(Exception e) {
+                        }/* else {
+                            Log.d(LOG_TAG, "Failed to find version");
                             menuItemBookmarks.setVisible(false);
-                        }
-					} else {
-                        menuItemBookmarks.setVisible(false);
+                        }*/
                     }
-				    
+
 				    if (patternLoginPage.matcher(this.webViewtitle).find() || patternLoginPage2.matcher(this.webViewtitle).find())	// if title ends with "Login Dolixxx x.y.z", this is login page or home page
 				    {
 				    	if (url.equals(savedDolBasedUrl+"/"))
 				    	{
-							Log.w(LOG_TAG, "We ignore page since url is not a specific page");
+							Log.w(LOG_TAG, "onPageFinished We ignore page since url is not a specific page");
 				    	}
 				    	else
 				    	{
@@ -1663,10 +1687,10 @@ public class SecondActivity extends Activity {
 								else {
 									versionOk = false;
 								}
-								if (versionOk) Log.d(LOG_TAG, "Dolidroid is compatible with your Dolibarr "+lastversionfound);
+								if (versionOk) Log.d(LOG_TAG, "onPageFinished Dolidroid is compatible with your Dolibarr "+lastversionfound);
 								else 
 								{
-									Log.w(LOG_TAG, "Dolidroid is NOT compatible with your Dolibarr "+lastversionfound);
+									Log.w(LOG_TAG, "onPageFinished Dolidroid is NOT compatible with your Dolibarr "+lastversionfound);
 									final Toast aToast = Toast.makeText(activity, getString(R.string.notCompatibleWithVersion, (lastversionfound == null ? this.webViewtitle : lastversionfound), "3.4"), Toast.LENGTH_SHORT);
 									new CountDownTimer(5000, 1000)	// 5 seconds
 									{
@@ -1685,14 +1709,14 @@ public class SecondActivity extends Activity {
 									if ((username != null && ! "".equals(username)) || (password != null && ! "".equals(password)))
 									{
 										tagToOverwriteLoginPass=false;
-										Log.d(LOG_TAG, "Prepare js to autofill login form with username="+username+" password="+password.replaceAll(".", "*"));
+										Log.d(LOG_TAG, "onPageFinished Prepare js to autofill login form with username="+username+" password="+password.replaceAll(".", "*"));
 										// This call inject JavaScript into the page which just finished loading.
 										if (username != null && ! "".equals(username)) jsInjectCodeForSetForm+="document.getElementById('username').value='"+username+"';";	// Warning: This line makes Webkit fails with 2.3
 										if (password != null && ! "".equals(password)) jsInjectCodeForSetForm+="document.getElementById('password').value='"+password+"';";	// Warning: This line makes Webkit fails with 2.3
 									}
-									else Log.d(LOG_TAG, "No predefined login/pass to autofill login form");
+									else Log.d(LOG_TAG, "onPageFinished No predefined login/pass to autofill login form");
 								}
-								else Log.d(LOG_TAG, "Do not autofill login form with login/pass. tagToOverwriteLoginPass is false.");
+								else Log.d(LOG_TAG, "onPageFinished Do not autofill login form with login/pass. tagToOverwriteLoginPass is false.");
 
 								// Force inject value of mobile parameters. This is required when session expired and login is available
 								jsInjectCodeForSetForm+="document.getElementById('dol_hide_topmenu').value='1';";	// Warning: This line makes Webkit fails with 2.3
@@ -1702,7 +1726,7 @@ public class SecondActivity extends Activity {
 								jsInjectCodeForSetForm+="document.getElementById('dol_use_jmobile').value='"+(DoliDroid.useJMobileAjax?"2":"1")+"';";	// Warning: This line makes Webkit fails with 2.3
 								jsInjectCodeForSetForm+=jsInjectCodeForLoginSubmit;
 								// Now inject js to catch submission of login
-								Log.d(LOG_TAG, "Inject js into page (to autofill form if allowed, to hook the submit of form, to fill submit params)");
+								Log.d(LOG_TAG, "onPageFinished Inject js into page (to autofill form if allowed, to hook the submit of form, to fill submit params)");
 								view.loadUrl("javascript:(function() { " + jsInjectCodeForSetForm + " })()");
 							}
 				    	}
@@ -1712,31 +1736,31 @@ public class SecondActivity extends Activity {
 				    	//Log.d(LOG_TAG, "Title of page is: "+myWebView.getTitle()+" - Login tag or Version not found");
 				    	if (tagLastLoginPassToSavedLoginPass)
 				    	{
-				    		Log.i(LOG_TAG, "We have just received a page that is not Login page after submitting login form.");
+				    		Log.i(LOG_TAG, "onPageFinished We have just received a page that is not Login page after submitting login form.");
 				    		tagLastLoginPassToSavedLoginPass=false;
 					    	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 					    	//SharedPreferences sharedPrefs = this.secondActivity.getSharedPreferences(FILENAME_INST_PARAM, Context.MODE_PRIVATE);
 					    	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
 					    	if (prefAlwaysAutoFill)
 					    	{
-						    	Log.d(LOG_TAG, "We save form fields (prefAlwaysAutoFill is true).");
+						    	Log.d(LOG_TAG, "onPageFinished We save form fields (prefAlwaysAutoFill is true).");
 						    	String username=sharedPrefs.getString("lastsubmit-username", "");
 								String password=sharedPrefs.getString("lastsubmit-password", "");
 								if ((username != null && ! "".equals(username)) || (password != null && ! "".equals(password)))
 								{
 									SharedPreferences.Editor editor = sharedPrefs.edit();
-									Log.d(LOG_TAG,"Save "+savedDolRootUrl+"-username="+username);
+									Log.d(LOG_TAG,"onPageFinished Save "+savedDolRootUrl+"-username="+username);
 									editor.putString(savedDolRootUrl+"-username", username);
-									Log.d(LOG_TAG,"Save "+savedDolRootUrl+"-password="+password);
+									Log.d(LOG_TAG,"onPageFinished Save "+savedDolRootUrl+"-password="+password);
 									editor.putString(savedDolRootUrl+"-password", password);
 									editor.apply();
 								}
 					    	}
-					    	else Log.d(LOG_TAG, "We don't save form fields (prefAlwaysAutoFill is false).");
+					    	else Log.d(LOG_TAG, "onPageFinished We don't save form fields (prefAlwaysAutoFill is false).");
 							tagToOverwriteLoginPass=prefAlwaysAutoFill;
 								
 				    		// Clear webview history
-							Log.d(LOG_TAG,"We clear history of webview");
+							Log.d(LOG_TAG,"onPageFinished We clear history of webview");
 				    		myWebView.clearHistory();
 				    	}
 				    }
@@ -1749,10 +1773,10 @@ public class SecondActivity extends Activity {
 					{
 						if (tagToLogout)
 						{
-							Log.d(LOG_TAG, "End of logout page, tagToLogout="+tagToLogout);
+							Log.d(LOG_TAG, "onPageFinished End of logout page, tagToLogout="+tagToLogout);
 							tagToLogout=false;	// Set to false to avoid infinite loop
 							tagToOverwriteLoginPass=true;
-							Log.i(LOG_TAG, "We finish activity resultCode="+RESULT_LOGOUT);
+							Log.i(LOG_TAG, "onPageFinished We finish activity resultCode="+RESULT_LOGOUT);
 							setResult(RESULT_LOGOUT);
 					    	WebViewDatabase.getInstance(getBaseContext()).clearHttpAuthUsernamePassword();
 							finish();	// End activity
@@ -1782,7 +1806,7 @@ public class SecondActivity extends Activity {
 					{
 						if (tagToGetCacheForQuickAccess)
 						{
-							Log.d(LOG_TAG, "Inject js to get html content, tagToGetCacheQuickAccess="+tagToGetCacheForQuickAccess);
+							Log.d(LOG_TAG, "onPageFinished Inject js to get html content, tagToGetCacheQuickAccess="+tagToGetCacheForQuickAccess);
 							tagToGetCacheForQuickAccess=false;	// Set to false to avoid infinite loop
 					        // This call inject JavaScript into the page which just finished loading.
 							view.loadUrl("javascript:window.HTMLOUT.functionJavaCalledByJsProcessHTML('quickaccess','<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");	// Warning: This line makes Webkit fails with 2.3, that's why there is a version check before
@@ -1793,7 +1817,7 @@ public class SecondActivity extends Activity {
 
 				if (! "".equals(nextAltHistoryStackBis))
 				{
-					Log.d(LOG_TAG, "We add an entry into history stack because nextAltHistoryStackBis="+nextAltHistoryStackBis);
+					Log.d(LOG_TAG, "onPageFinished We add an entry into history stack because nextAltHistoryStackBis="+nextAltHistoryStackBis);
 					altHistoryStack.add(nextAltHistoryStackBis);
 					nextAltHistoryStackBis="";
 					if (url.contains("&ui-page=")) nextAltHistoryStack="menu";
@@ -1801,7 +1825,7 @@ public class SecondActivity extends Activity {
 				
 				if (url.equals(savedDolBasedUrl+"/") || url.contains("&ui-page="))
 				{
-					Log.d(LOG_TAG, "We finished to load a page with a bad history "+url+".");
+					Log.d(LOG_TAG, "onPageFinished We finished to load a page with a bad history "+url);
 					// If we go from a back, nextAltHistoryStack is ""
 					//nextAltHistoryStackBis=(("".equals(nextAltHistoryStack) && url.contains("&ui-page="))?"menu":nextAltHistoryStack);
 					nextAltHistoryStackBis=nextAltHistoryStack;	

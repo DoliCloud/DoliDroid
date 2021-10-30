@@ -30,6 +30,7 @@ import java.util.Locale;
 import com.nltechno.utils.Utils;
 
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -44,6 +45,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,6 +54,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -131,6 +134,17 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 		setContentView(R.layout.activity_main);
 
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		int width = size.x;
+		int height = size.y;
+		Log.d(LOG_TAG, "Scree height is "+height);
+		if (height < 1100) {
+			// We hide the image
+			ImageView img1 = (ImageView) findViewById(R.id.imageViewLogoBottom);
+			img1.setVisibility(View.INVISIBLE);
+		}
 
         // text2 has links specified by putting <a> tags in the string
         // resource.  By default these links will appear but not

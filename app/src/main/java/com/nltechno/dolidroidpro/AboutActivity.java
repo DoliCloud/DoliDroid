@@ -331,9 +331,12 @@ public class AboutActivity extends Activity {
         if (lastversionfound != null && ! "".equals(lastversionfound)) s3+="<br /><br />\nDolibarr "+getString(R.string.Version)+": "+lastversionfound+"<br />\n";
 
 		// User agent
+		// The About view is not a webview, so we must use the userAgent propagated by the SecondActivity. It may be null if not already created.
         String userAgent = intent.getStringExtra("userAgent");
         Log.d(LOG_TAG,"userAgent="+userAgent);
-        if (userAgent != null && ! "".equals(userAgent)) s3+="<br /><br />\n<font color='#440066'><b>"+getString(R.string.UserAgent)+":</b></font><br /><br />\n"+userAgent+"<br />\n";
+        if (userAgent != null && ! "".equals(userAgent)) {
+        	s3+="<br /><br />\n<font color='#440066'><b>"+getString(R.string.UserAgent)+":</b></font><br /><br />\n"+userAgent+"<br />\n";
+		}
 
 		textViewAbout3.setText(Html.fromHtml(s3));
 	}

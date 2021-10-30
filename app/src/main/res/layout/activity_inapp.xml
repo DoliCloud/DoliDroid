@@ -24,7 +24,7 @@ android:layout_height="wrap_content">
         tools:context=".MainActivity" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageViewLogoBottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -37,7 +37,7 @@ android:layout_height="wrap_content">
         android:id="@+id/textAndroidClient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView2"
+        android:layout_below="@+id/imageViewLogoBottom"
         android:layout_centerHorizontal="true"
         android:text="@string/dolibarr_for_android"
         tools:context=".MainActivity" />

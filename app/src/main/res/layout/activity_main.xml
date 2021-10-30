@@ -51,7 +51,7 @@
         android:spinnerMode="dialog" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageViewLogoBottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/textAndroidClient"
