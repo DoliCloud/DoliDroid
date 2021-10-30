@@ -4,9 +4,10 @@ English DoliDroid ChangeLog
 
 ***** ChangeLog for 2.2 *****
 
-2.242
+2.243
 - Use checkboxes to select options.
 - Add support for the bookmarks pages into DoliDroid menu (need Dolibarr v15+).
+- Add support for the switch company page menu (need Dolibarr v15+).
 - Url entry is not lost when leaving and going back on app.
 - Can click on links into the About page.
 - Can delete a saved predefined URL to connect to from list of saved URLs.
