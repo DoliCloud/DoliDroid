@@ -260,7 +260,9 @@ public class SecondActivity extends Activity {
                 String[] credentials = userInfo.split(":");
                 //view.setHttpAuthUsernamePassword(getBaseDomain(url), "Restricted", credentials[0], credentials[1]);
                 savedAuthuser=credentials[0];
-                savedAuthpass=credentials[1];
+                if (credentials.length > 1) {
+                    savedAuthpass = credentials[1];
+                }
                 Log.d(LOG_TAG, "onCreate Saving basic authentication found into URL authuser="+savedAuthuser+" authpass="+savedAuthpass);
             }
             else
@@ -1599,6 +1601,7 @@ public class SecondActivity extends Activity {
 				{
 					Matcher m = patternLoginHomePageForVersion.matcher(this.webViewtitle);
 				    Boolean foundVersion = m.find();
+                    MenuItem menuItemBookmarks = savMenu.findItem(R.id.menu_bookmarks);
 					if (foundVersion)	// if title ends with " Dolibarr x.y.z" or " Dolibarr x.y.z - multicompany or anytext from module hook setTitleHtml", this is login page or home page
 				    {
 				    	lastversionfound=m.group(1) + ", " + m.group(2) + ", " + m.group(3);
@@ -1622,7 +1625,6 @@ public class SecondActivity extends Activity {
 
                         // Enable or disable menu entry for Bookmarks (available from Dolibarr v15)
                         Log.d(LOG_TAG, "Version major found = " + m.group(1));
-                        MenuItem menuItemBookmarks = savMenu.findItem(R.id.menu_bookmarks);
                         try {
                             if (Integer.parseInt(m.group(1)) >= 15) {
                                 menuItemBookmarks.setVisible(true);
@@ -1632,7 +1634,9 @@ public class SecondActivity extends Activity {
                         } catch(Exception e) {
                             menuItemBookmarks.setVisible(false);
                         }
-					}
+					} else {
+                        menuItemBookmarks.setVisible(false);
+                    }
 				    
 				    if (patternLoginPage.matcher(this.webViewtitle).find() || patternLoginPage2.matcher(this.webViewtitle).find())	// if title ends with "Login Dolixxx x.y.z", this is login page or home page
 				    {

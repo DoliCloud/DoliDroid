@@ -217,7 +217,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			adapter.add(getString(R.string.SelectUrl) + "...");
 		}
 		// Set entries to adapter
-		for(int i = 0; i < this.listOfRootUrl.size(); i++)
+		for (int i = 0; i < this.listOfRootUrl.size(); i++)
 		{
 			adapter.add(this.listOfRootUrl.get(i));
 		}
