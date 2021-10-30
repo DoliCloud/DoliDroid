@@ -1006,12 +1006,15 @@ public class SecondActivity extends Activity {
      */
     private boolean codeForMultiCompany()
     {
-        myWebView = (WebView) findViewById(R.id.webViewContent);
+        String urlToGo = "";
 
-        String urlToGo = myWebView.getOriginalUrl();
+        //myWebView = (WebView) findViewById(R.id.webViewContent);
+        //String urlToGo = myWebView.getOriginalUrl();
+
+        urlToGo = this.savedDolRootUrl+"core/multicompany_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
 
         if (urlToGo != null) {
-            if (urlToGo.startsWith("data:text") || urlToGo.startsWith("about:blank")) {
+            /*if (urlToGo.startsWith("data:text") || urlToGo.startsWith("about:blank")) {
                 urlToGo = savedDolRootUrl;
             }
             if (urlToGo.contains("?")) urlToGo = urlToGo + "&";
@@ -1025,9 +1028,22 @@ public class SecondActivity extends Activity {
             if (! urlToGo.contains("dol_use_jmobile=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
 
             urlToGo += "switchentityautoopen=1&dol_invisible_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=" + (DoliDroid.useJMobileAjax ? '2' : '1');
+            */
 
             // If not found into cache, call URL
             Log.d(LOG_TAG, "We called codeForMultiCompany after click on MultiCompany : savedDolBasedUrl=" + this.savedDolBasedUrl + " urlToGo=" + urlToGo);
+
+            // Clear also cache (we will need different content if we use different entities)
+            myWebView = (WebView) findViewById(R.id.webViewContent);
+            Log.i(LOG_TAG, "Clear caches of webView");
+            myWebView.clearCache(true);
+            Log.d(LOG_TAG,"Clear also history of webview");
+            myWebView.clearHistory();
+            this.cacheForMenu=null;
+            this.cacheForQuickAccess=null;
+            this.cacheForBookmarks=null;
+            //Log.d(LOG_TAG,"Clear also cookies");
+            //this.myWebViewClientDoliDroid.deleteSessionCookies();
 
             myWebView.loadUrl(urlToGo);
         }
@@ -1634,12 +1650,12 @@ public class SecondActivity extends Activity {
                             //isMulticompanyOn=true;
                             MenuItem menuItemMultiCompany = savMenu.findItem(R.id.menu_multicompany);
                             if (menuItemMultiCompany != null) {
-                                if (isMulticompanyOn) {
+                                if (isMulticompanyOn && Integer.parseInt(m.group(1)) >= 15) {
                                     menuItemMultiCompany.setVisible(true);
-                                    Log.d(LOG_TAG, "onPageFinished Module multicompany was found");
+                                    Log.d(LOG_TAG, "onPageFinished Module multicompany was found and Version major found >= 15, we enable the multicompany menu entry");
                                 } else {
                                     menuItemMultiCompany.setVisible(false);
-                                    Log.d(LOG_TAG, "onPageFinished Module multicompany was NOT found");
+                                    Log.d(LOG_TAG, "onPageFinished Module multicompany was NOT found or major version < 15, we disable the multicompany menu entry");
                                 }
                             }
 
