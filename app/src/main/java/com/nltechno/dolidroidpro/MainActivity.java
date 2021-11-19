@@ -570,19 +570,28 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		dolRequestUrl = dolRequestUrl.replace("\\", "/").trim();
 		dolRootUrl = dolRootUrl.replace("\\", "/").trim();
 
-		if (! dolRequestUrl.toLowerCase(Locale.ENGLISH).contains("http://") && ! dolRequestUrl.toLowerCase(Locale.ENGLISH).contains("https://")) dolRequestUrl = "http://".concat(dolRootUrl.replaceAll("^/", ""));
+		// Add https:// if no http provided
+		if (! dolRequestUrl.toLowerCase(Locale.ENGLISH).contains("http://") && ! dolRequestUrl.toLowerCase(Locale.ENGLISH).contains("https://")) {
+			dolRequestUrl = "https://".concat(dolRootUrl.replaceAll("^/", ""));
+		}
 		dolRequestUrl = dolRequestUrl.replaceAll("(?i)/index.php$", "");
-		if (! dolRequestUrl.endsWith("/") && ! dolRequestUrl.contains("?") && ! dolRequestUrl.endsWith(".php")) dolRequestUrl = dolRequestUrl.concat("/");
+		if (! dolRequestUrl.endsWith("/") && ! dolRequestUrl.contains("?") && ! dolRequestUrl.endsWith(".php")) {
+			dolRequestUrl = dolRequestUrl.concat("/");
+		}
 
-		if (! dolRootUrl.toLowerCase(Locale.ENGLISH).contains("http://") && ! dolRootUrl.toLowerCase(Locale.ENGLISH).contains("https://")) dolRootUrl = "http://".concat(dolRootUrl.replaceAll("^/", ""));
+		// Add https:// if no http provided
+		if (! dolRootUrl.toLowerCase(Locale.ENGLISH).contains("http://") && ! dolRootUrl.toLowerCase(Locale.ENGLISH).contains("https://")) {
+			dolRootUrl = "https://".concat(dolRootUrl.replaceAll("^/", ""));
+		}
 		dolRootUrl = dolRootUrl.replaceAll("(?i)/index.php$", "");
-		if (dolRootUrl.contains("?") || dolRootUrl.endsWith(".php"))
-		{
+		if (dolRootUrl.contains("?") || dolRootUrl.endsWith(".php")) {
 			String parttoremove = dolRootUrl.replaceAll("http(s|)://([^/]+)/", "");
 			dolRootUrl = dolRootUrl.replace(parttoremove, "");
 		}
 		dolRootUrl = dolRootUrl.replace(":///", "://");
-		if (! dolRootUrl.endsWith("/")) dolRootUrl = dolRootUrl.concat("/");
+		if (! dolRootUrl.endsWith("/")) {
+			dolRootUrl = dolRootUrl.concat("/");
+		}
 
 		Log.d(LOG_TAG, "We clicked 'Start' with dolRootUrl=" + dolRootUrl+" dolRequestUrl=" + dolRequestUrl);
 
