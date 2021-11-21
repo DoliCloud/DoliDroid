@@ -388,7 +388,7 @@ public class SecondActivity extends Activity {
             menu.findItem(R.id.menu_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             menu.findItem(R.id.menu_bookmarks).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);   // Not enough room so we force it on dropdown menu.
         }
         if (this.menuAre.equals("hardwareonly"))
         {
