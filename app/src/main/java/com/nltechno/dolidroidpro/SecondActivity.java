@@ -1733,8 +1733,8 @@ public class SecondActivity extends Activity {
 									if ((username != null && ! "".equals(username)) || (password != null && ! "".equals(password)))
 									{
 										tagToOverwriteLoginPass=false;  // So we autofill form only the first time.
-										//Log.d(LOG_TAG, "onPageFinished Prepare js to autofill login form with username="+username+" password="+password.replaceAll(".", "*"));
-                                        Log.d(LOG_TAG, "onPageFinished Prepare js to autofill login form with username="+username+" password="+password);
+										Log.d(LOG_TAG, "onPageFinished Prepare js to autofill login form with username="+username+" password="+password.replaceAll(".", "*"));
+                                        //Log.d(LOG_TAG, "onPageFinished Prepare js to autofill login form with username="+username+" password="+password);
 
                                         // This call inject JavaScript into the page which just finished loading.
 										if (username != null && ! "".equals(username)) jsInjectCodeForSetForm+="document.getElementById('username').value='"+username+"';";	// Warning: This line makes Webkit fails with 2.3
