@@ -29,7 +29,7 @@ import android.widget.Toast;
  * Class to manage end of download
  */
 public class DownloadBroadcastReceiver extends BroadcastReceiver {
-	private static final String LOG_TAG = "DoliDroidActivity";
+	private static final String LOG_TAG = "DoliDroidDownloadBroadcastReceiver";
 
     @Override
     public void onReceive(Context context, Intent intent) {

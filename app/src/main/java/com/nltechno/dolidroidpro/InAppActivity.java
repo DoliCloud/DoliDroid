@@ -33,7 +33,7 @@ import android.util.Log;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
 public class InAppActivity extends Activity {
 
-	private static final String LOG_TAG = "DoliDroidActivity";
+	private static final String LOG_TAG = "DoliDroidInAppActivity";
 	
 	static final int REQUEST_ABOUT = 0;
 	static final int REQUEST_WEBVIEW = 1;

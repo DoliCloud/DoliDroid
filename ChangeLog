@@ -4,6 +4,10 @@ English DoliDroid ChangeLog
 
 ***** ChangeLog for 2.2 *****
 
+2.244
+- Fix troubles when there is a = or : into the password.
+- Sort the list of past URL.
+
 2.243
 - Use checkboxes to select options.
 - Add support for the bookmarks pages into DoliDroid menu (need Dolibarr v15+).

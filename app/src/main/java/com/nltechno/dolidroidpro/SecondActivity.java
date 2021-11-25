@@ -111,7 +111,7 @@ import android.app.AlertDialog;
 @SuppressLint("SetJavaScriptEnabled")
 public class SecondActivity extends Activity {
 
-	private static final String LOG_TAG = "DoliDroidActivity";
+	private static final String LOG_TAG = "DoliDroidSecondActivity";
 	public static final String VERSION_RESOURCES = "14.0";
 
 	private WebView myWebView;
@@ -179,10 +179,10 @@ public class SecondActivity extends Activity {
     final String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtKWPkZ1rys0aYT9qQ7gHytljus58x9ZNwFUabsXgRAua2RwVkHnFfc8L2p68ojIb2tNHiRvMV6hYH2qViylftEMSYLFoKnuHzpL4tc+Ic+cTv/KtubP+ehUfISPQfYrZrukp3E8y0zM795Agsy8mefc2mmuOFJny/IZFLNyM5J+vjhoE6mO2l3jBmo08zu/3tz8Mbo/VYqJSs+P9UTppwF8ovB6u3fGPFeqblAdGize9WQ1L4SXNYblIjCklYj0rbXHFN3aJCjV9sSo0U+qdi6i+mT+CZgj09W1+U7RpkNJ6OczspTwhFh7/1nEev3Zci17TIFXNyP2v5aGMoBuCPwIDAQAB";   // key dolidroid pro
     public static final String ITEM_SKU = "android.test.purchased";
 
-    private final Pattern patternLoginHomePageForVersion = Pattern.compile(" (?:Doli[a-zA-Z]+|@) (\\d+)\\.(\\d+)\\.([^\\s]+)");     // Regex to extract version
+    private final Pattern patternLoginHomePageForVersion = Pattern.compile(" (?:[@-]) (?:Doli[a-zA-Z]+ |)(\\d+)\\.(\\d+)\\.([^\\s]+)");     // Regex to extract version
     private final Pattern patternLoginHomePageForMulticompany = Pattern.compile("multicompany");                                    // Regex to know if multicompany module is on
-    private final Pattern patternLoginPage = Pattern.compile("Login Doli[a-zA-Z]+ (\\d+)\\.(\\d+)\\.([^\\s]+)");                    // To know page is login page with dolibarr <= 3.6
-    private final Pattern patternLoginPage2 = Pattern.compile("@ (?:Doli[a-zA-Z]+ |)(\\d+)\\.(\\d+)\\.([^\\s]+)");                  // To know page is login page with dolibarr >= 3.7
+    private final Pattern patternLoginPage = Pattern.compile("Login Doli[a-zA-Z]+ (\\d+)\\.(\\d+)\\.([^\\s]+)"); // No more used                    // To know page is login page with dolibarr <= 3.6
+    private final Pattern patternLoginPage2 = Pattern.compile(" @ (?:Doli[a-zA-Z]+ |)(\\d+)\\.(\\d+)\\.([^\\s]+)");                  // To know page is login page with dolibarr >= 3.7
     
     private String nextAltHistoryStack = "";
     private String nextAltHistoryStackBis = "";
@@ -257,7 +257,7 @@ public class SecondActivity extends Activity {
             String userInfo=uri.getUserInfo();
             if (userInfo != null)
             {
-                String[] credentials = userInfo.split(":");
+                String[] credentials = userInfo.split(":", 2);
                 //view.setHttpAuthUsernamePassword(getBaseDomain(url), "Restricted", credentials[0], credentials[1]);
                 savedAuthuser=credentials[0];
                 if (credentials.length > 1) {
@@ -300,6 +300,8 @@ public class SecondActivity extends Activity {
 
         myWebView.getSettings().setJavaScriptEnabled(true);
         myWebView.getSettings().setAllowFileAccess(true);
+        //myWebView.getSettings().setPluginsEnabled(true);
+        //myWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         //myWebView.getSettings().setLoadWithOverviewMode(true);
         //myWebView.getSettings().setUseWideViewPort(false);
         //myWebView.getSettings().setSavePassword(false);
@@ -312,8 +314,10 @@ public class SecondActivity extends Activity {
         myWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         //myWebView.getSettings().setRenderPriority(RenderPriority.HIGH);
         //myWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+
         final MyJavaScriptInterface myJavaScriptInterface = new MyJavaScriptInterface(activity);
         myWebView.addJavascriptInterface(myJavaScriptInterface, "HTMLOUT");
+
         myWebView.getSettings().setBuiltInZoomControls(true);
         Log.d(LOG_TAG, "onCreate Method setDisplayZoomControls exists. Set to false.");
         myWebView.getSettings().setDisplayZoomControls(false);          // Works with Android 3.0+ (level 11)
@@ -1229,7 +1233,8 @@ public class SecondActivity extends Activity {
 
 		private SecondActivity secondActivity;
 		private String webViewtitle="";
-		private final String jsInjectCodeForLoginSubmit = 
+		private final String jsInjectCodeForLoginSubmit =
+                "console.log('Execute jsInjectCodeForLoginSubmit');" +
 		        "function dolidroidParseFormAfterSubmit(event) {" +
 		        "    var form = this;" +
 		        "    if (this.tagName.toLowerCase() != 'form') form = this.form;" +    
@@ -1238,12 +1243,14 @@ public class SecondActivity extends Activity {
 		        "    data += 'method=' + form.method;" +
 		        "    data += '&action=' + form.action;" +        
 		        "    var inputs = document.forms[0].getElementsByTagName('input');" +
-		        "    for (var i = 0; i < inputs.length; i++) {" +
+                "    for (var i = 0; i < inputs.length; i++) {" +
 		        "         var field = inputs[i];" +
 		        "         if (field.type != 'submit' && field.type != 'reset' && field.type != 'button')" +
 		        "             data += '&' + field.name + '=' + field.value;" +
 		        "    }" +
-		        "    HTMLOUT.functionJavaCalledByJsProcessFormSubmit(data);" +
+                "    console.log('We have set a data string to '+data);" +
+		        "    window.HTMLOUT.functionJavaCalledByJsProcessFormSubmit(data);" +
+                "    console.log('Finished');" +
 		        "}" +
 		        "" +
 		        "for (var form_idx = 0; form_idx < document.forms.length; ++form_idx) {" +
@@ -1253,9 +1260,10 @@ public class SecondActivity extends Activity {
 		        "for (var i = 0; i < inputs.length; i++) {" +
 		        "    if (inputs[i].getAttribute('type') == 'button')" +
 		        "        inputs[i].addEventListener('click', dolidroidParseFormAfterSubmit, false);" +
-		        "}";		
-				
-		public WebViewClientDoliDroid(SecondActivity secondActivity)
+		        "}" +
+                "console.log('End of jsInjectCodeForLoginSubmit');";
+
+        public WebViewClientDoliDroid(SecondActivity secondActivity)
 		{
 			this.secondActivity = secondActivity;
 		}
@@ -1682,7 +1690,7 @@ public class SecondActivity extends Activity {
 				    {
 				    	if (url.equals(savedDolBasedUrl+"/"))
 				    	{
-							Log.w(LOG_TAG, "onPageFinished We ignore page since url is not a specific page");
+							Log.w(LOG_TAG, "onPageFinished We ignore page since url is not a specific page (not /index.php, not /myapge.php, ...)");
 				    	}
 				    	else
 				    	{
@@ -1703,9 +1711,9 @@ public class SecondActivity extends Activity {
 								else {
 									versionOk = false;
 								}
-								if (versionOk) Log.d(LOG_TAG, "onPageFinished Dolidroid is compatible with your Dolibarr "+lastversionfound);
-								else 
-								{
+								if (versionOk) {
+								    Log.d(LOG_TAG, "onPageFinished Dolidroid is compatible with your Dolibarr "+lastversionfound);
+                                } else {
 									Log.w(LOG_TAG, "onPageFinished Dolidroid is NOT compatible with your Dolibarr "+lastversionfound);
 									final Toast aToast = Toast.makeText(activity, getString(R.string.notCompatibleWithVersion, (lastversionfound == null ? this.webViewtitle : lastversionfound), "3.4"), Toast.LENGTH_SHORT);
 									new CountDownTimer(5000, 1000)	// 5 seconds
@@ -1724,15 +1732,20 @@ public class SecondActivity extends Activity {
 									String password=sharedPrefs.getString(savedDolRootUrl+"-password", "");
 									if ((username != null && ! "".equals(username)) || (password != null && ! "".equals(password)))
 									{
-										tagToOverwriteLoginPass=false;
-										Log.d(LOG_TAG, "onPageFinished Prepare js to autofill login form with username="+username+" password="+password.replaceAll(".", "*"));
-										// This call inject JavaScript into the page which just finished loading.
+										tagToOverwriteLoginPass=false;  // So we autofill form only the first time.
+										//Log.d(LOG_TAG, "onPageFinished Prepare js to autofill login form with username="+username+" password="+password.replaceAll(".", "*"));
+                                        Log.d(LOG_TAG, "onPageFinished Prepare js to autofill login form with username="+username+" password="+password);
+
+                                        // This call inject JavaScript into the page which just finished loading.
 										if (username != null && ! "".equals(username)) jsInjectCodeForSetForm+="document.getElementById('username').value='"+username+"';";	// Warning: This line makes Webkit fails with 2.3
 										if (password != null && ! "".equals(password)) jsInjectCodeForSetForm+="document.getElementById('password').value='"+password+"';";	// Warning: This line makes Webkit fails with 2.3
 									}
-									else Log.d(LOG_TAG, "onPageFinished No predefined login/pass to autofill login form");
-								}
-								else Log.d(LOG_TAG, "onPageFinished Do not autofill login form with login/pass. tagToOverwriteLoginPass is false.");
+									else {
+									    Log.d(LOG_TAG, "onPageFinished No predefined login/pass to autofill login form");
+                                    }
+								} else {
+								    Log.d(LOG_TAG, "onPageFinished Do not autofill login form with login/pass. tagToOverwriteLoginPass is false.");
+                                }
 
 								// Force inject value of mobile parameters. This is required when session expired and login is available
 								jsInjectCodeForSetForm+="document.getElementById('dol_hide_topmenu').value='1';";	// Warning: This line makes Webkit fails with 2.3
@@ -1742,7 +1755,7 @@ public class SecondActivity extends Activity {
 								jsInjectCodeForSetForm+="document.getElementById('dol_use_jmobile').value='"+(DoliDroid.useJMobileAjax?"2":"1")+"';";	// Warning: This line makes Webkit fails with 2.3
 								jsInjectCodeForSetForm+=jsInjectCodeForLoginSubmit;
 								// Now inject js to catch submission of login
-								Log.d(LOG_TAG, "onPageFinished Inject js into page (to autofill form if allowed, to hook the submit of form, to fill submit params)");
+								Log.d(LOG_TAG, "onPageFinished Inject javascript jsInjectCodeForSetForm into page (to autofill form if allowed and to hook the submit of form to catch submitted params)");
 								view.loadUrl("javascript:(function() { " + jsInjectCodeForSetForm + " })()");
 							}
 				    	}
@@ -2212,12 +2225,18 @@ public class SecondActivity extends Activity {
      */
     public class MyJavaScriptInterface
     {
-        private static final String LOG_TAG = "MyJavaScriptInterface";
+        private static final String LOG_TAG = "DoliDroidMyJavaScriptInterface";
         Context mContext;
+        private Activity activity;
 
         MyJavaScriptInterface(Context c) 
         {
              mContext = c;
+        }
+
+        MyJavaScriptInterface(Activity a)
+        {
+            activity = a;
         }
 
         /*
@@ -2242,19 +2261,20 @@ public class SecondActivity extends Activity {
         */
         
         /*
-         * Example: method=post&action=http://192.168.0.1/index.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1&mainmenu=home&token=cf51a99cad2639a6f2da61753748dc16&loginfunction=loginfunction&tz=0&tz_string=GMT&dst_observed=0&dst_first=&dst_second=&screenwidth=320&screenheight=460&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1&username=admin&password=admin
+         * Example of data:
+         * method=post&action=http://192.168.0.1/index.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1&mainmenu=home&token=cf51a99cad2639a6f2da61753748dc16&loginfunction=loginfunction&tz=0&tz_string=GMT&dst_observed=0&dst_first=&dst_second=&screenwidth=320&screenheight=460&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1&username=admin&password=admin
          */
         @JavascriptInterface
         public void functionJavaCalledByJsProcessFormSubmit(String data)
         {
-            Log.i(LOG_TAG, "functionJavaCalledByJsProcessFormSubmit data="+data);
+            Log.i(LOG_TAG, "functionJavaCalledByJsProcessFormSubmit execution of code infected by jsInjectCodeForSetForm with data="+data);
             String tmpdata[]=data.split("&");
             SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             //SharedPreferences sharedPrefs = mContext.getSharedPreferences(FILENAME_INST_PARAM, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPrefs.edit();
             for (String s: tmpdata)
             {
-                String keyval[]=s.split("=");
+                String keyval[]=s.split("=", 2);
                 if (keyval.length >= 2)
                 {
                     String key=keyval[0];

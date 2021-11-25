@@ -24,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -67,7 +68,7 @@ import android.widget.TextView;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class MainActivity extends Activity implements OnItemSelectedListener {
 
-	private static final String LOG_TAG = "DoliDroidActivity";
+	private static final String LOG_TAG = "DoliDroidMainActivity";
 	public final static String FILENAME = "dolidroid_prefs";		// File will be into
 	private final static String HOME_URL = "";
 	public static List<String> listOfRootUrl = null;
@@ -216,6 +217,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 					Log.d(LOG_TAG, "Duplicate");
 				}
 			}
+			Collections.sort(this.listOfRootUrl);
 			// Close the input stream
 			in.close();
 		} catch (Exception e) {// Catch exception if any
