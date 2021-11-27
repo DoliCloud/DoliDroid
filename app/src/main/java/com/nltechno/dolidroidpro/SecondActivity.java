@@ -1444,6 +1444,9 @@ public class SecondActivity extends Activity {
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Log.d(LOG_TAG, "shouldOverrideUrlLoading url=" + url + " originalUrl=" + view.getOriginalUrl() + " savedDolRootUrl=" + savedDolRootUrl);
 
+            String urlWithoutBasicAuth = url.replaceAll("://[^:]+:[^:]+@", "://");
+            //Log.d(LOG_TAG, "shouldOverrideUrlLoading tmpurl=" + urlWithoutBasicAuth);
+
             // TODO Optimize performance by disabling loading of some url (ie: jquery plugin tipTip)
 
             if (url.startsWith("tel:")) {  // Intercept phone urls
@@ -1477,9 +1480,9 @@ public class SecondActivity extends Activity {
                 } catch (Exception ex) {
                 }
                 return true;
-            } else if (! url.startsWith(savedDolBasedUrl)) {	// This is an external url
+            } else if (! urlWithoutBasicAuth.startsWith(savedDolBasedUrl)) {	// This is an external url
 				// Open in Chrome
-				Log.d(LOG_TAG, "Launch external url : " + url);
+				Log.d(LOG_TAG, "Launch external url : " + urlWithoutBasicAuth + " that does not start with " + savedDolBasedUrl);
 				return false;
 			}
 
