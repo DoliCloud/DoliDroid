@@ -12,7 +12,8 @@
     <string name="logo_dolidroid">Logo DoliDroid</string>
     <string name="SelectUrl">ou choisir une URL prédéfinie</string>
     <string name="enterNewUrl">ou entrez une nouvelle URL</string>
-    <string name="AlertHTTPS">Il semble que votre serveur ait forcé une redirection sur une page HTTPS. Merci de vérifier votre URL Dolibarr et utiliser directement la forme en https plutot que http (URL commençant par https:// au lieu de http://). Garder une URL sans le s provoquera, pour des raisons de sécurité, des problèmes pour accéder aux menus ou des téléchargements impossibles.</string>
+    <string name="AlertHTTPS">Il semble que votre serveur ait forcé une redirection sur une page HTTPS. Merci de vérifier votre URL Dolibarr et utiliser directement la forme en https plutot que http (URL commençant par https:// au lieu de http://). Garder une URL sans le s provoquera, pour des raisons de sécurité, des désactivations de fonctions comme la mise en cache ou le téléchargement de fichiers.</string>
+    <string name="AlertHTTP">Vous accédez à un site web non sécurisé (en http: au lieu de https:). Pour des raisons de sécurité, Android peut désactiver certaines fonctions de cette app pour un tel site. Vous devriez sécuriser votre site en ajoutant un certificat HTTPS.</string>
 
     <!-- Activity web -->
     <string name="title_activity_second"></string>

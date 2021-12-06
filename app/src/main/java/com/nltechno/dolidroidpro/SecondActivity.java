@@ -138,6 +138,7 @@ public class SecondActivity extends Activity {
 
 	private boolean prefAlwaysUseLocalResources=true;
 	public boolean sslErrorWasAccepted=false;
+    public boolean httpWarningWasViewed=false;
 
 	private String lastversionfound;
 	private String lastversionfoundforasset;
@@ -1280,9 +1281,13 @@ public class SecondActivity extends Activity {
 		{  
 		    Log.d(LOG_TAG, "onPageStarted url="+url+" originalUrl="+view.getOriginalUrl()+" view.getUrl="+view.getUrl()+" savedDolBasedUrl="+savedDolBasedUrl);
 			String urltotest = view.getOriginalUrl();
-			if (urltotest == null) urltotest = view.getUrl();
+			if (urltotest == null) {
+			    urltotest = view.getUrl();
+            }
+            String urltotestWithoutBasicAuth = urltotest.replaceAll("://[^:]+:[^:]+@", "://");
 
-		    if (urltotest.startsWith("http:") && urltotest.startsWith(savedDolBasedUrl)) {
+		    if (urltotest.startsWith("http:") && urltotestWithoutBasicAuth.startsWith(savedDolBasedUrl)) {
+		        // If the urltotest (original url) is http:
 				//Log.d(LOG_TAG, "https:" + view.getUrl().substring(5));
 				//Log.d(LOG_TAG, url);
 				if (("https:" + urltotest.substring(5)).equals(url)) {
@@ -1302,6 +1307,21 @@ public class SecondActivity extends Activity {
 							});
 					alertDialog.show();
 				}
+
+                if (("http:" + urltotest.substring(5)).equals(url) && !this.secondActivity.httpWarningWasViewed) {
+                    // Use Dialog instead of Toast for a longer message
+                    AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+                    alertDialog.setTitle(getString(R.string.Warning));
+                    alertDialog.setMessage(getString(R.string.AlertHTTP));
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                    this.secondActivity.httpWarningWasViewed = true;
+                }
 			}
 		    //super.onPageStarted(view, url, favicon);
 		}
@@ -1340,9 +1360,14 @@ public class SecondActivity extends Activity {
 				// Format fileName to have a relative URL from root
 				if (fileName != null)
 				{
-					if (this.secondActivity.savedDolRootUrlRel.equals("/")) fileName=fileName.replaceFirst(this.secondActivity.savedDolRootUrlRel, "");
-					else fileName=fileName.replaceFirst(this.secondActivity.savedDolRootUrlRel, "");
-					if (fileName.startsWith("/")) fileName=fileName.substring(1);
+					if (this.secondActivity.savedDolRootUrlRel.equals("/")) {
+					    fileName=fileName.replaceFirst(this.secondActivity.savedDolRootUrlRel, "");
+                    } else {
+					    fileName=fileName.replaceFirst(this.secondActivity.savedDolRootUrlRel, "");
+                    }
+					if (fileName.startsWith("/")) {
+					    fileName=fileName.substring(1);
+                    }
 				}
 			}
 			catch(Exception e)
@@ -1350,17 +1375,19 @@ public class SecondActivity extends Activity {
 				Log.e(LOG_TAG, "shouldInterceptRequest Error into getting fileName or host");
 				fileName=null;
 			}
-				
-			
-			Log.v(LOG_TAG, "shouldInterceptRequest url="+url+", host="+host+", fileName="+fileName+", savedDolBasedUrl="+savedDolBasedUrl+" version in url param (for js or css pages)="+version);
 
-			if ("document.php".equals(fileName) && url != null && ! url.startsWith(savedDolBasedUrl) && url.startsWith(savedDolBasedUrlWithSForced)) {
-				Log.w(LOG_TAG, "Bad savedDolBasedUrl that does not allow download");
+            Log.v(LOG_TAG, "shouldInterceptRequest url="+url+", host="+host+", fileName="+fileName+", savedDolBasedUrl="+savedDolBasedUrl+" version in url param (for js or css pages)="+version);
+
+            String urlWithoutBasicAuth = url.replaceAll("://[^:]+:[^:]+@", "://");
+
+			if ("document.php".equals(fileName) && url != null && ! urlWithoutBasicAuth.startsWith(savedDolBasedUrl) && urlWithoutBasicAuth.startsWith(savedDolBasedUrlWithSForced)) {
+				// In this case, we entered a HTTP login url but we were redirected to a HTTPS site.
+			    Log.w(LOG_TAG, "AlertDownloadBadHTTPS Bad savedDolBasedUrl that does not allow download");
 				// Can't make interaction here
 				//Toast.makeText(activity, R.string.AlertDownloadBadHTTPS, Toast.LENGTH_LONG).show();
 			}
 
-			if (fileName != null && url.startsWith(savedDolBasedUrl))
+			if (fileName != null && urlWithoutBasicAuth.startsWith(savedDolBasedUrl))
 			{
 				if (prefAlwaysUseLocalResources) {
 					try {

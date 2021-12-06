@@ -62,7 +62,8 @@
     <string name="menu_autofill_off">Save login/password (no)</string>
     <string name="menu_uselocalresources_on">Use local static resources</string>
     <string name="menu_uselocalresources_off">Use local static resources (no)</string>
-    <string name="AlertHTTPS">It seems your server forced a redirect to a HTTPS page. Please check your Dolibarr URL and use the https URL form directly (URL starting with https:// instead of http://). Keeping using an URL without the s will result, for security puroposes, in features not working like no menu access or broken downloading files.</string>
+    <string name="AlertHTTPS">It seems your server forced a redirect to a HTTPS page. Please check your Dolibarr URL and use the https URL form directly (URL starting with https:// instead of http://). Keeping using an URL without the s will result, for security purposes, in features not working like cache optimization or downloading files.</string>
+    <string name="AlertHTTP">You try to access a not secured web site (http: instead of https:). For security reason, Android may restrict some features into this app for such web sites. You should secure your website by adding a HTTPS certificate.</string>
     <string name="AlertDownloadBadHTTPS">Download is not possible when you used a bad value of scheme to connect (http vs https)</string>
 
     <!-- Menu main page -->
