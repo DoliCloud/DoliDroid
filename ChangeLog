@@ -4,12 +4,10 @@ English DoliDroid ChangeLog
 
 ***** ChangeLog for 2.2 *****
 
-2.245
+2.244
 - Https is now the default scheme for url without http(s)
 - Add warning if you are not using a HTTPS web site.
 - Fix download for some http web site protected with HTTP Basic.
-
-2.244
 - Fix troubles when there is a = or : into the password.
 - Sort the list of past URL.
 
