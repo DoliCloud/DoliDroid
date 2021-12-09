@@ -440,7 +440,11 @@ public class SecondActivity extends Activity {
 
 
         MenuItem menuItem3 = menu.findItem(R.id.clear_all_urls);
-        menuItem3.setTitle(getString(R.string.menu_clear_all_urls)+" ("+MainActivity.listOfRootUrl.size()+")");
+        if (MainActivity.listOfRootUrl != null) {
+            menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
+        } else {
+            menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (0)");
+        }
 
 
         MenuItem menuItem4 = menu.findItem(R.id.always_uselocalresources);
