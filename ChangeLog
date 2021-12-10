@@ -4,6 +4,10 @@ English DoliDroid ChangeLog
 
 ***** ChangeLog for 2.2 *****
 
+2.245
+- Better management of cache and back to page. No error if not logged.
+- Removed deprecated code of CookieSyncManager.
+
 2.244
 - Https is now the default scheme for url without http(s)
 - Add warning if you are not using a HTTPS web site.

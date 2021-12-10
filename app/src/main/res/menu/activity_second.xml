@@ -28,6 +28,17 @@
 		android:title="@string/menu_back" />
 
 	<item
+		android:id="@+id/menu_scan"
+		android:icon="@drawable/ic_baseline_star_border_24"
+		android:orderInCategory="32"
+		android:title="@string/menu_scan" />
+	<item
+		android:id="@+id/menu_photo"
+		android:icon="@drawable/ic_baseline_star_border_24"
+		android:orderInCategory="32"
+		android:title="@string/menu_photo" />
+
+	<item
 		android:id="@+id/menu_multicompany"
 		android:icon="@mipmap/ic_action_multicompany"
 		android:orderInCategory="32"
