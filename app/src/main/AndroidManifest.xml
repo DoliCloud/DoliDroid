@@ -10,6 +10,8 @@
     <!-- Some Chromebooks don't support touch. Although not essential,
          it's a good idea to explicitly include this declaration. -->
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+    <!--<uses-feature android:name="android.hardware.camera" />-->
+    <uses-feature android:name="android.hardware.camera2.full" android:required="false" />
 
     <!-- Normal permissions (PROTECTION_NORMAL) -->
     <uses-permission android:name="android.permission.INTERNET" />
