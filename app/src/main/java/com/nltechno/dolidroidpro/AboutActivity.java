@@ -17,13 +17,7 @@
 
 package com.nltechno.dolidroidpro;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.nltechno.utils.Utils;
@@ -52,7 +46,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -67,7 +60,7 @@ public class AboutActivity extends Activity {
 	private static final String LOG_TAG = "DoliDroidAboutActivity";
 	private String menuAre="hardwareonly";
 
-	static final int RESULT_ABOUT =  RESULT_FIRST_USER+0;
+	static final int RESULT_ABOUT =  RESULT_FIRST_USER;
 
 	/**
 	 * Called when activity is created
@@ -90,12 +83,10 @@ public class AboutActivity extends Activity {
         }
         Log.d(LOG_TAG, "hasMenuHardware="+hasMenuHardware+" menuAre="+this.menuAre);
 
-        // menuAre is defined to 'buttonsbar', 'actionbar' or 'hardware'
-        if (menuAre.equals("actionbar"))
-        {
+        // menuAre is defined to 'actionbar' or 'hardware'
+        if (menuAre.equals("actionbar")) {
         	// Nothing
-        }
-        else {	// Menu are hardware
+        } else {	// Menu are hardware
         	requestWindowFeature(Window.FEATURE_NO_TITLE);	// Hide title with menus
         }
 
@@ -105,10 +96,10 @@ public class AboutActivity extends Activity {
 		// resource.  By default these links will appear but not
 		// respond to user input.  To make them active, you need to
 		// call setMovementMethod() on the TextView object.
-		TextView t1 = (TextView) findViewById(R.id.TextAbout01);
+		TextView t1 = findViewById(R.id.TextAbout01);
 		t1.setMovementMethod(LinkMovementMethod.getInstance());
 
-		TextView t2 = (TextView) findViewById(R.id.TextAbout02);
+		TextView t2 = findViewById(R.id.TextAbout02);
 		t2.setMovementMethod(LinkMovementMethod.getInstance());
 
 
@@ -118,7 +109,7 @@ public class AboutActivity extends Activity {
 		// Create listener to respond to click on button
 		// Not using the android:onClick tag is bugged.
 		// Declaring listener is also faster.
-		Button btn = (Button) findViewById(R.id.buttonDeletePredefinedUrl);
+		Button btn = findViewById(R.id.buttonDeletePredefinedUrl);
 		btn.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -177,11 +168,11 @@ public class AboutActivity extends Activity {
     	//boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
     	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
 
-		Button btn = (Button) findViewById(R.id.buttonDeletePredefinedUrl);
+		Button btn = findViewById(R.id.buttonDeletePredefinedUrl);
 
 
 		// Show text section 1
-		TextView textViewAbout1 = (TextView) findViewById(R.id.TextAbout01);
+		TextView textViewAbout1 = findViewById(R.id.TextAbout01);
 		String s1="";
 
 		PackageManager manager = this.getPackageManager();
@@ -241,7 +232,7 @@ public class AboutActivity extends Activity {
 		textViewAbout1.setText(Html.fromHtml(s1));
 
 		// Show text section 2
-		TextView textViewAbout2 = (TextView) findViewById(R.id.TextAbout02);
+		TextView textViewAbout2 = findViewById(R.id.TextAbout02);
 		String s2="";
 
 		Intent intent = getIntent();
@@ -316,7 +307,7 @@ public class AboutActivity extends Activity {
 		}
 
 		// Show text section 3
-		TextView textViewAbout3 = (TextView) findViewById(R.id.TextAbout03);
+		TextView textViewAbout3 = findViewById(R.id.TextAbout03);
 		String s3="";
 
 		// Current url

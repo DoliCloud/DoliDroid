@@ -18,9 +18,7 @@ package com.nltechno.dolidroidpro;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,7 +28,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -87,7 +84,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
 import android.provider.MediaStore;
-import android.text.format.DateFormat;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
@@ -129,8 +125,7 @@ public class SecondActivity extends Activity {
 	private WebChromeClientDoliDroid myWebChromeClientDoliDroid;
 	
 	private ValueCallback<Uri[]> mFilePathCallback;
-	private ValueCallback<Uri> mUploadMessage;
-	
+
 	private String savedDolRootUrl;
 	private String savedDolRootUrlRel;
 	private String savedDolScheme;
@@ -182,8 +177,8 @@ public class SecondActivity extends Activity {
     final Activity activity = this;
     private ProgressBar progress;
 
-    static final int REQUEST_ABOUT = RESULT_FIRST_USER+0;
-    static final int RESULT_ABOUT = RESULT_FIRST_USER+0;
+    static final int REQUEST_ABOUT = RESULT_FIRST_USER;
+    static final int RESULT_ABOUT = RESULT_FIRST_USER;
 
     static final int RESULT_WEBVIEW =  RESULT_FIRST_USER+1;
 
@@ -193,8 +188,8 @@ public class SecondActivity extends Activity {
 
     // For inapp purchases (public key is found into menu "Services and API" for application into Google play publish center).
     //IabHelper iabHelper;
-    final String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtKWPkZ1rys0aYT9qQ7gHytljus58x9ZNwFUabsXgRAua2RwVkHnFfc8L2p68ojIb2tNHiRvMV6hYH2qViylftEMSYLFoKnuHzpL4tc+Ic+cTv/KtubP+ehUfISPQfYrZrukp3E8y0zM795Agsy8mefc2mmuOFJny/IZFLNyM5J+vjhoE6mO2l3jBmo08zu/3tz8Mbo/VYqJSs+P9UTppwF8ovB6u3fGPFeqblAdGize9WQ1L4SXNYblIjCklYj0rbXHFN3aJCjV9sSo0U+qdi6i+mT+CZgj09W1+U7RpkNJ6OczspTwhFh7/1nEev3Zci17TIFXNyP2v5aGMoBuCPwIDAQAB";   // key dolidroid pro
-    public static final String ITEM_SKU = "android.test.purchased";
+    //final String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtKWPkZ1rys0aYT9qQ7gHytljus58x9ZNwFUabsXgRAua2RwVkHnFfc8L2p68ojIb2tNHiRvMV6hYH2qViylftEMSYLFoKnuHzpL4tc+Ic+cTv/KtubP+ehUfISPQfYrZrukp3E8y0zM795Agsy8mefc2mmuOFJny/IZFLNyM5J+vjhoE6mO2l3jBmo08zu/3tz8Mbo/VYqJSs+P9UTppwF8ovB6u3fGPFeqblAdGize9WQ1L4SXNYblIjCklYj0rbXHFN3aJCjV9sSo0U+qdi6i+mT+CZgj09W1+U7RpkNJ6OczspTwhFh7/1nEev3Zci17TIFXNyP2v5aGMoBuCPwIDAQAB";   // key dolidroid pro
+    //public static final String ITEM_SKU = "android.test.purchased";
 
     private final Pattern patternLoginHomePageForVersion = Pattern.compile(" (?:[@-]) (?:Doli[a-zA-Z]+ |)(\\d+)\\.(\\d+)\\.([^\\s]+)");     // Regex to extract version
     private final Pattern patternLoginHomePageForMulticompany = Pattern.compile("multicompany");                                    // Regex to know if multicompany module is on
@@ -206,8 +201,7 @@ public class SecondActivity extends Activity {
     ArrayList<String> altHistoryStack = new ArrayList<String>();
 
     // To store data for the download manager
-    SharedPreferences preferenceManager;
-    final String strPref_Download_ID = "PREF_DOWNLOAD_ID";
+    //final String strPref_Download_ID = "PREF_DOWNLOAD_ID";
 
 
     // This is a UI Thread
@@ -243,7 +237,7 @@ public class SecondActivity extends Activity {
         }
         Log.d(LOG_TAG, "onCreate hasMenuHardware="+hasMenuHardware+" menuAre="+this.menuAre);
 
-        // menuAre is defined to buttonsbar, actionbar or hardwareonly
+        // menuAre is defined to actionbar or hardwareonly
         if (this.menuAre.equals("actionbar"))
         {
             //getActionBar().setHomeButtonEnabled(true);
@@ -305,13 +299,13 @@ public class SecondActivity extends Activity {
         // To have the view SecondActivity with WebView included:
         setContentView(R.layout.activity_second);
 
-        progress = (ProgressBar) findViewById(R.id.progressBar1);
+        progress = findViewById(R.id.progressBar1);
         progress.setMax(100);
-        Drawable d=getResources().getDrawable(R.drawable.progressbar_style);
+        /*Drawable d=getResources().getDrawable(R.drawable.progressbar_style);
         ClipDrawable cd = new ClipDrawable(d, Gravity.START, ClipDrawable.HORIZONTAL);
-        progress.setProgressDrawable(cd);
+        progress.setProgressDrawable(cd);*/
 
-        myWebView = (WebView) findViewById(R.id.webViewContent);
+        myWebView = findViewById(R.id.webViewContent);
 
         this.savedUserAgent = myWebView.getSettings().getUserAgentString() + " - " + getString(R.string.dolidroidUserAgent);
 
@@ -410,9 +404,12 @@ public class SecondActivity extends Activity {
             menu.findItem(R.id.menu_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             menu.findItem(R.id.menu_bookmarks).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            menu.findItem(R.id.menu_photo).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);   // Not enough room so we force it on dropdown menu.
-            menu.findItem(R.id.menu_scan).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);   // Not enough room so we force it on dropdown menu.
+            menu.findItem(R.id.menu_photo).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
+            menu.findItem(R.id.menu_scan).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
             menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
+
+            menu.findItem(R.id.menu_photo).setVisible(false);
+            menu.findItem(R.id.menu_scan).setVisible(false);
         }
         if (this.menuAre.equals("hardwareonly"))
         {
@@ -421,8 +418,8 @@ public class SecondActivity extends Activity {
             menu.findItem(R.id.menu_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             menu.findItem(R.id.menu_bookmarks).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-            menu.findItem(R.id.menu_photo).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-            menu.findItem(R.id.menu_scan).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            //menu.findItem(R.id.menu_photo).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            //menu.findItem(R.id.menu_scan).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         }
 
@@ -565,16 +562,12 @@ public class SecondActivity extends Activity {
                 editor.apply();
                 Log.d(LOG_TAG, "Switched value is now "+prefAlwaysAutoFill);
                 // Update show bar or not
-                if (prefAlwaysAutoFill) 
-                {
+                if (prefAlwaysAutoFill) {
                     this.savMenu.findItem(R.id.always_autofill).setTitle(getString(R.string.menu_autofill_on));
-                    invalidateOptionsMenu();
-                }
-                else
-                {
+                } else {
                     this.savMenu.findItem(R.id.always_autofill).setTitle(getString(R.string.menu_autofill_off));
-                    invalidateOptionsMenu();
                 }
+                invalidateOptionsMenu();
                 return true;
             case R.id.always_uselocalresources:
                 sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -600,7 +593,7 @@ public class SecondActivity extends Activity {
                 return true;
             case R.id.about:
                 Log.i(LOG_TAG, "Start activity About");
-                myWebView = (WebView) findViewById(R.id.webViewContent);
+                myWebView = findViewById(R.id.webViewContent);
                 Intent intent = new Intent(SecondActivity.this, AboutActivity.class);
                 intent.putExtra("currentUrl", myWebView.getOriginalUrl());
                 intent.putExtra("userAgent", myWebView.getSettings().getUserAgentString());
@@ -615,7 +608,7 @@ public class SecondActivity extends Activity {
                 return true;
             case R.id.logout:
                 tagToLogout=true;
-                myWebView = (WebView) findViewById(R.id.webViewContent);
+                myWebView = findViewById(R.id.webViewContent);
                 urlToGo = this.savedDolRootUrl+"user/logout.php?noredirect=1&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
                 Log.i(LOG_TAG, "LoadUrl after select Logout : "+urlToGo);
                 lastLoadUrl=urlToGo;
@@ -627,7 +620,7 @@ public class SecondActivity extends Activity {
                 finish();
                 return true;    
             case R.id.refresh:
-                myWebView = (WebView) findViewById(R.id.webViewContent);
+                myWebView = findViewById(R.id.webViewContent);
                 urlToGo = myWebView.getUrl();
                 Log.d(LOG_TAG, "urlToGo="+urlToGo);
                 if (urlToGo != null) {
@@ -646,7 +639,7 @@ public class SecondActivity extends Activity {
                 }
                 return true;
             case R.id.clearcache:
-                myWebView = (WebView) findViewById(R.id.webViewContent);
+                myWebView = findViewById(R.id.webViewContent);
                 Log.i(LOG_TAG, "Clear caches of webView");
                 myWebView.clearCache(true);
                 Log.d(LOG_TAG,"Clear also history of webview");
@@ -921,7 +914,7 @@ public class SecondActivity extends Activity {
 
         // If not found into cache, call URL
         Log.d(LOG_TAG, "We called codeForMenu after click on Menu : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
-        myWebView = (WebView) findViewById(R.id.webViewContent);
+        myWebView = findViewById(R.id.webViewContent);
 
         if (this.cacheForMenu != null && this.cacheForMenu.length() > 0)
         {
@@ -953,7 +946,7 @@ public class SecondActivity extends Activity {
 
         // If not found into cache, call URL
         Log.d(LOG_TAG, "We called codeForQuickAccess after click on Search : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
-        myWebView = (WebView) findViewById(R.id.webViewContent);
+        myWebView = findViewById(R.id.webViewContent);
 
         if (this.cacheForQuickAccess != null && this.cacheForQuickAccess.length() > 0)
         {
@@ -985,7 +978,7 @@ public class SecondActivity extends Activity {
 
         // If not found into cache, call URL
         Log.d(LOG_TAG, "We called codeForBookmarks after click on Bookmarks : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
-        myWebView = (WebView) findViewById(R.id.webViewContent);
+        myWebView = findViewById(R.id.webViewContent);
 
         if (this.cacheForBookmarks != null && this.cacheForBookmarks.length() > 0)
         {
@@ -1019,7 +1012,7 @@ public class SecondActivity extends Activity {
 
         // If not found into cache, call URL
         Log.d(LOG_TAG, "We called codeForMultiCompany after click on Multicompany : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
-        myWebView = (WebView) findViewById(R.id.webViewContent);
+        myWebView = findViewById(R.id.webViewContent);
 
         /*if (urlToGo.startsWith("data:text") || urlToGo.startsWith("about:blank")) {
             urlToGo = savedDolRootUrl;
@@ -1066,7 +1059,7 @@ public class SecondActivity extends Activity {
         // Check if there is history
         String currentUrl = "";
         String previousUrl = "";
-        myWebView = (WebView) findViewById(R.id.webViewContent);
+        myWebView = findViewById(R.id.webViewContent);
         boolean b = myWebView.canGoBack();
         currentUrl = myWebView.getUrl();
 
@@ -1161,66 +1154,6 @@ public class SecondActivity extends Activity {
         */
     }
 
-    /**
-     * Method to generate an InApp purchase
-     * 
-     * @param View  v       view
-     */
-    /*
-    public void buyMethod(View v) {
-        iabHelper.launchPurchaseFlow(this, ITEM_SKU, REQUEST_CODE, mPurchaseFinishedListener, "");
-    }*/
-    /**
-     * Listener for InApp purchase result
-     */
-    /*
-    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
-        public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-            if (result.isFailure()) {
-                Log.d(LOG_TAG, "Purchase failed");
-                return;
-            }
-            else if (purchase.getSku().equals(ITEM_SKU)) {
-                Log.d(LOG_TAG, "Purchase of item "+ITEM_SKU+" ok");
-                iabHelper.queryInventoryAsync(mReceivedInventoryListener);
-            }
-        }
-    };
-    */
-    /**
-     * Listener for InApp purchase inventory result
-     */
-    /*
-    IabHelper.QueryInventoryFinishedListener mReceivedInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
-        @Override
-        public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-            if (result.isFailure()) {
-                Log.d(LOG_TAG, "Inventory failed");
-            }
-            else {
-                iabHelper.consumeAsync(inventory.getPurchase(ITEM_SKU), mConsumeFinishedListener);
-                Log.d(LOG_TAG, "Consume is launched. Waiting for listener.");
-            }
-        }
-    };
-    */
-    /**
-     * Listener for InApp purchase consume result
-     */
-    /*
-    IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
-        public void onConsumeFinished(Purchase purchase, IabResult result) {
-            if (result.isSuccess()) {
-                Log.d(LOG_TAG, "Consume of item ok");
-            }
-            else
-            {
-                Log.d(LOG_TAG, "Consume of item failed");
-            }
-        }
-    };
-    */
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -1303,7 +1236,7 @@ public class SecondActivity extends Activity {
 	{
 		int counthttpauth=0;
 
-		private SecondActivity secondActivity;
+		final private SecondActivity secondActivity;
 		private String webViewtitle="";
 		private final String jsInjectCodeForLoginSubmit =
                 "console.log('Execute jsInjectCodeForLoginSubmit');" +
@@ -1454,7 +1387,7 @@ public class SecondActivity extends Activity {
                 urlWithoutBasicAuth = url.replaceAll("://[^:]+:[^:]+@", "://");
             }
 
-			if ("document.php".equals(fileName) && url != null && ! urlWithoutBasicAuth.startsWith(savedDolBasedUrl) && urlWithoutBasicAuth.startsWith(savedDolBasedUrlWithSForced)) {
+			if ("document.php".equals(fileName) && urlWithoutBasicAuth != null && ! urlWithoutBasicAuth.startsWith(savedDolBasedUrl) && urlWithoutBasicAuth.startsWith(savedDolBasedUrlWithSForced)) {
 				// In this case, we entered a HTTP login url but we were redirected to a HTTPS site.
 			    Log.w(LOG_TAG, "AlertDownloadBadHTTPS Bad savedDolBasedUrl that does not allow download");
 				// Can't make interaction here
@@ -1701,7 +1634,7 @@ public class SecondActivity extends Activity {
 				listOfCookiesAfterLogon=this.listCookies();	// Save cookie for
 			}
 
-			myWebView = (WebView) findViewById(R.id.webViewContent);
+			myWebView = findViewById(R.id.webViewContent);
 			boolean b = myWebView.canGoBack();
 			
 			Log.d(LOG_TAG, "onPageFinished url="+url+" canGoBack="+b);
@@ -2010,16 +1943,6 @@ public class SecondActivity extends Activity {
 	    }
 	      
 		/**
-		 * onReceivedLoginRequest 
-		 * 
-		 * @return	void
-		 */
-	    /*@Override 
-	    public void onReceivedLoginRequest(WebView view, String realm, String account, String args) 
-	    { 
-	    }*/
-
-		/**
 		 * onReceivedError
 		 * This method is only called when network errors occur, but never when HTTP errors are received by WebView.
 		 */
@@ -2198,7 +2121,8 @@ public class SecondActivity extends Activity {
             boolean usecustomselect = true;
 
             // Log info on the input type=file attributes
-            for (int i = 0; i < acceptAttribute.length; i++) {
+            int nbOfAttributes = acceptAttribute.length;
+            for (int i = 0; i < nbOfAttributes; i++) {
                 // For example: acceptAttribute[i]="image/*"
                 Log.d(LOG_TAG, "acceptAttribute=" + acceptAttribute[i] + " nameAttribute=" + nameAttribute);
             }

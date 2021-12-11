@@ -113,14 +113,10 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
         }
         Log.d(LOG_TAG, "hasMenuHardware="+hasMenuHardware+" menuAre="+this.menuAre);
 
-        // menuAre is defined to buttonsbar, actionbar or hardwareonly
-        if (this.menuAre.equals("actionbar"))
+        // menuAre is defined to actionbar or hardwareonly
+        if (! this.menuAre.equals("actionbar"))
         {
-        	//getActionBar().setHomeButtonEnabled(true);
-        	//getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        else
-        {	// We choose menu using hardware
+        	// We choose menu using hardware
        		// Hide actionbar without hiding title (no requestFeature(Window.FEATURE_NO_TITLE) because there is no way to restore actionbar after
        		try {
        			ActionBar actionBar = getActionBar();
@@ -143,7 +139,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		Log.d(LOG_TAG, "Scree height is "+height);
 		if (height < 1100) {
 			// We hide the image
-			ImageView img1 = (ImageView) findViewById(R.id.imageViewLogoBottom);
+			ImageView img1 = findViewById(R.id.imageViewLogoBottom);
 			img1.setVisibility(View.INVISIBLE);
 		}
 
@@ -151,14 +147,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
         // resource.  By default these links will appear but not
         // respond to user input.  To make them active, you need to
         // call setMovementMethod() on the TextView object.
-        TextView t2 = (TextView) findViewById(R.id.textViewLink);
+        TextView t2 = findViewById(R.id.textViewLink);
         t2.setMovementMethod(LinkMovementMethod.getInstance());
 
 
 		// Create listener to respond to click on button
 		// Not using the android:onClick tag is bugged.
 		// Declaring listener is also faster.
-		Button btn = (Button) findViewById(R.id.buttonStart);
+		Button btn = findViewById(R.id.buttonStart);
 		btn.setOnClickListener(new View.OnClickListener()
 		{
 		    @Override
@@ -225,7 +221,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		}
 
 		// Loop on this.listOfRootUrl
-		if (this.listOfRootUrl.size() == 0 || this.listOfRootUrl.size() > 1) {
+		if (this.listOfRootUrl.size() != 1) {
 			adapter.add(getString(R.string.SelectUrl) + "...");
 		}
 		else {
@@ -239,8 +235,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		}
 
 		// Show combo list if there is at least 1 choice
-		Spinner spinner1 = (Spinner) findViewById(R.id.combo_list_of_urls);
-		TextView texViewLink = (TextView) findViewById(R.id.textViewLink);
+		Spinner spinner1 = findViewById(R.id.combo_list_of_urls);
+		TextView texViewLink = findViewById(R.id.textViewLink);
 
 		if (this.nbOfEntries > 0)
 		{
@@ -263,7 +259,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		}
 
 		// Init url with hard coded value
-		EditText editText1 = (EditText) findViewById(R.id.url_of_instance);
+		EditText editText1 = findViewById(R.id.url_of_instance);
 		//editText1.setText(homeUrlToSuggest);
 
 		// If listener was not already added, we add one
@@ -277,7 +273,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 		// Init with button disabled
 		if (editText1.getText().toString().equals("")) {
-			Button startButton = (Button) findViewById(R.id.buttonStart);
+			Button startButton = findViewById(R.id.buttonStart);
 			startButton.setEnabled(false);
 			startButton.setClickable(false);
 			startButton.setTextColor(Color.LTGRAY);
@@ -336,7 +332,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
         }
 
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-    		Button startButton = (Button) findViewById(R.id.buttonStart);
+    		Button startButton = findViewById(R.id.buttonStart);
             Log.d(LOG_TAG, "onTextChanged s="+s);
             if (s.equals("") || "http://".contains(s.toString().toLowerCase(Locale.ENGLISH)) || "https://".contains(s.toString().toLowerCase(Locale.ENGLISH))) {
 				startButton.setEnabled(false);
@@ -488,9 +484,9 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	    		Boolean result = file.delete();
 				Log.d(LOG_TAG, result.toString());
 	    		// Hide combo
-	    		Spinner spinner1 = (Spinner) findViewById(R.id.combo_list_of_urls);
+	    		Spinner spinner1 = findViewById(R.id.combo_list_of_urls);
 	    		spinner1.setVisibility(View.INVISIBLE);
-				TextView texViewLink = (TextView) findViewById(R.id.textViewLink);
+				TextView texViewLink = findViewById(R.id.textViewLink);
 				texViewLink.setVisibility(View.VISIBLE);
 				// Now update menu entry
 				this.listOfRootUrl = new ArrayList<String>();	// Clear array of menu entry
