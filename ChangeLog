@@ -7,7 +7,8 @@ English DoliDroid ChangeLog
 2.245
 - Better management of cache and back to page. No error on menu pages if not logged.
 - Removed deprecated code of CookieSyncManager.
-- Support the camera capture on input file of type accept="image/*"
+- Support the camera capture on input file of type accept (whatever is its value, not only "image/*")
+- Support for multiple file submission.
 - Clean code
 
 2.244
