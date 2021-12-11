@@ -35,12 +35,7 @@ public class InAppActivity extends Activity {
 
 	private static final String LOG_TAG = "DoliDroidInAppActivity";
 	
-	static final int REQUEST_ABOUT = 0;
-	static final int REQUEST_WEBVIEW = 1;
-	static final int RESULT_LOGOUT =  RESULT_FIRST_USER+0;
-	static final int RESULT_WEBVIEW =  RESULT_FIRST_USER+1;
-	static final int RESULT_ABOUT =  RESULT_FIRST_USER+2;
-	
+
 	static final String APP_LICENCE_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtKWPkZ1rys0aYT9qQ7gHytljus58x9ZNwFUabsXgRAua2RwVkHnFfc8L2p68ojIb2tNHiRvMV6hYH2qViylftEMSYLFoKnuHzpL4tc+Ic+cTv/KtubP+ehUfISPQfYrZrukp3E8y0zM795Agsy8mefc2mmuOFJny/IZFLNyM5J+vjhoE6mO2l3jBmo08zu/3tz8Mbo/VYqJSs+P9UTppwF8ovB6u3fGPFeqblAdGize9WQ1L4SXNYblIjCklYj0rbXHFN3aJCjV9sSo0U+qdi6i+mT+CZgj09W1+U7RpkNJ6OczspTwhFh7/1nEev3Zci17TIFXNyP2v5aGMoBuCPwIDAQAB";
 
 

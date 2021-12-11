@@ -27,8 +27,10 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.KeyStore;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -177,12 +179,13 @@ public class SecondActivity extends Activity {
 
     final Activity activity = this;
     private ProgressBar progress;
-    static final int REQUEST_ABOUT = 0;
-    static final int REQUEST_WEBVIEW = 1;
-    static final int REQUEST_INPUTFILE = 2;     // Use to trap file chooser on input field
-    static final int RESULT_LOGOUT =   RESULT_FIRST_USER+0; // We don't want to quit completely
+
+    static final int REQUEST_ABOUT = RESULT_FIRST_USER+0;
+    static final int RESULT_ABOUT = RESULT_FIRST_USER+0;
+
     static final int RESULT_WEBVIEW =  RESULT_FIRST_USER+1;
-    static final int RESULT_ABOUT =    RESULT_FIRST_USER+2;
+
+    static final int REQUEST_INPUTFILE = RESULT_FIRST_USER+2;    // Use to trap file chooser on input field
 
     static final int REQUEST_CODE_ASK_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 123;
 
@@ -290,9 +293,9 @@ public class SecondActivity extends Activity {
         Log.d(LOG_TAG, "onCreate We have root URL : savedDolRootUrl=" + dolRootUrl + " => savedDolBasedUrl=" + this.savedDolBasedUrl + " savedDolBasedUrlWithSForced=" + this.savedDolBasedUrlWithSForced + " + savedDolRootUrlRel=" + this.savedDolRootUrlRel);
 
         String urlToGo = ""; 
-        if (! dolRequestUrl.contains("?") && ! dolRequestUrl.contains(".php")) urlToGo = dolRequestUrl+"index.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
-        else if (dolRequestUrl.contains("?")) urlToGo = dolRequestUrl+"&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
-        else urlToGo = dolRequestUrl+"?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
+        if (! dolRequestUrl.contains("?") && ! dolRequestUrl.contains(".php")) urlToGo = dolRequestUrl+"index.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
+        else if (dolRequestUrl.contains("?")) urlToGo = dolRequestUrl+"&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
+        else urlToGo = dolRequestUrl+"?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
         
         Log.d(LOG_TAG, "onCreate isDownloadManagerAvailable="+Utils.isDownloadManagerAvailable(this));
         Log.d(LOG_TAG, "onCreate We are in onCreate and will load URL urlToGo=" + urlToGo);
@@ -340,7 +343,8 @@ public class SecondActivity extends Activity {
         
         lastLoadUrl=urlToGo;
         myWebView.loadUrl(urlToGo);
-        
+
+
         //CookieSyncManager.createInstance(this);
         
         // Init IabHelper for InApp purchase
@@ -404,8 +408,8 @@ public class SecondActivity extends Activity {
             menu.findItem(R.id.menu_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             menu.findItem(R.id.menu_bookmarks).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            //menu.findItem(R.id.menu_photo).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
-            //menu.findItem(R.id.menu_scan).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
+            menu.findItem(R.id.menu_photo).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);   // Not enough room so we force it on dropdown menu.
+            menu.findItem(R.id.menu_scan).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);   // Not enough room so we force it on dropdown menu.
             menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
         }
         if (this.menuAre.equals("hardwareonly"))
@@ -415,8 +419,8 @@ public class SecondActivity extends Activity {
             menu.findItem(R.id.menu_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             menu.findItem(R.id.menu_bookmarks).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-            //menu.findItem(R.id.menu_photo).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-            //menu.findItem(R.id.menu_scan).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            menu.findItem(R.id.menu_photo).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            menu.findItem(R.id.menu_scan).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         }
 
@@ -610,7 +614,7 @@ public class SecondActivity extends Activity {
             case R.id.logout:
                 tagToLogout=true;
                 myWebView = (WebView) findViewById(R.id.webViewContent);
-                urlToGo = this.savedDolRootUrl+"user/logout.php?noredirect=1&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
+                urlToGo = this.savedDolRootUrl+"user/logout.php?noredirect=1&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
                 Log.i(LOG_TAG, "LoadUrl after select Logout : "+urlToGo);
                 lastLoadUrl=urlToGo;
                 myWebView.loadUrl(urlToGo);             
@@ -633,7 +637,7 @@ public class SecondActivity extends Activity {
                     if (! urlToGo.contains("dol_hide_leftmenu=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_hide_leftmenu=1";
                     if (! urlToGo.contains("dol_optimize_smallscreen=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_optimize_smallscreen=1";
                     if (! urlToGo.contains("dol_no_mouse_hover=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_no_mouse_hover=1";
-                    if (! urlToGo.contains("dol_use_jmobile=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
+                    if (! urlToGo.contains("dol_use_jmobile=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_use_jmobile=1";
                     Log.d(LOG_TAG, "LoadUrl after select Refresh : Load url "+urlToGo);
                     lastLoadUrl=urlToGo;
                     myWebView.loadUrl(urlToGo);
@@ -786,19 +790,19 @@ public class SecondActivity extends Activity {
             //Log.d(LOG_TAG, "result="+this.result);
 
             if ("menu".equals(this.mode)) {     // Test that result is a menu
-                stringforHistoryUrl = savedDolRootUrl+"core/get_menudiv.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
+                stringforHistoryUrl = savedDolRootUrl+"core/get_menudiv.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
                 stringToCheckInResult = "<!-- Menu -->";
             }
             if ("quickaccess".equals(this.mode)) {     // Test that result is the search page
-                stringforHistoryUrl = savedDolRootUrl+"core/search_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
+                stringforHistoryUrl = savedDolRootUrl+"core/search_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
                 stringToCheckInResult = "<!-- Quick access -->";
             }
             if ("bookmarks".equals(this.mode)) {     // Test that result is a bookmark page
-                stringforHistoryUrl = savedDolRootUrl+"core/bookmarks_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
+                stringforHistoryUrl = savedDolRootUrl+"core/bookmarks_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
                 stringToCheckInResult = "<!-- Bookmarks -->";
             }
             if ("multicompany".equals(this.mode)) {     // Test that result is a multicompany selection page
-                stringforHistoryUrl = savedDolRootUrl+"core/multicompany_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
+                stringforHistoryUrl = savedDolRootUrl+"core/multicompany_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
                 stringToCheckInResult = "<!-- Multicompany selection  -->";
             }
 
@@ -908,8 +912,7 @@ public class SecondActivity extends Activity {
     {
         String urlToGo = ""; 
         
-        urlToGo = this.savedDolRootUrl+"core/get_menudiv.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
-        //if (DoliDroid.useJMobileAjax) urlToGo=urlToGo.concat("&dol_basehref="+Uri.encode(this.savedDolBasedUrl));
+        urlToGo = this.savedDolRootUrl+"core/get_menudiv.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
         // If not found into cache, call URL
         Log.d(LOG_TAG, "We called codeForMenu after click on Menu : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
@@ -941,7 +944,7 @@ public class SecondActivity extends Activity {
     {
         String urlToGo = ""; 
         
-        urlToGo = this.savedDolRootUrl+"core/search_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
+        urlToGo = this.savedDolRootUrl+"core/search_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
         // If not found into cache, call URL
         Log.d(LOG_TAG, "We called codeForQuickAccess after click on Search : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
@@ -973,7 +976,7 @@ public class SecondActivity extends Activity {
     private boolean codeForBookmarks() {
         String urlToGo = "";
 
-        urlToGo = this.savedDolRootUrl+"core/bookmarks_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
+        urlToGo = this.savedDolRootUrl+"core/bookmarks_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
         // If not found into cache, call URL
         Log.d(LOG_TAG, "We called codeForBookmarks after click on Bookmarks : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
@@ -1007,7 +1010,7 @@ public class SecondActivity extends Activity {
     {
         String urlToGo = "";
 
-        urlToGo = this.savedDolRootUrl+"core/multicompany_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
+        urlToGo = this.savedDolRootUrl+"core/multicompany_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
         // If not found into cache, call URL
         Log.d(LOG_TAG, "We called codeForMultiCompany after click on Multicompany : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
@@ -1025,9 +1028,9 @@ public class SecondActivity extends Activity {
             if (! urlToGo.contains("dol_hide_leftmenu=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_hide_leftmenu=1";
             if (! urlToGo.contains("dol_optimize_smallscreen=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_optimize_smallscreen=1";
             if (! urlToGo.contains("dol_no_mouse_hover=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_no_mouse_hover=1";
-            if (! urlToGo.contains("dol_use_jmobile=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_use_jmobile="+(DoliDroid.useJMobileAjax?'2':'1');
+            if (! urlToGo.contains("dol_use_jmobile=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_use_jmobile=1";
 
-            urlToGo += "switchentityautoopen=1&dol_invisible_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=" + (DoliDroid.useJMobileAjax ? '2' : '1');
+            urlToGo += "switchentityautoopen=1&dol_invisible_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
             */
 
             // Clear also cache (we will need different content if we use different entities)
@@ -1113,9 +1116,9 @@ public class SecondActivity extends Activity {
             else
             {
                 Log.d(LOG_TAG, "Second click on Previous when no previous available.");
-                Log.i(LOG_TAG, "We finish activity resultCode="+RESULT_LOGOUT);
+                Log.i(LOG_TAG, "We finish activity resultCode="+RESULT_ABOUT);
                 this.noPreviousPageShown=false;
-                setResult(RESULT_LOGOUT);   // We don't want to quit completely
+                setResult(RESULT_ABOUT);   // We don't want to quit completely
                 WebViewDatabase.getInstance(getBaseContext()).clearHttpAuthUsernamePassword();
                 finish();
             }           
@@ -1847,7 +1850,7 @@ public class SecondActivity extends Activity {
 								jsInjectCodeForSetForm+="document.getElementById('dol_hide_leftmenu').value='1';";	// Warning: This line makes Webkit fails with 2.3
 								jsInjectCodeForSetForm+="document.getElementById('dol_optimize_smallscreen').value='1';";	// Warning: This line makes Webkit fails with 2.3
 								jsInjectCodeForSetForm+="document.getElementById('dol_no_mouse_hover').value='1';";	// Warning: This line makes Webkit fails with 2.3
-								jsInjectCodeForSetForm+="document.getElementById('dol_use_jmobile').value='"+(DoliDroid.useJMobileAjax?"2":"1")+"';";	// Warning: This line makes Webkit fails with 2.3
+								jsInjectCodeForSetForm+="document.getElementById('dol_use_jmobile').value='1';";	// Warning: This line makes Webkit fails with 2.3
 								jsInjectCodeForSetForm+=jsInjectCodeForLoginSubmit;
 								// Now inject js to catch submission of login
 								Log.d(LOG_TAG, "onPageFinished Inject javascript jsInjectCodeForSetForm into page (to autofill form if allowed and to hook the submit of form to catch submitted params)");
@@ -1900,8 +1903,8 @@ public class SecondActivity extends Activity {
 							Log.d(LOG_TAG, "onPageFinished End of logout page, tagToLogout="+tagToLogout);
 							tagToLogout=false;	// Set to false to avoid infinite loop
 							tagToOverwriteLoginPass=true;
-							Log.i(LOG_TAG, "onPageFinished We finish activity resultCode="+RESULT_LOGOUT);
-							setResult(RESULT_LOGOUT);
+							Log.i(LOG_TAG, "onPageFinished We finish activity resultCode="+RESULT_ABOUT);
+							setResult(RESULT_ABOUT);
 					    	WebViewDatabase.getInstance(getBaseContext()).clearHttpAuthUsernamePassword();
 							finish();	// End activity
 						}
@@ -2177,13 +2180,12 @@ public class SecondActivity extends Activity {
                 WebView webView, ValueCallback<Uri[]> filePathCallback,
                 WebChromeClient.FileChooserParams fileChooserParams) {
             
-            Log.d(LOG_TAG, "onShowFileChooser fileChooserParams="+fileChooserParams);
+            Log.i(LOG_TAG, "onShowFileChooser fileChooserParams="+fileChooserParams);
 
             String[] acceptAttribute = fileChooserParams.getAcceptTypes();
             String nameAttribute = fileChooserParams.getFilenameHint();
 
             Boolean usedefaultselect = false;
-            Boolean enableCamera = false;
 
             // Define which file selector we will use depending on acceptAttribute
             // If this is image/* only, we may consider using the enableCamera = true
@@ -2213,16 +2215,24 @@ public class SecondActivity extends Activity {
                 }
             } else {
                 // The custom file selector
-                // See https://stackoverflow.com/questions/29290940/open-camera-for-input-type-file-in-webview-not-opening-android
-                Log.d(LOG_TAG, "onShowFileChooser use custom selector");
+                Context context = getApplicationContext();
+                PackageManager pm = context.getPackageManager();
+                Boolean enableCamera = pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
+
+                Log.d(LOG_TAG, "onShowFileChooser use custom selector enableCamera="+enableCamera);
 
                 //Adjust the camera in a way that specifies the storage location for taking pictures
-                String filePath = Environment.getExternalStorageDirectory() + File.separator
-                        + Environment.DIRECTORY_PICTURES + File.separator;
-                String fileName = "IMG_tmp.jpg";
+                String filePath = Environment.getExternalStorageDirectory() + File.separator + Environment.DIRECTORY_PICTURES + File.separator;
+                // Create directory if it does not exists
+                File imagesFolder = new File(filePath);
+                imagesFolder.mkdirs();
+
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                String fileName = "Photo_"+timeStamp+".jpg";
+
                 mCameraPhotoPath = filePath + fileName;
                 imageUri = Uri.fromFile(new File(filePath + fileName));
-
+                Log.d(LOG_TAG, "onShowFileChooser imageUri for camera capture = "+imageUri);
                 //If you select a picture (not including taking pictures by camera), you don't need to send a broadcast to refresh the gallery after success
                 //    Intent i = new Intent(Intent.ACTION_GET_CONTENT);
                 //    i.addCategory(Intent.CATEGORY_OPENABLE);
@@ -2238,9 +2248,9 @@ public class SecondActivity extends Activity {
 
                 // Add also the selector to capture a photo with name imageUri
                 if (enableCamera) {
-                    Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Parcelable[]{captureIntent});
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Parcelable[]{takePictureIntent});
                 }
 
                 // Start activity to choose file
@@ -2250,6 +2260,8 @@ public class SecondActivity extends Activity {
                     mFilePathCallback = null;
                     Toast.makeText(getApplicationContext(), "Cannot open custom file chooser", Toast.LENGTH_LONG).show();
                     return false;
+                } catch (Exception e) {
+                    Log.e(LOG_TAG, "onShowFileChooser Failed to startActivityForResult");
                 }
             }
 
@@ -2382,48 +2394,96 @@ public class SecondActivity extends Activity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) 
     {
-        Log.d(LOG_TAG, "onActivityResult requestCode = "+requestCode+" resultCode = "+resultCode + " mFilePathCallback = " + mFilePathCallback);
+        Log.i(LOG_TAG, "onActivityResult requestCode = "+requestCode+" resultCode = "+resultCode + " mFilePathCallback = " + mFilePathCallback);
 
-        if (requestCode != REQUEST_INPUTFILE || mFilePathCallback == null)
+        if (requestCode != REQUEST_INPUTFILE)
         {
+            Log.d(LOG_TAG, "onActivityResult not a return after an input file selection");
+            // Not a file upload, we make standard action.
+            super.onActivityResult(requestCode, resultCode, data);
+            return;
+        }
+        if (mFilePathCallback == null) {
+            Log.d(LOG_TAG, "onActivityResult return after input file selection but mFilePathCallback was empty");
             // Not a file upload, we make standard action.
             super.onActivityResult(requestCode, resultCode, data);
             return;
         }
 
-        Log.d(LOG_TAG, "onActivityResult we have just selected a file from external activity");
-
         // Handle here if return comes from submit a file. mFilePathCallback is not null.
-        Uri[] results = null;
+        Log.d(LOG_TAG, "onActivityResult we should have just selected a file from an external activity");
+
+        if (data != null) {
+            Log.d(LOG_TAG, "data = "+data.toString());
+        } else {
+            Log.d(LOG_TAG, "data is null");
+        }
+        // Example: Intent { dat=content://com.android.providers.downloads.documents/document/74 flg=0x1 } after selection of file manager
+        // Example: Intent { dat=content://com.android.providers.media.documents/document/image:88 flg=0x1 } after selection of file manager
+
 
         // Check that the response is a good one
         if (resultCode == Activity.RESULT_OK) 
         {
             Log.d(LOG_TAG, "onActivityResult result code is ok");
-            //Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            //intent.setData(imageUri);
-            //sendBroadcast(intent);
 
-            if(data == null) {
-                Log.d(LOG_TAG, "onActivityResult data is null mCameraPhotoPath="+mCameraPhotoPath);
+            // Not sure this is necessary
+            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            intent.setData(imageUri);
+            sendBroadcast(intent);
+
+            Uri uri = null;
+            if (data != null) {
+                /*Bundle extras = data.getExtras();
+                if (extras != null) {
+                    Bitmap imageBitmap = (Bitmap) extras.get("data");
+                    imageView.setImageBitmap(imageBitmap);
+                }*/
+                uri = data.getData();
+            }
+
+            if (data == null || uri == null) {
+                // Case we have taken a photo
+                Log.d(LOG_TAG, "onActivityResult data or uri is null, mCameraPhotoPath="+mCameraPhotoPath+" custom results "+imageUri);
 
                 // If there is not data, then we may have taken a photo
-                if(mCameraPhotoPath != null) {
+                if (mCameraPhotoPath != null) {
+                    Uri[] results = null;
+                    //results = new Uri[]{Uri.parse(mCameraPhotoPath)};
                     results = new Uri[]{Uri.parse(mCameraPhotoPath)};
+                    mFilePathCallback.onReceiveValue(new Uri[]{imageUri});
                 }
+                mCameraPhotoPath = null;
             } else {
+                // Case we have selected a file from file manager
+                Uri[] results = null;
+
                 Log.d(LOG_TAG, "onActivityResult data is not null");
 
                 String dataString = data.getDataString();
-                if (dataString != null) {
-                    results = new Uri[]{Uri.parse(dataString)};
+                Uri uriData = data.getData();
+                Log.d(LOG_TAG, "uriData="+uriData);
+                // Example: content://com.android.providers.media.documents/document/image%3A88
+                results = new Uri[]{uriData};
+                for (Uri uriTmp : results) {
+                    if (uriTmp != null) {
+                        Log.d(LOG_TAG, "onActivityResult system return URI:" + uriTmp);
+                        // Example: URI:content://com.android.providers.downloads.documents/document/74
+                        // Example: URI:content://com.android.providers.media.documents/document/image%3A88
+                    }
                 }
+                mFilePathCallback.onReceiveValue(results);
             }
+        } else {
+            Log.d(LOG_TAG, "onActivityResult resultCode is 0 (error)");
+            mFilePathCallback.onReceiveValue(null);
         }
 
         Log.d(LOG_TAG, "onActivityResult end of management of external activity result");
-        mFilePathCallback.onReceiveValue(results);
         mFilePathCallback = null;
+
+        // After this the onStart of SecondActivity should be executed
     }
     
 }
+

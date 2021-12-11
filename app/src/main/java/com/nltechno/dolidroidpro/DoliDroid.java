@@ -17,8 +17,5 @@
 package com.nltechno.dolidroidpro;
 
 public class DoliDroid extends android.app.Application {
-	// Do we use ajax for recent browsers ?
-	// If true, we will use dol_use_jmobile=2
-	// If false, we will use dol_use_jmobile=1.
-	public static boolean useJMobileAjax=false;
+    //public static boolean globalVar=false;
 }

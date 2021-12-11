@@ -67,12 +67,8 @@ public class AboutActivity extends Activity {
 	private static final String LOG_TAG = "DoliDroidAboutActivity";
 	private String menuAre="hardwareonly";
 
-	static final int REQUEST_ABOUT = 0;
-	static final int REQUEST_WEBVIEW = 1;
-	static final int RESULT_LOGOUT =  RESULT_FIRST_USER+0;
-	static final int RESULT_WEBVIEW =  RESULT_FIRST_USER+1;
-	static final int RESULT_ABOUT =  RESULT_FIRST_USER+2;
-	
+	static final int RESULT_ABOUT =  RESULT_FIRST_USER+0;
+
 	/**
 	 * Called when activity is created
 	 */
@@ -364,8 +360,8 @@ public class AboutActivity extends Activity {
     	switch (item.getItemId())
     	{
 	    	case R.id.menu_back:
-	    		Log.d(LOG_TAG, "We finish activity resultCode = "+RESULT_LOGOUT);
-	    		setResult(RESULT_LOGOUT);
+	    		Log.d(LOG_TAG, "We finish activity resultCode = "+RESULT_ABOUT);
+	    		setResult(RESULT_ABOUT);
 	    		finish();
 	    		return true;
     	}
@@ -386,8 +382,8 @@ public class AboutActivity extends Activity {
 	    	// Check if the key event was the Back button and if there's history
 		    if (keyCode == KeyEvent.KEYCODE_MENU || keyCode == KeyEvent.KEYCODE_BACK) 
 		    {
-		    	Log.d(LOG_TAG, "We clicked onto KEYCODE_MENU or KEYCODE_BACK. We finish activity resultCode = "+RESULT_LOGOUT);
-	    		setResult(RESULT_LOGOUT);
+		    	Log.d(LOG_TAG, "We clicked onto KEYCODE_MENU or KEYCODE_BACK. We finish activity resultCode = "+RESULT_ABOUT);
+	    		setResult(RESULT_ABOUT);
 				finish();
 				return true;
 		    }
@@ -402,8 +398,8 @@ public class AboutActivity extends Activity {
     @SuppressLint("SetJavaScriptEnabled")
 	public void onClickToBack(View v) 
     {
-		Log.d(LOG_TAG, "We finish activity resultCode = "+RESULT_LOGOUT);
-		setResult(RESULT_LOGOUT);
+		Log.d(LOG_TAG, "We finish activity resultCode = "+RESULT_ABOUT);
+		setResult(RESULT_ABOUT);
     	finish();
     } 
     
@@ -414,10 +410,10 @@ public class AboutActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
     	Log.d(LOG_TAG, "AboutActivity::onActivityResult requestCode = " + requestCode + " resultCode = " + resultCode);
-        if (resultCode==RESULT_LOGOUT)
+        if (resultCode==RESULT_ABOUT)
         {
-			Log.d(LOG_TAG, "AboutActivity::onActivityResult We finish activity resultCode = "+RESULT_LOGOUT);
-    		setResult(RESULT_LOGOUT);
+			Log.d(LOG_TAG, "AboutActivity::onActivityResult We finish activity resultCode = "+RESULT_ABOUT);
+    		setResult(RESULT_ABOUT);
             finish();
         } 
     }

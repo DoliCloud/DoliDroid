@@ -79,11 +79,11 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 	private Menu savMenu;
 	private String menuAre="hardwareonly";
-	static final int REQUEST_ABOUT = 0;
-	static final int REQUEST_WEBVIEW = 1;
-	static final int RESULT_LOGOUT =  RESULT_FIRST_USER+0;
-	static final int RESULT_WEBVIEW =  RESULT_FIRST_USER+1;
-	static final int RESULT_ABOUT =  RESULT_FIRST_USER+2;
+
+	static final int REQUEST_ABOUT = RESULT_FIRST_USER+0;
+	static final int RESULT_ABOUT = RESULT_FIRST_USER+0;
+
+	static final int REQUEST_WEBVIEW = RESULT_FIRST_USER+1;
 
     final Activity activity = this;
 
@@ -636,7 +636,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
     	Log.d(LOG_TAG, "MainActivity::onActivityResult requestCode = "+requestCode + " resultCode = "+resultCode);
-        if (requestCode == REQUEST_WEBVIEW && resultCode != RESULT_LOGOUT)
+        if (requestCode == REQUEST_WEBVIEW && resultCode != RESULT_ABOUT)
         {
 			Log.d(LOG_TAG, "MainActivity::onActivityResult We finish activity.");
             finish();

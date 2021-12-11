@@ -5,8 +5,10 @@ English DoliDroid ChangeLog
 ***** ChangeLog for 2.2 *****
 
 2.245
-- Better management of cache and back to page. No error if not logged.
+- Better management of cache and back to page. No error on menu pages if not logged.
 - Removed deprecated code of CookieSyncManager.
+- Support the camera capture on input file of type accept="image/*"
+- Clean code
 
 2.244
 - Https is now the default scheme for url without http(s)
