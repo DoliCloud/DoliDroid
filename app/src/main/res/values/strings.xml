@@ -52,7 +52,7 @@
     <string name="Yes">Yes</string>
     <string name="No">No</string>
     <string name="Warning">Warning</string>
-    <string name="DeletePredefinedUrl">Delete predefined login URL of this instance</string>
+    <string name="DeletePredefinedUrl">Delete the predefined login URL of this instance</string>
 
     <!-- Menu main + web -->
     <string name="menu_info">About DoliDroid</string>

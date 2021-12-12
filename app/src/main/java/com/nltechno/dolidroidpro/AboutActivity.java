@@ -185,11 +185,11 @@ public class AboutActivity extends Activity {
 
 			//s+= "PackageName = " + info.packageName + "\n";
 			s1+=getString(R.string.Author)+": <b>Laurent Destailleur</b><br />\n";
-			s1+=getString(R.string.Web)+": <a href=\"https://www.dolicloud.com?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile\">https://www.dolicloud.com</a><br />\n";
-			s1+=getString(R.string.Compatibility)+": <b>Dolibarr 7+</b><br />\n";
+			s1+=getString(R.string.Web)+": <span style=\"color:#008888\"><a href=\"https://www.dolicloud.com?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile\">https://www.dolicloud.com</a></span><br />\n";
+			s1+=getString(R.string.Compatibility)+": <b>Dolibarr 8+</b><br />\n";
 			s1+=getString(R.string.License)+": <b>GPL v3+</b><br />\n";
 			//s1+=getString(R.string.Sources)+": https://www.nltechno.com/services/<br />\n";
-			s1+=getString(R.string.Sources)+": <a href=\"https://github.com/eldy/dolidroid.git\">https://github.com/eldy/dolidroid.git</a><br />\n";
+			s1+=getString(R.string.Sources)+": <span style=\"color:#008888\"><a href=\"https://github.com/DoliCloud/DoliDroid.git\">https://github.com/DoliCloud/DoliDroid.git</a></span><br />\n";
 			// This download key allow to download file with name src_dolidroid-info.versionName-downloadkey
 			//String downloadkey=Utils.MD5Hex("dolidroid"+info.versionName.replaceAll("[^0-9.]", "")+"saltnltechno").substring(0, 8);
 			//s1+=getString(R.string.Sources)+" Download Key: dolidroid-"+info.versionName.replaceAll("[^0-9.]", "")+"-"+downloadkey+"<br />\n";
@@ -203,7 +203,7 @@ public class AboutActivity extends Activity {
 			int width = size.x;
 			int height = size.y;
 			s1+=getString(R.string.DeviceSize)+": <b>"+width+"x"+height+"</b><br />";
-			s1+=getString(R.string.DeviceHasMenuHardware)+": <b>"+(Utils.hasMenuHardware(this)?getString(R.string.Yes):getString(R.string.No))+"</b><br />\n";
+			//s1+=getString(R.string.DeviceHasMenuHardware)+": <b>"+(Utils.hasMenuHardware(this)?getString(R.string.Yes):getString(R.string.No))+"</b><br />\n";
 			s1+=getString(R.string.DeviceHasDownloadManager)+": <b>"+(Utils.isDownloadManagerAvailable(this)?getString(R.string.Yes):getString(R.string.No))+"</b><br />\n";
 
 			// This return /storage/sdcard0/Download for example (we use this for downloading files)
@@ -217,10 +217,11 @@ public class AboutActivity extends Activity {
             testIntent.setType("application/pdf"); 
             List<ResolveInfo> list = manager.queryIntentActivities(testIntent, PackageManager.MATCH_DEFAULT_ONLY); 
 			s1+=getString(R.string.DeviceHasPDFViewer)+": <b>"+(list.size() > 0?getString(R.string.Yes)+" ("+list.size()+")":getString(R.string.No))+"</b><br />\n";
-            Intent testIntent2 = new Intent(Intent.ACTION_VIEW); 
+
+			Intent testIntent2 = new Intent(Intent.ACTION_VIEW);
             testIntent2.setType("application/vnd.oasis.opendocument.text"); 
             List<ResolveInfo> list2 = manager.queryIntentActivities(testIntent2, PackageManager.MATCH_DEFAULT_ONLY); 
-			s1+=getString(R.string.DeviceHasODXViewer)+": <b>"+(list2.size() > 0?getString(R.string.Yes)+" ("+list2.size()+")":getString(R.string.No))+"</b><br />\n";
+			s1+=getString(R.string.DeviceHasODXViewer)+": <b>"+(list2.size() > 0?getString(R.string.Yes)+" ("+list2.size()+")":getString(R.string.No))+"</b>\n";
            
 			//s+="Permissions = " + info.permissions;
 		}
@@ -230,6 +231,7 @@ public class AboutActivity extends Activity {
 		}
 
 		textViewAbout1.setText(Html.fromHtml(s1));
+		// For api level 24: textViewAbout1.setText(Html.fromHtml(s1, Html.FROM_HTML_MODE_LEGACY));
 
 		// Show text section 2
 		TextView textViewAbout2 = findViewById(R.id.TextAbout02);
@@ -242,7 +244,10 @@ public class AboutActivity extends Activity {
 			btn.setVisibility(View.VISIBLE);
 			btn.setEnabled(true);
 
-        	s2+="<font color='#440066'><b>"+getString(R.string.savedDolUrlRoot)+":</b></font><br /><br />\n";
+			findViewById(R.id.imageView02).setVisibility(View.VISIBLE);
+			findViewById(R.id.imageView02).setEnabled(true);
+
+			s2+="<font color='#440066'><b>"+getString(R.string.savedDolUrlRoot)+":</b></font><br /><br />\n";
         	s2+=savedDolRootUrl+"<br />\n";
 
 	        // Saved user/pass
@@ -269,6 +274,9 @@ public class AboutActivity extends Activity {
         	// No need to show the button, we don't know the predefined url used.
 			btn.setVisibility(View.INVISIBLE);
 			btn.setEnabled(false);
+
+			findViewById(R.id.imageView02).setVisibility(View.INVISIBLE);
+			findViewById(R.id.imageView02).setEnabled(false);
 		}
 
 		textViewAbout2.setText(Html.fromHtml(s2));
@@ -313,9 +321,13 @@ public class AboutActivity extends Activity {
 		// Current url
         String currentUrl = intent.getStringExtra("currentUrl");
         String title = intent.getStringExtra("title");
-        if (currentUrl != null && ! "".equals(currentUrl)) s3+="<br /><font color='#440066'><b>"+getString(R.string.currentUrl)+":</b></font><br /><br />\n"+title+"<br />\n"+currentUrl;
+        if (currentUrl != null && ! "".equals(currentUrl)) {
+        	s3+="<font color='#440066'><b>"+getString(R.string.currentUrl)+":</b></font><br /><br />\n"+title+"<br />\n"+currentUrl;
+		}
 		String lastversionfound = intent.getStringExtra("lastversionfound");
-        if (lastversionfound != null && ! "".equals(lastversionfound)) s3+="<br /><br />\nDolibarr "+getString(R.string.Version)+": "+lastversionfound+"<br />\n";
+        if (lastversionfound != null && ! "".equals(lastversionfound)) {
+        	s3+="<br /><br />\nDolibarr "+getString(R.string.Version)+": "+lastversionfound+"<br />\n";
+		}
 
 		// User agent
 		// The About view is not a webview, so we must use the userAgent propagated by the SecondActivity. It may be null if not already created.
@@ -323,6 +335,14 @@ public class AboutActivity extends Activity {
         Log.d(LOG_TAG,"userAgent="+userAgent);
         if (userAgent != null && ! "".equals(userAgent)) {
         	s3+="<br /><br />\n<font color='#440066'><b>"+getString(R.string.UserAgent)+":</b></font><br /><br />\n"+userAgent+"<br />\n";
+		}
+
+		if (currentUrl != null && ! "".equals(currentUrl)) {
+			findViewById(R.id.imageView03).setVisibility(View.VISIBLE);
+			findViewById(R.id.imageView03).setEnabled(true);
+		} else {
+			findViewById(R.id.imageView03).setVisibility(View.INVISIBLE);
+			findViewById(R.id.imageView03).setEnabled(false);
 		}
 
 		textViewAbout3.setText(Html.fromHtml(s3));

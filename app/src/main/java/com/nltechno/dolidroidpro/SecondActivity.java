@@ -198,7 +198,7 @@ public class SecondActivity extends Activity {
     
     private String nextAltHistoryStack = "";
     private String nextAltHistoryStackBis = "";
-    ArrayList<String> altHistoryStack = new ArrayList<String>();
+    ArrayList<String> altHistoryStack = new ArrayList<>();
 
     // To store data for the download manager
     //final String strPref_Download_ID = "PREF_DOWNLOAD_ID";
@@ -430,13 +430,7 @@ public class SecondActivity extends Activity {
             menuItem.setVisible(true);
             boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
             Log.d(LOG_TAG, "onCreateOptionsMenu prefAlwaysShowBar value is "+prefAlwaysShowBar);
-            if (prefAlwaysShowBar) {
-                //menuItem.setTitle(getString(R.string.menu_show_bar_on));
-                menuItem.setChecked(true);
-            } else {
-                //menuItem.setTitle(getString(R.string.menu_show_bar_off));
-                menuItem.setChecked(false);
-            }
+            menuItem.setChecked(prefAlwaysShowBar);
         }
         else
         {
@@ -448,13 +442,7 @@ public class SecondActivity extends Activity {
         MenuItem menuItem2 = menu.findItem(R.id.always_autofill);
         boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
         Log.d(LOG_TAG, "onCreateOptionsMenu prefAlwaysAutoFill value is "+prefAlwaysAutoFill);
-        if (prefAlwaysAutoFill) {
-            //menuItem2.setTitle(getString(R.string.menu_autofill_on));
-            menuItem2.setChecked(true);
-        } else {
-            //menuItem2.setTitle(getString(R.string.menu_autofill_off));
-            menuItem2.setChecked(false);
-        }
+        menuItem2.setChecked(prefAlwaysAutoFill);
 
 
         MenuItem menuItem3 = menu.findItem(R.id.clear_all_urls);
@@ -506,7 +494,8 @@ public class SecondActivity extends Activity {
         SharedPreferences sharedPrefs = null;
         Editor editor = null;
         String urlToGo = ""; 
-        
+
+        // On which menu entry did you click ?
         switch (item.getItemId())
         {
             case R.id.menu_menu:
@@ -680,7 +669,7 @@ public class SecondActivity extends Activity {
     
     /**
      * Return a DefaultHTTPClient with option to support untrusted HTTPS
-     *  
+     *
      * @return HttpClient       Object derivated from DefaultHttpClient
      */
     public HttpClient getNewHttpClient() {
@@ -709,9 +698,9 @@ public class SecondActivity extends Activity {
     
     /**
      * Class to load an URL in background
-     * Used to load menu and quick search page (with Android 3+)
+     * Used to load menu, quick search page and more...
      */
-    private class DownloadWebPageTask extends AsyncTask<String, Void, String> 
+    private class DownloadWebPageTask extends AsyncTask<String, Void, String>
     {
         String mode;
         
@@ -722,51 +711,50 @@ public class SecondActivity extends Activity {
         }
         
         /**
-         * Launch download of url
+         * Launch download of urls. Return content of response.
          */
         @Override
         protected String doInBackground(String... urls) 
         {
-          StringBuilder response = new StringBuilder();
-          
-          if (listOfCookiesAfterLogon != null)      // We do not try to load url if cookies are not yet set
-          {
-	          for (String url : urls)
-	          {
-	        	  //DefaultHttpClient client = new DefaultHttpClient();
-                  HttpClient client = getNewHttpClient();
-	        	  HttpGet httpGet = new HttpGet(url);
-	        	  try {
-	        		  Log.i(LOG_TAG, "doInBackground get url mode="+this.mode+" url="+url+" savedAuthuser="+savedAuthuser+" cookies="+listOfCookiesAfterLogon);
-	
-	        		  httpGet.setHeader("Cookie", listOfCookiesAfterLogon);
-	        		  //httpGet.setHeader("Connection", "keep-alive");
-	        		  httpGet.setHeader("User-Agent", savedUserAgent);
-	        		  if (savedAuthuser != null) {
-	        		      httpGet.setHeader("Authorization", "Basic " + Base64.encodeToString((savedAuthuser+":"+savedAuthpass).getBytes(), Base64.NO_WRAP));	// Add user/pass for basic authentication
-                      }
-	        		  String androlocale=Locale.getDefault().getLanguage();	
-	        		  if (! "".equals(androlocale)) {
-	        		      httpGet.setHeader("Accept-Language", androlocale);
-                      }
-	        		  
-	        		  HttpResponse execute = client.execute(httpGet);
-	        		  InputStream content = execute.getEntity().getContent();
-	
-	        		  BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-	        		  String s = "";
-	        		  while ((s = buffer.readLine()) != null) {
-	        			  response.append(s);
-	        		  }
-	        	  }
-	        	  catch (Exception e) 
-	        	  {
-	        		  e.printStackTrace();
-	        	  }
-	          }
-          }
-          
-          return response.toString();
+            StringBuilder response = new StringBuilder();
+
+            if (listOfCookiesAfterLogon != null) {      // We do not try to load url if cookies are not yet set
+                for (String url : urls) {
+                    //DefaultHttpClient client = new DefaultHttpClient();
+                    // TODO Replace this with java.net.HttpURLConnection
+                    HttpClient client = getNewHttpClient();
+                    HttpGet httpGet = new HttpGet(url);
+                    try {
+                        Log.i(LOG_TAG, "doInBackground get url mode="+this.mode+" url="+url+" savedAuthuser="+savedAuthuser+" cookies="+listOfCookiesAfterLogon);
+
+                        httpGet.setHeader("Cookie", listOfCookiesAfterLogon);
+                        //httpGet.setHeader("Connection", "keep-alive");
+                        httpGet.setHeader("User-Agent", savedUserAgent);
+                        if (savedAuthuser != null) {
+                            httpGet.setHeader("Authorization", "Basic " + Base64.encodeToString((savedAuthuser+":"+savedAuthpass).getBytes(), Base64.NO_WRAP));	// Add user/pass for basic authentication
+                        }
+                        String androlocale=Locale.getDefault().getLanguage();
+                        if (! "".equals(androlocale)) {
+                            httpGet.setHeader("Accept-Language", androlocale);
+                        }
+
+                        HttpResponse execute = client.execute(httpGet);
+                        InputStream content = execute.getEntity().getContent();
+
+                        BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                        String s = "";
+                        while ((s = buffer.readLine()) != null) {
+                            response.append(s);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            return response.toString();
         }
         
         /**
@@ -865,41 +853,8 @@ public class SecondActivity extends Activity {
         // system behavior (probably exit the activity)
         return super.onKeyDown(keyCode, event);
     } 
-   
-    /**
-     * Click onto text Back
-     * 
-     * @param View v
-     */
-    @SuppressLint("SetJavaScriptEnabled")
-    public void onClickToBack(View v) 
-    {
-        this.codeForBack();
-    }  
 
-    /**
-     * Click onto text Menu
-     * 
-     * @param View v
-     */
-    @SuppressLint("SetJavaScriptEnabled")
-    public void onClickToMenu(View v) 
-    {
-        this.codeForMenu();
-    }      
 
-    /**
-     * Click onto text Search
-     * 
-     * @param View v
-     */
-    @SuppressLint("SetJavaScriptEnabled")
-    public void onClickToSearch(View v) 
-    {
-        this.codeForQuickAccess();
-    } 
-    
-    
     /**
      * Common code for Menu
      * codeForMenu is in a UI thread
@@ -908,7 +863,7 @@ public class SecondActivity extends Activity {
      */
     private boolean codeForMenu() 
     {
-        String urlToGo = ""; 
+        String urlToGo;
         
         urlToGo = this.savedDolRootUrl+"core/get_menudiv.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
@@ -940,7 +895,7 @@ public class SecondActivity extends Activity {
      */
     private boolean codeForQuickAccess() 
     {
-        String urlToGo = ""; 
+        String urlToGo;
         
         urlToGo = this.savedDolRootUrl+"core/search_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
@@ -967,12 +922,12 @@ public class SecondActivity extends Activity {
 
     /**
      * Common code for Back
-     * codeForBack is in a UI thread
+     * codeForBookmarks is in a UI thread
      *
      * @return  boolean             True
      */
     private boolean codeForBookmarks() {
-        String urlToGo = "";
+        String urlToGo;
 
         urlToGo = this.savedDolRootUrl+"core/bookmarks_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
@@ -1006,7 +961,7 @@ public class SecondActivity extends Activity {
      */
     private boolean codeForMultiCompany()
     {
-        String urlToGo = "";
+        String urlToGo;
 
         urlToGo = this.savedDolRootUrl+"core/multicompany_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
@@ -1057,11 +1012,15 @@ public class SecondActivity extends Activity {
     private boolean codeForBack() 
     {
         // Check if there is history
-        String currentUrl = "";
-        String previousUrl = "";
+        String currentUrl;
+        String previousUrl;
+        boolean b;
+
         myWebView = findViewById(R.id.webViewContent);
-        boolean b = myWebView.canGoBack();
+
         currentUrl = myWebView.getUrl();
+        previousUrl = "";
+        b = myWebView.canGoBack();
 
         WebBackForwardList mWebBackForwardList = myWebView.copyBackForwardList();
         if (mWebBackForwardList.getCurrentIndex() > 0) {
@@ -1204,14 +1163,16 @@ public class SecondActivity extends Activity {
         // Complete tutorial on download manager on http://www.101apps.co.za/index.php/articles/using-the-downloadmanager-to-manage-your-downloads.html
         DownloadManager dmanager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         long id = dmanager.enqueue(request);
+        Log.d(LOG_TAG, "putDownloadInQueue id="+id);
 
         // Save the request id
-            /*
-            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            SharedPreferences.Editor editor = sharedPrefs.edit();
-            editor.putLong(strPref_Download_ID, id);
-            editor.commit();
-            */
+        /*
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.putLong(strPref_Download_ID, id);
+        editor.commit();
+        */
+
         return true;
     }
 
@@ -1237,8 +1198,8 @@ public class SecondActivity extends Activity {
 		int counthttpauth=0;
 
 		final private SecondActivity secondActivity;
-		private String webViewtitle="";
-		private final String jsInjectCodeForLoginSubmit =
+		String webViewtitle="";
+		final String jsInjectCodeForLoginSubmit =
                 "console.log('Execute jsInjectCodeForLoginSubmit');" +
 		        "function dolidroidParseFormAfterSubmit(event) {" +
 		        "    var form = this;" +
@@ -1731,8 +1692,8 @@ public class SecondActivity extends Activity {
 								boolean versionOk=true;	// Will be false if Dolibarr is < 3.6.*
 								if (foundVersion) {
 									try {
-										if (Integer.parseInt(m.group(1)) < 3) versionOk = false;
-										if (Integer.parseInt(m.group(1)) < 3 && Integer.parseInt(m.group(2)) < 6)
+										if (m.group(1) != null && Integer.parseInt(m.group(1)) < 3) versionOk = false;
+										if (m.group(1) != null && Integer.parseInt(m.group(1)) < 3 && m.group(2) != null && Integer.parseInt(m.group(2)) < 6)
 											versionOk = false;
 									}
 									catch(Exception e)

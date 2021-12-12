@@ -1,5 +1,6 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -14,22 +15,12 @@
         android:background="@color/white"
         android:textColor="@color/black">
 
-        <ImageView
-            android:id="@+id/imageViewLogoBottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:contentDescription="@string/logo_dolidroid"
-            android:src="@drawable/ic_launcher" />
-
         <TextView
             android:id="@+id/textAndroidClient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageViewLogoBottom"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
             android:text="@string/dolibarr_for_android"
             android:textColor="@color/grey"
             tools:context=".AboutActivity"
@@ -39,11 +30,11 @@
             android:id="@+id/TextAbout01"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textAndroidClient"
+            android:layout_below="@id/imageView01"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="42dp"
+            android:layout_marginTop="14dp"
             android:layout_marginEnd="14dp"
             android:maxLines="30"
             android:text="@string/textAboutA"
@@ -54,11 +45,11 @@
             android:id="@+id/TextAbout02"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/TextAbout01"
+            android:layout_below="@id/imageView02"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
             android:layout_marginStart="14dp"
+            android:layout_marginTop="14dp"
             android:layout_marginEnd="14dp"
             android:maxLines="50"
             android:text="@string/textAboutB"
@@ -76,23 +67,60 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="14dp"
             android:background="#009688"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:text="@string/DeletePredefinedUrl"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:ignore="TextContrastCheck" />
 
         <TextView
             android:id="@+id/TextAbout03"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/buttonDeletePredefinedUrl"
+            android:layout_below="@id/imageView03"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="14dp"
             android:layout_marginEnd="14dp"
             android:maxLines="50"
             android:text="@string/textAboutB"
             android:textSize="14sp"
             tools:context=".AboutActivity" />
+
+        <ImageView
+            android:id="@+id/imageView01"
+            android:layout_width="48dp"
+            android:layout_height="42dp"
+            android:layout_below="@+id/textAndroidClient"
+            android:layout_alignParentStart="false"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:backgroundTint="@color/yellow"
+            android:backgroundTintMode="screen"
+            android:src="@android:drawable/ic_menu_info_details" />
+
+        <ImageView
+            android:id="@+id/imageView02"
+            android:layout_width="48dp"
+            android:layout_height="45dp"
+            android:layout_below="@id/TextAbout01"
+            android:layout_alignParentStart="false"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="55dp"
+            android:foregroundTint="#009688"
+            android:src="@android:drawable/ic_menu_view" />
+
+        <ImageView
+            android:id="@+id/imageView03"
+            android:layout_width="48dp"
+            android:layout_height="45dp"
+            android:layout_below="@id/buttonDeletePredefinedUrl"
+            android:layout_alignParentStart="false"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="55dp"
+            android:foregroundTint="#009688"
+            android:src="@android:drawable/ic_menu_myplaces" />
 
 
     </RelativeLayout>

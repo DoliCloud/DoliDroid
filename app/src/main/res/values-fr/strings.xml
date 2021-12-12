@@ -53,6 +53,7 @@
     <string name="Yes">Oui</string>
     <string name="No">Non</string>
     <string name="Warning">Alerte</string>
+    <string name="DeletePredefinedUrl">Effacer l\'URL prédéfinie de cette instance</string>
 
     <!-- Menu main + web -->
     <string name="menu_info">A propos de DoliDroid</string>
