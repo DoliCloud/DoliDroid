@@ -81,16 +81,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
-import android.graphics.drawable.ClipDrawable;
-import android.graphics.drawable.Drawable;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.webkit.CookieManager;
 import android.webkit.HttpAuthHandler;
@@ -99,6 +95,7 @@ import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -123,7 +120,8 @@ public class SecondActivity extends Activity {
 	private WebView myWebView;
 	private WebViewClientDoliDroid myWebViewClientDoliDroid;
 	private WebChromeClientDoliDroid myWebChromeClientDoliDroid;
-	
+	private WebBackForwardList mWebBackForwardList;
+
 	private ValueCallback<Uri[]> mFilePathCallback;
 
 	private String savedDolRootUrl;
@@ -168,7 +166,7 @@ public class SecondActivity extends Activity {
 
 	private String menuAre="hardwareonly";
 	private Menu savMenu;
-	private boolean noPreviousPageShown=false;
+	private boolean messageNoPreviousPageShown =false;
 	String listOfCookiesAfterLogon=null;
 
 	private String mCameraPhotoPath;
@@ -489,7 +487,7 @@ public class SecondActivity extends Activity {
      */
     public boolean onOptionsItemSelected(MenuItem item) 
     {
-        Log.i(LOG_TAG, "SecondActivity::onOptionsItemSelected Click onto menu "+item.toString());
+        Log.i(LOG_TAG, "SecondActivity::onOptionsItemSelected Click onto menu: item="+item.toString());
 
         SharedPreferences sharedPrefs = null;
         Editor editor = null;
@@ -758,14 +756,15 @@ public class SecondActivity extends Activity {
         }
         
         /**
-         * When url has been downloaded
+         * When an url has been downloaded.
+         * Used when download is done by the async Download manager after a DownloadWebPageTask.execute into codeForXXX for example.
+         * Not called for common navigation (see instead shouldInterceptRequest, onPageStarted, onPageFinished)
          * 
          * @param   String      content downloaded
          */
         @Override
         protected void onPostExecute(String result) 
         {
-            String historyUrl = null;
             String stringforHistoryUrl = null;
             String stringToCheckInResult = null;
 
@@ -794,7 +793,7 @@ public class SecondActivity extends Activity {
 
             if (result != null && ! "".equals(result))
             {
-                Log.d(LOG_TAG, "onPostExecute Check result of doInBackground "+this.mode+" savedDolBasedUrl="+savedDolBasedUrl+" historyUrl="+historyUrl);
+                Log.d(LOG_TAG, "onPostExecute Check result of doInBackground mode="+this.mode+" savedDolBasedUrl="+savedDolBasedUrl+" stringforHistoryUrl="+stringforHistoryUrl);
 
                 if (stringToCheckInResult != null) {     // Test that result is as expected
                     if (result.contains(stringToCheckInResult)) {
@@ -814,24 +813,26 @@ public class SecondActivity extends Activity {
                         if ("multicompany".equals(this.mode)) {     // Test that result is the quickaccess page
                             cacheForMultiCompany = result;
                         }
-                        historyUrl = stringforHistoryUrl;
 
                         // Generic download
-                        Log.d(LOG_TAG, "onPostExecute Load content from result of doInBackground mode=" + this.mode + " savedDolBasedUrl=" + savedDolBasedUrl + " historyUrl=" + historyUrl);
-                        myWebView.loadDataWithBaseURL(savedDolBasedUrl, result, "text/html", "UTF-8", historyUrl);
-                        //myWebView.loadData(result, "text/html", "UTF-8");
+                        Log.d(LOG_TAG, "onPostExecute Load content from result of doInBackground mode=" + this.mode + " savedDolBasedUrl=" + savedDolBasedUrl + " stringforHistoryUrl=" + stringforHistoryUrl);
+
+                        myWebView.loadDataWithBaseURL(savedDolBasedUrl, result, "text/html", "UTF-8", stringforHistoryUrl);
+                        //myWebView.loadData(result, "text/html", "UTF-8");     // This does not work
                     } else {
                         Log.d(LOG_TAG, "onPostExecute Failed to get page. Are you logged ?");
                         Toast.makeText(activity, getString(R.string.failedtogetpage), Toast.LENGTH_LONG).show();
                         Log.d(LOG_TAG, result);
                     }
                 } else {    // Generic download
-                    Log.d(LOG_TAG, "onPostExecute Load content from result of doInBackground mode=" + this.mode + " savedDolBasedUrl=" + savedDolBasedUrl + " historyUrl=" + historyUrl);
-                    myWebView.loadDataWithBaseURL(savedDolBasedUrl, result, "text/html", "UTF-8", historyUrl);
+                    Log.d(LOG_TAG, "onPostExecute Load content from result of doInBackground mode=" + this.mode + " savedDolBasedUrl=" + savedDolBasedUrl + " stringforHistoryUrl=" + stringforHistoryUrl);
+                    myWebView.loadDataWithBaseURL(savedDolBasedUrl, result, "text/html", "UTF-8", stringforHistoryUrl);
                     //myWebView.loadData(result, "text/html", "UTF-8");
                 }
             }
-        }        
+
+            Log.d(LOG_TAG, "toremove");
+        }
     }
         
     
@@ -864,26 +865,29 @@ public class SecondActivity extends Activity {
     private boolean codeForMenu() 
     {
         String urlToGo;
-        
+        boolean allowCacheForMenuPage = false;
+
         urlToGo = this.savedDolRootUrl+"core/get_menudiv.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
         // If not found into cache, call URL
         Log.d(LOG_TAG, "We called codeForMenu after click on Menu : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
         myWebView = findViewById(R.id.webViewContent);
 
-        if (this.cacheForMenu != null && this.cacheForMenu.length() > 0)
-        {
-            String historyUrl = urlToGo;
-            Log.d(LOG_TAG, "Got content from app cache this.cacheForMenu savedDolBasedUrl="+this.savedDolBasedUrl+" historyUrl="+historyUrl);
-            //altHistoryStack.add("menu");  // TODO Do not add same history url twice
-            nextAltHistoryStack="menu";
-            myWebView.loadDataWithBaseURL(this.savedDolBasedUrl, this.cacheForMenu, "text/html", "UTF-8", historyUrl);
+        if (allowCacheForMenuPage) {
+            if (this.cacheForMenu != null && this.cacheForMenu.length() > 0) {
+                String historyUrl = urlToGo;
+                Log.d(LOG_TAG, "Got content from app cache this.cacheForMenu savedDolBasedUrl=" + this.savedDolBasedUrl + " historyUrl=" + historyUrl);
+                //altHistoryStack.add("menu");  // TODO Do not add same history url twice
+                nextAltHistoryStack = "menu";
+                myWebView.loadDataWithBaseURL(this.savedDolBasedUrl, this.cacheForMenu, "text/html", "UTF-8", historyUrl);
+            } else {
+                DownloadWebPageTask task = new DownloadWebPageTask("menu");
+                task.execute(new String[]{urlToGo});
+            }
+        } else {
+            myWebView.loadUrl(urlToGo);
         }
-        else
-        {
-            DownloadWebPageTask task = new DownloadWebPageTask("menu");
-            task.execute(new String[] { urlToGo });
-        }
+
         return true;
     }
 
@@ -896,26 +900,31 @@ public class SecondActivity extends Activity {
     private boolean codeForQuickAccess() 
     {
         String urlToGo;
-        
+        boolean allowCacheForQuickAccessPage = false;
+
         urlToGo = this.savedDolRootUrl+"core/search_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
         // If not found into cache, call URL
         Log.d(LOG_TAG, "We called codeForQuickAccess after click on Search : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
         myWebView = findViewById(R.id.webViewContent);
 
-        if (this.cacheForQuickAccess != null && this.cacheForQuickAccess.length() > 0)
-        {
-            String historyUrl = urlToGo;
-            Log.d(LOG_TAG, "Got content from app cache this.cacheForQuickAccess savedDolBasedUrl="+this.savedDolBasedUrl+" historyUrl="+historyUrl);
-            //altHistoryStack.add("quickaccess");   // TODO Do not add same history url twice
-            nextAltHistoryStack="quickaccess";
-            myWebView.loadDataWithBaseURL(this.savedDolBasedUrl, this.cacheForQuickAccess, "text/html", "UTF-8", historyUrl);
-        
-            return true;
-        }
+        if (allowCacheForQuickAccessPage) {
+            if (this.cacheForQuickAccess != null && this.cacheForQuickAccess.length() > 0)
+            {
+                String historyUrl = urlToGo;
+                Log.d(LOG_TAG, "Got content from app cache this.cacheForQuickAccess savedDolBasedUrl="+this.savedDolBasedUrl+" historyUrl="+historyUrl);
+                //altHistoryStack.add("quickaccess");   // TODO Do not add same history url twice
+                nextAltHistoryStack="quickaccess";
+                myWebView.loadDataWithBaseURL(this.savedDolBasedUrl, this.cacheForQuickAccess, "text/html", "UTF-8", historyUrl);
 
-        DownloadWebPageTask task = new DownloadWebPageTask("quickaccess");
-        task.execute(new String[] { urlToGo });
+                return true;
+            }
+
+            DownloadWebPageTask task = new DownloadWebPageTask("quickaccess");
+            task.execute(new String[] { urlToGo });
+        } else {
+            myWebView.loadUrl(urlToGo);
+        }
 
         return true;
     }
@@ -928,6 +937,7 @@ public class SecondActivity extends Activity {
      */
     private boolean codeForBookmarks() {
         String urlToGo;
+        boolean allowCacheForBookmarkPage = false;
 
         urlToGo = this.savedDolRootUrl+"core/bookmarks_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
@@ -935,19 +945,22 @@ public class SecondActivity extends Activity {
         Log.d(LOG_TAG, "We called codeForBookmarks after click on Bookmarks : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
         myWebView = findViewById(R.id.webViewContent);
 
-        if (this.cacheForBookmarks != null && this.cacheForBookmarks.length() > 0)
-        {
-            String historyUrl = urlToGo;
-            Log.d(LOG_TAG, "Got content from app cache this.cacheForBookmarks savedDolBasedUrl="+this.savedDolBasedUrl+" historyUrl="+historyUrl);
-            //altHistoryStack.add("bookmarks");   // TODO Do not add same history url twice
-            nextAltHistoryStack="bookmarks";
-            myWebView.loadDataWithBaseURL(this.savedDolBasedUrl, this.cacheForBookmarks, "text/html", "UTF-8", historyUrl);
+        if (allowCacheForBookmarkPage) {
+            if (false && this.cacheForBookmarks != null && this.cacheForBookmarks.length() > 0) {
+                String historyUrl = urlToGo;
+                Log.d(LOG_TAG, "Got content from app cache this.cacheForBookmarks savedDolBasedUrl=" + this.savedDolBasedUrl + " historyUrl=" + historyUrl);
+                //altHistoryStack.add("bookmarks");   // TODO Do not add same history url twice
+                nextAltHistoryStack = "bookmarks";
+                myWebView.loadDataWithBaseURL(this.savedDolBasedUrl, this.cacheForBookmarks, "text/html", "UTF-8", historyUrl);
 
-            return true;
+                return true;
+            }
+
+            DownloadWebPageTask task = new DownloadWebPageTask("bookmarks");
+            task.execute(new String[]{urlToGo});
+        } else {
+            myWebView.loadUrl(urlToGo);
         }
-
-        DownloadWebPageTask task = new DownloadWebPageTask("bookmarks");
-        task.execute(new String[] { urlToGo });
 
         return true;
     }
@@ -962,6 +975,7 @@ public class SecondActivity extends Activity {
     private boolean codeForMultiCompany()
     {
         String urlToGo;
+        boolean allowCacheForMultiCompanyPage = false;
 
         urlToGo = this.savedDolRootUrl+"core/multicompany_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
@@ -969,42 +983,42 @@ public class SecondActivity extends Activity {
         Log.d(LOG_TAG, "We called codeForMultiCompany after click on Multicompany : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
         myWebView = findViewById(R.id.webViewContent);
 
-        /*if (urlToGo.startsWith("data:text") || urlToGo.startsWith("about:blank")) {
-            urlToGo = savedDolRootUrl;
+        if (allowCacheForMultiCompanyPage) {
+            // Clear also cache (we will need different content if we use different entities)
+            Log.i(LOG_TAG, "Clear caches of webView");
+            myWebView.clearCache(true);
+            Log.d(LOG_TAG, "Clear also history of webView");
+            myWebView.clearHistory();
+            this.cacheForMenu = null;
+            this.cacheForQuickAccess = null;
+            this.cacheForBookmarks = null;
+            this.cacheForMultiCompany = null;
+            //Log.d(LOG_TAG,"Clear also cookies");
+            //this.myWebViewClientDoliDroid.deleteSessionCookies();
+
+            myWebView.loadUrl(urlToGo);
+        } else {
+            // Clear also cache (we will need different content if we use different entities)
+            Log.i(LOG_TAG, "Clear caches of webView");
+            myWebView.clearCache(true);
+            Log.d(LOG_TAG, "Clear also history of webView");
+            myWebView.clearHistory();
+            this.cacheForMenu = null;
+            this.cacheForQuickAccess = null;
+            this.cacheForBookmarks = null;
+            this.cacheForMultiCompany = null;
+            //Log.d(LOG_TAG,"Clear also cookies");
+            //this.myWebViewClientDoliDroid.deleteSessionCookies();
+
+            myWebView.loadUrl(urlToGo);
         }
-        if (urlToGo.contains("?")) urlToGo = urlToGo + "&";
-        else urlToGo = urlToGo + "?";
-
-        //if (! urlToGo.contains("dol_hide_topmenu=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_hide_topmenu=1";
-        urlToGo.replace("&dol_hide_leftmenu=1", "");
-        if (! urlToGo.contains("dol_hide_leftmenu=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_hide_leftmenu=1";
-        if (! urlToGo.contains("dol_optimize_smallscreen=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_optimize_smallscreen=1";
-        if (! urlToGo.contains("dol_no_mouse_hover=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_no_mouse_hover=1";
-        if (! urlToGo.contains("dol_use_jmobile=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_use_jmobile=1";
-
-        urlToGo += "switchentityautoopen=1&dol_invisible_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
-        */
-
-        // Clear also cache (we will need different content if we use different entities)
-        Log.i(LOG_TAG, "Clear caches of webView");
-        myWebView.clearCache(true);
-        Log.d(LOG_TAG,"Clear also history of webview");
-        myWebView.clearHistory();
-        this.cacheForMenu=null;
-        this.cacheForQuickAccess=null;
-        this.cacheForBookmarks=null;
-        this.cacheForMultiCompany=null;
-        //Log.d(LOG_TAG,"Clear also cookies");
-        //this.myWebViewClientDoliDroid.deleteSessionCookies();
-
-        myWebView.loadUrl(urlToGo);
 
         return true;
     }
 
 
     /**
-     * Common code for Back
+     * Common code for Back. Called for example by onOptionsItemSelected().
      * codeForBack is in a UI thread
      * 
      * @return  boolean             True
@@ -1021,19 +1035,21 @@ public class SecondActivity extends Activity {
         currentUrl = myWebView.getUrl();
         previousUrl = "";
         b = myWebView.canGoBack();
+        int indextoget = 0;
 
-        WebBackForwardList mWebBackForwardList = myWebView.copyBackForwardList();
+        mWebBackForwardList = myWebView.copyBackForwardList();
         if (mWebBackForwardList.getCurrentIndex() > 0) {
-            previousUrl = mWebBackForwardList.getItemAtIndex(mWebBackForwardList.getCurrentIndex() - 1).getUrl();
+            indextoget = mWebBackForwardList.getCurrentIndex() - 1;
+            previousUrl = mWebBackForwardList.getItemAtIndex(indextoget).getUrl();
         }
 
-        Log.d(LOG_TAG, "We called codeForBack. canGoBack = "+b+", currentUrl = "+currentUrl+", previousUrl = "+previousUrl);
+        Log.d(LOG_TAG, "We called codeForBack. canGoBack="+b+", currentUrl="+currentUrl+", previousUrl="+previousUrl+", savedDolBasedUrl="+savedDolBasedUrl);
         if (b) 
         {
-            if (previousUrl.equals(savedDolBasedUrl+"/") || previousUrl.contains("&ui-page="))
+            if (previousUrl.equals(savedDolBasedUrl+"/") || previousUrl.contains("data:text/html"))
             {
                 Log.d(LOG_TAG, "Previous Url is a page with an history problem");
-                if (currentUrl.contains("&ui-page="))
+                if (currentUrl.contains("data:text/html"))
                 {
                     if (altHistoryStack.size() > 0) // Should be true
                     {
@@ -1046,7 +1062,7 @@ public class SecondActivity extends Activity {
                 {
                     if (altHistoryStack.size() > 0) // Should be true
                     {
-                        // later shouldInterceptRequest will take lasentry of history to knwo which cache to use
+                        // later shouldInterceptRequest will take lastentry of history to know which cache to use
                         //nextAltHistoryStack=altHistoryStack.get(altHistoryStack.size() - 1);
                         Log.d(LOG_TAG, "We do nothing, we let shouldInterceptRequest consume and pop the history stack"); 
                         //altHistoryStack.remove(altHistoryStack.size() - 1);
@@ -1057,22 +1073,32 @@ public class SecondActivity extends Activity {
                 nextAltHistoryStack="";
             }
 
-            Log.d(LOG_TAG, "We clear nextAltHistoryStackBis"); 
-            nextAltHistoryStackBis="";
-            myWebView.goBack(); // This will call shouldInterceptRequest
+            boolean goBackShouldWorks = true;
+            if (indextoget <= 1 && previousUrl.startsWith(savedDolBasedUrl + "/index.php")) {
+                // For an unknown reason, if we access home page passing by the login page, reaching the index.php page after, when we make a go page
+                // back to reach this home page, we got an error of cache when making the goBack (even if we remove the myWebView.clearHistory after login).
+                // So we disable the goBack for this case.
+                Log.d(LOG_TAG, "We disable the goBack for this case");
+                goBackShouldWorks = false;
+            }
+            if (goBackShouldWorks) {
+                Log.d(LOG_TAG, "We clear nextAltHistoryStackBis and make the goBack to "+previousUrl);
+                nextAltHistoryStackBis = "";
+                myWebView.goBack(); // This will call shouldInterceptRequest
+            }
         }
         else
         {
-            if (! this.noPreviousPageShown)
+            if (! this.messageNoPreviousPageShown)
             {
                 Toast.makeText(activity, getString(R.string.NoPreviousPageAgainToQuit), Toast.LENGTH_SHORT).show();
-                this.noPreviousPageShown=true;
+                this.messageNoPreviousPageShown =true;
             }
             else
             {
                 Log.d(LOG_TAG, "Second click on Previous when no previous available.");
                 Log.i(LOG_TAG, "We finish activity resultCode="+RESULT_ABOUT);
-                this.noPreviousPageShown=false;
+                this.messageNoPreviousPageShown =false;
                 setResult(RESULT_ABOUT);   // We don't want to quit completely
                 WebViewDatabase.getInstance(getBaseContext()).clearHttpAuthUsernamePassword();
                 finish();
@@ -1296,20 +1322,21 @@ public class SecondActivity extends Activity {
 		 * Return if we must intercept HTTP Request for pages (not called when cache is used)
 		 * This method is called into a non-UI Thread (Android >= 3.0) so UI Thread function are not allowed.
 		 * 
-		 * @param 	WebView		view
-		 * @param 	String		url			For example "http://192.168.0.1/xxx" or "data:image/png;base64,..."
-		 * @return	boolean					True or false if we must send request or not
+		 * @param 	WebView		        view
+		 * @param 	WebResourceRequest	wrr     Object with	url. For example "http://192.168.0.1/xxx" or "data:image/png;base64,..."
+		 * @return	boolean					    True or false if we must send request or not
 		 */
 		@Override
-		public WebResourceResponse shouldInterceptRequest(WebView view, String url)
-		//public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest url)	from API21
+		public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest wrr)
 		{
 			// Get url relative to Dolibarr root.
+            String url = wrr.getUrl().toString();
+
 			String host=null;
 			String fileName=null;
 			String version=null;
 			try {
-				if (url != null && ! url.startsWith("data:"))
+				if (url != null && ! url.startsWith("data:"))   // for data:image
 				{
 					Uri uri=Uri.parse(url);
 					version=uri.getQueryParameter("version");
@@ -1318,7 +1345,7 @@ public class SecondActivity extends Activity {
 						String[] split = version.split("\\.");
 						version=split[0]+"."+split[1];
 					}
-					fileName=uri.getPath();	// Return relative path of page (withtout params)
+					fileName=uri.getPath();	// Return relative path of page (without params)
 					host=uri.getHost();
 				}
 				
@@ -1391,7 +1418,7 @@ public class SecondActivity extends Activity {
 								Log.d(LOG_TAG, "shouldInterceptRequest Filename " + fileName + " intercepted. Replaced with css assets file into " + versionjscss);
 								return new WebResourceResponse("text/css", "UTF-8", getAssets().open(versionjscss + "/" + fileName));
 							}
-						} else if (fileName.startsWith("&ui-page=") || fileName.equals("")) {
+						} else if (fileName.startsWith("data:text/html") || fileName.equals("")) {
 							Log.d(LOG_TAG, "shouldInterceptRequest We make a back to go to a bad history url fileName=" + fileName);
 
 							// Return last page that fails found into altHistoryStack
@@ -1440,7 +1467,7 @@ public class SecondActivity extends Activity {
             Log.d(LOG_TAG, "shouldOverrideUrlLoading url=" + url + " originalUrl=" + view.getOriginalUrl() + " savedDolRootUrl=" + savedDolRootUrl);
 
             String urlWithoutBasicAuth = url.replaceAll("://[^:]+:[^:]+@", "://");
-            //Log.d(LOG_TAG, "shouldOverrideUrlLoading tmpurl=" + urlWithoutBasicAuth);
+            //Log.d(LOG_TAG, "shouldOverrideUrlLoading urlWithoutBasicAuth=" + urlWithoutBasicAuth);
 
             // TODO Optimize performance by disabling loading of some url (ie: jquery plugin tipTip)
 
@@ -1484,7 +1511,7 @@ public class SecondActivity extends Activity {
 			// Without this, we got "download not supported" ("telechargement non pris en charge")
 			if (((url.endsWith(".pdf") || url.endsWith(".odt") || url.endsWith(".ods")) && ! url.contains("action=")) 	// Old way to detect a download (we do not make a download of link to delete or print or presend a file)
 					|| url.startsWith(savedDolRootUrl+"document.php?")													// The default wrapper to download files
-					|| url.contains("output=file"))																		// The new recommended parameter for files like export.php that generate file output
+					|| url.contains("output=file"))																		// The new recommended parameter for pages that are not documents.php like export.php that generate a file output
 	        {
 				String query=Uri.parse(url).getQuery().replaceAll(".*file=", "").replaceAll("&.*", "").replaceAll(".*/", "");
 				Log.d(LOG_TAG, "shouldOverrideUrlLoading Start activity to download file="+query);
@@ -1597,8 +1624,9 @@ public class SecondActivity extends Activity {
 
 			myWebView = findViewById(R.id.webViewContent);
 			boolean b = myWebView.canGoBack();
-			
-			Log.d(LOG_TAG, "onPageFinished url="+url+" canGoBack="+b);
+            WebBackForwardList mWebBackForwardList;
+
+            Log.d(LOG_TAG, "onPageFinished url="+url+" canGoBack="+b);
 	        
 		    if (tagToShowInterruptMessage.length() > 0 && tagToShowInterruptCounter > 0)	//onConsoleMessage is increased by onConsoleMessage function (javascript error)
 			{
@@ -1782,8 +1810,9 @@ public class SecondActivity extends Activity {
 							tagToOverwriteLoginPass=prefAlwaysAutoFill;
 								
 				    		// Clear webview history
-							Log.d(LOG_TAG,"onPageFinished We clear history of webview");
-				    		myWebView.clearHistory();
+							Log.d(LOG_TAG,"onPageFinished We clear history to removes the login page history entry");
+                            //mWebBackForwardList = myWebView.copyBackForwardList();   // To analyse content for debug. Can be commented.
+                            myWebView.clearHistory();   // So it removes the login page history entry (we don't want to have it when making go back)
 				    	}
 				    }
 				}
@@ -1842,14 +1871,14 @@ public class SecondActivity extends Activity {
 					Log.d(LOG_TAG, "onPageFinished We add an entry into history stack because nextAltHistoryStackBis="+nextAltHistoryStackBis);
 					altHistoryStack.add(nextAltHistoryStackBis);
 					nextAltHistoryStackBis="";
-					if (url.contains("&ui-page=")) nextAltHistoryStack="menu";
+					if (url.contains("data:text/html")) nextAltHistoryStack="menu";
 				}
 				
-				if (url.equals(savedDolBasedUrl+"/") || url.contains("&ui-page="))
+				if (url.equals(savedDolBasedUrl+"/") || url.contains("data:text/html"))
 				{
 					Log.d(LOG_TAG, "onPageFinished We finished to load a page with a bad history "+url);
 					// If we go from a back, nextAltHistoryStack is ""
-					//nextAltHistoryStackBis=(("".equals(nextAltHistoryStack) && url.contains("&ui-page="))?"menu":nextAltHistoryStack);
+					//nextAltHistoryStackBis=(("".equals(nextAltHistoryStack) && url.contains("data:text/html"))?"menu":nextAltHistoryStack);
 					nextAltHistoryStackBis=nextAltHistoryStack;	
 					nextAltHistoryStack="";
 				}
