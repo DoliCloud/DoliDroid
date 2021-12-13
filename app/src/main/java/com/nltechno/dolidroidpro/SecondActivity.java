@@ -95,6 +95,7 @@ import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -118,9 +119,9 @@ public class SecondActivity extends Activity {
 	public static final String VERSION_RESOURCES = "14.0";
 
 	private WebView myWebView;
-	private WebViewClientDoliDroid myWebViewClientDoliDroid;
-	private WebChromeClientDoliDroid myWebChromeClientDoliDroid;
-	private WebBackForwardList mWebBackForwardList;
+	WebViewClientDoliDroid myWebViewClientDoliDroid;
+	WebChromeClientDoliDroid myWebChromeClientDoliDroid;
+	WebBackForwardList mWebBackForwardList;
 
 	private ValueCallback<Uri[]> mFilePathCallback;
 
@@ -304,6 +305,8 @@ public class SecondActivity extends Activity {
         progress.setProgressDrawable(cd);*/
 
         myWebView = findViewById(R.id.webViewContent);
+        myWebView.clearCache(true);
+        myWebView.clearHistory();
 
         this.savedUserAgent = myWebView.getSettings().getUserAgentString() + " - " + getString(R.string.dolidroidUserAgent);
 
@@ -454,13 +457,7 @@ public class SecondActivity extends Activity {
         MenuItem menuItem4 = menu.findItem(R.id.always_uselocalresources);
         //boolean prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
         Log.d(LOG_TAG, "onCreateOptionsMenu prefAlwaysUseLocalResources value is "+prefAlwaysUseLocalResources);
-        if (prefAlwaysUseLocalResources) {
-            //menuItem4.setTitle(getString(R.string.menu_uselocalresources_on));
-            menuItem4.setChecked(true);
-        } else {
-            //menuItem4.setTitle(getString(R.string.menu_uselocalresources_off));
-            menuItem4.setChecked(false);
-        }
+        menuItem4.setChecked(prefAlwaysUseLocalResources);
 
 
         if (isMulticompanyOn) {
@@ -489,8 +486,8 @@ public class SecondActivity extends Activity {
     {
         Log.i(LOG_TAG, "SecondActivity::onOptionsItemSelected Click onto menu: item="+item.toString());
 
-        SharedPreferences sharedPrefs = null;
-        Editor editor = null;
+        SharedPreferences sharedPrefs;
+        Editor editor;
         String urlToGo = ""; 
 
         // On which menu entry did you click ?
@@ -570,13 +567,12 @@ public class SecondActivity extends Activity {
                 if (prefAlwaysUseLocalResources)
                 {
                     this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_on));
-                    invalidateOptionsMenu();
                 }
                 else
                 {
                     this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_off));
-                    invalidateOptionsMenu();
                 }
+                invalidateOptionsMenu();
                 return true;
             case R.id.about:
                 Log.i(LOG_TAG, "Start activity About");
@@ -599,7 +595,11 @@ public class SecondActivity extends Activity {
                 urlToGo = this.savedDolRootUrl+"user/logout.php?noredirect=1&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
                 Log.i(LOG_TAG, "LoadUrl after select Logout : "+urlToGo);
                 lastLoadUrl=urlToGo;
-                myWebView.loadUrl(urlToGo);             
+
+                myWebView.loadUrl(urlToGo);
+                Log.i(LOG_TAG, "Clear caches and history of webView");
+                myWebView.clearCache(true);
+                myWebView.clearHistory();
                 return true;
             case R.id.quit:
                 Log.i(LOG_TAG, "Call finish activity, with setResult = "+RESULT_WEBVIEW);
@@ -627,44 +627,20 @@ public class SecondActivity extends Activity {
                 return true;
             case R.id.clearcache:
                 myWebView = findViewById(R.id.webViewContent);
-                Log.i(LOG_TAG, "Clear caches of webView");
+                Log.i(LOG_TAG, "Clear caches and history of webView");
                 myWebView.clearCache(true);
-                Log.d(LOG_TAG,"Clear also history of webview");
                 myWebView.clearHistory();
                 this.cacheForMenu=null;
                 this.cacheForQuickAccess=null;
                 this.cacheForBookmarks=null;
+                this.cacheForMultiCompany=null;
                 return true;
         }
         
         return false;
     }
 
-    
-    /**
-     * More info this method can be found at
-     * http://developer.android.com/training/camera/photobasics.html
-     *
-     * @return
-     * @throws IOException
-     */
-    /*
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "uploaded_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-        File imageFile = File.createTempFile(
-                imageFileName,
-                ".jpg",
-                storageDir
-        );
-        return imageFile;
-    }
-    */
-    
-    
+
     /**
      * Return a DefaultHTTPClient with option to support untrusted HTTPS
      *
@@ -693,7 +669,7 @@ public class SecondActivity extends Activity {
             return new DefaultHttpClient();
         }
     }
-    
+
     /**
      * Class to load an URL in background
      * Used to load menu, quick search page and more...
@@ -740,7 +716,7 @@ public class SecondActivity extends Activity {
                         InputStream content = execute.getEntity().getContent();
 
                         BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-                        String s = "";
+                        String s;
                         while ((s = buffer.readLine()) != null) {
                             response.append(s);
                         }
@@ -867,7 +843,7 @@ public class SecondActivity extends Activity {
         String urlToGo;
         boolean allowCacheForMenuPage = false;
 
-        urlToGo = this.savedDolRootUrl+"core/get_menudiv.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
+        urlToGo = this.savedDolRootUrl+"core/get_menudiv.php?cache=600&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
         // If not found into cache, call URL
         Log.d(LOG_TAG, "We called codeForMenu after click on Menu : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
@@ -902,7 +878,7 @@ public class SecondActivity extends Activity {
         String urlToGo;
         boolean allowCacheForQuickAccessPage = false;
 
-        urlToGo = this.savedDolRootUrl+"core/search_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
+        urlToGo = this.savedDolRootUrl+"core/search_page.php?cache=600&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
         // If not found into cache, call URL
         Log.d(LOG_TAG, "We called codeForQuickAccess after click on Search : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
@@ -939,14 +915,14 @@ public class SecondActivity extends Activity {
         String urlToGo;
         boolean allowCacheForBookmarkPage = false;
 
-        urlToGo = this.savedDolRootUrl+"core/bookmarks_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
+        urlToGo = this.savedDolRootUrl+"core/bookmarks_page.php?cache=600&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
         // If not found into cache, call URL
         Log.d(LOG_TAG, "We called codeForBookmarks after click on Bookmarks : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
         myWebView = findViewById(R.id.webViewContent);
 
         if (allowCacheForBookmarkPage) {
-            if (false && this.cacheForBookmarks != null && this.cacheForBookmarks.length() > 0) {
+            if (this.cacheForBookmarks != null && this.cacheForBookmarks.length() > 0) {
                 String historyUrl = urlToGo;
                 Log.d(LOG_TAG, "Got content from app cache this.cacheForBookmarks savedDolBasedUrl=" + this.savedDolBasedUrl + " historyUrl=" + historyUrl);
                 //altHistoryStack.add("bookmarks");   // TODO Do not add same history url twice
@@ -985,9 +961,8 @@ public class SecondActivity extends Activity {
 
         if (allowCacheForMultiCompanyPage) {
             // Clear also cache (we will need different content if we use different entities)
-            Log.i(LOG_TAG, "Clear caches of webView");
+            Log.i(LOG_TAG, "Clear caches and history of webView");
             myWebView.clearCache(true);
-            Log.d(LOG_TAG, "Clear also history of webView");
             myWebView.clearHistory();
             this.cacheForMenu = null;
             this.cacheForQuickAccess = null;
@@ -999,9 +974,8 @@ public class SecondActivity extends Activity {
             myWebView.loadUrl(urlToGo);
         } else {
             // Clear also cache (we will need different content if we use different entities)
-            Log.i(LOG_TAG, "Clear caches of webView");
+            Log.i(LOG_TAG, "Clear caches and history of webView");
             myWebView.clearCache(true);
-            Log.d(LOG_TAG, "Clear also history of webView");
             myWebView.clearHistory();
             this.cacheForMenu = null;
             this.cacheForQuickAccess = null;
@@ -1141,7 +1115,7 @@ public class SecondActivity extends Activity {
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         Log.d(LOG_TAG, "onRequestPermissionsResult override");
         switch (requestCode) {
             case REQUEST_CODE_ASK_PERMISSIONS_WRITE_EXTERNAL_STORAGE: {
@@ -1330,7 +1304,10 @@ public class SecondActivity extends Activity {
 		public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest wrr)
 		{
 			// Get url relative to Dolibarr root.
-            String url = wrr.getUrl().toString();
+            String url = null;
+            if (wrr.getUrl() != null) {
+                url = wrr.getUrl().toString();
+            }
 
 			String host=null;
 			String fileName=null;
@@ -1452,7 +1429,7 @@ public class SecondActivity extends Activity {
 				}
 			}
 			
-			return super.shouldInterceptRequest(view, url);
+			return super.shouldInterceptRequest(view, wrr);
 		}
 
 		/**
@@ -1485,7 +1462,7 @@ public class SecondActivity extends Activity {
                 Log.d(LOG_TAG, "Launch mailto : " + url);
                 try {
                     Intent emailIntent = new Intent(Intent.ACTION_SEND, Uri.parse(url));
-                    emailIntent.setType("message/rfc822");
+                    emailIntent.setDataAndType(Uri.parse(url), "message/rfc822");
                     String recipient = url.substring(url.indexOf(":") + 1);
                     emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{recipient});
                     //emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, mContext.getString(R.string.email_subject));
@@ -1934,14 +1911,15 @@ public class SecondActivity extends Activity {
 	      
 		/**
 		 * onReceivedError
-		 * This method is only called when network errors occur, but never when HTTP errors are received by WebView.
+		 * This method is only called when network errors occur, but never when a HTTP errors are received by WebView.
 		 */
 		@Override
-	    public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) 
+        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error)
 		{
-			//super.onReceivedError(view, errorCode, description, failingUrl);
-		    Log.e(LOG_TAG, "onReceivedError code: " + errorCode + " on URL " + failingUrl + ": " + description);
-		    Toast.makeText(activity, "Your Internet Connection may not be active Or " + description , Toast.LENGTH_LONG).show();
+		    Log.e(LOG_TAG, "onReceivedError code: " + error.getErrorCode() + " on URL " + request.getUrl() + ": " + error.getDescription());
+            super.onReceivedError(view, request, error);
+
+		    Toast.makeText(activity, "Your Internet Connection may not be active Or " + error.getDescription() , Toast.LENGTH_LONG).show();
 	    }
 		
 		/**
@@ -2106,7 +2084,7 @@ public class SecondActivity extends Activity {
             int multipleAttribute = fileChooserParams.getMode();
 
             // If capture attribute is not set, we use the default file chooser.
-            // if capture attribute isset, we use the custom file chooser
+            // if capture attribute is set, we use the custom file chooser
             //boolean usecustomselect = fileChooserParams.isCaptureEnabled();
             boolean usecustomselect = true;
 
@@ -2156,7 +2134,6 @@ public class SecondActivity extends Activity {
                 mCameraPhotoPath = filePath + fileName;
                 imageUri = Uri.fromFile(new File(filePath + fileName));
                 Log.d(LOG_TAG, "onShowFileChooser imageUri for camera capture = "+imageUri);
-                //If you select a picture (not including taking pictures by camera), you don't need to send a broadcast to refresh the gallery after success
                 //    Intent i = new Intent(Intent.ACTION_GET_CONTENT);
                 //    i.addCategory(Intent.CATEGORY_OPENABLE);
                 //    i.setType("image/*");
@@ -2291,13 +2268,13 @@ public class SecondActivity extends Activity {
         public void functionJavaCalledByJsProcessFormSubmit(String data)
         {
             Log.i(LOG_TAG, "functionJavaCalledByJsProcessFormSubmit execution of code infected by jsInjectCodeForSetForm with data="+data);
-            String tmpdata[] = data.split("&");
+            String[] tmpdata = data.split("&");
             SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             //SharedPreferences sharedPrefs = mContext.getSharedPreferences(FILENAME_INST_PARAM, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPrefs.edit();
             for (String s: tmpdata)
             {
-                String keyval[] = s.split("=", 2);
+                String[] keyval = s.split("=", 2);
                 if (keyval.length >= 2)
                 {
                     String key=keyval[0];
@@ -2356,6 +2333,7 @@ public class SecondActivity extends Activity {
             Log.d(LOG_TAG, "onActivityResult result code is ok");
 
             // Not sure this is necessary
+            //If you select a picture (not including taking pictures by camera), you don't need to send a broadcast to refresh the gallery after success
             Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             intent.setData(imageUri);
             sendBroadcast(intent);
