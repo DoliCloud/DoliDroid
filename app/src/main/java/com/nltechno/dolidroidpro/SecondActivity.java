@@ -164,6 +164,7 @@ public class SecondActivity extends Activity {
 
 	private String lastLoadUrl;
 	private boolean	isMulticompanyOn=false;
+    private boolean	isBookmarkOn=true;
 
 	private String menuAre="hardwareonly";
 	private Menu savMenu;
@@ -204,7 +205,6 @@ public class SecondActivity extends Activity {
 
 
     // This is a UI Thread
-    //@SuppressWarnings("deprecation")
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -213,13 +213,6 @@ public class SecondActivity extends Activity {
 
         Log.i(LOG_TAG, "onCreate savedInstanceState="+savedInstanceState);
 
-        // This is to allow IO (Like HTTPGet into main thread).
-        /*if (android.os.Build.VERSION.SDK_INT > 9) 
-        {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }*/
-        
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
         boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
@@ -340,26 +333,6 @@ public class SecondActivity extends Activity {
         
         lastLoadUrl=urlToGo;
         myWebView.loadUrl(urlToGo);
-
-
-        //CookieSyncManager.createInstance(this);
-        
-        // Init IabHelper for InApp purchase
-        /*
-        iabHelper = new IabHelper(this, PUBLIC_KEY);
-        iabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            @Override
-            public void onIabSetupFinished(IabResult result) {
-                if (!result.isSuccess()) {
-                    Log.d(LOG_TAG, "IAB setup failed : " + result);
-                }
-                else
-                {
-                    Log.d(LOG_TAG, "IAB setup OK");
-                }
-            }
-        });
-        */
     }
 
 
@@ -459,6 +432,15 @@ public class SecondActivity extends Activity {
         Log.d(LOG_TAG, "onCreateOptionsMenu prefAlwaysUseLocalResources value is "+prefAlwaysUseLocalResources);
         menuItem4.setChecked(prefAlwaysUseLocalResources);
 
+        if (isBookmarkOn) {
+            Log.d(LOG_TAG, "onCreateOptionsMenu Bookmark feature must be on, we show picto");
+            MenuItem menuItemBookmarks = menu.findItem(R.id.menu_bookmarks);
+            if (menuItemBookmarks != null) menuItemBookmarks.setVisible(true);
+        } else {
+            Log.d(LOG_TAG, "onCreateOptionsMenu Bookmark feature must be disabled, we hide picto");
+            MenuItem menuItemBookmarks = menu.findItem(R.id.menu_bookmarks);
+            if (menuItemBookmarks != null) menuItemBookmarks.setVisible(false);
+        }
 
         if (isMulticompanyOn) {
             Log.d(LOG_TAG, "onCreateOptionsMenu Module multicompany was found, we show picto");
@@ -1018,6 +1000,15 @@ public class SecondActivity extends Activity {
         }
 
         Log.d(LOG_TAG, "We called codeForBack. canGoBack="+b+", currentUrl="+currentUrl+", previousUrl="+previousUrl+", savedDolBasedUrl="+savedDolBasedUrl);
+
+        if (indextoget <= 1 && previousUrl.startsWith(savedDolBasedUrl + "/index.php")) {
+            // For an unknown reason, if we access home page passing by the login page, reaching the index.php page after, when we make a go page
+            // back to reach this home page, we got an error of cache when making the goBack (even if we remove the myWebView.clearHistory after login).
+            // So we disable the goBack for this case.
+            Log.d(LOG_TAG, "We disable the goBack for this case. We replace it with the case there is no previous page.");
+            b = false;
+        }
+
         if (b) 
         {
             if (previousUrl.equals(savedDolBasedUrl+"/") || previousUrl.contains("data:text/html"))
@@ -1047,19 +1038,9 @@ public class SecondActivity extends Activity {
                 nextAltHistoryStack="";
             }
 
-            boolean goBackShouldWorks = true;
-            if (indextoget <= 1 && previousUrl.startsWith(savedDolBasedUrl + "/index.php")) {
-                // For an unknown reason, if we access home page passing by the login page, reaching the index.php page after, when we make a go page
-                // back to reach this home page, we got an error of cache when making the goBack (even if we remove the myWebView.clearHistory after login).
-                // So we disable the goBack for this case.
-                Log.d(LOG_TAG, "We disable the goBack for this case");
-                goBackShouldWorks = false;
-            }
-            if (goBackShouldWorks) {
-                Log.d(LOG_TAG, "We clear nextAltHistoryStackBis and make the goBack to "+previousUrl);
-                nextAltHistoryStackBis = "";
-                myWebView.goBack(); // This will call shouldInterceptRequest
-            }
+            Log.d(LOG_TAG, "We clear nextAltHistoryStackBis and make the goBack to "+previousUrl);
+            nextAltHistoryStackBis = "";
+            myWebView.goBack(); // This will call shouldInterceptRequest
         }
         else
         {
@@ -1650,19 +1631,22 @@ public class SecondActivity extends Activity {
                             lastversionfoundforasset = m.group(1) + "." + m.group(2);
                             Log.i(LOG_TAG, "onPageFinished Title of page is: " + this.webViewtitle + " - url=" + url + " - Found login or home page + version: " + lastversionfound + " - Suggest to use asset: " + lastversionfoundforasset);
 
-                            // Enable or disable menu entry for Mumticompany
-                            Matcher multicompanyRegex = patternLoginHomePageForMulticompany.matcher(this.webViewtitle);
-                            isMulticompanyOn = multicompanyRegex.find();
-                            //isMulticompanyOn=true;
                             MenuItem menuItemMultiCompany = savMenu.findItem(R.id.menu_multicompany);
                             if (menuItemMultiCompany != null) {
-                                if (isMulticompanyOn && m.group(1) != null && Integer.parseInt(m.group(1)) >= 15) {
+                                // Enable or disable menu entry for Multicompany
+                                Matcher multicompanyRegex = patternLoginHomePageForMulticompany.matcher(this.webViewtitle);
+
+                                if (multicompanyRegex.find() && m.group(1) != null && Integer.parseInt(m.group(1)) >= 15) {
                                     menuItemMultiCompany.setVisible(true);
                                     Log.d(LOG_TAG, "onPageFinished Module multicompany was found and Version major found >= 15, we enable the multicompany menu entry");
+                                    isMulticompanyOn = true;
                                 } else {
                                     menuItemMultiCompany.setVisible(false);
                                     Log.d(LOG_TAG, "onPageFinished Module multicompany was NOT found or major version < 15, we disable the multicompany menu entry");
+                                    isMulticompanyOn = false;
                                 }
+                            } else {
+                                isMulticompanyOn = false;
                             }
 
                             // Enable or disable menu entry for Bookmarks (available from Dolibarr v15)
@@ -1670,9 +1654,11 @@ public class SecondActivity extends Activity {
                                 if (m.group(1) != null && Integer.parseInt(m.group(1)) >= 15) {
                                     Log.d(LOG_TAG, "onPageFinished Version major found >= 15, we enable the bookmark menu entry");
                                     menuItemBookmarks.setVisible(true);
+                                    isBookmarkOn = true;
                                 } else {
                                     Log.d(LOG_TAG, "onPageFinished Version major found < 15, we disable the bookmark menu entry");
                                     menuItemBookmarks.setVisible(false);
+                                    isBookmarkOn = false;
                                 }
                             } catch (Exception e) {
                                 Log.d(LOG_TAG, "onPageFinished Failed to parse version found = " + m.group(1));
