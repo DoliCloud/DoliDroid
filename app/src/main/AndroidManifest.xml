@@ -59,6 +59,7 @@
             android:theme="@style/DoliDroidThemeAbout" >
         </activity>
 
+        <!-- Define a broadcastreceiver -->
         <receiver android:name="com.nltechno.dolidroidpro.DownloadBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>

@@ -126,12 +126,16 @@ public class SecondActivity extends Activity {
 	private ValueCallback<Uri[]> mFilePathCallback;
 
 	private String savedDolRootUrl;
+	private String savedDolRootUrlWithSForced;
 	private String savedDolRootUrlRel;
 	private String savedDolScheme;
 	private int savedDolPort;
 	private String savedDolHost;
+	private String savedDolUserInfoEncoded;
 	private String savedDolBasedUrl;
 	private String savedDolBasedUrlWithSForced;
+	private String savedDolBasedUrlWithoutUserInfo;
+    private String savedDolBasedUrlWithoutUserInfoWithSForced;
 	private String savedAuthuser=null;
 	private String savedAuthpass=null;
 	private String savedUserAgent=null;
@@ -247,16 +251,37 @@ public class SecondActivity extends Activity {
         Intent intent = getIntent();
         String dolRootUrl = intent.getStringExtra("dolRootUrl");        
         String dolRequestUrl = intent.getStringExtra("dolRequestUrl");        
-        this.savedDolRootUrl = dolRootUrl;                                                                                                                      // Example: http://testldr1.with.dolicloud.com/
+
+        this.savedDolRootUrl = dolRootUrl;      // this include user:pass of http basic urls. Example: hTtP://user:pass@testldr1.with.dolicloud.com:xxx/
+        this.savedDolRootUrl = this.savedDolRootUrl.replaceAll("^(?i)http(s?):", "http$1:");
         this.savedDolScheme=Uri.parse(this.savedDolRootUrl).getScheme();                                                                                        // Example: http
         this.savedDolPort=Uri.parse(this.savedDolRootUrl).getPort();
         this.savedDolHost=Uri.parse(this.savedDolRootUrl).getHost();
-        this.savedDolBasedUrl = this.savedDolScheme+"://"+this.savedDolHost+((this.savedDolPort > 0 && this.savedDolPort != 80) ? ":"+this.savedDolPort : "");	// Example: http://testldr1.with.dolicloud.com
+        this.savedDolUserInfoEncoded=Uri.parse(this.savedDolRootUrl).getEncodedUserInfo();   // user:pass
+        if (this.savedDolUserInfoEncoded == null) {
+            this.savedDolUserInfoEncoded = "";
+        }
+        if (this.savedDolScheme != null)
+            this.savedDolScheme = this.savedDolScheme.toLowerCase(Locale.ROOT);
+        boolean includePort = (this.savedDolPort > 0);  // Do we have to include the port into the base url ?
+        if ("http".equals(this.savedDolScheme) && this.savedDolPort == 80) {
+            includePort = false;
+            this.savedDolRootUrl = this.savedDolRootUrl.replace(":80", "");
+        }
+        if ("https".equals(this.savedDolScheme) && this.savedDolPort == 443) {
+            includePort = false;
+            this.savedDolRootUrl = this.savedDolRootUrl.replace(":443", "");
+        }
+        this.savedDolRootUrlWithSForced = "https:"+this.savedDolRootUrl.replace("http:", "").replace("https:", "");
+        this.savedDolBasedUrl = this.savedDolScheme+"://"+this.savedDolUserInfoEncoded+("".equals(this.savedDolUserInfoEncoded) ? "" : "@")+this.savedDolHost+(includePort ? ":"+this.savedDolPort : "");   // Example: http://user:pass@testldr1.with.dolicloud.com:xxx
 		this.savedDolBasedUrlWithSForced = "https:"+this.savedDolBasedUrl.replace("http:", "").replace("https:", "");
-        this.savedDolRootUrlRel = dolRootUrl.replace(this.savedDolBasedUrl, "");	// rest of url														// Example: /
+        this.savedDolBasedUrlWithoutUserInfo = this.savedDolScheme+"://"+this.savedDolHost+(includePort ? ":"+this.savedDolPort : "");	// Example: http://testldr1.with.dolicloud.com
+        this.savedDolBasedUrlWithoutUserInfoWithSForced = "https:"+this.savedDolBasedUrlWithoutUserInfo.replace("http:", "").replace("https:", "");
+
+		this.savedDolRootUrlRel = this.savedDolRootUrl.replace(this.savedDolBasedUrl, "");	// Rest of url, example: /
 
         try {
-            URL uri=new URL(dolRootUrl);
+            URL uri=new URL(this.savedDolRootUrl);
             String userInfo=uri.getUserInfo();
             if (userInfo != null)
             {
@@ -278,7 +303,9 @@ public class SecondActivity extends Activity {
         catch (MalformedURLException e) {
             Log.w(LOG_TAG, e.getMessage());
         }
-        Log.d(LOG_TAG, "onCreate We have root URL : savedDolRootUrl=" + dolRootUrl + " => savedDolBasedUrl=" + this.savedDolBasedUrl + " savedDolBasedUrlWithSForced=" + this.savedDolBasedUrlWithSForced + " + savedDolRootUrlRel=" + this.savedDolRootUrlRel);
+        Log.d(LOG_TAG, "onCreate We have original root url = "+dolRootUrl);
+        Log.d(LOG_TAG, "onCreate => savedDolRootUrl=" + this.savedDolRootUrl + " - savedDolRootUrlRel=" + this.savedDolRootUrlRel + " - savedDolRootUrlWithSForced = " + this.savedDolRootUrlWithSForced);
+        Log.d(LOG_TAG, "onCreate => savedDolBasedUrl=" + this.savedDolBasedUrl + " - savedDolBasedUrlWithSForced=" + this.savedDolBasedUrlWithSForced);
 
         String urlToGo = ""; 
         if (! dolRequestUrl.contains("?") && ! dolRequestUrl.contains(".php")) urlToGo = dolRequestUrl+"index.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
@@ -1124,27 +1151,39 @@ public class SecondActivity extends Activity {
     public boolean putDownloadInQueue(String query, String url, String listOfCookies)
     {
         Log.d(LOG_TAG, "putDownloadInQueue url to download = " + url);
+
+        /*
+        if (!url.startsWith("https")) {
+            throw new IllegalArgumentException();
+        }
+        */
+
+        // First create an object Request
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-        request.setDescription(query);
         request.setTitle(query);
+        request.setDescription(query);
         request.addRequestHeader("Cookie", listOfCookies);
-        if (savedAuthuser != null) request.addRequestHeader("Authorization", "Basic " + Base64.encodeToString((savedAuthuser+":"+savedAuthpass).getBytes(), Base64.NO_WRAP));   // Add user/pass for basic authentication
-        //request.setVisibleInDownloadsUi(isVisible);
+        if (savedAuthuser != null) {
+            Log.d(LOG_TAG, "putDownloadInQueue add header Authorization Basic for user "+savedAuthuser);
+            request.addRequestHeader("Authorization", "Basic " + Base64.encodeToString((savedAuthuser+":"+savedAuthpass).getBytes(), Base64.NO_WRAP));   // Add user/pass for basic authentication
+        }
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
         request.setAllowedOverRoaming(true);
         request.setVisibleInDownloadsUi(true);
-        request.allowScanningByMediaScanner();
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.allowScanningByMediaScanner();
 
         Log.d(LOG_TAG, "putDownloadInQueue Set output dirType=" + Environment.DIRECTORY_DOWNLOADS + " subPath="+query);
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, query);
         //request.setDestinationInExternalFilesDir(getApplicationContext(), null, query);
 
-        // Get download service and enqueue file
+        // Then create the object DownloadManager and enqueue the file
         // Complete tutorial on download manager on http://www.101apps.co.za/index.php/articles/using-the-downloadmanager-to-manage-your-downloads.html
         DownloadManager dmanager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         long id = dmanager.enqueue(request);
         Log.d(LOG_TAG, "putDownloadInQueue id="+id);
+
+        // Once file is enqueue, you just have to wait until the event ACTION_DOWNLOAD_COMPLETE is triggered.
 
         // Save the request id
         /*
@@ -1328,19 +1367,20 @@ public class SecondActivity extends Activity {
 
             Log.v(LOG_TAG, "shouldInterceptRequest url="+url+", host="+host+", fileName="+fileName+", savedDolBasedUrl="+savedDolBasedUrl+" version in url param (for js or css pages)="+version);
 
-            String urlWithoutBasicAuth = null;
-            if (url != null) {
-                urlWithoutBasicAuth = url.replaceAll("://[^:]+:[^:]+@", "://");
-            }
+            //String urlWithoutBasicAuth = null;
+            //if (url != null) {
+            //    urlWithoutBasicAuth = url.replaceAll("://[^:]+:[^:]+@", "://");
+            //    Log.d(LOG_TAG, "shouldOverrideUrlLoading urlWithoutBasicAuth=" + urlWithoutBasicAuth);
+            //}
 
-			if ("document.php".equals(fileName) && urlWithoutBasicAuth != null && ! urlWithoutBasicAuth.startsWith(savedDolBasedUrl) && urlWithoutBasicAuth.startsWith(savedDolBasedUrlWithSForced)) {
+			if ("document.php".equals(fileName) && url != null && ! url.startsWith(savedDolBasedUrl) && url.startsWith(savedDolBasedUrlWithSForced)) {
 				// In this case, we entered a HTTP login url but we were redirected to a HTTPS site.
 			    Log.w(LOG_TAG, "AlertDownloadBadHTTPS Bad savedDolBasedUrl that does not allow download");
 				// Can't make interaction here
 				//Toast.makeText(activity, R.string.AlertDownloadBadHTTPS, Toast.LENGTH_LONG).show();
 			}
 
-			if (fileName != null && urlWithoutBasicAuth.startsWith(savedDolBasedUrl))
+			if (fileName != null && url.startsWith(savedDolBasedUrl))
 			{
 				if (prefAlwaysUseLocalResources) {
 					try {
@@ -1422,10 +1462,13 @@ public class SecondActivity extends Activity {
 		 */
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            Log.d(LOG_TAG, "shouldOverrideUrlLoading url=" + url + " originalUrl=" + view.getOriginalUrl() + " savedDolRootUrl=" + savedDolRootUrl);
+            Log.d(LOG_TAG, "shouldOverrideUrlLoading url=" + url + " originalUrl=" + view.getOriginalUrl());
+            Log.d(LOG_TAG, "shouldOverrideUrlLoading savedDolRootUrl=" + savedDolRootUrl + " savedDolRootUrlWithSForced = " + savedDolRootUrlWithSForced + " savedDolBasedUrl=" + savedDolBasedUrl);
 
-            String urlWithoutBasicAuth = url.replaceAll("://[^:]+:[^:]+@", "://");
-            //Log.d(LOG_TAG, "shouldOverrideUrlLoading urlWithoutBasicAuth=" + urlWithoutBasicAuth);
+            //if (url != null) {
+            //    String urlWithoutBasicAuth = url.replaceAll("://[^:]+:[^:]+@", "://");
+            //    Log.d(LOG_TAG, "shouldOverrideUrlLoading urlWithoutBasicAuth=" + urlWithoutBasicAuth);
+            //}
 
             // TODO Optimize performance by disabling loading of some url (ie: jquery plugin tipTip)
 
@@ -1460,15 +1503,16 @@ public class SecondActivity extends Activity {
                 } catch (Exception ex) {
                 }
                 return true;
-            } else if (! urlWithoutBasicAuth.startsWith(savedDolBasedUrl)) {	// This is an external url
+            } else if (! url.startsWith(savedDolBasedUrl) && ! url.startsWith(savedDolBasedUrlWithSForced)) {	// This is an external url
 				// Open in Chrome
-				Log.d(LOG_TAG, "Launch external url : " + urlWithoutBasicAuth + " that does not start with " + savedDolBasedUrl);
+				Log.d(LOG_TAG, "Launch external url : " + url + " that does not start with " + savedDolBasedUrl);
 				return false;
 			}
 
 			// Without this, we got "download not supported" ("telechargement non pris en charge")
 			if (((url.endsWith(".pdf") || url.endsWith(".odt") || url.endsWith(".ods")) && ! url.contains("action=")) 	// Old way to detect a download (we do not make a download of link to delete or print or presend a file)
-					|| url.startsWith(savedDolRootUrl+"document.php?")													// The default wrapper to download files
+					|| url.startsWith(savedDolRootUrl+"document.php?")									    			// The default wrapper to download files
+                    || url.startsWith(savedDolRootUrlWithSForced+"document.php?")										// The default wrapper to download files
 					|| url.contains("output=file"))																		// The new recommended parameter for pages that are not documents.php like export.php that generate a file output
 	        {
 				String query=Uri.parse(url).getQuery().replaceAll(".*file=", "").replaceAll("&.*", "").replaceAll(".*/", "");
@@ -1533,7 +1577,7 @@ public class SecondActivity extends Activity {
 					editor.commit();
 					*/
 
-					Log.d(LOG_TAG, "shouldOverrideUrlLoading URI has been added in queue");
+					Log.d(LOG_TAG, "shouldOverrideUrlLoading URI has been added in queue - Now waiting event onReceive ACTION_DOWNLOAD_COMPLETE");
 				}
 				catch(IllegalArgumentException ie)
 				{
@@ -1547,7 +1591,9 @@ public class SecondActivity extends Activity {
 				}
 
 				return true;
-	        }
+	        } else {
+			    Log.v(LOG_TAG, "Not a special link, not a download link");
+            }
 
 			return false;
 		}
