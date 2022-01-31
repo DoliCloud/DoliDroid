@@ -4,6 +4,9 @@ English DoliDroid ChangeLog
 
 ***** ChangeLog for 2.2 *****
 
+2.247 - To release
+- External links are now opened into the default web browser
+
 2.246
 - Better management of cache and back to page. No error on menu pages if not logged.
 - Removed deprecated code of CookieSyncManager.

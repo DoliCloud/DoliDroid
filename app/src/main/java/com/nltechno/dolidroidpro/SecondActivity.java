@@ -1495,19 +1495,15 @@ public class SecondActivity extends Activity {
                 } catch (Exception ex) {
                 }
                 return true;
-            } else if (url.startsWith("eeeeeeee")) {    // Intercept some urls
-                Log.d(LOG_TAG, "Launch url in default browser : " + url);
+            } else if (! url.startsWith(savedDolBasedUrl) && ! url.startsWith(savedDolBasedUrlWithSForced)) {	// This is an external url
+                Log.d(LOG_TAG, "Launch external url in default browser : " + url);
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     startActivity(intent);
                 } catch (Exception ex) {
                 }
                 return true;
-            } else if (! url.startsWith(savedDolBasedUrl) && ! url.startsWith(savedDolBasedUrlWithSForced)) {	// This is an external url
-				// Open in Chrome
-				Log.d(LOG_TAG, "Launch external url : " + url + " that does not start with " + savedDolBasedUrl);
-				return false;
-			}
+            }
 
 			// Without this, we got "download not supported" ("telechargement non pris en charge")
 			if (((url.endsWith(".pdf") || url.endsWith(".odt") || url.endsWith(".ods")) && ! url.contains("action=")) 	// Old way to detect a download (we do not make a download of link to delete or print or presend a file)
