@@ -6,6 +6,8 @@ English DoliDroid ChangeLog
 
 2.247 - To release
 - External links are now opened into the default web browser
+- Add menu entry "Copy URL into clipboard"
+
 
 2.246
 - Better management of cache and back to page. No error on menu pages if not logged.

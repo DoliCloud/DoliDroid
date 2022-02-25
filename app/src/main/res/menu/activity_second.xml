@@ -35,14 +35,21 @@
 	<item
 		android:id="@+id/menu_photo"
 		android:icon="@drawable/ic_baseline_star_border_24"
-		android:orderInCategory="32"
+		android:orderInCategory="33"
 		android:title="@string/menu_photo" />
 
 	<item
 		android:id="@+id/menu_multicompany"
 		android:icon="@mipmap/ic_action_multicompany"
-		android:orderInCategory="32"
+		android:orderInCategory="34"
 		android:title="@string/menu_multicompany" />
+
+	<item android:id="@+id/menu_copy_url"
+		android:title="@string/menu_copy_url"
+		android:icon="@android:drawable/ic_menu_close_clear_cancel"
+		android:menuCategory="secondary"
+		android:orderInCategory="130"
+		/>
 
 	<item android:id="@+id/clearcache"
    	    android:title="@string/menu_clearcache"

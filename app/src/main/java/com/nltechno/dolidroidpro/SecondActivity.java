@@ -59,6 +59,7 @@ import com.nltechno.inapp.Purchase;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
+import android.content.ClipboardManager;
 import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -469,6 +470,7 @@ public class SecondActivity extends Activity {
             if (menuItemBookmarks != null) menuItemBookmarks.setVisible(false);
         }
 
+
         if (isMulticompanyOn) {
             Log.d(LOG_TAG, "onCreateOptionsMenu Module multicompany was found, we show picto");
             MenuItem menuItem5 = menu.findItem(R.id.menu_multicompany);
@@ -479,6 +481,10 @@ public class SecondActivity extends Activity {
             if (menuItem5 != null) menuItem5.setVisible(false);
         }
 
+
+        Log.d(LOG_TAG, "onCreateOptionsMenu Add link to copy url");
+        MenuItem menuItemAddLink = menu.findItem(R.id.menu_copy_url);
+        if (menuItemAddLink != null) menuItemAddLink.setVisible(true);
 
         this.savMenu = menu;
         
@@ -512,6 +518,8 @@ public class SecondActivity extends Activity {
                 return this.codeForBookmarks();
             case R.id.menu_multicompany:
                 return this.codeForMultiCompany();
+            case R.id.menu_copy_url:
+                return this.codeForCopyUrl();
             case R.id.always_show_bar:  // Switch menu bar on/off
                 sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
@@ -995,6 +1003,56 @@ public class SecondActivity extends Activity {
 
             myWebView.loadUrl(urlToGo);
         }
+
+        return true;
+    }
+
+
+    /**
+     * Common code for CopyURL
+     * codeForCopyUrl is in a UI thread
+     *
+     * @return  boolean     true
+     */
+    private boolean codeForCopyUrl()
+    {
+        String urlToGo;
+
+        String currentUrl = myWebView.getUrl();
+
+        // If not found into cache, call URL
+        Log.d(LOG_TAG, "We called codeForCopyUrl after click on copyUrl : savedDolBasedUrl="+this.savedDolBasedUrl+" currentUrl="+currentUrl);
+        myWebView = findViewById(R.id.webViewContent);
+
+        // Set currentUrl
+        currentUrl = currentUrl.replace("&dol_hide_topmenu=1", "");
+        currentUrl = currentUrl.replace("dol_hide_topmenu=1&", "");
+        currentUrl = currentUrl.replace("&dol_hide_leftmenu=1", "");
+        currentUrl = currentUrl.replace("dol_hide_leftmenu=1&", "");
+        currentUrl = currentUrl.replace("&dol_optimize_smallscreen=1", "");
+        currentUrl = currentUrl.replace("dol_optimize_smallscreen=1&", "");
+        currentUrl = currentUrl.replace("&dol_no_mouse_hover=1", "");
+        currentUrl = currentUrl.replace("dol_no_mouse_hover=1&", "");
+        currentUrl = currentUrl.replace("&dol_use_jmobile=1", "");
+        currentUrl = currentUrl.replace("dol_use_jmobile=1&", "");
+        // Another pass if it remains only 1 paramater
+        currentUrl = currentUrl.replace("dol_hide_topmenu=1", "");
+        currentUrl = currentUrl.replace("dol_hide_leftmenu=1", "");
+        currentUrl = currentUrl.replace("dol_optimize_smallscreen=1", "");
+        currentUrl = currentUrl.replace("dol_no_mouse_hover=1", "");
+        currentUrl = currentUrl.replace("dol_use_jmobile=1", "");
+
+        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        android.content.ClipData clip = android.content.ClipData.newPlainText(getString(R.string.UrlCopied), currentUrl);
+        clipboard.setPrimaryClip(clip);
+
+        /*
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("DoliDroid copied URL", currentUrl);
+        clipboard.setPrimaryClip(clip);
+        */
+
+        Toast.makeText(activity, R.string.UrlCopied, Toast.LENGTH_LONG).show();
 
         return true;
     }

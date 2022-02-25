@@ -12,6 +12,7 @@
     <string name="logo_dolidroid">Logo DoliDroid</string>
     <string name="SelectUrl">or select a predefined URL</string>
     <string name="enterNewUrl">or enter a new URL</string>
+    <string name="UrlCopied">URL copied into clipboard</string>
 
     <!-- Activity web -->
     <string name="title_activity_second"></string>
@@ -81,6 +82,7 @@
     <string name="menu_bookmarks">Bookmarks</string>
     <string name="menu_back">Back</string>
     <string name="menu_refresh">Reload page</string>
+    <string name="menu_copy_url">Copy URL into clipboard</string>
     <string name="menu_clearcache">Clear cache</string>
     <string name="menu_logout">Logout</string>
     <string name="menu_quit">Quit</string>
