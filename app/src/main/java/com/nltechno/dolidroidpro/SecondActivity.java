@@ -681,10 +681,12 @@ public class SecondActivity extends Activity {
                 Boolean result = file.delete();
                 Log.d(LOG_TAG, result.toString());
                 // Hide combo
+                /*
                 Spinner spinner1 = findViewById(R.id.combo_list_of_urls);
                 spinner1.setVisibility(View.INVISIBLE);
                 TextView texViewLink = findViewById(R.id.textViewLink);
                 texViewLink.setVisibility(View.VISIBLE);
+                 */
                 // Now update menu entry
                 MainActivity.listOfRootUrl = new ArrayList<String>();	// Clear array of menu entry
                 MenuItem menuItem3 = this.savMenu.findItem(R.id.clear_all_urls);
