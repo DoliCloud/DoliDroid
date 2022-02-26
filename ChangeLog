@@ -7,6 +7,8 @@ English DoliDroid ChangeLog
 2.248
 - Use the native masterkeystore of Android for preferences encryption.
 - Fix native menu entry "Clear all predefined Urls" not working when used once logged on an instance.
+- Clean code on the "About page"
+
 
 2.247
 - External links are now opened into the default web browser
