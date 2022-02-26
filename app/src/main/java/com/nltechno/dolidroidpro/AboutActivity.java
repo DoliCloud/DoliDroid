@@ -49,6 +49,9 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKeys;
+
 /**
  * About activity class
  * 
@@ -102,6 +105,8 @@ public class AboutActivity extends Activity {
 		TextView t2 = findViewById(R.id.TextAbout02);
 		t2.setMovementMethod(LinkMovementMethod.getInstance());
 
+		TextView t2b = findViewById(R.id.TextAbout02b);
+		t2b.setMovementMethod(LinkMovementMethod.getInstance());
 
 		Log.d(LOG_TAG, "Open file " + MainActivity.FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());
 
@@ -167,6 +172,8 @@ public class AboutActivity extends Activity {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     	//boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
     	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
+		Intent intent = getIntent();
+
 
 		Button btn = findViewById(R.id.buttonDeletePredefinedUrl);
 
@@ -233,11 +240,11 @@ public class AboutActivity extends Activity {
 		textViewAbout1.setText(Html.fromHtml(s1));
 		// For api level 24: textViewAbout1.setText(Html.fromHtml(s1, Html.FROM_HTML_MODE_LEGACY));
 
+
 		// Show text section 2
 		TextView textViewAbout2 = findViewById(R.id.TextAbout02);
 		String s2="";
 
-		Intent intent = getIntent();
         String savedDolRootUrl = intent.getStringExtra("savedDolRootUrl");
         if (savedDolRootUrl != null && ! "".equals(savedDolRootUrl))
         {
@@ -250,36 +257,21 @@ public class AboutActivity extends Activity {
 			s2+="<font color='#440066'><b>"+getString(R.string.savedDolUrlRoot)+":</b></font><br /><br />\n";
         	s2+=savedDolRootUrl+"<br />\n";
 
-	        // Saved user/pass
-	        String username=null;
-	        String password=null;
-	        Boolean tagToOverwriteLoginPass = prefAlwaysAutoFill;
-			if (tagToOverwriteLoginPass)	// If we are allowed to overwrite username/pass into fields
-			{
-		    	//SharedPreferences sharedPrefs = this.secondActivity.getSharedPreferences(FILENAME_INST_PARAM, Context.MODE_PRIVATE);
-				username=sharedPrefs.getString(savedDolRootUrl+"-username", "");
-				password=sharedPrefs.getString(savedDolRootUrl+"-password", "");
-			}
-
-			s2+="<br />";
-	        s2+=getString(R.string.SavedLogin)+": "+(username != null ? username : "")+"<br />\n";
-	        s2+=getString(R.string.SavedPassword)+": "+(password != null ? password.replaceAll(".", "*") : "")+"\n";
-	                
-	        // Basic auth user/pass used ? 
-	        String savedAuthuser = intent.getStringExtra("savedAuthuser");
-	        if (savedAuthuser != null) s2+="<br /><br />"+getString(R.string.BasicAuthLogin)+": "+savedAuthuser+"<br />";
-	        String savedAuthpass = intent.getStringExtra("savedAuthpass");
-	        if (savedAuthpass != null) s2+=getString(R.string.BasicAuthPassword)+": "+savedAuthpass.replaceAll(".", "*")+"\n";
-        } else {
+			textViewAbout2.setVisibility(View.VISIBLE);
+			textViewAbout2.setEnabled(true);
+			textViewAbout2.setText(Html.fromHtml(s2));
+		} else {
         	// No need to show the button, we don't know the predefined url used.
 			btn.setVisibility(View.INVISIBLE);
 			btn.setEnabled(false);
 
 			findViewById(R.id.imageView02).setVisibility(View.INVISIBLE);
 			findViewById(R.id.imageView02).setEnabled(false);
-		}
 
-		textViewAbout2.setText(Html.fromHtml(s2));
+			textViewAbout2.setVisibility(View.INVISIBLE);
+			textViewAbout2.setEnabled(false);
+			textViewAbout2.setText("");
+		}
 
 
         // Show btn or not
@@ -300,18 +292,67 @@ public class AboutActivity extends Activity {
 				}
 			}
 		}
-		catch(Exception ioe)
+		catch(Exception e)
 		{
 			Log.e(LOG_TAG, "Error");
 		}
 		if (savedDolRootUrlFoundIntoPredefinedLoginUrl) {
-			btn.setVisibility(View.VISIBLE);
-			btn.setEnabled(true);
 			btn.setTextColor(Color.WHITE);
 		} else {
-			//btn.setVisibility(View.INVISIBLE);
-			btn.setEnabled(false);
 			btn.setTextColor(Color.LTGRAY);
+		}
+
+
+		// Show text section 2b
+		TextView textViewAbout2b = findViewById(R.id.TextAbout02b);
+		String s2b="";
+
+		if (savedDolRootUrl != null && ! "".equals(savedDolRootUrl))
+		{
+			// Saved user/pass
+			String username=null;
+			String password=null;
+			Boolean tagToOverwriteLoginPass = prefAlwaysAutoFill;
+			if (tagToOverwriteLoginPass)	// If we are allowed to overwrite username/pass into fields
+			{
+				try {
+					//SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+					String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
+					SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
+							"secret_shared_prefs",
+							masterKeyAlias,
+							getApplicationContext(),
+							EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+							EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+					);
+
+					username = sharedPrefsEncrypted.getString(savedDolRootUrl + "-username", "");
+					password = sharedPrefsEncrypted.getString(savedDolRootUrl + "-password", "");
+				}
+				catch(Exception e) {
+					Log.w(LOG_TAG, "Failed to read the encrypted shared preference file");
+				}
+			}
+
+			s2b+="<br />";
+			s2b+=getString(R.string.SavedLogin)+": "+(username != null ? username : "")+"<br />\n";
+			s2b+=getString(R.string.SavedPassword)+": "+(password != null ? password.replaceAll(".", "*") : "")+"\n";
+
+			// Basic auth user/pass used ?
+			String savedAuthuser = intent.getStringExtra("savedAuthuser");
+			if (savedAuthuser != null) s2b+="<br /><br />"+getString(R.string.BasicAuthLogin)+": "+savedAuthuser+"<br />";
+			String savedAuthpass = intent.getStringExtra("savedAuthpass");
+			if (savedAuthpass != null) s2b+=getString(R.string.BasicAuthPassword)+": "+savedAuthpass.replaceAll(".", "*")+"\n";
+		}
+
+		if (s2b != null && ! "".equals(s2b)) {
+			textViewAbout2b.setVisibility(View.VISIBLE);
+			textViewAbout2b.setEnabled(true);
+			textViewAbout2b.setText(Html.fromHtml(s2b));
+		} else {
+			textViewAbout2b.setVisibility(View.INVISIBLE);
+			textViewAbout2b.setEnabled(false);
+			textViewAbout2b.setText("");
 		}
 
 		// Show text section 3
@@ -340,12 +381,16 @@ public class AboutActivity extends Activity {
 		if (currentUrl != null && ! "".equals(currentUrl)) {
 			findViewById(R.id.imageView03).setVisibility(View.VISIBLE);
 			findViewById(R.id.imageView03).setEnabled(true);
+			textViewAbout3.setText(Html.fromHtml(s3));
+			textViewAbout3.setVisibility(View.VISIBLE);
+			textViewAbout3.setEnabled(true);
 		} else {
 			findViewById(R.id.imageView03).setVisibility(View.INVISIBLE);
 			findViewById(R.id.imageView03).setEnabled(false);
+			textViewAbout3.setText("");
+			textViewAbout3.setVisibility(View.INVISIBLE);
+			textViewAbout3.setEnabled(false);
 		}
-
-		textViewAbout3.setText(Html.fromHtml(s3));
 	}
 	
     /**

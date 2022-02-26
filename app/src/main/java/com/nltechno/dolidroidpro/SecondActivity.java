@@ -50,12 +50,6 @@ import org.apache.http.protocol.HTTP;
 
 import com.nltechno.utils.MySSLSocketFactory;
 import com.nltechno.utils.Utils;
-/*
-import com.nltechno.inapp.IabHelper;
-import com.nltechno.inapp.IabResult;
-import com.nltechno.inapp.Inventory;
-import com.nltechno.inapp.Purchase;
-*/
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
@@ -88,6 +82,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.webkit.CookieManager;
 import android.webkit.HttpAuthHandler;
@@ -105,8 +100,13 @@ import android.webkit.WebViewClient;
 //import android.webkit.CookieSyncManager;
 import android.webkit.WebViewDatabase;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.app.AlertDialog;
+
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKeys;
 
 
 /**
@@ -218,11 +218,12 @@ public class SecondActivity extends Activity {
 
         Log.i(LOG_TAG, "onCreate savedInstanceState="+savedInstanceState);
 
+        // Read the non encrypted share preferences files
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
         boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
         prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
-        Log.d(LOG_TAG, "onCreate prefAlwaysShowBar="+prefAlwaysShowBar+" prefAlwaysAutoFill="+prefAlwaysAutoFill+" prefAlwaysUseLocResouces="+prefAlwaysUseLocalResources);
+        Log.d(LOG_TAG, "onCreate Read the non encrypted shared preferences file: prefAlwaysShowBar="+prefAlwaysShowBar+" prefAlwaysAutoFill="+prefAlwaysAutoFill+" prefAlwaysUseLocResouces="+prefAlwaysUseLocalResources);
         
         tagToOverwriteLoginPass=prefAlwaysAutoFill;
 
@@ -388,6 +389,7 @@ public class SecondActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) 
     {
+        // Handle for the non encrypted shared preferences file
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         getMenuInflater().inflate(R.menu.activity_second, menu);    // Deploy android menu
@@ -456,7 +458,6 @@ public class SecondActivity extends Activity {
 
 
         MenuItem menuItem4 = menu.findItem(R.id.always_uselocalresources);
-        //boolean prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
         Log.d(LOG_TAG, "onCreateOptionsMenu prefAlwaysUseLocalResources value is "+prefAlwaysUseLocalResources);
         menuItem4.setChecked(prefAlwaysUseLocalResources);
 
@@ -523,8 +524,10 @@ public class SecondActivity extends Activity {
             case R.id.always_show_bar:  // Switch menu bar on/off
                 sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
+
                 Log.i(LOG_TAG, "Click onto switch show bar, prefAlwaysShowBar is "+prefAlwaysShowBar);
                 prefAlwaysShowBar=!prefAlwaysShowBar;
+
                 editor = sharedPrefs.edit();
                 editor.putBoolean("prefAlwaysShowBar", prefAlwaysShowBar);
                 editor.apply();
@@ -553,11 +556,13 @@ public class SecondActivity extends Activity {
                     invalidateOptionsMenu();
                 }
                 return true;
-            case R.id.always_autofill:  // Switch menu bar on/off
+            case R.id.always_autofill:  // Switch menu bar on/off for "Save login/password"
                 sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
+
                 Log.i(LOG_TAG, "Click onto switch autofill, prefAlwaysAutoFill is "+prefAlwaysAutoFill);
                 prefAlwaysAutoFill=!prefAlwaysAutoFill;
+
                 editor = sharedPrefs.edit();
                 editor.putBoolean("prefAlwaysAutoFill", prefAlwaysAutoFill);
                 editor.apply();
@@ -567,26 +572,44 @@ public class SecondActivity extends Activity {
                     this.savMenu.findItem(R.id.always_autofill).setTitle(getString(R.string.menu_autofill_on));
                 } else {
                     this.savMenu.findItem(R.id.always_autofill).setTitle(getString(R.string.menu_autofill_off));
+
+                    // Clear saved login / pass
+                    try {
+                        //SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
+                        SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
+                                "secret_shared_prefs",
+                                masterKeyAlias,
+                                getApplicationContext(),
+                                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+                        );
+                        Editor editorEncrypted = sharedPrefsEncrypted.edit();
+                        editorEncrypted.clear();
+                        editorEncrypted.commit();
+
+                        Log.d(LOG_TAG, "The encrypted shared preferences file has been cleared");
+                    }
+                    catch(Exception e) {
+                        Log.w(LOG_TAG, "Failed to clear encrypted shared preferences file");
+                    }
                 }
                 invalidateOptionsMenu();
                 return true;
-            case R.id.always_uselocalresources:
-                sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                //boolean prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
+            case R.id.always_uselocalresources:  // Switch menu bar on/off for "Use local static resources"
                 Log.i(LOG_TAG, "Click onto switch uselocalresources, prefAlwaysUseLocalResources is "+prefAlwaysUseLocalResources);
                 prefAlwaysUseLocalResources=!prefAlwaysUseLocalResources;
+
+                sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 editor = sharedPrefs.edit();
                 editor.putBoolean("prefAlwaysUseLocalResources", prefAlwaysUseLocalResources);
                 editor.apply();
+
                 Log.d(LOG_TAG, "Switched value is now "+prefAlwaysUseLocalResources);
-                //savedPrefAlwaysUseLocalResources=prefAlwaysUseLocalResources;
-                // Update men label
-                if (prefAlwaysUseLocalResources)
-                {
+                // Update menu label
+                if (prefAlwaysUseLocalResources) {
                     this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_on));
-                }
-                else
-                {
+                } else {
                     this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_off));
                 }
                 invalidateOptionsMenu();
@@ -642,7 +665,7 @@ public class SecondActivity extends Activity {
                     myWebView.loadUrl(urlToGo);
                 }
                 return true;
-            case R.id.clearcache:
+            case R.id.clearcache:   // Action to clear webview caches
                 myWebView = findViewById(R.id.webViewContent);
                 Log.i(LOG_TAG, "Clear caches and history of webView");
                 myWebView.clearCache(true);
@@ -651,6 +674,21 @@ public class SecondActivity extends Activity {
                 this.cacheForQuickAccess=null;
                 this.cacheForBookmarks=null;
                 this.cacheForMultiCompany=null;
+                return true;
+            case R.id.clear_all_urls:
+                File file = new File(getApplicationContext().getFilesDir().toString() + "/" + MainActivity.FILENAME);
+                Log.d(LOG_TAG, "Clear predefined URL list "+MainActivity.FILENAME+" (from SecondActivity) by deleting file with full path="+file.getAbsolutePath());
+                Boolean result = file.delete();
+                Log.d(LOG_TAG, result.toString());
+                // Hide combo
+                Spinner spinner1 = findViewById(R.id.combo_list_of_urls);
+                spinner1.setVisibility(View.INVISIBLE);
+                TextView texViewLink = findViewById(R.id.textViewLink);
+                texViewLink.setVisibility(View.VISIBLE);
+                // Now update menu entry
+                MainActivity.listOfRootUrl = new ArrayList<String>();	// Clear array of menu entry
+                MenuItem menuItem3 = this.savMenu.findItem(R.id.clear_all_urls);
+                menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
                 return true;
         }
         
@@ -1632,7 +1670,10 @@ public class SecondActivity extends Activity {
                     || url.startsWith(savedDolRootUrlWithSForced+"document.php?")										// The default wrapper to download files
 					|| url.contains("output=file"))																		// The new recommended parameter for pages that are not documents.php like export.php that generate a file output
 	        {
-				String query=Uri.parse(url).getQuery().replaceAll(".*file=", "").replaceAll("&.*", "").replaceAll(".*/", "");
+				String query=Uri.parse(url).getQuery();
+				if (query != null) {
+                    query = query.replaceAll(".*file=", "").replaceAll("&.*", "").replaceAll(".*/", "");
+                }
 				Log.d(LOG_TAG, "shouldOverrideUrlLoading Start activity to download file="+query);
 				/*Pattern p = Pattern.compile("file=(.*)\.(pdf|odt|ods)");
 				Matcher m = p.matcher(urlquery);
@@ -1873,22 +1914,42 @@ public class SecondActivity extends Activity {
 								String jsInjectCodeForSetForm="";
 								if (tagToOverwriteLoginPass)	// If we are allowed to overwrite username/pass into fields
 								{
-							    	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-							    	//SharedPreferences sharedPrefs = this.secondActivity.getSharedPreferences(FILENAME_INST_PARAM, Context.MODE_PRIVATE);
-									String username=sharedPrefs.getString(savedDolRootUrl+"-username", "");
-									String password=sharedPrefs.getString(savedDolRootUrl+"-password", "");
-									if ((username != null && ! "".equals(username)) || (password != null && ! "".equals(password)))
-									{
-										tagToOverwriteLoginPass=false;  // So we autofill form only the first time.
-										Log.d(LOG_TAG, "onPageFinished Prepare js to autofill login form with username="+username+" password="+password.replaceAll(".", "*"));
-                                        //Log.d(LOG_TAG, "onPageFinished Prepare js to autofill login form with username="+username+" password="+password);
+								    // Load username and password for the URL
+							    	try {
+                                        Log.d(LOG_TAG, "onPageFinished Open file to read shared preferences (secret_shared_prefs)");
 
-                                        // This call inject JavaScript into the page which just finished loading.
-										if (username != null && ! "".equals(username)) jsInjectCodeForSetForm+="document.getElementById('username').value='"+username+"';";	// Warning: This line makes Webkit fails with 2.3
-										if (password != null && ! "".equals(password)) jsInjectCodeForSetForm+="document.getElementById('password').value='"+password+"';";	// Warning: This line makes Webkit fails with 2.3
-									}
-									else {
-									    Log.d(LOG_TAG, "onPageFinished No predefined login/pass to autofill login form");
+                                        //SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                        String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
+                                        SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
+                                                "secret_shared_prefs",
+                                                masterKeyAlias,
+                                                getApplicationContext(),
+                                                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                                                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+                                        );
+
+                                        String username = sharedPrefsEncrypted.getString(savedDolRootUrl + "-username", "");
+                                        String password = sharedPrefsEncrypted.getString(savedDolRootUrl + "-password", "");
+
+                                        if ((username != null && !"".equals(username)) || (password != null && !"".equals(password))) {
+                                            tagToOverwriteLoginPass = false;  // So we autofill form only the first time.
+                                            Log.d(LOG_TAG, "onPageFinished Prepare js to autofill login form with username=" + username + " password=" + password.replaceAll(".", "*"));
+                                            //Log.d(LOG_TAG, "onPageFinished Prepare js to autofill login form with username="+username+" password="+password);
+
+                                            // This call inject JavaScript into the page which just finished loading.
+                                            if (username != null && !"".equals(username))
+                                                jsInjectCodeForSetForm += "document.getElementById('username').value='" + username + "';";    // Warning: This line makes Webkit fails with 2.3
+                                            if (password != null && !"".equals(password))
+                                                jsInjectCodeForSetForm += "document.getElementById('password').value='" + password + "';";    // Warning: This line makes Webkit fails with 2.3
+                                        } else {
+                                            Log.d(LOG_TAG, "onPageFinished No predefined login/pass to autofill login form");
+                                        }
+                                    }
+                                    catch(IOException e) {
+                                        Log.w(LOG_TAG, "onPageFinished Error IO on reading saved username/password");
+                                    }
+							    	catch(Exception e) {
+                                        Log.w(LOG_TAG, "onPageFinished Error on reading saved username/password");
                                     }
 								} else {
 								    Log.d(LOG_TAG, "onPageFinished Do not autofill login form with login/pass. tagToOverwriteLoginPass is false.");
@@ -1914,25 +1975,45 @@ public class SecondActivity extends Activity {
 				    	{
 				    		Log.i(LOG_TAG, "onPageFinished We have just received a page that is not Login page after submitting login form.");
 				    		tagLastLoginPassToSavedLoginPass=false;
+
 					    	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-					    	//SharedPreferences sharedPrefs = this.secondActivity.getSharedPreferences(FILENAME_INST_PARAM, Context.MODE_PRIVATE);
+					    	// shared pref file is into /data/data/package.name/shared_prefs/settings.xml but can be read by root only.
+
 					    	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
-					    	if (prefAlwaysAutoFill)
-					    	{
-						    	Log.d(LOG_TAG, "onPageFinished We save form fields (prefAlwaysAutoFill is true).");
-						    	String username=sharedPrefs.getString("lastsubmit-username", "");
-								String password=sharedPrefs.getString("lastsubmit-password", "");
-								if ((username != null && ! "".equals(username)) || (password != null && ! "".equals(password)))
-								{
-									SharedPreferences.Editor editor = sharedPrefs.edit();
-									Log.d(LOG_TAG,"onPageFinished Save "+savedDolRootUrl+"-username="+username);
-									editor.putString(savedDolRootUrl+"-username", username);
-									Log.d(LOG_TAG,"onPageFinished Save "+savedDolRootUrl+"-password="+password);
-									editor.putString(savedDolRootUrl+"-password", password);
-									editor.apply();
-								}
-					    	}
-					    	else Log.d(LOG_TAG, "onPageFinished We don't save form fields (prefAlwaysAutoFill is false).");
+					    	if (prefAlwaysAutoFill) {
+						    	Log.d(LOG_TAG, "onPageFinished We save some fields of the submited form (prefAlwaysAutoFill is true) into a file (secret_shared_prefs).");
+
+						    	// Retrieve last values used submitted for username and password
+                                // to save them with a name depending on URL.
+                                try {
+                                    //SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                    String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
+                                    SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
+                                            "secret_shared_prefs",
+                                            masterKeyAlias,
+                                            getApplicationContext(),
+                                            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                                            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+                                    );
+
+                                    String username = sharedPrefsEncrypted.getString("lastsubmit-username", "");
+                                    String password = sharedPrefsEncrypted.getString("lastsubmit-password", "");
+                                    if ((username != null && !"".equals(username)) || (password != null && !"".equals(password))) {
+                                        // Save username and password.
+                                        SharedPreferences.Editor editor = sharedPrefsEncrypted.edit();
+                                        Log.d(LOG_TAG, "onPageFinished Save " + savedDolRootUrl + "-username=" + username);
+                                        editor.putString(savedDolRootUrl + "-username", username);
+                                        Log.d(LOG_TAG, "onPageFinished Save " + savedDolRootUrl + "-password=" + password);
+                                        editor.putString(savedDolRootUrl + "-password", password);
+                                        editor.apply();
+                                    }
+                                }
+                                catch(Exception e) {
+                                    Log.w(LOG_TAG, "onPageFinished Failed to read or write into EncryptedSharedPreferences.");
+                                }
+					    	} else {
+                                Log.d(LOG_TAG, "onPageFinished We don't save form fields (prefAlwaysAutoFill is false).");
+                            }
 							tagToOverwriteLoginPass=prefAlwaysAutoFill;
 								
 				    		// Clear webview history
@@ -2028,31 +2109,17 @@ public class SecondActivity extends Activity {
             if (counthttpauth >= 3)
             {
                 counthttpauth=0;
-                Toast.makeText(getBaseContext(), "Server protected by Basic Authentication. Include login/pass into login URL:\nhttp://login:password@mydomain.com", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "The server is protected by Basic Authentication. You must include login/pass into your login URL:\nhttp://login:password@mydomain.com", Toast.LENGTH_LONG).show();
                 handler.cancel();
             }
             if (counthttpauth == 1)
             {
-                /*
-                SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                //SharedPreferences sharedPrefs = this.secondActivity.getSharedPreferences(FILENAME_INST_PARAM, Context.MODE_PRIVATE);
-                boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
-                if (prefAlwaysAutoFill)
-                {
-                    //String username=sharedPrefs.getString("lastsubmit-username", "");
-                    //String password=sharedPrefs.getString("lastsubmit-password", "");
-                    String username=sharedPrefs.getString(savedDolRootUrl+"-username", "");
-                    String password=sharedPrefs.getString(savedDolRootUrl+"-password", "");
-                    Log.d(LOG_TAG, "We try to proceed with username="+username+" password="+password);
-                    handler.proceed(username, password);
-                }
-                else counthttpauth++;
-                */
                 counthttpauth++;
             }
             if (counthttpauth == 2) 
             {
-                Log.d(LOG_TAG, "We try to proceed with info from URL username="+savedAuthuser+" password="+savedAuthpass);
+                //Log.d(LOG_TAG, "We try to proceed with info from URL username="+savedAuthuser+" password="+savedAuthpass);
+                Log.d(LOG_TAG, "We try to proceed with info from URL username="+savedAuthuser+" password=hidden");
                 handler.proceed(savedAuthuser, savedAuthpass);
             }
 	    	//webview.setHttpAuthUsernamePassword(host, realm, username, password);
@@ -2418,25 +2485,41 @@ public class SecondActivity extends Activity {
         {
             Log.i(LOG_TAG, "functionJavaCalledByJsProcessFormSubmit execution of code infected by jsInjectCodeForSetForm with data="+data);
             String[] tmpdata = data.split("&");
-            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            //SharedPreferences sharedPrefs = mContext.getSharedPreferences(FILENAME_INST_PARAM, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPrefs.edit();
-            for (String s: tmpdata)
-            {
-                String[] keyval = s.split("=", 2);
-                if (keyval.length >= 2)
-                {
-                    String key=keyval[0];
-                    String val=keyval[1];
-                    if ("username".equals(key) || "password".equals(key)) 
-                    {
-                        tagLastLoginPassToSavedLoginPass=true;
-                        Log.d(LOG_TAG,"functionJavaCalledByJsProcessFormSubmit save lastsubmit-"+key+"="+val);
-                        editor.putString("lastsubmit-"+key, val);
+
+            // Save the username and password into temporary var lastsubmit-username and lastsubmit-password
+            try {
+                //SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
+                SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
+                        "secret_shared_prefs",
+                        masterKeyAlias,
+                        getApplicationContext(),
+                        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+                );
+
+                SharedPreferences.Editor editor = sharedPrefsEncrypted.edit();
+                for (String s : tmpdata) {
+                    String[] keyval = s.split("=", 2);
+                    if (keyval.length >= 2) {
+                        String key = keyval[0];
+                        String val = keyval[1];
+                        if ("username".equals(key) || "password".equals(key)) {
+                            tagLastLoginPassToSavedLoginPass = true;
+                            if ("username".equals(key)) {
+                                Log.d(LOG_TAG, "functionJavaCalledByJsProcessFormSubmit save lastsubmit-" + key + "=" + val);
+                            } else {
+                                Log.d(LOG_TAG, "functionJavaCalledByJsProcessFormSubmit save lastsubmit-" + key + "=hidden");
+                            }
+                            editor.putString("lastsubmit-" + key, val);
+                        }
                     }
                 }
+                editor.apply();
             }
-            editor.apply();
+            catch(Exception e) {
+                Log.w(LOG_TAG, "functionJavaCalledByJsProcessFormSubmit Failed to read the EncryptedSharedPreferences");
+            }
         }
     }
 

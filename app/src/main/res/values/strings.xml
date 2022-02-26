@@ -27,8 +27,10 @@
     <string name="title_activity_about"></string>
     <string name="textBack">Back</string>
     <string name="textMenu">Menu</string>
-    <string name="textAboutA"><xliff:g id="textAboutA">XXX</xliff:g></string>
-    <string name="textAboutB"><xliff:g id="textAboutB">XXX</xliff:g></string>
+    <string name="textAboutA"><xliff:g id="textAboutA">Versions...</xliff:g></string>
+    <string name="textAboutB"><xliff:g id="textAboutB">Instance Url...</xliff:g></string>
+    <string name="textAboutB2"><xliff:g id="textAboutB2">Saved Logins...</xliff:g></string>
+    <string name="textAboutC"><xliff:g id="textAboutC">CurrentURL and user agent...</xliff:g></string>
     <string name="Version">Version</string>
     <string name="VersionStaticResources">Version of local static resources</string>
     <string name="Author">Author</string>
@@ -53,7 +55,7 @@
     <string name="Yes">Yes</string>
     <string name="No">No</string>
     <string name="Warning">Warning</string>
-    <string name="DeletePredefinedUrl">Delete the predefined login URL of this instance</string>
+    <string name="DeletePredefinedUrl">Delete the predefined URL of this instance</string>
 
     <!-- Menu main + web -->
     <string name="menu_info">About DoliDroid</string>

@@ -192,7 +192,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		this.nbOfEntries=0;
 		try {
 			FileInputStream fis = openFileInput(FILENAME);
-			Log.d(LOG_TAG, "Open data file "+FILENAME+" in directory "+getApplicationContext().getFilesDir().toString());
+			Log.d(LOG_TAG, "Open the data file for Urls ("+FILENAME+") in directory "+getApplicationContext().getFilesDir().toString());
 			// Get the object of DataInputStream
 			DataInputStream in = new DataInputStream(fis);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -479,8 +479,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	    		Log.d(LOG_TAG, "Remove predefined URL");
 	    		return true;*/
 	    	case R.id.clear_all_urls:
-				File file = new File(getApplicationContext().getFilesDir().toString() + "/" + FILENAME);
-				Log.d(LOG_TAG, "Clear predefined URL list "+FILENAME+" by deleting file with full path="+file.getAbsolutePath());
+				File file = new File(getApplicationContext().getFilesDir().toString() + "/" + MainActivity.FILENAME);
+				Log.d(LOG_TAG, "Clear predefined URL list "+MainActivity.FILENAME+" (from MainActivity) by deleting file with full path="+file.getAbsolutePath());
 	    		Boolean result = file.delete();
 				Log.d(LOG_TAG, result.toString());
 	    		// Hide combo

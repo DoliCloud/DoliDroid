@@ -9,7 +9,7 @@ android {
     // 24=7.0.0 26=8.0.0 29=10.0.0 30=11.0.0 31=12.0.0
     defaultConfig {
         applicationId "com.nltechno.dolidroidpro"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 31
     }
 
@@ -31,4 +31,18 @@ android {
 dependencies {
     // Add entry to support ContextCompat.checkSelfPermission for API 23+ even when building for target 21
     //compile 'com.android.support:support-v4:23'
+
+    // Dependencies added to use the EncryptedSharedPreferences.
+    dependencies {
+        implementation "androidx.security:security-crypto:1.0.0"
+
+        // For Identity Credential APIs
+        implementation "androidx.security:security-identity-credential:1.0.0-alpha03"
+
+        // For App Authentication APIs
+        implementation "androidx.security:security-app-authenticator:1.0.0-alpha02"
+
+        // For App Authentication API testing
+        androidTestImplementation "androidx.security:security-app-authenticator:1.0.0-alpha01"
+    }
 }
