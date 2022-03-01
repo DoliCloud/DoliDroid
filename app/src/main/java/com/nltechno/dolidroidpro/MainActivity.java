@@ -59,6 +59,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKeys;
+
 
 /**
  * Main activity class
@@ -492,6 +495,28 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				this.listOfRootUrl = new ArrayList<String>();	// Clear array of menu entry
 				MenuItem menuItem3 = this.savMenu.findItem(R.id.clear_all_urls);
 				menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (" + this.listOfRootUrl.size() + ")");
+
+				// Clear saved login / pass
+				try {
+					//SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+					String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
+					SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
+							"secret_shared_prefs",
+							masterKeyAlias,
+							getApplicationContext(),
+							EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+							EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+					);
+					Editor editorEncrypted = sharedPrefsEncrypted.edit();
+					editorEncrypted.clear();
+					editorEncrypted.commit();
+
+					Log.d(LOG_TAG, "The encrypted shared preferences file has been cleared");
+				}
+				catch(Exception e) {
+					Log.w(LOG_TAG, "Failed to clear encrypted shared preferences file");
+				}
+
 	    	    return true;
 		    case R.id.about:
 	    		Log.d(LOG_TAG, "Click onto Info");

@@ -675,7 +675,7 @@ public class SecondActivity extends Activity {
                 this.cacheForBookmarks=null;
                 this.cacheForMultiCompany=null;
                 return true;
-            case R.id.clear_all_urls:
+            case R.id.clear_all_urls:   // Clear predefined URLs
                 File file = new File(getApplicationContext().getFilesDir().toString() + "/" + MainActivity.FILENAME);
                 Log.d(LOG_TAG, "Clear predefined URL list "+MainActivity.FILENAME+" (from SecondActivity) by deleting file with full path="+file.getAbsolutePath());
                 Boolean result = file.delete();
@@ -691,6 +691,28 @@ public class SecondActivity extends Activity {
                 MainActivity.listOfRootUrl = new ArrayList<String>();	// Clear array of menu entry
                 MenuItem menuItem3 = this.savMenu.findItem(R.id.clear_all_urls);
                 menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
+
+                // Clear saved login / pass
+                try {
+                    //SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
+                    SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
+                            "secret_shared_prefs",
+                            masterKeyAlias,
+                            getApplicationContext(),
+                            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+                    );
+                    Editor editorEncrypted = sharedPrefsEncrypted.edit();
+                    editorEncrypted.clear();
+                    editorEncrypted.commit();
+
+                    Log.d(LOG_TAG, "The encrypted shared preferences file has been cleared");
+                }
+                catch(Exception e) {
+                    Log.w(LOG_TAG, "Failed to clear encrypted shared preferences file");
+                }
+
                 return true;
         }
         
@@ -1559,7 +1581,12 @@ public class SecondActivity extends Activity {
 		 * @return	boolean					True to mean URL has been handled by code, False to ask webview to handle it.
 		 */
 		@Override
-		public boolean shouldOverrideUrlLoading(WebView view, String url) {
+		public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            String url = null;
+            if (request.getUrl() != null) {
+                url = request.getUrl().toString();
+            }
+
             Log.d(LOG_TAG, "shouldOverrideUrlLoading url=" + url + " originalUrl=" + view.getOriginalUrl());
             Log.d(LOG_TAG, "shouldOverrideUrlLoading savedDolRootUrl=" + savedDolRootUrl + " savedDolRootUrlWithSForced = " + savedDolRootUrlWithSForced + " savedDolBasedUrl=" + savedDolBasedUrl);
 
