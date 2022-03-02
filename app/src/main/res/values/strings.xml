@@ -22,6 +22,7 @@
     <string name="notification_error_ssl_cert_invalid">Server security SSL Certificate seems invalid:</string>
     <string name="notification_error_ssl_cert_invalidbis">Do you want to continue (download of files would not be possible) ?</string>
     <string name="failedtogetpage">Failed to get page by a fast direct download. Are you logged ?</string>
+    <string name="CacheAndHistoryCleared">Cache and history cleared.</string>
 
     <!-- Activity about -->
     <string name="title_activity_about"></string>

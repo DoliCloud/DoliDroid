@@ -6,7 +6,8 @@ English DoliDroid ChangeLog
 
 2.249
 - Fix null pointer when clearing predefined URLs.
-- Removed a depreated method
+- Removed a deprecated method.
+- Fix javascript warning when using ACE editor.
 
 2.248
 - Use the native masterkeystore of Android for preferences encryption.

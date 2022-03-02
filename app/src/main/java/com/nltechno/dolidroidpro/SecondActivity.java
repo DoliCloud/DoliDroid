@@ -674,6 +674,9 @@ public class SecondActivity extends Activity {
                 this.cacheForQuickAccess=null;
                 this.cacheForBookmarks=null;
                 this.cacheForMultiCompany=null;
+
+                Toast.makeText(activity, R.string.CacheAndHistoryCleared, Toast.LENGTH_LONG).show();
+
                 return true;
             case R.id.clear_all_urls:   // Clear predefined URLs
                 File file = new File(getApplicationContext().getFilesDir().toString() + "/" + MainActivity.FILENAME);
@@ -2268,32 +2271,27 @@ public class SecondActivity extends Activity {
 		@Override
 		public boolean onConsoleMessage(ConsoleMessage cm) 
 		{
-			if (cm != null && cm.sourceId() != null && cm.sourceId().contains("jquery.mobile-latest"))		// Test if error to load page thats fails because of jmobile (slow systems)
-			{
-			    tagToShowInterruptMessage="Error during loading of page url = " + lastLoadUrl + " -- " + cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId();
-			    tagToShowInterruptCounter++;
-			    Log.e(LOG_TAG, "onConsoleMessage tagToShowInterruptCounter set to "+tagToShowInterruptCounter+" after "+tagToShowInterruptMessage);
-			    return true;
-			}
-			else
-			{
-				if (cm != null && cm.messageLevel() == ConsoleMessage.MessageLevel.LOG)	{
-				    Log.v(LOG_TAG, "onConsoleMessage "+cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId());
-                } else if (cm != null && cm.messageLevel() == ConsoleMessage.MessageLevel.DEBUG) {
-				    Log.d(LOG_TAG, "onConsoleMessage "+cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId());
-                } else if (cm != null && cm.messageLevel() == ConsoleMessage.MessageLevel.WARNING) {
-				    Log.w(LOG_TAG, "onConsoleMessage "+cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId());
-                } else if (cm != null && cm.messageLevel() == ConsoleMessage.MessageLevel.ERROR) {
-				    tagToShowMessage="Javascript error detected on page url = " + lastLoadUrl + " -- " + cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId();
-				    tagToShowCounter++;
-					Log.e(LOG_TAG, "onConsoleMessage "+cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId());
-				    return true;
-				} else if (cm != null) {
-				    Log.e(LOG_TAG, "onConsoleMessage "+cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId());
-                } else {
-                    Log.e(LOG_TAG, "onConsoleMessage cm=null");
+            if (cm != null && (cm.messageLevel() == ConsoleMessage.MessageLevel.TIP || cm.messageLevel() == ConsoleMessage.MessageLevel.LOG))	{
+                Log.v(LOG_TAG, "onConsoleMessage "+cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId());
+            } else if (cm != null && cm.messageLevel() == ConsoleMessage.MessageLevel.DEBUG) {
+                Log.d(LOG_TAG, "onConsoleMessage "+cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId());
+            } else if (cm != null && cm.messageLevel() == ConsoleMessage.MessageLevel.WARNING) {
+                Log.w(LOG_TAG, "onConsoleMessage "+cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId());
+            } else if (cm != null && cm.messageLevel() == ConsoleMessage.MessageLevel.ERROR) {
+                Log.e(LOG_TAG, "onConsoleMessage "+cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId());
+                // I don't know why we get this error with DoliDroid on web site ACE edit page. ACE seems to work correctly and we
+                // don't have error on full browser mode. So i discard alert on this error message.
+                if (cm.message() != null && !cm.message().contains("Failed to execute 'importScripts' on 'WorkerGlobalScope'")) {
+                    tagToShowMessage = "Javascript error detected on page url = " + lastLoadUrl + " -- " + cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId();
+                    tagToShowCounter++;
                 }
-			}
+                return true;
+            } else if (cm != null) {
+                Log.e(LOG_TAG, "onConsoleMessage "+cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId());
+            } else {
+                Log.e(LOG_TAG, "onConsoleMessage cm=null");
+            }
+
 			return false;
 		}		
 		
