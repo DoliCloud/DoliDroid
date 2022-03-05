@@ -2178,7 +2178,11 @@ public class SecondActivity extends Activity {
 		    Log.e(LOG_TAG, "onReceivedError code: " + error.getErrorCode() + " on URL " + request.getUrl() + ": " + error.getDescription());
             super.onReceivedError(view, request, error);
 
-		    Toast.makeText(activity, "Your Internet Connection may not be active Or " + error.getDescription() , Toast.LENGTH_LONG).show();
+            if ("net::ERR_ACCESS_DENIED".equals(error.getDescription())) {
+                Toast.makeText(activity, "Your WebView failed to gain permission for action (submit a captured file ?), for an unknown reason.", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(activity, "Your Internet Connection may not be active Or " + error.getDescription() + ".", Toast.LENGTH_LONG).show();
+            }
 	    }
 		
 		/**
@@ -2379,7 +2383,8 @@ public class SecondActivity extends Activity {
                 Log.d(LOG_TAG, "onShowFileChooser use custom selector enableCamera="+enableCamera);
 
                 //Adjust the camera in a way that specifies the storage location for taking pictures
-                String filePath = Environment.getExternalStorageDirectory() + File.separator + Environment.DIRECTORY_PICTURES + File.separator;
+                String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator;
+
                 Log.d(LOG_TAG, "filePath = "+filePath);
 
                 // Create directory if it does not exists

@@ -43,6 +43,7 @@
     <string name="DeviceHasMenuHardware">Device has hardware buttons</string>
     <string name="DeviceHasDownloadManager">Device has a download manager</string>
     <string name="DownloadDirectory">Download directory</string>
+    <string name="PhotosDirectory">Photos directory</string>
     <string name="DeviceHasPDFViewer">Device has PDF viewers</string>
     <string name="DeviceHasODXViewer">Device has OpenOffice viewers</string>
     <string name="DeviceSize">Device screen size</string>
