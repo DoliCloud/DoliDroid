@@ -333,7 +333,11 @@ public class SecondActivity extends Activity {
         this.savedUserAgent = myWebView.getSettings().getUserAgentString() + " - " + getString(R.string.dolidroidUserAgent);
 
         myWebView.getSettings().setJavaScriptEnabled(true);
+        myWebView.getSettings().setAllowContentAccess(true);
         myWebView.getSettings().setAllowFileAccess(true);
+        myWebView.getSettings().setAllowFileAccessFromFileURLs(true);
+        myWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+
         //myWebView.getSettings().setPluginsEnabled(true);
         //myWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         //myWebView.getSettings().setLoadWithOverviewMode(true);
@@ -343,9 +347,11 @@ public class SecondActivity extends Activity {
         myWebView.getSettings().setUserAgentString(this.savedUserAgent);
         // Cache for no network (we don't want it, so we use default)
         //myWebView.getSettings().setAppCacheMaxSize(1024 * 1024 * 8);
+
         //myWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //LOAD_DEFAULT
         //myWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         myWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+
         //myWebView.getSettings().setRenderPriority(RenderPriority.HIGH);
         //myWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
@@ -373,11 +379,12 @@ public class SecondActivity extends Activity {
     public void onStart() 
 	{	
     	Log.i(LOG_TAG, "onStart");
+
     	super.onStart();
 
     	// We must reload menu (it may have been changed into other activities)
 		invalidateOptionsMenu();
-	}
+    }
 
 
     /**
@@ -1386,52 +1393,56 @@ public class SecondActivity extends Activity {
 		 */
 		@Override  
 		public void onPageStarted(WebView view, String url, Bitmap favicon)
-		{  
-		    Log.d(LOG_TAG, "onPageStarted url="+url+" originalUrl="+view.getOriginalUrl()+" view.getUrl="+view.getUrl()+" savedDolBasedUrl="+savedDolBasedUrl);
-			String urltotest = view.getOriginalUrl();
-			if (urltotest == null) {
-			    urltotest = view.getUrl();
-            }
-            String urltotestWithoutBasicAuth = urltotest.replaceAll("://[^:]+:[^:]+@", "://");
-
-		    if (urltotest.startsWith("http:") && urltotestWithoutBasicAuth.startsWith(savedDolBasedUrl)) {
-		        // If the urltotest (original url) is http:
-				//Log.d(LOG_TAG, "https:" + view.getUrl().substring(5));
-				//Log.d(LOG_TAG, url);
-				if (("https:" + urltotest.substring(5)).equals(url)) {
-					Log.w(LOG_TAG, "onPageStarted value of url is value of view.getUrl with a s added, we change the savedDolRootUrl");
-					//Toast.makeText(activity, "Warning: It seems your server forced a redirect to HTTPS page. Please check your connection URL and use the https directly if you can.", Toast.LENGTH_SHORT).show();
-					//savedDolBasedUrl = "http://"+savedDolBasedUrl.substring(4);
-
-					// Use Dialog instead of Toast for a longer message
-					AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
-					alertDialog.setTitle(getString(R.string.Warning));
-					alertDialog.setMessage(getString(R.string.AlertHTTPS));
-					alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog, int which) {
-									dialog.dismiss();
-								}
-							});
-					alertDialog.show();
-				}
-
-                if (("http:" + urltotest.substring(5)).equals(url) && !this.secondActivity.httpWarningWasViewed) {
-                    // Use Dialog instead of Toast for a longer message
-                    AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
-                    alertDialog.setTitle(getString(R.string.Warning));
-                    alertDialog.setMessage(getString(R.string.AlertHTTP));
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.show();
-                    this.secondActivity.httpWarningWasViewed = true;
+		{
+		    try {
+                Log.d(LOG_TAG, "onPageStarted url=" + url + " originalUrl=" + view.getOriginalUrl() + " view.getUrl=" + view.getUrl() + " savedDolBasedUrl=" + savedDolBasedUrl);
+                String urltotest = view.getOriginalUrl();
+                if (urltotest == null) {
+                    urltotest = view.getUrl();
                 }
-			}
-		    //super.onPageStarted(view, url, favicon);
+                String urltotestWithoutBasicAuth = urltotest.replaceAll("://[^:]+:[^:]+@", "://");
+
+                if (urltotest.startsWith("http:") && urltotestWithoutBasicAuth.startsWith(savedDolBasedUrl)) {
+                    // If the urltotest (original url) is http:
+                    //Log.d(LOG_TAG, "https:" + view.getUrl().substring(5));
+                    //Log.d(LOG_TAG, url);
+                    if (("https:" + urltotest.substring(5)).equals(url)) {
+                        Log.w(LOG_TAG, "onPageStarted value of url is value of view.getUrl with a s added, we change the savedDolRootUrl");
+                        //Toast.makeText(activity, "Warning: It seems your server forced a redirect to HTTPS page. Please check your connection URL and use the https directly if you can.", Toast.LENGTH_SHORT).show();
+                        //savedDolBasedUrl = "http://"+savedDolBasedUrl.substring(4);
+
+                        // Use Dialog instead of Toast for a longer message
+                        AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+                        alertDialog.setTitle(getString(R.string.Warning));
+                        alertDialog.setMessage(getString(R.string.AlertHTTPS));
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    }
+
+                    if (("http:" + urltotest.substring(5)).equals(url) && !this.secondActivity.httpWarningWasViewed) {
+                        // Use Dialog instead of Toast for a longer message
+                        AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+                        alertDialog.setTitle(getString(R.string.Warning));
+                        alertDialog.setMessage(getString(R.string.AlertHTTP));
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                        this.secondActivity.httpWarningWasViewed = true;
+                    }
+                }
+                //super.onPageStarted(view, url, favicon);
+            } catch(Exception e) {
+		        Log.e(LOG_TAG, e.getMessage());
+            }
 		}
 
 
@@ -1584,7 +1595,7 @@ public class SecondActivity extends Activity {
 		 * @return	boolean					True to mean URL has been handled by code, False to ask webview to handle it.
 		 */
 		@Override
-		public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             String url = null;
             if (request.getUrl() != null) {
                 url = request.getUrl().toString();
@@ -2159,7 +2170,7 @@ public class SecondActivity extends Activity {
 	      
 		/**
 		 * onReceivedError
-		 * This method is only called when network errors occur, but never when a HTTP errors are received by WebView.
+		 * This method is only called when network or webview errors occur, but never when a HTTP errors are received by WebView.
 		 */
 		@Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error)
@@ -2319,7 +2330,9 @@ public class SecondActivity extends Activity {
         public boolean onShowFileChooser(
                 WebView webView, ValueCallback<Uri[]> filePathCallback,
                 WebChromeClient.FileChooserParams fileChooserParams) {
-            
+
+            super.onShowFileChooser(webView, filePathCallback, fileChooserParams);
+
             Log.i(LOG_TAG, "onShowFileChooser fileChooserParams="+fileChooserParams);
 
             String[] acceptAttribute = fileChooserParams.getAcceptTypes();
@@ -2367,6 +2380,8 @@ public class SecondActivity extends Activity {
 
                 //Adjust the camera in a way that specifies the storage location for taking pictures
                 String filePath = Environment.getExternalStorageDirectory() + File.separator + Environment.DIRECTORY_PICTURES + File.separator;
+                Log.d(LOG_TAG, "filePath = "+filePath);
+
                 // Create directory if it does not exists
                 File imagesFolder = new File(filePath);
                 imagesFolder.mkdirs();
@@ -2396,6 +2411,7 @@ public class SecondActivity extends Activity {
 
                 // Add also the selector to capture a photo with name imageUri
                 if (enableCamera) {
+                    Log.d(LOG_TAG, "onShowFileChooser imageUri="+imageUri);
                     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                     chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Parcelable[]{takePictureIntent});
@@ -2578,9 +2594,9 @@ public class SecondActivity extends Activity {
         Log.d(LOG_TAG, "onActivityResult we should have just selected a file from an external activity");
 
         if (data != null) {
-            Log.d(LOG_TAG, "data = "+data.toString());
+            Log.d(LOG_TAG, "onActivityResult data = "+data.toString());
         } else {
-            Log.d(LOG_TAG, "data is null");
+            Log.d(LOG_TAG, "onActivityResult data is null");
         }
         // Example: Intent { dat=content://com.android.providers.downloads.documents/document/74 flg=0x1 } after selection of file manager
         // Example: Intent { dat=content://com.android.providers.media.documents/document/image:88 flg=0x1 } after selection of file manager
@@ -2591,15 +2607,10 @@ public class SecondActivity extends Activity {
         {
             Log.d(LOG_TAG, "onActivityResult result code is ok");
 
-            // Not sure this is necessary
-            //If you select a picture (not including taking pictures by camera), you don't need to send a broadcast to refresh the gallery after success
-            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            intent.setData(imageUri);
-            sendBroadcast(intent);
-
             Uri uri = null;
             ClipData uris = null;
             if (data != null) {
+                // No need to refresh the gallery after selecting a file from gallery
                 /*Bundle extras = data.getExtras();
                 if (extras != null) {
                     Bitmap imageBitmap = (Bitmap) extras.get("data");
@@ -2607,17 +2618,30 @@ public class SecondActivity extends Activity {
                 }*/
                 uri = data.getData();
                 uris = data.getClipData();
+            } else {
+                // We refresh the gallery after taking a photo
+                Log.d(LOG_TAG, "onActivityResult imageUri="+imageUri);
+                Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                intent.setData(imageUri);
+                sendBroadcast(intent);
             }
 
             if (data == null || (uri == null && uris == null)) {
                 // Case we have taken a photo
-                Log.d(LOG_TAG, "onActivityResult data or (uri and uris is null), mCameraPhotoPath="+mCameraPhotoPath+" custom results "+imageUri);
+                Uri[] results = null;
+
+                Log.d(LOG_TAG, "onActivityResult data or (uri and uris is null), mCameraPhotoPath="+mCameraPhotoPath+" imageUri="+imageUri);
 
                 // If there is not data, then we may have taken a photo
                 if (imageUri != null) {
                     //Uri[] results = null;
                     //results = new Uri[]{Uri.parse(mCameraPhotoPath)};
-                    mFilePathCallback.onReceiveValue(new Uri[]{imageUri});
+
+                    results = new Uri[]{imageUri};
+
+                    Log.d(LOG_TAG, "onActivityResult results="+results.toString());
+
+                    mFilePathCallback.onReceiveValue(results);
                 }
                 mCameraPhotoPath = null;
                 imageUri = null;
@@ -2628,7 +2652,7 @@ public class SecondActivity extends Activity {
                 Log.d(LOG_TAG, "onActivityResult data is not null");
 
                 if (uri != null) {
-                    Log.d(LOG_TAG, "uri="+uri);
+                    Log.d(LOG_TAG, "onActivityResult uri="+uri);
                     // Example: content://com.android.providers.media.documents/document/image%3A88
                     results = new Uri[]{uri};
                     for (Uri uriTmp : results) {
@@ -2639,7 +2663,7 @@ public class SecondActivity extends Activity {
                         }
                     }
                 } else if (uris != null) {
-                    Log.d(LOG_TAG, "uris="+uris);
+                    Log.d(LOG_TAG, "onActivityResult uris="+uris);
                     // Example: ClipData { */* {U:content://com.android.providers.media.documents/document/image%3A112} {U:content://com.android.providers.media.documents/document/image%3A113} }
                     results = new Uri[uris.getItemCount()];
                     int count = uris.getItemCount();
@@ -2650,6 +2674,8 @@ public class SecondActivity extends Activity {
                         results[i] = item.getUri();
                     }
                 }
+
+                Log.d(LOG_TAG, "onActivityResult results="+results.toString());
 
                 mFilePathCallback.onReceiveValue(results);
             }
