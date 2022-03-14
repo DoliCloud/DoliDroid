@@ -55,8 +55,10 @@ import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.ClipboardManager;
 import android.content.ClipData;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.AsyncTask;
@@ -335,9 +337,10 @@ public class SecondActivity extends Activity {
         myWebView.getSettings().setJavaScriptEnabled(true);
         myWebView.getSettings().setAllowContentAccess(true);
         myWebView.getSettings().setAllowFileAccess(true);
-        myWebView.getSettings().setAllowFileAccessFromFileURLs(true);
-        myWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
-
+        //myWebView.getSettings().setAllowFileAccessFromFileURLs(true);
+        //myWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+        myWebView.getSettings().setDomStorageEnabled(true);
+        myWebView.getSettings().setSupportMultipleWindows(false);
         //myWebView.getSettings().setPluginsEnabled(true);
         //myWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         //myWebView.getSettings().setLoadWithOverviewMode(true);
@@ -623,7 +626,7 @@ public class SecondActivity extends Activity {
                 return true;
             case R.id.about:
                 Log.i(LOG_TAG, "Start activity About");
-                myWebView = findViewById(R.id.webViewContent);
+                //myWebView = findViewById(R.id.webViewContent);
                 Intent intent = new Intent(SecondActivity.this, AboutActivity.class);
                 intent.putExtra("currentUrl", myWebView.getOriginalUrl());
                 intent.putExtra("userAgent", myWebView.getSettings().getUserAgentString());
@@ -638,7 +641,7 @@ public class SecondActivity extends Activity {
                 return true;
             case R.id.logout:
                 tagToLogout=true;
-                myWebView = findViewById(R.id.webViewContent);
+                //myWebView = findViewById(R.id.webViewContent);
                 urlToGo = this.savedDolRootUrl+"user/logout.php?noredirect=1&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
                 Log.i(LOG_TAG, "LoadUrl after select Logout : "+urlToGo);
                 lastLoadUrl=urlToGo;
@@ -654,7 +657,7 @@ public class SecondActivity extends Activity {
                 finish();
                 return true;    
             case R.id.refresh:
-                myWebView = findViewById(R.id.webViewContent);
+                //myWebView = findViewById(R.id.webViewContent);
                 urlToGo = myWebView.getUrl();
                 Log.d(LOG_TAG, "urlToGo="+urlToGo);
                 if (urlToGo != null) {
@@ -673,7 +676,7 @@ public class SecondActivity extends Activity {
                 }
                 return true;
             case R.id.clearcache:   // Action to clear webview caches
-                myWebView = findViewById(R.id.webViewContent);
+                //myWebView = findViewById(R.id.webViewContent);
                 Log.i(LOG_TAG, "Clear caches and history of webView");
                 myWebView.clearCache(true);
                 myWebView.clearHistory();
@@ -936,7 +939,7 @@ public class SecondActivity extends Activity {
 
         // If not found into cache, call URL
         Log.d(LOG_TAG, "We called codeForMenu after click on Menu : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
-        myWebView = findViewById(R.id.webViewContent);
+        //myWebView = findViewById(R.id.webViewContent);
 
         if (allowCacheForMenuPage) {
             if (this.cacheForMenu != null && this.cacheForMenu.length() > 0) {
@@ -971,7 +974,7 @@ public class SecondActivity extends Activity {
 
         // If not found into cache, call URL
         Log.d(LOG_TAG, "We called codeForQuickAccess after click on Search : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
-        myWebView = findViewById(R.id.webViewContent);
+        //myWebView = findViewById(R.id.webViewContent);
 
         if (allowCacheForQuickAccessPage) {
             if (this.cacheForQuickAccess != null && this.cacheForQuickAccess.length() > 0)
@@ -1008,7 +1011,7 @@ public class SecondActivity extends Activity {
 
         // If not found into cache, call URL
         Log.d(LOG_TAG, "We called codeForBookmarks after click on Bookmarks : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
-        myWebView = findViewById(R.id.webViewContent);
+        //myWebView = findViewById(R.id.webViewContent);
 
         if (allowCacheForBookmarkPage) {
             if (this.cacheForBookmarks != null && this.cacheForBookmarks.length() > 0) {
@@ -1046,7 +1049,7 @@ public class SecondActivity extends Activity {
 
         // If not found into cache, call URL
         Log.d(LOG_TAG, "We called codeForMultiCompany after click on Multicompany : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
-        myWebView = findViewById(R.id.webViewContent);
+        //myWebView = findViewById(R.id.webViewContent);
 
         if (allowCacheForMultiCompanyPage) {
             // Clear also cache (we will need different content if we use different entities)
@@ -1094,7 +1097,7 @@ public class SecondActivity extends Activity {
 
         // If not found into cache, call URL
         Log.d(LOG_TAG, "We called codeForCopyUrl after click on copyUrl : savedDolBasedUrl="+this.savedDolBasedUrl+" currentUrl="+currentUrl);
-        myWebView = findViewById(R.id.webViewContent);
+        //myWebView = findViewById(R.id.webViewContent);
 
         // Set currentUrl
         currentUrl = currentUrl.replace("&dol_hide_topmenu=1", "");
@@ -1143,7 +1146,7 @@ public class SecondActivity extends Activity {
         String previousUrl;
         boolean b;
 
-        myWebView = findViewById(R.id.webViewContent);
+        //myWebView = findViewById(R.id.webViewContent);
 
         currentUrl = myWebView.getUrl();
         previousUrl = "";
@@ -1827,7 +1830,7 @@ public class SecondActivity extends Activity {
 				listOfCookiesAfterLogon=this.listCookies();	// Save cookie for
 			}
 
-			myWebView = findViewById(R.id.webViewContent);
+			//myWebView = findViewById(R.id.webViewContent);
 			boolean b = myWebView.canGoBack();
             WebBackForwardList mWebBackForwardList;
 
@@ -2379,11 +2382,17 @@ public class SecondActivity extends Activity {
                 Context context = getApplicationContext();
                 PackageManager pm = context.getPackageManager();
                 boolean enableCamera = pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
+                //enableCamera = false;
 
                 Log.d(LOG_TAG, "onShowFileChooser use custom selector enableCamera="+enableCamera);
 
                 //Adjust the camera in a way that specifies the storage location for taking pictures
                 String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator;
+                // Create the storage directory if it does not exist
+                File tmpDir = new File(filePath);
+                if (!tmpDir.exists() && !tmpDir.mkdirs()){
+                    Log.e(LOG_TAG, "failed to create directory");
+                }
 
                 Log.d(LOG_TAG, "filePath = "+filePath);
 
@@ -2396,6 +2405,12 @@ public class SecondActivity extends Activity {
 
                 mCameraPhotoPath = filePath + fileName;
                 imageUri = Uri.fromFile(new File(filePath + fileName));
+
+                /*ContentValues values = new ContentValues(1);
+                values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg");
+                Uri outputFileUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                */
+
                 Log.d(LOG_TAG, "onShowFileChooser imageUri for camera capture = "+imageUri);
                 //    Intent i = new Intent(Intent.ACTION_GET_CONTENT);
                 //    i.addCategory(Intent.CATEGORY_OPENABLE);
@@ -2416,10 +2431,14 @@ public class SecondActivity extends Activity {
 
                 // Add also the selector to capture a photo with name imageUri
                 if (enableCamera) {
-                    Log.d(LOG_TAG, "onShowFileChooser imageUri="+imageUri);
+                    Log.d(LOG_TAG, "onShowFileChooser imageUri = "+imageUri);
                     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    //Intent takePictureIntent = new Intent(Intent.ACTION_PICK);
+                    takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+
                     chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Parcelable[]{takePictureIntent});
+                    //chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, outputFileUri);
                 }
 
                 // Start activity to choose file
@@ -2614,21 +2633,37 @@ public class SecondActivity extends Activity {
 
             Uri uri = null;
             ClipData uris = null;
+
             if (data != null) {
-                // No need to refresh the gallery after selecting a file from gallery
-                /*Bundle extras = data.getExtras();
+                // When we receive the image as a bitmap because we create chooser with a simple chooser and intent
+                /*
+                Bundle extras = data.getExtras();
                 if (extras != null) {
                     Bitmap imageBitmap = (Bitmap) extras.get("data");
-                    imageView.setImageBitmap(imageBitmap);
-                }*/
+                    //imageView.setImageBitmap(imageBitmap);
+                }
+                */
+
                 uri = data.getData();
                 uris = data.getClipData();
             } else {
                 // We refresh the gallery after taking a photo
                 Log.d(LOG_TAG, "onActivityResult imageUri="+imageUri);
+
+                // Refresh the media so it will see the new captured file. Old method
                 Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                 intent.setData(imageUri);
                 sendBroadcast(intent);
+
+                // Refresh the media so it will see the new captured file. New method
+                // To test this, juste after using the camera to capture an image, switch to the Files application into Pictures directory and check you see the new file.
+                File file = new File(imageUri.getPath());
+                MediaScannerConnection.scanFile(getApplicationContext(), new String[]{file.toString()}, null,
+                        new MediaScannerConnection.OnScanCompletedListener() {
+                            public void onScanCompleted(String path, Uri uri) {
+                                // now visible in gallery
+                                Log.d(LOG_TAG, "MediaScannerConnection callback: Media have been refreshed");
+                            }});
             }
 
             if (data == null || (uri == null && uris == null)) {
@@ -2696,4 +2731,3 @@ public class SecondActivity extends Activity {
     }
     
 }
-
