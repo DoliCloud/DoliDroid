@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
     //buildToolsVersion '30.0.2'
 
     // API Level
@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId "com.nltechno.dolidroidpro"
         minSdkVersion 25
-        targetSdkVersion 30
+        targetSdkVersion 32
     }
 
     buildTypes {
@@ -30,7 +30,7 @@ android {
 
 dependencies {
     // Add entry to be able to use androidx.core.content.FileProvider to use Provider for file upload of camera capture on Android >= 30
-    implementation 'androidx.core:core:1.6.0'
+    implementation 'androidx.core:core:1.7.0'
 
     // Add entry to support ContextCompat.checkSelfPermission for API 23+ even when building for target 21
     //compile 'com.android.support:support-v4:23'
@@ -46,6 +46,6 @@ dependencies {
         implementation "androidx.security:security-app-authenticator:1.0.0-alpha02"
 
         // For App Authentication API testing
-        androidTestImplementation "androidx.security:security-app-authenticator:1.0.0-alpha01"
+        androidTestImplementation "androidx.security:security-app-authenticator:1.0.0-alpha02"
     }
 }

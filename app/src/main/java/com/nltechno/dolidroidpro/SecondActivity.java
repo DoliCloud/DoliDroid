@@ -183,6 +183,7 @@ public class SecondActivity extends Activity {
 
 	private String mCameraPhotoPathString;
     Uri imageUri;
+    Uri outputFileUri;
 
     final Activity activity = this;
     private ProgressBar progress;
@@ -2333,7 +2334,6 @@ public class SecondActivity extends Activity {
             }
         }
 
-
         /**
          * Called when clicked on input select file. With API >= 21 (Before it was openFileChooser)
          */
@@ -2390,18 +2390,17 @@ public class SecondActivity extends Activity {
                 Log.d(LOG_TAG, "onShowFileChooser use custom selector enableCamera="+enableCamera);
 
                 //Adjust the camera in a way that specifies the storage location for taking pictures
-                String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator;
+                //String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator;
+                // Environment.getExternalFilesDir()
+                String filePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES) + File.separator;
+
+                Log.d(LOG_TAG, "filePath = "+filePath);
+
                 // Create the storage directory if it does not exist
                 File tmpDir = new File(filePath);
                 if (!tmpDir.exists() && !tmpDir.mkdirs()){
                     Log.e(LOG_TAG, "failed to create directory");
                 }
-
-                Log.d(LOG_TAG, "filePath = "+filePath);
-
-                // Create directory if it does not exists
-                File imagesFolder = new File(filePath);
-                imagesFolder.mkdirs();
 
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 String fileName = "Photo_"+timeStamp+".jpg";
@@ -2428,9 +2427,11 @@ public class SecondActivity extends Activity {
 
                 // Add also the selector to capture a photo with name imageUri
                 if (enableCamera) {
-                    Uri outputFileUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", new File(mCameraPhotoPathString));
+                    String AuthorityString = context.getApplicationContext().getPackageName() + ".provider";
+                    outputFileUri = FileProvider.getUriForFile(context, AuthorityString, new File(mCameraPhotoPathString));
+                    context.getApplicationContext().grantUriPermission(context.getApplicationContext().getPackageName(), outputFileUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
-                    Log.d(LOG_TAG, "onShowFileChooser imageUri = "+imageUri+" outputFileUri = "+outputFileUri);
+                    Log.d(LOG_TAG, "onShowFileChooser AuthorityString = "+AuthorityString +" imageUri = "+imageUri+" outputFileUri = "+outputFileUri);
 
                     /*
                     Option 1: Detect all intent available and forge chooserIntent with that
@@ -2480,6 +2481,7 @@ public class SecondActivity extends Activity {
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
 
                     chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Parcelable[]{takePictureIntent});
+                    chooserIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 }
 
                 // Start activity to choose file
@@ -2689,22 +2691,39 @@ public class SecondActivity extends Activity {
                 uris = data.getClipData();
             } else {
                 // We refresh the gallery after taking a photo
-                Log.d(LOG_TAG, "onActivityResult imageUri="+imageUri);
+                Log.d(LOG_TAG, "onActivityResult imageUri="+imageUri+" outputFileUri="+outputFileUri);
 
                 // Refresh the media so it will see the new captured file. Old method
                 Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                 intent.setData(imageUri);
                 sendBroadcast(intent);
 
+                /*
+                Intent intent2 = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                intent2.setData(outputFileUri);
+                sendBroadcast(intent2);
+                */
+
                 // Refresh the media so it will see the new captured file. New method
                 // To test this, juste after using the camera to capture an image, switch to the Files application into Pictures directory and check you see the new file.
                 File file = new File(imageUri.getPath());
-                MediaScannerConnection.scanFile(getApplicationContext(), new String[]{file.toString()}, null,
+                MediaScannerConnection.scanFile(getApplicationContext(), new String[]{file.getAbsolutePath()}, null,
                         new MediaScannerConnection.OnScanCompletedListener() {
                             public void onScanCompleted(String path, Uri uri) {
                                 // now visible in gallery
                                 Log.d(LOG_TAG, "MediaScannerConnection callback: Media have been refreshed");
                             }});
+
+                // Refresh the media so it will see the new captured file. New method
+                // To test this, juste after using the camera to capture an image, switch to the Files application into Pictures directory and check you see the new file.
+                /*File file2 = new File(outputFileUri.getPath());
+                MediaScannerConnection.scanFile(activity, new String[]{file2.getAbsolutePath()}, null,
+                        new MediaScannerConnection.OnScanCompletedListener() {
+                            public void onScanCompleted(String path, Uri uri) {
+                                // now visible in gallery
+                                Log.d(LOG_TAG, "MediaScannerConnection callback: Media have been refreshed");
+                            }});
+                 */
             }
 
             if (data == null || (uri == null && uris == null)) {

@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <external-path name="external_files" path="."/>
+    // store in public directory for sharing. Associate with getExternalStorageDirectory
+    // file path will be storage/emulated/0/Pictures/
+    <external-path name="my_share_images" path="Pictures/"/>
+
+    // store in Android app package name directory. Associate with getExternalFilesDir
+    // file path will be storage/emulated/0/Android/data/com.example.ex/files/Example Images/
+    // Removed when app is uninstalled
+    <external-files-path name="my_images" path="Pictures/"/>
+
+    // store in root directory. Cannot access without root. Associate with getFilesDir
+    // file path will be storage/data/user/0/Android/data/com.example.ex/files/Example Images/
+    // not visible from a file explorer.
+    // Removed when app is uninstalled
+    <files-path name="my_internal_images" path="Pictures/"/>
 </paths>
