@@ -2,10 +2,11 @@
 English DoliDroid ChangeLog
 --------------------------------------------------------------
 
-***** ChangeLog for 2.2 *****
+***** ChangeLog for 3.0 *****
 
 3.0
 - Upload of a photo captured by a camera on Android >= 30 is available on all devices.
+- Upgrade androidx.core:core to 1.7.0
 
 
 ***** ChangeLog for 2.2 *****
