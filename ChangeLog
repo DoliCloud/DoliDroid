@@ -4,8 +4,11 @@ English DoliDroid ChangeLog
 
 ***** ChangeLog for 2.2 *****
 
-2.250
-- Fix upload of a photo caputred image on Android >= 30
+3.0
+- Upload of a photo captured by a camera on Android >= 30 is available on all devices.
+
+
+***** ChangeLog for 2.2 *****
 
 2.249
 - Fix null pointer when clearing predefined URLs.

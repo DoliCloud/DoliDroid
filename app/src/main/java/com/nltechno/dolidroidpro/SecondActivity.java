@@ -2698,12 +2698,6 @@ public class SecondActivity extends Activity {
                 intent.setData(imageUri);
                 sendBroadcast(intent);
 
-                /*
-                Intent intent2 = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                intent2.setData(outputFileUri);
-                sendBroadcast(intent2);
-                */
-
                 // Refresh the media so it will see the new captured file. New method
                 // To test this, juste after using the camera to capture an image, switch to the Files application into Pictures directory and check you see the new file.
                 File file = new File(imageUri.getPath());
@@ -2713,17 +2707,6 @@ public class SecondActivity extends Activity {
                                 // now visible in gallery
                                 Log.d(LOG_TAG, "MediaScannerConnection callback: Media have been refreshed");
                             }});
-
-                // Refresh the media so it will see the new captured file. New method
-                // To test this, juste after using the camera to capture an image, switch to the Files application into Pictures directory and check you see the new file.
-                /*File file2 = new File(outputFileUri.getPath());
-                MediaScannerConnection.scanFile(activity, new String[]{file2.getAbsolutePath()}, null,
-                        new MediaScannerConnection.OnScanCompletedListener() {
-                            public void onScanCompleted(String path, Uri uri) {
-                                // now visible in gallery
-                                Log.d(LOG_TAG, "MediaScannerConnection callback: Media have been refreshed");
-                            }});
-                 */
             }
 
             if (data == null || (uri == null && uris == null)) {
