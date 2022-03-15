@@ -4,6 +4,9 @@ English DoliDroid ChangeLog
 
 ***** ChangeLog for 2.2 *****
 
+2.250
+- Fix upload of a photo caputred image on Android >= 30
+
 2.249
 - Fix null pointer when clearing predefined URLs.
 - Removed a deprecated method.

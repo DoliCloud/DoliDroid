@@ -29,6 +29,7 @@ import java.security.KeyStore;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -55,9 +56,10 @@ import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.ClipboardManager;
 import android.content.ClipData;
-import android.content.ContentValues;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.net.http.SslError;
@@ -107,6 +109,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.app.AlertDialog;
 
+import androidx.core.content.FileProvider;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
 
@@ -178,7 +181,7 @@ public class SecondActivity extends Activity {
 	private boolean messageNoPreviousPageShown =false;
 	String listOfCookiesAfterLogon=null;
 
-	private String mCameraPhotoPath;
+	private String mCameraPhotoPathString;
     Uri imageUri;
 
     final Activity activity = this;
@@ -2403,13 +2406,8 @@ public class SecondActivity extends Activity {
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 String fileName = "Photo_"+timeStamp+".jpg";
 
-                mCameraPhotoPath = filePath + fileName;
-                imageUri = Uri.fromFile(new File(filePath + fileName));
-
-                /*ContentValues values = new ContentValues(1);
-                values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg");
-                Uri outputFileUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                */
+                mCameraPhotoPathString = filePath + fileName;
+                imageUri = Uri.fromFile(new File(mCameraPhotoPathString));
 
                 Log.d(LOG_TAG, "onShowFileChooser imageUri for camera capture = "+imageUri);
                 //    Intent i = new Intent(Intent.ACTION_GET_CONTENT);
@@ -2424,21 +2422,64 @@ public class SecondActivity extends Activity {
                     intentDefault.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
                 }
                 // Intent to get photos from photo galleries app (Google photo, ...)
-                //Intent intentPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 Intent chooserIntent = Intent.createChooser(intentDefault, "File Chooser");
                 //chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
                 //chooserIntent.putExtra(Intent.EXTRA_TITLE, "File Chooser");
 
                 // Add also the selector to capture a photo with name imageUri
                 if (enableCamera) {
-                    Log.d(LOG_TAG, "onShowFileChooser imageUri = "+imageUri);
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    //Intent takePictureIntent = new Intent(Intent.ACTION_PICK);
+                    Uri outputFileUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", new File(mCameraPhotoPathString));
+
+                    Log.d(LOG_TAG, "onShowFileChooser imageUri = "+imageUri+" outputFileUri = "+outputFileUri);
+
+                    /*
+                    Option 1: Detect all intent available and forge chooserIntent with that
+
+                    List<Intent> allIntents = new ArrayList();
+                    Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    List<android.content.pm.ResolveInfo> listCam = pm.queryIntentActivities(captureIntent, 0);
+                    for (ResolveInfo res : listCam) {
+                        Intent intent = new Intent(captureIntent);
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                        intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+                        intent.setPackage(res.activityInfo.packageName);
+                        if (outputFileUri != null) {
+                            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+                        }
+                        allIntents.add(intent);
+                    }
+
+                    // collect all gallery intents
+                    Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);       // Note ACTION_PICK should be considered deprecated
+                    galleryIntent.setType("image/*");
+                    List<android.content.pm.ResolveInfo> listGallery = pm.queryIntentActivities(galleryIntent, 0);
+                    for (ResolveInfo res : listGallery) {
+                        Intent intent = new Intent(galleryIntent);
+                        intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+                        intent.setPackage(res.activityInfo.packageName);
+                        allIntents.add(intent);
+                    }
+
+                    // the main intent is the last in the list (fucking android) so pickup the useless one
+                    Intent mainIntent = (Intent) allIntents.get(allIntents.size() - 1);
+                    allIntents.remove(mainIntent);
+
+                    // Create a chooser from the main intent
+                    chooserIntent = Intent.createChooser(mainIntent, "File Chooser");
+
+                    // Add all other intents
+                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
+                    */
+
+                    /*
+                     Option 2 - Just add the ACTION_IMAGE_CAPTURE to default
+                     */
+                    Intent takePictureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                     takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                    //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);    // Works on Android < 30 only
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
 
                     chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Parcelable[]{takePictureIntent});
-                    //chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, outputFileUri);
                 }
 
                 // Start activity to choose file
@@ -2635,8 +2676,8 @@ public class SecondActivity extends Activity {
             ClipData uris = null;
 
             if (data != null) {
-                // When we receive the image as a bitmap because we create chooser with a simple chooser and intent
                 /*
+                // When we receive the image as a bitmap because we have created the chooser with a simple chooser and intent
                 Bundle extras = data.getExtras();
                 if (extras != null) {
                     Bitmap imageBitmap = (Bitmap) extras.get("data");
@@ -2670,12 +2711,12 @@ public class SecondActivity extends Activity {
                 // Case we have taken a photo
                 Uri[] results = null;
 
-                Log.d(LOG_TAG, "onActivityResult data or (uri and uris is null), mCameraPhotoPath="+mCameraPhotoPath+" imageUri="+imageUri);
+                Log.d(LOG_TAG, "onActivityResult data or (uri and uris is null), mCameraPhotoPathString="+mCameraPhotoPathString+" imageUri="+imageUri);
 
                 // If there is not data, then we may have taken a photo
                 if (imageUri != null) {
                     //Uri[] results = null;
-                    //results = new Uri[]{Uri.parse(mCameraPhotoPath)};
+                    //results = new Uri[]{Uri.parse(mCameraPhotoPathString)};
 
                     results = new Uri[]{imageUri};
 
@@ -2683,7 +2724,7 @@ public class SecondActivity extends Activity {
 
                     mFilePathCallback.onReceiveValue(results);
                 }
-                mCameraPhotoPath = null;
+                mCameraPhotoPathString = null;
                 imageUri = null;
             } else {
                 // Case we have selected a file from file manager
@@ -2729,5 +2770,4 @@ public class SecondActivity extends Activity {
 
         // After this the onStart of SecondActivity should be executed
     }
-    
 }
