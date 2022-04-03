@@ -1508,35 +1508,26 @@ public class SecondActivity extends Activity {
 
             Log.v(LOG_TAG, "shouldInterceptRequest url="+url+", host="+host+", fileName="+fileName+", savedDolBasedUrl="+savedDolBasedUrl+" version in url param (for js or css pages)="+version);
 
-            //String urlWithoutBasicAuth = null;
-            //if (url != null) {
-            //    urlWithoutBasicAuth = url.replaceAll("://[^:]+:[^:]+@", "://");
-            //    Log.d(LOG_TAG, "shouldOverrideUrlLoading urlWithoutBasicAuth=" + urlWithoutBasicAuth);
-            //}
+            Boolean isADownload = false;
+            if ((url != null && (url.endsWith(".pdf") || url.endsWith(".odt") || url.endsWith(".ods")) && ! url.contains("action=")) 	// Old way to detect a download (we do not make a download of link to delete or print or presend a file)
+                    || "document.php".equals(fileName)									                       			                // The default wrapper to download files
+                    || (url != null && url.contains("output=file"))) {																	// The new recommended parameter for pages that are not document.php like export.php that generate a file output
+                isADownload = true;
+            }
 
-			if ("document.php".equals(fileName) && url != null && ! url.startsWith(savedDolBasedUrl) && url.startsWith(savedDolBasedUrlWithSForced)) {
+			if (isADownload && url != null && ! url.startsWith(savedDolBasedUrl) && url.startsWith(savedDolBasedUrlWithSForced)) {
 				// In this case, we entered a HTTP login url but we were redirected to a HTTPS site.
-			    Log.w(LOG_TAG, "AlertDownloadBadHTTPS Bad savedDolBasedUrl that does not allow download");
+			    Log.w(LOG_TAG, "shouldInterceptRequest AlertDownloadBadHTTPS Bad savedDolBasedUrl that does not allow download");
 				// Can't make interaction here
 				//Toast.makeText(activity, R.string.AlertDownloadBadHTTPS, Toast.LENGTH_LONG).show();
 			}
 
-			if (fileName != null && url.startsWith(savedDolBasedUrl))
-			{
+			if (fileName != null && url.startsWith(savedDolBasedUrl)) {
 				if (prefAlwaysUseLocalResources) {
 					try {
 						/* Example to return empty for files instead of some files */
 						/*
-						if (fileName.endsWith("datepicker.js.php")
-								|| fileName.contains("viewimage.php") || fileName.contains("ajax-loader.gif") || fileName.contains("headbg2.jpg") || fileName.contains("lib_head.js")
-								|| fileName.contains("js/dst.js") || fileName.contains("tipTip")|| fileName.contains("tablednd")|| fileName.contains("jnotify")|| fileName.contains("flot.")
-								|| fileName.contains("jquery.mobile")
-								//|| fileName.contains("jquery-latest")
-								//|| fileName.contains("jquery-ui-latest")
-								|| fileName.contains("button_")
-								|| fileName.contains("dolibarr_logo.png")
-								 )
-						{
+						if (fileName.contains("dolibarr_logo.png"))	{
 							Log.i(LOG_TAG, "Filename "+fileName+" discarded");
 							return new WebResourceResponse("text/css", "UTF-8", new ByteArrayInputStream("".getBytes("UTF-8")));
 						}*/
@@ -1580,23 +1571,31 @@ public class SecondActivity extends Activity {
 
 							Log.w(LOG_TAG, "shouldInterceptRequest Nothing to return instead");
 						}
-
 					} catch (IOException e) {
 						Log.w(LOG_TAG, "shouldInterceptRequest Filename " + fileName + " intercepted but failed to find/open it from assets, we do standard process (so use cache of webview browser if not expired or download).");
 					}
-				}
-				else
-				{
+				} else {
 					Log.v(LOG_TAG, "shouldInterceptRequest option is off");
 				}
 			}
-			
-			return super.shouldInterceptRequest(view, wrr);
+
+            // Check if this is a download from a POST. Show a warning for that.
+            if (isADownload) {
+                // In this case, we entered a HTTP login url but we were redirected to a HTTPS site.
+                Log.w(LOG_TAG, "shouldInterceptRequest AlertDownloadFromAPost Your app tried to make a download from a POST. This is forbidden by Dolibarr good practices. Not supported.");
+                // Can't make interaction here
+                //Toast.makeText(activity, R.string.AlertDownloadBadHTTPS, Toast.LENGTH_LONG).show();
+            } else {
+                Log.v(LOG_TAG, "shouldInterceptRequest Not a download link");
+            }
+
+            return super.shouldInterceptRequest(view, wrr);
 		}
 
 		/**
-		 * Handler to manage downloads
-		 * 
+		 * Handler to manage downloads.
+		 * Seems called when we click on a href link or when calling loadUrl(). It is not called on POST methods.
+         *
 		 * @param	WebView		view		Web view
 		 * @param	String		url			Url
 		 * @return	boolean					True to mean URL has been handled by code, False to ask webview to handle it.
@@ -1777,13 +1776,6 @@ public class SecondActivity extends Activity {
                     DownloadManager dmanager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
                     long id = dmanager.enqueue(request);
 */
-					// Save the request id
-					/*
-					SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-					SharedPreferences.Editor editor = sharedPrefs.edit();
-					editor.putLong(strPref_Download_ID, id);
-					editor.commit();
-					*/
 
 					Log.d(LOG_TAG, "shouldOverrideUrlLoading URI has been added in queue - Now waiting event onReceive ACTION_DOWNLOAD_COMPLETE");
 				}
