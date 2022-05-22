@@ -26,7 +26,6 @@
 		android:orderInCategory="30"
 		android:showAsAction="always"
 		android:title="@string/menu_back" />
-
 	<item
 		android:id="@+id/menu_scan"
 		android:icon="@drawable/ic_baseline_star_border_24"
@@ -44,34 +43,7 @@
 		android:orderInCategory="34"
 		android:title="@string/menu_multicompany" />
 
-	<item android:id="@+id/menu_copy_url"
-		android:title="@string/menu_copy_url"
-		android:icon="@android:drawable/ic_menu_close_clear_cancel"
-		android:menuCategory="secondary"
-		android:orderInCategory="130"
-		/>
-
-	<item android:id="@+id/clearcache"
-   	    android:title="@string/menu_clearcache"
-   	    android:icon="@android:drawable/ic_menu_close_clear_cancel"
-   	    android:menuCategory="secondary"
-   	    android:orderInCategory="140"
-   	    />
-	
-   	<item android:id="@+id/refresh"
-   	    android:title="@string/menu_refresh"
-   	    android:icon="@android:drawable/ic_menu_rotate"
-   	    android:menuCategory="secondary"
-   	    android:orderInCategory="150"
-   	    />
-
-	<item android:id="@+id/logout"
-		  android:title="@string/menu_logout"
-		  android:icon="@android:drawable/ic_lock_power_off"
-		  android:menuCategory="secondary"
-		  android:orderInCategory="200"
-		/>
-
+	<!--
 	<item
 		android:id="@+id/quit"
 		android:icon="@drawable/ic_baseline_exit_to_app_24"
@@ -79,6 +51,36 @@
 		android:orderInCategory="210"
 		android:showAsAction="ifRoom|withText"
 		android:title="@string/menu_quit" />
+	-->
+
+	<item
+		android:id="@+id/menu_utilities"
+		android:menuCategory="secondary"
+		android:orderInCategory="290"
+		android:title="@string/menu_utilities">
+		<menu android:id="@+id/submenu_utilities">
+			<item
+				android:id="@+id/menu_copy_url"
+				android:title="@string/menu_copy_url"
+				android:icon="@android:drawable/alert_dark_frame"
+				android:menuCategory="secondary"
+				android:orderInCategory="130"
+				/>
+			<item android:id="@+id/refresh"
+				android:title="@string/menu_refresh"
+				android:icon="@android:drawable/ic_menu_rotate"
+				android:menuCategory="secondary"
+				android:orderInCategory="140"
+				/>
+			<item android:id="@+id/clearcache"
+				android:title="@string/menu_clearcache"
+				android:icon="@android:drawable/ic_menu_close_clear_cancel"
+				android:menuCategory="secondary"
+				android:orderInCategory="150"
+				/>
+		</menu>
+	</item>
+
 
 
 	<item
@@ -111,18 +113,23 @@
 				android:menuCategory="secondary"
 				android:orderInCategory="138"
 				android:title="@string/menu_clear_all_urls" />
+			<item android:id="@+id/about"
+				android:icon="@android:drawable/ic_menu_info_details"
+				android:menuCategory="secondary"
+				android:orderInCategory="500"
+				android:showAsAction="withText"
+				android:title="@string/menu_info"
+				android:titleCondensed="@string/menu_info_short" />
 		</menu>
 	</item>
 
-	<item
-		android:id="@+id/about"
-		android:icon="@android:drawable/ic_menu_info_details"
+
+	<item android:id="@+id/menu_logout"
+		android:icon="@android:drawable/ic_lock_power_off"
 		android:menuCategory="secondary"
 		android:orderInCategory="500"
 		android:showAsAction="withText"
-		android:title="@string/menu_info"
-		android:titleCondensed="@string/menu_info_short" />
-
-
+		android:title="@string/menu_logout"
+		/>
 
 </menu>

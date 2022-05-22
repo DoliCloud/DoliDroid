@@ -241,8 +241,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		Spinner spinner1 = findViewById(R.id.combo_list_of_urls);
 		TextView texViewLink = findViewById(R.id.textViewLink);
 
-		if (this.nbOfEntries > 0)
-		{
+		if (this.nbOfEntries > 0) {
 			spinner1.setAdapter(adapter);
 			spinner1.setVisibility(View.VISIBLE);
 			texViewLink.setVisibility(View.INVISIBLE);
@@ -254,9 +253,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				//spinner1.setSelection(1, false);
 				homeUrlToSuggest=homeUrlFirstFound;
 			}
-		}
-		else
-		{
+		} else {
 			spinner1.setVisibility(View.INVISIBLE);
 			texViewLink.setVisibility(View.VISIBLE);
 		}
@@ -368,16 +365,13 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
     	MenuItem menuItem  = menu.findItem(R.id.always_show_bar);
 
         // Hide menu show bar if there is no hardware
-        if (Utils.hasMenuHardware(activity))
-        {
+        if (Utils.hasMenuHardware(activity)) {
 			menuItem.setVisible(true);
         	boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
         	Log.d(LOG_TAG, "prefAlwaysShowBar value is "+prefAlwaysShowBar);
         	if (prefAlwaysShowBar) menuItem.setTitle(getString(R.string.menu_show_bar_on));
         	else menuItem.setTitle(getString(R.string.menu_show_bar_off));
-        }
-        else
-        {
+        } else {
         	// When there is no hardware button and not using "actionbar", we remove the 'always show bar' menu
         	menuItem.setVisible(false);
         }
@@ -385,31 +379,45 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		MenuItem menuItem2 = menu.findItem(R.id.always_autofill);
    		boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
    		Log.d(LOG_TAG, "prefAlwaysAutoFill value is "+prefAlwaysAutoFill);
-   		if (prefAlwaysAutoFill) {
-   			//menuItem2.setTitle(getString(R.string.menu_autofill_on));
-			menuItem2.setChecked(true);
-		} else {
-   			//menuItem2.setTitle(getString(R.string.menu_autofill_off));
-			menuItem2.setChecked(false);
+		if (menuItem2 != null) {
+			if (prefAlwaysAutoFill) {
+				//menuItem2.setTitle(getString(R.string.menu_autofill_on));
+				menuItem2.setChecked(true);
+			} else {
+				//menuItem2.setTitle(getString(R.string.menu_autofill_off));
+				menuItem2.setChecked(false);
+			}
 		}
-
 
 		if (this.listOfRootUrl != null) {
 			MenuItem menuItem3 = menu.findItem(R.id.clear_all_urls);
-			menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
+			if (menuItem3 != null) {
+				menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
+			}
 		}
-
 
 		MenuItem menuItem4 = menu.findItem(R.id.always_uselocalresources);
-		if (prefAlwaysAutoFill) {
-			//menuItem4.setTitle(getString(R.string.menu_uselocalresources_on));
-			menuItem4.setChecked(true);
-		} else {
-			//menuItem4.setTitle(getString(R.string.menu_uselocalresources_off));
-			menuItem4.setChecked(false);
+		if (menuItem4 != null) {
+			if (prefAlwaysAutoFill) {
+				//menuItem4.setTitle(getString(R.string.menu_uselocalresources_on));
+				menuItem4.setChecked(true);
+			} else {
+				//menuItem4.setTitle(getString(R.string.menu_uselocalresources_off));
+				menuItem4.setChecked(false);
+			}
 		}
 
-        this.savMenu=menu;
+		MenuItem menuItemQuit = menu.findItem(R.id.quit);
+		if (menuItemQuit != null) {
+			menuItemQuit.setIcon(getDrawable(R.drawable.ic_baseline_exit_to_app_24));
+		}
+
+		MenuItem menuItemAbout = menu.findItem(R.id.about);
+		if (menuItemAbout != null) {
+			menuItemAbout.setIcon(getDrawable(R.drawable.ic_baseline_help_outline_24));
+		}
+
+		this.savMenu=menu;
 
         return true;
     }

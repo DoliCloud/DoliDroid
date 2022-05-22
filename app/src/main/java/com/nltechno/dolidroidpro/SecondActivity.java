@@ -29,7 +29,6 @@ import java.security.KeyStore;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,17 +48,15 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.HttpClient;
 import com.nltechno.utils.MySSLSocketFactory;
 import com.nltechno.utils.Utils;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
-import android.content.ClipboardManager;
 import android.content.ClipData;
-import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.net.http.SslError;
@@ -86,7 +83,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.webkit.CookieManager;
 import android.webkit.HttpAuthHandler;
@@ -104,8 +100,6 @@ import android.webkit.WebViewClient;
 //import android.webkit.CookieSyncManager;
 import android.webkit.WebViewDatabase;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.app.AlertDialog;
 
@@ -497,9 +491,40 @@ public class SecondActivity extends Activity {
         }
 
 
-        Log.d(LOG_TAG, "onCreateOptionsMenu Add link to copy url");
+        Log.d(LOG_TAG, "onCreateOptionsMenu Add menu Copy url");
         MenuItem menuItemAddLink = menu.findItem(R.id.menu_copy_url);
-        if (menuItemAddLink != null) menuItemAddLink.setVisible(true);
+        if (menuItemAddLink != null) {
+            menuItemAddLink.setVisible(true);
+            menuItemAddLink.setIcon(getDrawable(R.drawable.ic_copy));
+        }
+
+        Log.d(LOG_TAG, "onCreateOptionsMenu Add menu Clear cache");
+        MenuItem menuItemClearCache = menu.findItem(R.id.clearcache);
+        if (menuItemClearCache != null) {
+            menuItemClearCache.setVisible(true);
+            menuItemClearCache.setIcon(getDrawable(R.drawable.ic_baseline_clear_24));
+        }
+
+        Log.d(LOG_TAG, "onCreateOptionsMenu Add menu Reload page");
+        MenuItem menuItemReloadPage = menu.findItem(R.id.refresh);
+        if (menuItemReloadPage != null) {
+            menuItemReloadPage.setVisible(true);
+            menuItemReloadPage.setIcon(getDrawable(R.drawable.ic_baseline_refresh_24));
+        }
+
+        Log.d(LOG_TAG, "onCreateOptionsMenu Add menu About");
+        MenuItem menuItemAbout = menu.findItem(R.id.about);
+        if (menuItemAbout != null) {
+            menuItemAbout.setVisible(true);
+            menuItemAbout.setIcon(getDrawable(R.drawable.ic_baseline_help_outline_24));
+        }
+
+        Log.d(LOG_TAG, "onCreateOptionsMenu Add menu Logout");
+        MenuItem menuItemLogout = menu.findItem(R.id.menu_logout);
+        if (menuItemLogout != null) {
+            menuItemLogout.setVisible(true);
+            menuItemLogout.setIcon(getDrawable(R.drawable.ic_baseline_exit_to_app_24));
+        }
 
         this.savMenu = menu;
         
@@ -643,7 +668,7 @@ public class SecondActivity extends Activity {
                 Log.d(LOG_TAG, "startActivityForResult with requestCode="+REQUEST_ABOUT);
                 startActivityForResult(intent,REQUEST_ABOUT);
                 return true;
-            case R.id.logout:
+            case R.id.menu_logout:
                 tagToLogout=true;
                 //myWebView = findViewById(R.id.webViewContent);
                 urlToGo = this.savedDolRootUrl+"user/logout.php?noredirect=1&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
@@ -1047,7 +1072,6 @@ public class SecondActivity extends Activity {
     private boolean codeForMultiCompany()
     {
         String urlToGo;
-        boolean allowCacheForMultiCompanyPage = false;
 
         urlToGo = this.savedDolRootUrl+"core/multicompany_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
@@ -1055,33 +1079,18 @@ public class SecondActivity extends Activity {
         Log.d(LOG_TAG, "We called codeForMultiCompany after click on Multicompany : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
         //myWebView = findViewById(R.id.webViewContent);
 
-        if (allowCacheForMultiCompanyPage) {
-            // Clear also cache (we will need different content if we use different entities)
-            Log.i(LOG_TAG, "Clear caches and history of webView");
-            myWebView.clearCache(true);
-            myWebView.clearHistory();
-            this.cacheForMenu = null;
-            this.cacheForQuickAccess = null;
-            this.cacheForBookmarks = null;
-            this.cacheForMultiCompany = null;
-            //Log.d(LOG_TAG,"Clear also cookies");
-            //this.myWebViewClientDoliDroid.deleteSessionCookies();
+        // Clear also cache (we will need different content if we use different entities)
+        Log.i(LOG_TAG, "Clear caches and history of webView");
+        myWebView.clearCache(true);
+        myWebView.clearHistory();
+        this.cacheForMenu = null;
+        this.cacheForQuickAccess = null;
+        this.cacheForBookmarks = null;
+        this.cacheForMultiCompany = null;
+        //Log.d(LOG_TAG,"Clear also cookies");
+        //this.myWebViewClientDoliDroid.deleteSessionCookies();
 
-            myWebView.loadUrl(urlToGo);
-        } else {
-            // Clear also cache (we will need different content if we use different entities)
-            Log.i(LOG_TAG, "Clear caches and history of webView");
-            myWebView.clearCache(true);
-            myWebView.clearHistory();
-            this.cacheForMenu = null;
-            this.cacheForQuickAccess = null;
-            this.cacheForBookmarks = null;
-            this.cacheForMultiCompany = null;
-            //Log.d(LOG_TAG,"Clear also cookies");
-            //this.myWebViewClientDoliDroid.deleteSessionCookies();
-
-            myWebView.loadUrl(urlToGo);
-        }
+        myWebView.loadUrl(urlToGo);
 
         return true;
     }
@@ -1615,7 +1624,7 @@ public class SecondActivity extends Activity {
             //    Log.d(LOG_TAG, "shouldOverrideUrlLoading urlWithoutBasicAuth=" + urlWithoutBasicAuth);
             //}
 
-            // TODO Optimize performance by disabling loading of some url (ie: jquery plugin tipTip)
+            // TODO Optimize performance by disabling loading of some url (ie: some jquery plugins)
 
             if (url.startsWith("tel:")) {  // Intercept phone urls
                 Log.d(LOG_TAG, "Launch dialer : " + url);

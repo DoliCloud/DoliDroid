@@ -74,7 +74,7 @@
         <Button
             android:id="@+id/buttonDeletePredefinedUrl"
             android:layout_width="wrap_content"
-            android:layout_height="36dp"
+            android:layout_height="48dp"
             android:layout_below="@+id/TextAbout02"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
@@ -127,7 +127,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="55dp"
             android:foregroundTint="#009688"
-            android:src="@android:drawable/ic_menu_view" />
+            android:src="@android:drawable/ic_menu_view"
+            tools:ignore="ImageContrastCheck" />
 
         <ImageView
             android:id="@+id/imageView03"

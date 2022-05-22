@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/buttonStart"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="56dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="@string/dolicloud_register"
@@ -63,7 +63,7 @@
     <Button
         android:id="@+id/buttonStart"
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
+        android:layout_height="48dp"
         android:layout_below="@id/url_of_instance"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="48dp"
@@ -99,7 +99,7 @@
         android:hint="https://..."
         android:importantForAutofill="no"
         android:inputType="textUri"
-        android:minHeight="32dp"
+        android:minHeight="48dp"
         android:singleLine="true"
         android:textSize="15sp"
         tools:ignore="LabelFor">

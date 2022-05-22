@@ -2,14 +2,6 @@
     <!-- List of predefined icon on: http://androiddrawableexplorer.appspot.com/ -->
 
 	<item
-		android:id="@+id/quit"
-		android:icon="@drawable/ic_baseline_exit_to_app_24"
-		android:menuCategory="secondary"
-		android:orderInCategory="200"
-		android:showAsAction="withText"
-		android:title="@string/menu_quit" />
-
-	<item
 		android:id="@+id/menu_settings"
 		android:menuCategory="secondary"
 		android:orderInCategory="300"
@@ -40,6 +32,15 @@
 				android:menuCategory="secondary"
 				android:orderInCategory="137"
 				android:title="@string/menu_clear_all_urls" />
+			<item
+				android:id="@+id/about"
+				android:icon="@android:drawable/ic_menu_info_details"
+				android:menuCategory="secondary"
+				android:orderInCategory="500"
+				android:showAsAction="withText"
+				android:title="@string/menu_info"
+				android:titleCondensed="@string/menu_info_short" />
+
 			<!-- <item android:id="@+id/add_url"
            android:title="@string/menu_add_url"   /> -->
 			<!-- <item android:id="@+id/remove_url"
@@ -49,12 +50,11 @@
 	</item>
 
 	<item
-		android:id="@+id/about"
-		android:icon="@android:drawable/ic_menu_info_details"
+		android:id="@+id/quit"
+		android:icon="@android:drawable/ic_menu_close_clear_cancel"
 		android:menuCategory="secondary"
-		android:orderInCategory="500"
+		android:orderInCategory="400"
 		android:showAsAction="withText"
-		android:title="@string/menu_info"
-		android:titleCondensed="@string/menu_info_short" />
+		android:title="@string/menu_quit" />
 
 </menu>
