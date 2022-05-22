@@ -33,6 +33,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// This are classes found with the useLibrary 'org.apache.http.legacy' in the build.gradle file.
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.HttpClient;
@@ -48,7 +49,6 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.HttpClient;
 import com.nltechno.utils.MySSLSocketFactory;
 import com.nltechno.utils.Utils;
 
