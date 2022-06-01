@@ -50,16 +50,6 @@
         android:layout_marginRight="10dp"
         android:spinnerMode="dialog" />
 
-    <ImageView
-        android:id="@+id/imageViewLogoBottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textAndroidClient"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="1dp"
-        android:contentDescription="@string/logo_dolidroid"
-        android:src="@drawable/ic_launcher" />
-
     <Button
         android:id="@+id/buttonStart"
         android:layout_width="wrap_content"
