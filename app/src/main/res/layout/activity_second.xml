@@ -4,45 +4,31 @@
     android:layout_height="match_parent"
     android:theme="@style/DoliDroidThemeFirst"
     tools:context=".SecondActivity">
-        
-    <WebView
-        android:id="@+id/webViewContent"
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:textColor="@color/black" />
-    
+        android:layout_height="match_parent">
 
- 
-    <!-- <Button
-        android:id="@+id/buttonViewMenu"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="32sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="2dp"
-        android:onClick="onClickToMenu"
-        android:text="@string/textMenu"
-        android:textSize="14sp"
-        tools:context=".SecondActivity" />
-        -->
-<!-- 
-            style="?android:attr/progressBarStyleHorizontal"
-        android:maxHeight="4dip"
-        android:minHeight="4dip"
-     -->
+        <WebView
+            android:id="@+id/webViewContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:textColor="@color/black" />
 
-    <ProgressBar
-        android:id="@+id/progressBar1"
-        style="@android:style/Widget.ProgressBar.Inverse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:bottomLeftRadius="0px"
-        android:bottomRightRadius="0px"
-        android:topLeftRadius="0px"
-        android:topRightRadius="0px" />
+        <ProgressBar
+                android:id="@+id/progressBar1"
+                style="@android:style/Widget.ProgressBar.Inverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:bottomLeftRadius="0px"
+                android:bottomRightRadius="0px"
+                android:topLeftRadius="0px"
+                android:topRightRadius="0px" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

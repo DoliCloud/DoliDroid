@@ -114,7 +114,6 @@
 				android:orderInCategory="138"
 				android:title="@string/menu_clear_all_urls" />
 			<item android:id="@+id/about"
-				android:icon="@android:drawable/ic_menu_info_details"
 				android:menuCategory="secondary"
 				android:orderInCategory="500"
 				android:showAsAction="withText"

@@ -106,6 +106,7 @@ import android.app.AlertDialog;
 import androidx.core.content.FileProvider;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 /**
@@ -204,6 +205,8 @@ public class SecondActivity extends Activity {
     private String nextAltHistoryStack = "";
     private String nextAltHistoryStackBis = "";
     ArrayList<String> altHistoryStack = new ArrayList<>();
+
+    SwipeRefreshLayout swipe;
 
     // To store data for the download manager
     //final String strPref_Download_ID = "PREF_DOWNLOAD_ID";
@@ -369,6 +372,34 @@ public class SecondActivity extends Activity {
         
         lastLoadUrl=urlToGo;
         myWebView.loadUrl(urlToGo);
+
+        // Add handler for the Swipe
+        swipe = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //myWebView.clearCache(true);
+                //myWebView.clearHistory();
+                //myWebView.reload();
+
+                // Code similar to menu "Reload page"
+                String urlToGo = myWebView.getUrl();
+                if (urlToGo != null) {
+                    if (urlToGo.startsWith("data:text") || urlToGo.startsWith("about:blank")) {
+                        urlToGo = savedDolRootUrl;
+                    }
+
+                    if (! urlToGo.contains("dol_hide_topmenu=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_hide_topmenu=1";
+                    if (! urlToGo.contains("dol_hide_leftmenu=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_hide_leftmenu=1";
+                    if (! urlToGo.contains("dol_optimize_smallscreen=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_optimize_smallscreen=1";
+                    if (! urlToGo.contains("dol_no_mouse_hover=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_no_mouse_hover=1";
+                    if (! urlToGo.contains("dol_use_jmobile=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_use_jmobile=1";
+                    Log.d(LOG_TAG, "LoadUrl after Swipe : Load url "+urlToGo);
+                    lastLoadUrl=urlToGo;
+                    myWebView.loadUrl(urlToGo);
+                }
+            }
+        });
     }
 
 
@@ -516,7 +547,7 @@ public class SecondActivity extends Activity {
         MenuItem menuItemAbout = menu.findItem(R.id.about);
         if (menuItemAbout != null) {
             menuItemAbout.setVisible(true);
-            menuItemAbout.setIcon(getDrawable(R.drawable.ic_baseline_help_outline_24));
+            //menuItemAbout.setIcon(getDrawable(R.drawable.ic_baseline_help_outline_24));
         }
 
         Log.d(LOG_TAG, "onCreateOptionsMenu Add menu Logout");
@@ -1835,11 +1866,14 @@ public class SecondActivity extends Activity {
 				listOfCookiesAfterLogon=this.listCookies();	// Save cookie for
 			}
 
+            // If the swipe animation is still running
+            swipe.setRefreshing(false);
+
 			//myWebView = findViewById(R.id.webViewContent);
 			boolean b = myWebView.canGoBack();
             WebBackForwardList mWebBackForwardList;
 
-            Log.d(LOG_TAG, "onPageFinished url="+url+" canGoBack="+b);
+            Log.d(LOG_TAG, "onPageFinished Begin url="+url+" canGoBack="+b);
 	        
 		    if (tagToShowInterruptMessage.length() > 0 && tagToShowInterruptCounter > 0)	//onConsoleMessage is increased by onConsoleMessage function (javascript error)
 			{

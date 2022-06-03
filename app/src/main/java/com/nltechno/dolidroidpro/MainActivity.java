@@ -139,7 +139,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		display.getSize(size);
 		int width = size.x;
 		int height = size.y;
-		Log.d(LOG_TAG, "Scree height is "+height);
+		Log.d(LOG_TAG, "Screen height is "+height);
 		if (height < 1100) {
 			// We hide the image
 			ImageView img1 = findViewById(R.id.imageViewLogoBottom);
@@ -414,7 +414,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 		MenuItem menuItemAbout = menu.findItem(R.id.about);
 		if (menuItemAbout != null) {
-			menuItemAbout.setIcon(getDrawable(R.drawable.ic_baseline_help_outline_24));
+			//menuItemAbout.setIcon(getDrawable(R.drawable.ic_baseline_help_outline_24));
 		}
 
 		this.savMenu=menu;
