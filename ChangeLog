@@ -5,6 +5,9 @@ English DoliDroid ChangeLog
 ***** ChangeLog for 3.0 *****
 
 3.0-b53
+- Add a refresh of page on swipe down.
+
+3.0-b52
 - Upload of a photo captured by a camera on Android >= 30 is available on all devices.
 - Upgrade androidx.core:core to 1.7.0
 
