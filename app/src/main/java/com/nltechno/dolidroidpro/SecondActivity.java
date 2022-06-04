@@ -45,9 +45,9 @@ import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.params.HttpParams;
 
 import com.nltechno.utils.MySSLSocketFactory;
 import com.nltechno.utils.Utils;
@@ -823,7 +823,7 @@ public class SecondActivity extends Activity {
     }
 
     /**
-     * Class to load an URL in background
+     * Class to load an URL in background.
      * Used to load menu, quick search page and more...
      */
     private class DownloadWebPageTask extends AsyncTask<String, Void, String>
