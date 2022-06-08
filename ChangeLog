@@ -6,6 +6,7 @@ English DoliDroid ChangeLog
 
 3.0-b53
 - Add a refresh of page on swipe down.
+- Clean code (removed a lot of deprecated code)
 
 3.0-b52
 - Upload of a photo captured by a camera on Android >= 30 is available on all devices.
