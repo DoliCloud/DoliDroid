@@ -142,8 +142,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		Log.d(LOG_TAG, "Screen height is "+height);
 		if (height < 1100) {
 			// We hide the image
-			ImageView img1 = findViewById(R.id.imageViewLogoBottom);
-			img1.setVisibility(View.INVISIBLE);
+			//ImageView img1 = findViewById(R.id.imageViewLogoBottom);
+			//img1.setVisibility(View.INVISIBLE);
 		}
 
         // text2 has links specified by putting <a> tags in the string
