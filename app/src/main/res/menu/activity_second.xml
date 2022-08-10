@@ -66,15 +66,15 @@
 				android:menuCategory="secondary"
 				android:orderInCategory="130"
 				/>
-			<item android:id="@+id/refresh"
-				android:title="@string/menu_refresh"
-				android:icon="@android:drawable/ic_menu_rotate"
-				android:menuCategory="secondary"
-				android:orderInCategory="140"
-				/>
 			<item android:id="@+id/clearcache"
 				android:title="@string/menu_clearcache"
 				android:icon="@android:drawable/ic_menu_close_clear_cancel"
+				android:menuCategory="secondary"
+				android:orderInCategory="140"
+				/>
+			<item android:id="@+id/refresh"
+				android:title="@string/menu_refresh"
+				android:icon="@android:drawable/ic_menu_rotate"
 				android:menuCategory="secondary"
 				android:orderInCategory="150"
 				/>

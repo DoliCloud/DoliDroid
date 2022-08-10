@@ -715,7 +715,22 @@ public class SecondActivity extends Activity {
                 Log.i(LOG_TAG, "Call finish activity, with setResult = "+RESULT_WEBVIEW);
                 setResult(RESULT_WEBVIEW);
                 finish();
-                return true;    
+                return true;
+            case R.id.clearcache:   // Action to clear webview caches
+                //myWebView = findViewById(R.id.webViewContent);
+                Log.i(LOG_TAG, "Clear caches and history of webView");
+                myWebView.clearFormData();
+                myWebView.clearHistory();
+                myWebView.clearCache(true);
+                //WebStorage.getInstance().deleteAllData();
+                this.cacheForMenu=null;
+                this.cacheForQuickAccess=null;
+                this.cacheForBookmarks=null;
+                this.cacheForMultiCompany=null;
+
+                Toast.makeText(activity, R.string.CacheAndHistoryCleared, Toast.LENGTH_LONG).show();
+
+                return true;
             case R.id.refresh:
                 //myWebView = findViewById(R.id.webViewContent);
                 urlToGo = myWebView.getUrl();
@@ -734,19 +749,6 @@ public class SecondActivity extends Activity {
                     lastLoadUrl=urlToGo;
                     myWebView.loadUrl(urlToGo);
                 }
-                return true;
-            case R.id.clearcache:   // Action to clear webview caches
-                //myWebView = findViewById(R.id.webViewContent);
-                Log.i(LOG_TAG, "Clear caches and history of webView");
-                myWebView.clearCache(true);
-                myWebView.clearHistory();
-                this.cacheForMenu=null;
-                this.cacheForQuickAccess=null;
-                this.cacheForBookmarks=null;
-                this.cacheForMultiCompany=null;
-
-                Toast.makeText(activity, R.string.CacheAndHistoryCleared, Toast.LENGTH_LONG).show();
-
                 return true;
             case R.id.clear_all_urls:   // Clear predefined URLs
                 File file = new File(getApplicationContext().getFilesDir().toString() + "/" + MainActivity.FILENAME);
@@ -1853,7 +1855,6 @@ public class SecondActivity extends Activity {
 
 		/**
 		 * onPageFinished: Execute code just after a page was completely loaded
-		 * Note: When using jmobile ajax cache, this method may be called before or after JMobile has run, so before or after any onConsoleMessage of JMobile error.
 		 */
 		@Override
 	    public void onPageFinished(WebView view, String url)
@@ -1907,6 +1908,7 @@ public class SecondActivity extends Activity {
 				// If we loaded page login.php, we check Dolibarr version
 				// Title for login page is defined into login.tpl.php (with some part into dol_loginfunction in security2.lib.php)
 				this.webViewtitle = myWebView.getTitle();
+
 				if (this.webViewtitle != null)
 				{
                     Matcher m = patternLoginHomePageForVersion.matcher(this.webViewtitle);
