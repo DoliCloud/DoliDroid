@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #------------------------------------------------------
 # Script to pull language files to Transifex
 #
@@ -6,6 +6,9 @@
 #------------------------------------------------------
 # Usage: txpull.sh (all|xx_XX) [-r dolibarr.file] [-f]
 #------------------------------------------------------
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+cd $DIR/../..
 
 # Syntax
 if [ "x$1" = "x" ]
