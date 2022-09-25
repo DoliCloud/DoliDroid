@@ -1551,7 +1551,7 @@ public class SecondActivity extends Activity {
             Log.v(LOG_TAG, "shouldInterceptRequest url="+url+", host="+host+", fileName="+fileName+", savedDolBasedUrl="+savedDolBasedUrl+" version in url param (for js or css pages)="+version);
 
             Boolean isADownload = false;
-            if ((url != null && (url.endsWith(".pdf") || url.endsWith(".odt") || url.endsWith(".ods")) && ! url.contains("action=")) 	// Old way to detect a download (we do not make a download of link to delete or print or presend a file)
+            if ((url != null && (url.endsWith(".pdf") || url.endsWith(".odt") || url.endsWith(".ods")) && ! url.contains("action=") && ! url.contains("section=")) 	// Old way to detect a download (we do not make a download of link to delete or print or presend a file)
                     || "document.php".equals(fileName)									                       			                // The default wrapper to download files
                     || (url != null && url.contains("output=file"))) {																	// The new recommended parameter for pages that are not document.php like export.php that generate a file output
                 isADownload = true;
