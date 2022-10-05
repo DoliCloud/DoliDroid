@@ -765,7 +765,11 @@ public class SecondActivity extends Activity {
                 // Now update menu entry
                 MainActivity.listOfRootUrl = new ArrayList<String>();	// Clear array of menu entry
                 MenuItem menuItem3 = this.savMenu.findItem(R.id.clear_all_urls);
-                menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
+                if (MainActivity.listOfRootUrl != null) {
+                    menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
+                } else {
+                    menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (0)");
+                }
 
                 // Clear saved login / pass
                 try {
