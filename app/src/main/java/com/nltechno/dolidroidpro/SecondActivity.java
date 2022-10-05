@@ -1443,6 +1443,7 @@ public class SecondActivity extends Activity {
 		 * @param view		View
 		 * @param url		URL
 		 * @param favicon	Favicon
+         * @see onPageFinished()
 		 */
 		@Override  
 		public void onPageStarted(WebView view, String url, Bitmap favicon)
@@ -1640,7 +1641,7 @@ public class SecondActivity extends Activity {
 
 		/**
 		 * Handler to manage downloads.
-		 * Seems called when we click on a href link or when calling loadUrl(). It is not called on POST methods.
+		 * Seems called when we click on a href link or when calling loadUrl(). It is not called on POST methods (see shouldInterceptRequest, PageStarted or PageFinished for that).
          *
 		 * @param	WebView		view		Web view
 		 * @param	String		url			Url
@@ -1859,6 +1860,10 @@ public class SecondActivity extends Activity {
 
 		/**
 		 * onPageFinished: Execute code just after a page was completely loaded
+         *
+         * @param	WebView		view		Web view
+         * @param	String		url			Url
+         * @see onPageStarted()
 		 */
 		@Override
 	    public void onPageFinished(WebView view, String url)

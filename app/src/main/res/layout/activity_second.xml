@@ -17,18 +17,18 @@
             android:background="@color/white"
             android:textColor="@color/black" />
 
-        <ProgressBar
-                android:id="@+id/progressBar1"
-                style="@android:style/Widget.ProgressBar.Inverse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:bottomLeftRadius="0px"
-                android:bottomRightRadius="0px"
-                android:topLeftRadius="0px"
-                android:topRightRadius="0px" />
-
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="@android:style/Widget.ProgressBar.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:bottomLeftRadius="0px"
+        android:bottomRightRadius="0px"
+        android:topLeftRadius="0px"
+        android:topRightRadius="0px" />
 
 </RelativeLayout>
