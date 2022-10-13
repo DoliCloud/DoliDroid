@@ -4,6 +4,12 @@ English DoliDroid ChangeLog
 
 ***** ChangeLog for 3.0 *****
 
+3.0-b56
+- Fix null pointer error on "Copy current URL" feature.
+
+3.0-b55
+- Fix the wheel on long pages
+
 3.0-b54
 - Fix error on small screen.
 

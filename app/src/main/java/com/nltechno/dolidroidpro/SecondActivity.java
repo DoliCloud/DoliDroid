@@ -1150,35 +1150,37 @@ public class SecondActivity extends Activity {
         //myWebView = findViewById(R.id.webViewContent);
 
         // Set currentUrl
-        currentUrl = currentUrl.replace("&dol_hide_topmenu=1", "");
-        currentUrl = currentUrl.replace("dol_hide_topmenu=1&", "");
-        currentUrl = currentUrl.replace("&dol_hide_leftmenu=1", "");
-        currentUrl = currentUrl.replace("dol_hide_leftmenu=1&", "");
-        currentUrl = currentUrl.replace("&dol_optimize_smallscreen=1", "");
-        currentUrl = currentUrl.replace("dol_optimize_smallscreen=1&", "");
-        currentUrl = currentUrl.replace("&dol_no_mouse_hover=1", "");
-        currentUrl = currentUrl.replace("dol_no_mouse_hover=1&", "");
-        currentUrl = currentUrl.replace("&dol_use_jmobile=1", "");
-        currentUrl = currentUrl.replace("dol_use_jmobile=1&", "");
-        // Another pass if it remains only 1 paramater
-        currentUrl = currentUrl.replace("dol_hide_topmenu=1", "");
-        currentUrl = currentUrl.replace("dol_hide_leftmenu=1", "");
-        currentUrl = currentUrl.replace("dol_optimize_smallscreen=1", "");
-        currentUrl = currentUrl.replace("dol_no_mouse_hover=1", "");
-        currentUrl = currentUrl.replace("dol_use_jmobile=1", "");
+        if (currentUrl != null) {
+            currentUrl = currentUrl.replace("&dol_hide_topmenu=1", "");
+            currentUrl = currentUrl.replace("dol_hide_topmenu=1&", "");
+            currentUrl = currentUrl.replace("&dol_hide_leftmenu=1", "");
+            currentUrl = currentUrl.replace("dol_hide_leftmenu=1&", "");
+            currentUrl = currentUrl.replace("&dol_optimize_smallscreen=1", "");
+            currentUrl = currentUrl.replace("dol_optimize_smallscreen=1&", "");
+            currentUrl = currentUrl.replace("&dol_no_mouse_hover=1", "");
+            currentUrl = currentUrl.replace("dol_no_mouse_hover=1&", "");
+            currentUrl = currentUrl.replace("&dol_use_jmobile=1", "");
+            currentUrl = currentUrl.replace("dol_use_jmobile=1&", "");
+            // Another pass if it remains only 1 paramater
+            currentUrl = currentUrl.replace("dol_hide_topmenu=1", "");
+            currentUrl = currentUrl.replace("dol_hide_leftmenu=1", "");
+            currentUrl = currentUrl.replace("dol_optimize_smallscreen=1", "");
+            currentUrl = currentUrl.replace("dol_no_mouse_hover=1", "");
+            currentUrl = currentUrl.replace("dol_use_jmobile=1", "");
 
-        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        android.content.ClipData clip = android.content.ClipData.newPlainText(getString(R.string.UrlCopied), currentUrl);
-        clipboard.setPrimaryClip(clip);
+            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            android.content.ClipData clip = android.content.ClipData.newPlainText(getString(R.string.UrlCopied), currentUrl);
+            clipboard.setPrimaryClip(clip);
 
-        /*
-        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("DoliDroid copied URL", currentUrl);
-        clipboard.setPrimaryClip(clip);
-        */
+            /*
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("DoliDroid copied URL", currentUrl);
+            clipboard.setPrimaryClip(clip);
+            */
 
-        Toast.makeText(activity, R.string.UrlCopied, Toast.LENGTH_LONG).show();
-
+            Toast.makeText(activity, R.string.UrlCopied, Toast.LENGTH_LONG).show();
+        }
+        
         return true;
     }
 
