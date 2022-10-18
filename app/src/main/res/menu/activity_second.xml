@@ -59,13 +59,6 @@
 		android:orderInCategory="290"
 		android:title="@string/menu_utilities">
 		<menu android:id="@+id/submenu_utilities">
-			<item
-				android:id="@+id/menu_copy_url"
-				android:title="@string/menu_copy_url"
-				android:icon="@android:drawable/alert_dark_frame"
-				android:menuCategory="secondary"
-				android:orderInCategory="130"
-				/>
 			<item android:id="@+id/clearcache"
 				android:title="@string/menu_clearcache"
 				android:icon="@android:drawable/ic_menu_close_clear_cancel"
@@ -77,6 +70,13 @@
 				android:icon="@android:drawable/ic_menu_rotate"
 				android:menuCategory="secondary"
 				android:orderInCategory="150"
+				/>
+			<item
+				android:id="@+id/menu_copy_url"
+				android:title="@string/menu_copy_url"
+				android:icon="@android:drawable/alert_dark_frame"
+				android:menuCategory="secondary"
+				android:orderInCategory="160"
 				/>
 		</menu>
 	</item>

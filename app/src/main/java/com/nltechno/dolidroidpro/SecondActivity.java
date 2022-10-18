@@ -395,6 +395,10 @@ public class SecondActivity extends Activity {
                     if (! urlToGo.contains("dol_no_mouse_hover=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_no_mouse_hover=1";
                     if (! urlToGo.contains("dol_use_jmobile=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_use_jmobile=1";
                     Log.d(LOG_TAG, "LoadUrl after Swipe : Load url "+urlToGo);
+
+                    // Disable the "swipe refresh" icon because we already have the progressBar called progress that is shown each time we load a page
+                    swipe.setRefreshing(false);
+
                     lastLoadUrl=urlToGo;
                     myWebView.loadUrl(urlToGo);
                 }
