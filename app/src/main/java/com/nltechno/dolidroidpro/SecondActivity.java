@@ -161,6 +161,7 @@ public class SecondActivity extends Activity {
 	private int tagToShowInterruptCounter=0;
 	private String tagToShowMessage="";
 	private int tagToShowCounter=0;
+    private int tagClearHistoryAfterFinished=0;
 
 	private String cacheForMenu;
 	private String cacheForQuickAccess;
@@ -257,9 +258,9 @@ public class SecondActivity extends Activity {
         String dolRootUrl = intent.getStringExtra("dolRootUrl");        
         String dolRequestUrl = intent.getStringExtra("dolRequestUrl");        
 
-        this.savedDolRootUrl = dolRootUrl;      // this include user:pass of http basic urls. Example: hTtP://user:pass@testldr1.with.dolicloud.com:xxx/
+        this.savedDolRootUrl = dolRootUrl;      // this include user:pass of http basic urls. Always end with /. Example: hTtP://user:pass@testldr1.with.dolicloud.com:xxx/
         this.savedDolRootUrl = this.savedDolRootUrl.replaceAll("^(?i)http(s?):", "http$1:");
-        this.savedDolScheme=Uri.parse(this.savedDolRootUrl).getScheme();                                                                                        // Example: http
+        this.savedDolScheme=Uri.parse(this.savedDolRootUrl).getScheme();                     // Example: http
         this.savedDolPort=Uri.parse(this.savedDolRootUrl).getPort();
         this.savedDolHost=Uri.parse(this.savedDolRootUrl).getHost();
         this.savedDolUserInfoEncoded=Uri.parse(this.savedDolRootUrl).getEncodedUserInfo();   // user:pass
@@ -936,7 +937,8 @@ public class SecondActivity extends Activity {
                 if (stringToCheckInResult != null) {     // Test that result is as expected
                     if (result.contains(stringToCheckInResult)) {
                         if (this.mode != null) {
-                            nextAltHistoryStack=this.mode;       // TODO Do not add same history url twice
+                            // TODO Do not add same history url twice
+                            nextAltHistoryStack = this.mode;       // this.mode is "menu", "quickaccess", ...
                         }
 
                         if ("menu".equals(this.mode)) {     // Test that result is a menu
@@ -969,7 +971,7 @@ public class SecondActivity extends Activity {
                 }
             }
 
-            Log.d(LOG_TAG, "toremove");
+            Log.d(LOG_TAG, "end onPostExecute (toremove)");
         }
     }
         
@@ -1215,39 +1217,32 @@ public class SecondActivity extends Activity {
             previousUrl = mWebBackForwardList.getItemAtIndex(indextoget).getUrl();
         }
 
-        Log.d(LOG_TAG, "We called codeForBack. canGoBack="+b+", currentUrl="+currentUrl+", previousUrl="+previousUrl+", savedDolBasedUrl="+savedDolBasedUrl);
+        Log.d(LOG_TAG, "We called codeForBack. canGoBack="+b+", indextoget="+indextoget+" currentUrl="+currentUrl+", previousUrl="+previousUrl);
+        Log.d(LOG_TAG, "savedDolRootUrl="+savedDolRootUrl+", savedDolBasedUrl="+savedDolBasedUrl);
 
-        if (indextoget <= 1 && previousUrl.startsWith(savedDolBasedUrl + "/index.php")) {
+        if (indextoget <= 1 && ("".equals(previousUrl) || previousUrl.startsWith(savedDolRootUrl + "index.php"))) {
             // For an unknown reason, if we access home page passing by the login page, reaching the index.php page after, when we make a go page
             // back to reach this home page, we got an error of cache when making the goBack (even if we remove the myWebView.clearHistory after login).
             // So we disable the goBack for this case.
             Log.d(LOG_TAG, "We disable the goBack for this case. We replace it with the case there is no previous page.");
-            b = false;
+            if ("".equals(previousUrl)) {
+                // No previous page
+                b = false;
+            } else {
+                // Previous page start with savedDolRootUrl + "index.php" so it's home page
+                tagClearHistoryAfterFinished = 1;
+                myWebView.loadUrl(savedDolRootUrl + "index.php");   // This will also add the index page into history
+                return true;
+            }
         }
 
-        if (b) 
-        {
-            if (previousUrl.equals(savedDolBasedUrl+"/") || previousUrl.contains("data:text/html"))
-            {
-                Log.d(LOG_TAG, "Previous Url is a page with an history problem");
-                if (currentUrl.contains("data:text/html"))
-                {
-                    if (altHistoryStack.size() > 0) // Should be true
-                    {
-                        nextAltHistoryStack=altHistoryStack.get(altHistoryStack.size() - 1);
-                        Log.d(LOG_TAG, "Current page has &ui-page, we set nextAltHistoryStack to "+nextAltHistoryStack+" and consume the history stack");
-                        altHistoryStack.remove(altHistoryStack.size() - 1);
-                    }
-                }
-                else
-                {
-                    if (altHistoryStack.size() > 0) // Should be true
-                    {
-                        // later shouldInterceptRequest will take lastentry of history to know which cache to use
-                        //nextAltHistoryStack=altHistoryStack.get(altHistoryStack.size() - 1);
-                        Log.d(LOG_TAG, "We do nothing, we let shouldInterceptRequest consume and pop the history stack"); 
-                        //altHistoryStack.remove(altHistoryStack.size() - 1);
-                    }
+        if (b) {
+            if (currentUrl.contains("data:text/html")) {
+                Log.d(LOG_TAG, "Previous Url may be a page with an history problem");
+                if (altHistoryStack.size() > 0) {   // Should be true
+                    nextAltHistoryStack = altHistoryStack.get(altHistoryStack.size() - 1);
+                    Log.d(LOG_TAG, "Current page has &ui-page, we set nextAltHistoryStack to "+nextAltHistoryStack+" and consume the history stack");
+                    altHistoryStack.remove(altHistoryStack.size() - 1);
                 }
             } else {
                 Log.d(LOG_TAG, "We clear nextAltHistoryStack"); 
@@ -1257,24 +1252,23 @@ public class SecondActivity extends Activity {
             Log.d(LOG_TAG, "We clear nextAltHistoryStackBis and make the goBack to "+previousUrl);
             nextAltHistoryStackBis = "";
             myWebView.goBack(); // This will call shouldInterceptRequest
-        }
-        else
-        {
+        } else {
             if (! this.messageNoPreviousPageShown)
             {
                 Toast.makeText(activity, getString(R.string.NoPreviousPageAgainToQuit), Toast.LENGTH_SHORT).show();
-                this.messageNoPreviousPageShown =true;
+                this.messageNoPreviousPageShown = true;
             }
             else
             {
                 Log.d(LOG_TAG, "Second click on Previous when no previous available.");
                 Log.i(LOG_TAG, "We finish activity resultCode="+RESULT_ABOUT);
-                this.messageNoPreviousPageShown =false;
+                this.messageNoPreviousPageShown = false;
                 setResult(RESULT_ABOUT);   // We don't want to quit completely
                 WebViewDatabase.getInstance(getBaseContext()).clearHttpAuthUsernamePassword();
                 finish();
             }           
         }
+
         return true;
     }
 
@@ -1920,7 +1914,7 @@ public class SecondActivity extends Activity {
 			{
 				tagToShowInterruptCounter=0;		// Page was loaded, so we set count of number of try to 0
 
-				// If we loaded page login.php, we check Dolibarr version
+                // If we loaded page login.php, we check Dolibarr version
 				// Title for login page is defined into login.tpl.php (with some part into dol_loginfunction in security2.lib.php)
 				this.webViewtitle = myWebView.getTitle();
 
@@ -1978,15 +1972,13 @@ public class SecondActivity extends Activity {
 
 				    if (patternLoginPage.matcher(this.webViewtitle).find() || patternLoginPage2.matcher(this.webViewtitle).find())	// if title ends with "Login Dolixxx x.y.z", this is login page or home page
 				    {
-				    	if (url.equals(savedDolBasedUrl+"/"))
-				    	{
-							Log.w(LOG_TAG, "onPageFinished We ignore page since url is not a specific page (not /index.php, not /myapge.php, ...)");
-				    	}
-				    	else
-				    	{
+                        // This is login page
+				    	if (url.equals(savedDolRootUrl)) {
+							Log.w(LOG_TAG, "onPageFinished We ignore page since url is not a specific page (not /index.php, not /mypage.php, ...)");
+				    	} else {
 							synchronized (this) 
 							{
-								boolean versionOk=true;	// Will be false if Dolibarr is < 3.6.*
+								boolean versionOk = true;	// Will be false if Dolibarr is < 3.6.*
 								if (foundVersion) {
 									try {
 										if (m.group(1) != null && Integer.parseInt(m.group(1)) < 3) versionOk = false;
@@ -2069,7 +2061,9 @@ public class SecondActivity extends Activity {
 								view.loadUrl("javascript:(function() { " + jsInjectCodeForSetForm + " })()");
 							}
 				    	}
-					}
+
+                        myWebView.clearHistory();   // So it removes all history and the new loadUrl will be alone and first in list
+                    }
 				    else	// This is not login page
 				    {
 				    	//Log.d(LOG_TAG, "Title of page is: "+myWebView.getTitle()+" - Login tag or Version not found");
@@ -2120,15 +2114,22 @@ public class SecondActivity extends Activity {
 								
 				    		// Clear webview history
 							Log.d(LOG_TAG,"onPageFinished We clear history to removes the login page history entry");
-                            //mWebBackForwardList = myWebView.copyBackForwardList();   // To analyse content for debug. Can be commented.
+
                             myWebView.clearHistory();   // So it removes the login page history entry (we don't want to have it when making go back)
-				    	}
+				    	} else {
+                            // This is a common page (no tag on login or version and not a page just after a login)
+                            WebBackForwardList tmpWebBackForwardList = myWebView.copyBackForwardList();
+                            int currentindexinhistory = tmpWebBackForwardList.getCurrentIndex();
+                            if (tagClearHistoryAfterFinished > 0) {
+                                tagClearHistoryAfterFinished = 0;
+                                myWebView.clearHistory();   // So it removes the login page history entry (we don't want to have it when making go back)
+                            }
+                        }
 				    }
 				}
 
-				// If we loaded page logout.php, we finished activity
-				if (url.contains("logout.php"))
-				{
+				// If we loaded the page logout.php, we finished activity
+				if (url.contains("logout.php")) {
 					synchronized (this) 
 					{
 						if (tagToLogout)
@@ -2175,23 +2176,25 @@ public class SecondActivity extends Activity {
 				}
 				*/
 
-				if (! "".equals(nextAltHistoryStackBis))
-				{
-					Log.d(LOG_TAG, "onPageFinished We add an entry into history stack because nextAltHistoryStackBis="+nextAltHistoryStackBis);
+				if (! "".equals(nextAltHistoryStackBis)) {
+					Log.d(LOG_TAG, "onPageFinished We now add an entry into history stack because nextAltHistoryStackBis="+nextAltHistoryStackBis);
 					altHistoryStack.add(nextAltHistoryStackBis);
 					nextAltHistoryStackBis="";
-					if (url.contains("data:text/html")) nextAltHistoryStack="menu";
+					if (url.contains("data:text/html")) {
+                        nextAltHistoryStack="menu";
+                    }
 				}
 				
-				if (url.equals(savedDolBasedUrl+"/") || url.contains("data:text/html"))
-				{
+				if (url.contains("data:text/html"))	{
 					Log.d(LOG_TAG, "onPageFinished We finished to load a page with a bad history "+url);
 					// If we go from a back, nextAltHistoryStack is ""
 					//nextAltHistoryStackBis=(("".equals(nextAltHistoryStack) && url.contains("data:text/html"))?"menu":nextAltHistoryStack);
 					nextAltHistoryStackBis=nextAltHistoryStack;	
 					nextAltHistoryStack="";
 				}
-				
+
+                messageNoPreviousPageShown = false;
+
 				dumpBackForwardList(myWebView);
 			}
 	    }
