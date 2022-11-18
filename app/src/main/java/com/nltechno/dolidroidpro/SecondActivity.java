@@ -1764,7 +1764,7 @@ public class SecondActivity extends Activity {
 			if (((url.endsWith(".pdf") || url.endsWith(".odt") || url.endsWith(".ods")) && ! url.contains("action=")) 	// Old way to detect a download (we do not make a download of link to delete or print or presend a file)
 					|| url.startsWith(savedDolRootUrl+"document.php?")									    			// The default wrapper to download files
                     || url.startsWith(savedDolRootUrlWithSForced+"document.php?")										// The default wrapper to download files
-					|| url.contains("output=file"))																		// The new recommended parameter for pages that are not documents.php like export.php that generate a file output
+					|| url.contains("output=file"))																		// The new recommended parameter for pages that are not documents.php like export.php, emptyexample.php that generate a file output
 	        {
 				String query=Uri.parse(url).getQuery();
 				if (query != null) {
