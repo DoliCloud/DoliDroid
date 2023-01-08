@@ -312,8 +312,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			}
 
     		if (this.listOfRootUrl != null) {
-				MenuItem menuItem3 = this.savMenu.findItem(R.id.clear_all_urls);
-				menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (" + this.listOfRootUrl.size() + ")");
+				MenuItem tmpItem = this.savMenu.findItem(R.id.manage_all_urls);
+				tmpItem.setTitle(getString(R.string.menu_manage_all_urls) + " (" + this.listOfRootUrl.size() + ")");
 			}
 		}
 	}
@@ -390,9 +390,9 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		}
 
 		if (this.listOfRootUrl != null) {
-			MenuItem menuItem3 = menu.findItem(R.id.clear_all_urls);
-			if (menuItem3 != null) {
-				menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
+			MenuItem tmpItem = menu.findItem(R.id.manage_all_urls);
+			if (tmpItem != null) {
+				tmpItem.setTitle(getString(R.string.menu_manage_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
 			}
 		}
 
@@ -489,7 +489,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	    	/*case R.id.remove_url:
 	    		Log.d(LOG_TAG, "Remove predefined URL");
 	    		return true;*/
-	    	case R.id.clear_all_urls:
+	    	/*
+			case R.id.clear_all_urls:
 				File file = new File(getApplicationContext().getFilesDir().toString() + "/" + MainActivity.FILENAME);
 				Log.d(LOG_TAG, "Clear predefined URL list "+MainActivity.FILENAME+" (from MainActivity) by deleting file with full path="+file.getAbsolutePath());
 	    		Boolean result = file.delete();
@@ -501,8 +502,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				texViewLink.setVisibility(View.VISIBLE);
 				// Now update menu entry
 				this.listOfRootUrl = new ArrayList<String>();	// Clear array of menu entry
-				MenuItem menuItem3 = this.savMenu.findItem(R.id.clear_all_urls);
-				menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (" + this.listOfRootUrl.size() + ")");
+				MenuItem tmpItem = this.savMenu.findItem(R.id.manage_all_urls);
+				tmpItem.setTitle(getString(R.string.menu_manage_all_urls) + " (" + this.listOfRootUrl.size() + ")");
 
 				// Clear saved login / pass
 				try {
@@ -526,11 +527,18 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				}
 
 	    	    return true;
-		    case R.id.about:
+	    	 */
+			case R.id.manage_all_urls:
+				Log.d(LOG_TAG, "Click onto Manage all URLs");
+				Intent tmpintent = new Intent(MainActivity.this, ManageURLActivity.class);
+				Log.d(LOG_TAG, "onOptionsItemSelected startActivityForResult with requestCode="+REQUEST_ABOUT);
+				startActivityForResult(tmpintent, REQUEST_ABOUT);
+				return true;
+			case R.id.about:
 	    		Log.d(LOG_TAG, "Click onto Info");
-	    		Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+	    		Intent tmpintent2 = new Intent(MainActivity.this, AboutActivity.class);
 	    		Log.d(LOG_TAG, "onOptionsItemSelected startActivityForResult with requestCode="+REQUEST_ABOUT);
-	    		startActivityForResult(intent, REQUEST_ABOUT);
+	    		startActivityForResult(tmpintent2, REQUEST_ABOUT);
 	    		return true;
     		case R.id.quit:
     	        Log.d(LOG_TAG, "Click finish");

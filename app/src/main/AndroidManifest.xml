@@ -56,6 +56,11 @@
             android:label="@string/title_activity_about"
             android:theme="@style/DoliDroidThemeAbout" >
         </activity>
+        <activity
+            android:name=".ManageURLActivity"
+            android:label="@string/title_activity_about"
+            android:theme="@style/DoliDroidThemeAbout" >
+        </activity>
 
         <!-- Define a broadcastreceiver -->
         <receiver android:name="com.nltechno.dolidroidpro.DownloadBroadcastReceiver"

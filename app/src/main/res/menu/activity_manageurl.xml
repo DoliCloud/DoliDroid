@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- List of predefined icon on: http://androiddrawableexplorer.appspot.com/ -->
+
+	<item android:id="@+id/menu_back"
+   	    android:title="@string/menu_back"
+   	    android:icon="@mipmap/ic_action_back"
+   	    android:orderInCategory="60"
+   	    android:showAsAction="always"
+        />
+</menu>

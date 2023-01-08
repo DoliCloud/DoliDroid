@@ -42,56 +42,6 @@
             tools:context=".AboutActivity" />
 
         <TextView
-            android:id="@+id/TextAbout02"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/imageView02"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:maxLines="50"
-            android:text="@string/textAboutB"
-            android:textSize="14sp"
-            tools:context=".AboutActivity" />
-
-        <TextView
-            android:id="@+id/TextAbout02b"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/buttonDeletePredefinedUrl"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="17dp"
-            android:maxLines="50"
-            android:text="@string/textAboutB2"
-            android:textSize="14sp"
-            tools:context=".AboutActivity" />
-
-        <Button
-            android:id="@+id/buttonDeletePredefinedUrl"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_below="@+id/TextAbout02"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="14dp"
-            android:background="#009688"
-            android:paddingStart="8dp"
-            android:paddingTop="0dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="4dp"
-            android:text="@string/DeletePredefinedUrl"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            tools:ignore="TextContrastCheck" />
-
-        <TextView
             android:id="@+id/TextAbout03"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -119,22 +69,10 @@
             android:src="@drawable/ic_baseline_help_outline_24" />
 
         <ImageView
-            android:id="@+id/imageView02"
-            android:layout_width="48dp"
-            android:layout_height="45dp"
-            android:layout_below="@id/TextAbout01"
-            android:layout_alignParentStart="false"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="55dp"
-            android:foregroundTint="#009688"
-            android:src="@drawable/ic_baseline_storage_24"
-            tools:ignore="ImageContrastCheck" />
-
-        <ImageView
             android:id="@+id/imageView03"
             android:layout_width="48dp"
             android:layout_height="45dp"
-            android:layout_below="@id/TextAbout02b"
+            android:layout_below="@id/TextAbout01"
             android:layout_alignParentStart="false"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="55dp"

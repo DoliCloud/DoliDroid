@@ -167,10 +167,12 @@ public class SecondActivity extends Activity {
 	private String cacheForQuickAccess;
     private String cacheForBookmarks;
     private String cacheForMultiCompany;
+    private String cacheForVirtualCard;
 
 	private String lastLoadUrl;
-	private boolean	isMulticompanyOn=false;
     private boolean	isBookmarkOn=true;
+	private boolean	isMulticompanyOn=false;     // Not visible by default
+    private boolean	isVirtualCardOn=false;      // Not visible by default
 
 	private String menuAre="hardwareonly";
 	private Menu savMenu;
@@ -423,21 +425,19 @@ public class SecondActivity extends Activity {
 		invalidateOptionsMenu();
     }
 
-
     /**
-     *  Load SmartPhone menu
-     *
-     *  @param  Menu        menu    Object menu to initialize
-     *  @return boolean             true
-     */
+      *  Load SmartPhone menu.
+      *  Note the onPrepareOptionsMenu is called at different moment compared to onCreateOptionsMenu called once at creation.
+      *
+      *  @param  Menu        menu    Object menu to initialize
+      *  @return boolean             true
+      */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) 
+    public boolean onCreateOptionsMenu(Menu menu)
     {
-        // Handle for the non encrypted shared preferences file
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Log.d(LOG_TAG, "onCreateOptionsMenu this.menuAre="+this.menuAre);
 
         getMenuInflater().inflate(R.menu.activity_second, menu);    // Deploy android menu
-        Log.d(LOG_TAG, "onCreateOptionsMenu this.menuAre="+this.menuAre);
 
         // When there is hardware button and not using "actionbar", we remove the back from menu
         if (Utils.hasMenuHardware(activity) && ! this.menuAre.equals("actionbar"))
@@ -446,42 +446,47 @@ public class SecondActivity extends Activity {
             menu.findItem(R.id.menu_back).setVisible(false);
         }
 
-        if (this.menuAre.equals("actionbar"))
-        {
+        if (this.menuAre.equals("actionbar")) {
             menu.findItem(R.id.menu_menu).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             menu.findItem(R.id.menu_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             menu.findItem(R.id.menu_bookmarks).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
             menu.findItem(R.id.menu_photo).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
             menu.findItem(R.id.menu_scan).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
+            menu.findItem(R.id.menu_virtualcard).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);  // Not enough room so we force it on dropdown menu.
             menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
 
             menu.findItem(R.id.menu_photo).setVisible(false);
             menu.findItem(R.id.menu_scan).setVisible(false);
+            menu.findItem(R.id.menu_virtualcard).setVisible(false);
+            menu.findItem(R.id.menu_multicompany).setVisible(false);
         }
-        if (this.menuAre.equals("hardwareonly"))
-        {
+        if (this.menuAre.equals("hardwareonly")) {
             // Move entries from actionbar to list
             menu.findItem(R.id.menu_menu).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             menu.findItem(R.id.menu_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             menu.findItem(R.id.menu_bookmarks).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            menu.findItem(R.id.menu_virtualcard).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             //menu.findItem(R.id.menu_photo).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             //menu.findItem(R.id.menu_scan).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         }
 
+
+        // Handle for the non encrypted shared preferences file
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+
         // Hide menu show bar if there is no hardware, change label otherwise
         MenuItem menuItem = menu.findItem(R.id.always_show_bar);
-        if (Utils.hasMenuHardware(activity))
-        {
+        if (Utils.hasMenuHardware(activity)) {
             menuItem.setVisible(true);
             boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
             Log.d(LOG_TAG, "onCreateOptionsMenu prefAlwaysShowBar value is "+prefAlwaysShowBar);
             menuItem.setChecked(prefAlwaysShowBar);
-        }
-        else
-        {
+        } else {
             menuItem.setVisible(false);
         }
 
@@ -493,13 +498,14 @@ public class SecondActivity extends Activity {
         menuItem2.setChecked(prefAlwaysAutoFill);
 
 
-        MenuItem menuItem3 = menu.findItem(R.id.clear_all_urls);
+        // Update menu label to add the number of predefined URL into label
+        MenuItem tmpItem = menu.findItem(R.id.manage_all_urls);
+        tmpItem.setVisible(false);
         if (MainActivity.listOfRootUrl != null) {
-            menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
+            tmpItem.setTitle(getString(R.string.menu_manage_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
         } else {
-            menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (0)");
+            tmpItem.setTitle(getString(R.string.menu_manage_all_urls) + " (0)");
         }
-
 
         MenuItem menuItem4 = menu.findItem(R.id.always_uselocalresources);
         Log.d(LOG_TAG, "onCreateOptionsMenu prefAlwaysUseLocalResources value is "+prefAlwaysUseLocalResources);
@@ -508,24 +514,44 @@ public class SecondActivity extends Activity {
         if (isBookmarkOn) {
             Log.d(LOG_TAG, "onCreateOptionsMenu Bookmark feature must be on, we show picto");
             MenuItem menuItemBookmarks = menu.findItem(R.id.menu_bookmarks);
-            if (menuItemBookmarks != null) menuItemBookmarks.setVisible(true);
+            if (menuItemBookmarks != null) {
+                menuItemBookmarks.setVisible(true);
+            }
         } else {
             Log.d(LOG_TAG, "onCreateOptionsMenu Bookmark feature must be disabled, we hide picto");
             MenuItem menuItemBookmarks = menu.findItem(R.id.menu_bookmarks);
-            if (menuItemBookmarks != null) menuItemBookmarks.setVisible(false);
+            if (menuItemBookmarks != null) {
+                menuItemBookmarks.setVisible(false);
+            }
         }
-
 
         if (isMulticompanyOn) {
             Log.d(LOG_TAG, "onCreateOptionsMenu Module multicompany was found, we show picto");
             MenuItem menuItem5 = menu.findItem(R.id.menu_multicompany);
-            if (menuItem5 != null) menuItem5.setVisible(true);
+            if (menuItem5 != null) {
+                menuItem5.setVisible(true);
+            }
         } else {
             Log.d(LOG_TAG, "onCreateOptionsMenu Module multicompany was NOT found, we hide picto");
             MenuItem menuItem5 = menu.findItem(R.id.menu_multicompany);
-            if (menuItem5 != null) menuItem5.setVisible(false);
+            if (menuItem5 != null) {
+                menuItem5.setVisible(false);
+            }
         }
 
+        if (isVirtualCardOn) {
+            Log.d(LOG_TAG, "onCreateOptionsMenu version enough for virtual card, we show picto");
+            MenuItem tmpmenu = menu.findItem(R.id.menu_virtualcard);
+            if (tmpmenu != null) {
+                tmpmenu.setVisible(true);
+            }
+        } else {
+            Log.d(LOG_TAG, "onCreateOptionsMenu version NOT enough for virtual card, we hide picto");
+            MenuItem tmpmenu = menu.findItem(R.id.menu_virtualcard);
+            if (tmpmenu != null) {
+                tmpmenu.setVisible(false);
+            }
+        }
 
         Log.d(LOG_TAG, "onCreateOptionsMenu Add menu Copy url");
         MenuItem menuItemAddLink = menu.findItem(R.id.menu_copy_url);
@@ -594,6 +620,8 @@ public class SecondActivity extends Activity {
                 return this.codeForBookmarks();
             case R.id.menu_multicompany:
                 return this.codeForMultiCompany();
+            case R.id.menu_virtualcard:
+                return this.codeForVirtualCard();
             case R.id.menu_copy_url:
                 return this.codeForCopyUrl();
             case R.id.always_show_bar:  // Switch menu bar on/off
@@ -689,6 +717,21 @@ public class SecondActivity extends Activity {
                 }
                 invalidateOptionsMenu();
                 return true;
+            case R.id.manage_all_urls:
+                Log.i(LOG_TAG, "Start activity Manage URLs");
+                //myWebView = findViewById(R.id.webViewContent);
+                Intent tmpintent1 = new Intent(SecondActivity.this, ManageURLActivity.class);
+                tmpintent1.putExtra("currentUrl", myWebView.getOriginalUrl());
+                tmpintent1.putExtra("userAgent", myWebView.getSettings().getUserAgentString());
+                tmpintent1.putExtra("savedDolRootUrl", this.savedDolRootUrl);
+                tmpintent1.putExtra("lastversionfound", this.lastversionfound);
+                tmpintent1.putExtra("lastversionfoundforasset", this.lastversionfoundforasset);
+                tmpintent1.putExtra("title", myWebView.getTitle());
+                tmpintent1.putExtra("savedAuthuser", this.savedAuthuser);
+                tmpintent1.putExtra("savedAuthpass", this.savedAuthpass);
+                Log.d(LOG_TAG, "startActivityForResult with requestCode="+REQUEST_ABOUT);
+                startActivityForResult(tmpintent1, REQUEST_ABOUT);
+                return true;
             case R.id.about:
                 Log.i(LOG_TAG, "Start activity About");
                 //myWebView = findViewById(R.id.webViewContent);
@@ -702,7 +745,7 @@ public class SecondActivity extends Activity {
                 intent.putExtra("savedAuthuser", this.savedAuthuser);
                 intent.putExtra("savedAuthpass", this.savedAuthpass);
                 Log.d(LOG_TAG, "startActivityForResult with requestCode="+REQUEST_ABOUT);
-                startActivityForResult(intent,REQUEST_ABOUT);
+                startActivityForResult(intent, REQUEST_ABOUT);
                 return true;
             case R.id.menu_logout:
                 tagToLogout=true;
@@ -732,6 +775,7 @@ public class SecondActivity extends Activity {
                 this.cacheForQuickAccess=null;
                 this.cacheForBookmarks=null;
                 this.cacheForMultiCompany=null;
+                this.cacheForVirtualCard=null;
 
                 Toast.makeText(activity, R.string.CacheAndHistoryCleared, Toast.LENGTH_LONG).show();
 
@@ -755,51 +799,9 @@ public class SecondActivity extends Activity {
                     myWebView.loadUrl(urlToGo);
                 }
                 return true;
-            case R.id.clear_all_urls:   // Clear predefined URLs
-                File file = new File(getApplicationContext().getFilesDir().toString() + "/" + MainActivity.FILENAME);
-                Log.d(LOG_TAG, "Clear predefined URL list "+MainActivity.FILENAME+" (from SecondActivity) by deleting file with full path="+file.getAbsolutePath());
-                Boolean result = file.delete();
-                Log.d(LOG_TAG, result.toString());
-                // Hide combo
-                /*
-                Spinner spinner1 = findViewById(R.id.combo_list_of_urls);
-                spinner1.setVisibility(View.INVISIBLE);
-                TextView texViewLink = findViewById(R.id.textViewLink);
-                texViewLink.setVisibility(View.VISIBLE);
-                 */
-                // Now update menu entry
-                MainActivity.listOfRootUrl = new ArrayList<String>();	// Clear array of menu entry
-                MenuItem menuItem3 = this.savMenu.findItem(R.id.clear_all_urls);
-                if (MainActivity.listOfRootUrl != null) {
-                    menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
-                } else {
-                    menuItem3.setTitle(getString(R.string.menu_clear_all_urls) + " (0)");
-                }
+         }
 
-                // Clear saved login / pass
-                try {
-                    //SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
-                    SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
-                            "secret_shared_prefs",
-                            masterKeyAlias,
-                            getApplicationContext(),
-                            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-                    );
-                    Editor editorEncrypted = sharedPrefsEncrypted.edit();
-                    editorEncrypted.clear();
-                    editorEncrypted.commit();
-
-                    Log.d(LOG_TAG, "The encrypted shared preferences file has been cleared");
-                }
-                catch(Exception e) {
-                    Log.w(LOG_TAG, "Failed to clear encrypted shared preferences file");
-                }
-
-                return true;
-        }
-        
+        Log.w(LOG_TAG, "Click onto unknown button "+item.getItemId());
         return false;
     }
 
@@ -929,6 +931,10 @@ public class SecondActivity extends Activity {
                 stringforHistoryUrl = savedDolRootUrl+"core/multicompany_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
                 stringToCheckInResult = "<!-- Multicompany selection  -->";
             }
+            if ("virtualcard".equals(this.mode)) {     // Test that result is a multicompany selection page
+                stringforHistoryUrl = savedDolRootUrl+"user/virtualcard.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
+                stringToCheckInResult = "<!-- Virtual card -->";
+            }
 
             if (result != null && ! "".equals(result))
             {
@@ -949,6 +955,9 @@ public class SecondActivity extends Activity {
                         }
                         if ("bookmarks".equals(this.mode)) {     // Test that result is the quickaccess page
                             cacheForBookmarks = result;
+                        }
+                        if ("virtualcard".equals(this.mode)) {     // Test that result is the quickaccess page
+                            cacheForVirtualCard = result;
                         }
                         if ("multicompany".equals(this.mode)) {     // Test that result is the quickaccess page
                             cacheForMultiCompany = result;
@@ -1105,6 +1114,42 @@ public class SecondActivity extends Activity {
         return true;
     }
 
+    /**
+     * Common code for Back
+     * codeForVirtualCard is in a UI thread
+     *
+     * @return  boolean             True
+     */
+    private boolean codeForVirtualCard() {
+        String urlToGo;
+        boolean allowCacheForVirtualCard = false;
+
+        urlToGo = this.savedDolRootUrl+"user/virtualcard.php?cache=600&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
+
+        // If not found into cache, call URL
+        Log.d(LOG_TAG, "We called codeForVirtualCard after click on Virtual Card : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
+        //myWebView = findViewById(R.id.webViewContent);
+
+        /*
+        if (allowCacheForVirtualCard) {
+            if (this.cacheForVirtualCard != null && this.cacheForVirtualCard.length() > 0) {
+                String historyUrl = urlToGo;
+                Log.d(LOG_TAG, "Got content from app cache this.cacheForVirtualCard savedDolBasedUrl=" + this.savedDolBasedUrl + " historyUrl=" + historyUrl);
+                //altHistoryStack.add("bookmarks");   // TODO Do not add same history url twice
+                nextAltHistoryStack = "bookmarks";
+                myWebView.loadDataWithBaseURL(this.savedDolBasedUrl, this.cacheForVirtualCard, "text/html", "UTF-8", historyUrl);
+
+                return true;
+            }
+
+            DownloadWebPageTask task = new DownloadWebPageTask("bookmarks");
+            task.execute(new String[]{urlToGo});
+        } else { */
+            myWebView.loadUrl(urlToGo);
+        //}
+
+        return true;
+    }
 
     /**
      * Common code for MultiCompany
@@ -1925,6 +1970,7 @@ public class SecondActivity extends Activity {
 
 				    if (savMenu != null) {
                         MenuItem menuItemBookmarks = savMenu.findItem(R.id.menu_bookmarks);
+                        MenuItem menuItemVirtualCard = savMenu.findItem(R.id.menu_virtualcard);
                         if (foundVersion)    // if title ends with " Dolibarr x.y.z" or " Dolibarr x.y.z - multicompany or anytext from module hook setTitleHtml", this is login page or home page
                         {
                             lastversionfound = m.group(1) + ", " + m.group(2) + ", " + m.group(3);
@@ -1964,6 +2010,22 @@ public class SecondActivity extends Activity {
                                 Log.d(LOG_TAG, "onPageFinished Failed to parse version found = " + m.group(1));
                                 menuItemBookmarks.setVisible(false);
                             }
+
+                            // Enable or disable menu entry for Virtual card (available from Dolibarr v18)
+                            try {
+                                if (m.group(1) != null && Integer.parseInt(m.group(1)) >= 18) {
+                                    Log.d(LOG_TAG, "onPageFinished Version major found >= 18, we enable the virtual card menu entry");
+                                    menuItemVirtualCard.setVisible(true);
+                                    isVirtualCardOn = true;
+                                } else {
+                                    Log.d(LOG_TAG, "onPageFinished Version major found < 18, we disable the virtual card menu entry");
+                                    menuItemVirtualCard.setVisible(false);
+                                    isVirtualCardOn = false;
+                                }
+                            } catch (Exception e) {
+                                Log.d(LOG_TAG, "onPageFinished Failed to parse version found = " + m.group(1));
+                                menuItemBookmarks.setVisible(false);
+                            }
                         }/* else {
                             Log.d(LOG_TAG, "Failed to find version");
                             menuItemBookmarks.setVisible(false);
@@ -1978,11 +2040,11 @@ public class SecondActivity extends Activity {
 				    	} else {
 							synchronized (this) 
 							{
-								boolean versionOk = true;	// Will be false if Dolibarr is < 3.6.*
+								boolean versionOk = true;	// Will be false if Dolibarr is < 6.0.*
 								if (foundVersion) {
 									try {
-										if (m.group(1) != null && Integer.parseInt(m.group(1)) < 3) versionOk = false;
-										if (m.group(1) != null && Integer.parseInt(m.group(1)) < 3 && m.group(2) != null && Integer.parseInt(m.group(2)) < 6)
+										if (m.group(1) != null && Integer.parseInt(m.group(1)) < 6) versionOk = false;
+										if (m.group(1) != null && Integer.parseInt(m.group(1)) < 6 && m.group(2) != null && Integer.parseInt(m.group(2)) < 0)
 											versionOk = false;
 									}
 									catch(Exception e)

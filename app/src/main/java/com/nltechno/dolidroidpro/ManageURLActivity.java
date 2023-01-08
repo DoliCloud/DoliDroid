@@ -17,26 +17,21 @@
 
 package com.nltechno.dolidroidpro;
 
-import java.io.FileOutputStream;
-import java.util.List;
-
-import com.nltechno.utils.Utils;
-
-import android.content.Context;
-import android.graphics.Color;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -52,15 +47,22 @@ import android.widget.TextView;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
 
+import com.nltechno.utils.Utils;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * About activity class
  * 
  * @author eldy@destailleur.fr
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-public class AboutActivity extends Activity {
+public class ManageURLActivity extends Activity {
 
-	private static final String LOG_TAG = "DoliDroidAboutActivity";
+	private static final String LOG_TAG = "DoliDroidManageURLActivity";
 	private String menuAre="hardwareonly";
 
 	static final int RESULT_ABOUT =  RESULT_FIRST_USER;
@@ -93,16 +95,127 @@ public class AboutActivity extends Activity {
         	requestWindowFeature(Window.FEATURE_NO_TITLE);	// Hide title with menus
         }
 
-		setContentView(R.layout.activity_about);
+		setContentView(R.layout.activity_manageurl);
 
-		// text2 has links specified by putting <a> tags in the string
-		// resource.  By default these links will appear but not
-		// respond to user input.  To make them active, you need to
-		// call setMovementMethod() on the TextView object.
-		TextView t1 = findViewById(R.id.TextAbout01);
-		t1.setMovementMethod(LinkMovementMethod.getInstance());
+		TextView t2 = findViewById(R.id.TextAbout02);
+		t2.setMovementMethod(LinkMovementMethod.getInstance());
+
+		TextView t2b = findViewById(R.id.TextAbout02b);
+		t2b.setMovementMethod(LinkMovementMethod.getInstance());
 
 		Log.d(LOG_TAG, "Open file " + MainActivity.FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());
+
+
+		// Update menu label to add the number of predefined URL into label
+		Button buttonClearAllUrl = findViewById(R.id.buttonClearAllUrl);
+		if (MainActivity.listOfRootUrl != null) {
+			buttonClearAllUrl.setText(getString(R.string.DeleteAllPredefinedUrl) + " (" + MainActivity.listOfRootUrl.size() + ")");
+		} else {
+			buttonClearAllUrl.setText(getString(R.string.DeleteAllPredefinedUrl) + " (0)");
+		}
+
+
+		// Create listener to respond to click on button Delete current URL
+		// Not using the android:onClick tag is bugged. Declaring listener is also faster.
+		Button btn = findViewById(R.id.buttonDeletePredefinedUrl);
+		btn.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v) {
+				Log.d(LOG_TAG, "We click on Delete predefined Url");
+
+				FileOutputStream fos;
+				try
+				{
+					Intent intent = getIntent();
+					String savedDolRootUrl = intent.getStringExtra("savedDolRootUrl");
+
+					// Now loop of each entry and rewrite or exclude it
+					fos = openFileOutput(MainActivity.FILENAME, Context.MODE_PRIVATE);
+					int itoremove = -1;
+					int sizeofarray = MainActivity.listOfRootUrl.size();
+					for (int i = 0; i < sizeofarray; i++)
+					{
+						String s=MainActivity.listOfRootUrl.get(i);
+						if (! s.equals(savedDolRootUrl))	// Add new value into saved list
+						{
+							Log.d(LOG_TAG, "write " + s);
+							fos.write((s+"\n").getBytes());
+						} else {
+							Log.d(LOG_TAG, "exclude entry " + s);
+							btn.setEnabled(false);
+							btn.setTextColor(Color.LTGRAY);
+							itoremove = i;
+						}
+					}
+					fos.close();
+
+					// If success, we can remove entry from memory array listOfRootUrl
+					if (itoremove >= 0) {
+						MainActivity.listOfRootUrl.remove(itoremove);
+					}
+				}
+				catch(Exception ioe)
+				{
+					Log.e(LOG_TAG, "Error");
+				}
+			}
+		});
+
+		// Create listener to respond to click on button Remove all predefined URL
+		// Not using the android:onClick tag is bugged. Declaring listener is also faster.
+		Button btn2 = findViewById(R.id.buttonClearAllUrl);
+		btn2.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v) {
+				Log.d(LOG_TAG, "We click on Remove all predefined URLs");
+
+				FileOutputStream fos;
+				try
+				{
+					File file = new File(getApplicationContext().getFilesDir().toString() + "/" + MainActivity.FILENAME);
+					Log.d(LOG_TAG, "Clear predefined URL list "+MainActivity.FILENAME+" (from ManageURLActivity) by deleting file with full path="+file.getAbsolutePath());
+					Boolean result = file.delete();
+					Log.d(LOG_TAG, result.toString());
+
+					MainActivity.listOfRootUrl = new ArrayList<String>();	// Clear array of menu entry
+
+					// Now update button label entry
+					Button buttonClearAllUrl = findViewById(R.id.buttonClearAllUrl);
+					if (MainActivity.listOfRootUrl != null) {
+						buttonClearAllUrl.setText(getString(R.string.DeleteAllPredefinedUrl) + " (" + MainActivity.listOfRootUrl.size() + ")");
+					} else {
+						buttonClearAllUrl.setText(getString(R.string.DeleteAllPredefinedUrl) + " (0)");
+					}
+
+					// Clear saved login / pass too
+					try {
+						//SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+						String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
+						SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
+								"secret_shared_prefs",
+								masterKeyAlias,
+								getApplicationContext(),
+								EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+								EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+						);
+						SharedPreferences.Editor editorEncrypted = sharedPrefsEncrypted.edit();
+						editorEncrypted.clear();
+						editorEncrypted.commit();
+
+						Log.d(LOG_TAG, "The encrypted shared preferences file has been cleared");
+					}
+					catch(Exception e) {
+						Log.w(LOG_TAG, "Failed to clear encrypted shared preferences file");
+					}
+				}
+				catch(Exception ioe)
+				{
+					Log.e(LOG_TAG, "Error");
+				}
+			}
+		});
 	}
 
 	
@@ -118,6 +231,10 @@ public class AboutActivity extends Activity {
     	//boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
     	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
 		Intent intent = getIntent();
+
+
+		Button btn = findViewById(R.id.buttonDeletePredefinedUrl);
+
 
 		// Show text section 1
 		TextView textViewAbout1 = findViewById(R.id.TextAbout01);
@@ -182,10 +299,41 @@ public class AboutActivity extends Activity {
 			Log.e(LOG_TAG, e.getMessage());
 		}
 
-		textViewAbout1.setText(Html.fromHtml(s1));
 		// For api level 24: textViewAbout1.setText(Html.fromHtml(s1, Html.FROM_HTML_MODE_LEGACY));
 
+
+		// Show text section 2
+		TextView textViewAbout2 = findViewById(R.id.TextAbout02);
+		String s2="";
+
         String savedDolRootUrl = intent.getStringExtra("savedDolRootUrl");
+        if (savedDolRootUrl != null && ! "".equals(savedDolRootUrl))
+        {
+			btn.setVisibility(View.VISIBLE);
+			btn.setEnabled(true);
+
+			findViewById(R.id.imageView02).setVisibility(View.VISIBLE);
+			findViewById(R.id.imageView02).setEnabled(true);
+
+			s2+="<font color='#440066'><b>"+getString(R.string.savedDolUrlRoot)+":</b></font><br /><br />\n";
+        	s2+=savedDolRootUrl+"<br />\n";
+
+			textViewAbout2.setVisibility(View.VISIBLE);
+			textViewAbout2.setEnabled(true);
+			textViewAbout2.setText(Html.fromHtml(s2));
+		} else {
+        	// No need to show the button, we don't know the predefined url used.
+			btn.setVisibility(View.INVISIBLE);
+			btn.setEnabled(false);
+
+			findViewById(R.id.imageView02).setVisibility(View.INVISIBLE);
+			findViewById(R.id.imageView02).setEnabled(false);
+
+			textViewAbout2.setVisibility(View.INVISIBLE);
+			textViewAbout2.setEnabled(false);
+			textViewAbout2.setText("");
+		}
+
 
         // Show btn or not
 		// Check if url is inside predefined URL
@@ -209,42 +357,63 @@ public class AboutActivity extends Activity {
 		{
 			Log.e(LOG_TAG, "Error");
 		}
-
-		// Show text section 3
-		TextView textViewAbout3 = findViewById(R.id.TextAbout03);
-		String s3="";
-
-		// Current url
-        String currentUrl = intent.getStringExtra("currentUrl");
-        String title = intent.getStringExtra("title");
-        if (currentUrl != null && ! "".equals(currentUrl)) {
-        	s3+="<font color='#440066'><b>"+getString(R.string.currentUrl)+":</b></font><br /><br />\n"+title+"<br />\n"+currentUrl;
-		}
-		String lastversionfound = intent.getStringExtra("lastversionfound");
-        if (lastversionfound != null && ! "".equals(lastversionfound)) {
-        	s3+="<br /><br />\nDolibarr "+getString(R.string.Version)+": "+lastversionfound+"<br />\n";
-		}
-
-		// User agent
-		// The About view is not a webview, so we must use the userAgent propagated by the SecondActivity. It may be null if not already created.
-        String userAgent = intent.getStringExtra("userAgent");
-        Log.d(LOG_TAG,"userAgent="+userAgent);
-        if (userAgent != null && ! "".equals(userAgent)) {
-        	s3+="<br /><br />\n<font color='#440066'><b>"+getString(R.string.UserAgent)+":</b></font><br /><br />\n"+userAgent+"<br />\n";
-		}
-
-		if (currentUrl != null && ! "".equals(currentUrl)) {
-			findViewById(R.id.imageView03).setVisibility(View.VISIBLE);
-			findViewById(R.id.imageView03).setEnabled(true);
-			textViewAbout3.setText(Html.fromHtml(s3));
-			textViewAbout3.setVisibility(View.VISIBLE);
-			textViewAbout3.setEnabled(true);
+		if (savedDolRootUrlFoundIntoPredefinedLoginUrl) {
+			btn.setTextColor(Color.WHITE);
 		} else {
-			findViewById(R.id.imageView03).setVisibility(View.INVISIBLE);
-			findViewById(R.id.imageView03).setEnabled(false);
-			textViewAbout3.setText("");
-			textViewAbout3.setVisibility(View.INVISIBLE);
-			textViewAbout3.setEnabled(false);
+			btn.setTextColor(Color.LTGRAY);
+		}
+
+
+		// Show text section 2b
+		TextView textViewAbout2b = findViewById(R.id.TextAbout02b);
+		String s2b="";
+
+		if (savedDolRootUrl != null && ! "".equals(savedDolRootUrl))
+		{
+			// Saved user/pass
+			String username=null;
+			String password=null;
+			Boolean tagToOverwriteLoginPass = prefAlwaysAutoFill;
+			if (tagToOverwriteLoginPass)	// If we are allowed to overwrite username/pass into fields
+			{
+				try {
+					//SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+					String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
+					SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
+							"secret_shared_prefs",
+							masterKeyAlias,
+							getApplicationContext(),
+							EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+							EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+					);
+
+					username = sharedPrefsEncrypted.getString(savedDolRootUrl + "-username", "");
+					password = sharedPrefsEncrypted.getString(savedDolRootUrl + "-password", "");
+				}
+				catch(Exception e) {
+					Log.w(LOG_TAG, "Failed to read the encrypted shared preference file");
+				}
+			}
+
+			s2b+="<br />";
+			s2b+=getString(R.string.SavedLogin)+": "+(username != null ? username : "")+"<br />\n";
+			s2b+=getString(R.string.SavedPassword)+": "+(password != null ? password.replaceAll(".", "*") : "")+"\n";
+
+			// Basic auth user/pass used ?
+			String savedAuthuser = intent.getStringExtra("savedAuthuser");
+			if (savedAuthuser != null) s2b+="<br /><br />"+getString(R.string.BasicAuthLogin)+": "+savedAuthuser+"<br />";
+			String savedAuthpass = intent.getStringExtra("savedAuthpass");
+			if (savedAuthpass != null) s2b+=getString(R.string.BasicAuthPassword)+": "+savedAuthpass.replaceAll(".", "*")+"\n";
+		}
+
+		if (s2b != null && ! "".equals(s2b)) {
+			textViewAbout2b.setVisibility(View.VISIBLE);
+			textViewAbout2b.setEnabled(true);
+			textViewAbout2b.setText(Html.fromHtml(s2b));
+		} else {
+			textViewAbout2b.setVisibility(View.INVISIBLE);
+			textViewAbout2b.setEnabled(false);
+			textViewAbout2b.setText("");
 		}
 	}
 	
@@ -255,7 +424,7 @@ public class AboutActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) 
     {
 		Log.d(LOG_TAG, "onCreateOptionsMenu");
-    	getMenuInflater().inflate(R.menu.activity_about, menu);	// Deploy android menu
+    	getMenuInflater().inflate(R.menu.activity_manageurl, menu);	// Deploy android menu
 		//finish();		// If we finish here, activity will end immediatly when using HOLO theme.
         return true;
     }
@@ -320,10 +489,10 @@ public class AboutActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-    	Log.d(LOG_TAG, "AboutActivity::onActivityResult requestCode = " + requestCode + " resultCode = " + resultCode);
+    	Log.d(LOG_TAG, "ManageURLActivity::onActivityResult requestCode = " + requestCode + " resultCode = " + resultCode);
         if (resultCode==RESULT_ABOUT)
         {
-			Log.d(LOG_TAG, "AboutActivity::onActivityResult We finish activity resultCode = "+RESULT_ABOUT);
+			Log.d(LOG_TAG, "ManageURLActivity::onActivityResult We finish activity resultCode = "+RESULT_ABOUT);
     		setResult(RESULT_ABOUT);
             finish();
         } 

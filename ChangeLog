@@ -6,6 +6,8 @@ English DoliDroid ChangeLog
 
 3.0-b56
 - Fix null pointer error on "Copy current URL" feature.
+- Reorganize menus to prepare future features
+- Add menu entry "Virtual business card" for future Dolibarr v18
 
 3.0-b55
 - Fix the wheel on long pages

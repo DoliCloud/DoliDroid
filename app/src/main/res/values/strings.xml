@@ -57,7 +57,10 @@
     <string name="Yes">Yes</string>
     <string name="No">No</string>
     <string name="Warning">Warning</string>
+
+    <!-- Activity Manage URL -->
     <string name="DeletePredefinedUrl">Remove the predefined URL of this instance</string>
+    <string name="DeleteAllPredefinedUrl">Remove all predefined URLs</string>
 
     <!-- Menu main + web -->
     <string name="menu_info">About DoliDroid</string>
@@ -78,6 +81,7 @@
     <string name="menu_add_url">Add predefined URL</string>
     <string name="menu_remove_url">Remove a predefined URL</string>
     <string name="menu_clear_all_urls">Clear predefined URLs</string>
+    <string name="menu_manage_all_urls">Manage all URLs</string>
     <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">I don\'t have a Dolibarr ERP CRM instance yet, create one on DoliCloud.com...</a></string>
 
     <!-- Menu web browser -->
@@ -92,6 +96,7 @@
     <string name="menu_logout">Logout</string>
     <string name="menu_quit">Quit</string>
     <string name="menu_multicompany">Switch company</string>
+    <string name="menu_virtualcard">Virtual business card</string>
     <string name="menu_scan">Scan a barcode</string>
     <string name="menu_photo">Scan a document</string>
 
