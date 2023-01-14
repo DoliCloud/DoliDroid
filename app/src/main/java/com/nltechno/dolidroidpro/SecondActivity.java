@@ -172,6 +172,7 @@ public class SecondActivity extends Activity {
 	private String lastLoadUrl;
     private boolean	isBookmarkOn=true;
 	private boolean	isMulticompanyOn=false;     // Not visible by default
+    private boolean	isUserCardOn=false;      // Not visible by default
     private boolean	isVirtualCardOn=false;      // Not visible by default
 
 	private String menuAre="hardwareonly";
@@ -454,11 +455,13 @@ public class SecondActivity extends Activity {
 
             menu.findItem(R.id.menu_photo).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
             menu.findItem(R.id.menu_scan).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
+            menu.findItem(R.id.menu_usercard).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);  // Not enough room so we force it on dropdown menu.
             menu.findItem(R.id.menu_virtualcard).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);  // Not enough room so we force it on dropdown menu.
             menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
 
             menu.findItem(R.id.menu_photo).setVisible(false);
             menu.findItem(R.id.menu_scan).setVisible(false);
+            menu.findItem(R.id.menu_usercard).setVisible(false);
             menu.findItem(R.id.menu_virtualcard).setVisible(false);
             menu.findItem(R.id.menu_multicompany).setVisible(false);
         }
@@ -468,6 +471,7 @@ public class SecondActivity extends Activity {
             menu.findItem(R.id.menu_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             menu.findItem(R.id.menu_bookmarks).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            menu.findItem(R.id.menu_usercard).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             menu.findItem(R.id.menu_virtualcard).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             //menu.findItem(R.id.menu_photo).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             //menu.findItem(R.id.menu_scan).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
@@ -539,14 +543,28 @@ public class SecondActivity extends Activity {
             }
         }
 
+        if (isUserCardOn) {
+            Log.d(LOG_TAG, "onCreateOptionsMenu version enough for user card, we show menu/picto");
+            MenuItem tmpmenu = menu.findItem(R.id.menu_usercard);
+            if (tmpmenu != null) {
+                tmpmenu.setVisible(true);
+            }
+        } else {
+            Log.d(LOG_TAG, "onCreateOptionsMenu version NOT enough for virtual card, we hide menu/picto");
+            MenuItem tmpmenu = menu.findItem(R.id.menu_usercard);
+            if (tmpmenu != null) {
+                tmpmenu.setVisible(false);
+            }
+        }
+
         if (isVirtualCardOn) {
-            Log.d(LOG_TAG, "onCreateOptionsMenu version enough for virtual card, we show picto");
+            Log.d(LOG_TAG, "onCreateOptionsMenu version enough for virtual card, we show menu/picto");
             MenuItem tmpmenu = menu.findItem(R.id.menu_virtualcard);
             if (tmpmenu != null) {
                 tmpmenu.setVisible(true);
             }
         } else {
-            Log.d(LOG_TAG, "onCreateOptionsMenu version NOT enough for virtual card, we hide picto");
+            Log.d(LOG_TAG, "onCreateOptionsMenu version NOT enough for virtual card, we hide menu/picto");
             MenuItem tmpmenu = menu.findItem(R.id.menu_virtualcard);
             if (tmpmenu != null) {
                 tmpmenu.setVisible(false);
@@ -620,6 +638,8 @@ public class SecondActivity extends Activity {
                 return this.codeForBookmarks();
             case R.id.menu_multicompany:
                 return this.codeForMultiCompany();
+            case R.id.menu_usercard:
+                return this.codeForUserCard();
             case R.id.menu_virtualcard:
                 return this.codeForVirtualCard();
             case R.id.menu_copy_url:
@@ -1110,6 +1130,43 @@ public class SecondActivity extends Activity {
         } else {
             myWebView.loadUrl(urlToGo);
         }
+
+        return true;
+    }
+
+    /**
+     * Common code for Back
+     * codeForUserCard is in a UI thread
+     *
+     * @return  boolean             True
+     */
+    private boolean codeForUserCard() {
+        String urlToGo;
+        boolean allowCacheForUserCard = false;
+
+        urlToGo = this.savedDolRootUrl+"user/card.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
+
+        // If not found into cache, call URL
+        Log.d(LOG_TAG, "We called codeForUserCard after click on User Card : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
+        //myWebView = findViewById(R.id.webViewContent);
+
+        /*
+        if (allowCacheForVirtualCard) {
+            if (this.cacheForVirtualCard != null && this.cacheForVirtualCard.length() > 0) {
+                String historyUrl = urlToGo;
+                Log.d(LOG_TAG, "Got content from app cache this.cacheForVirtualCard savedDolBasedUrl=" + this.savedDolBasedUrl + " historyUrl=" + historyUrl);
+                //altHistoryStack.add("bookmarks");   // TODO Do not add same history url twice
+                nextAltHistoryStack = "bookmarks";
+                myWebView.loadDataWithBaseURL(this.savedDolBasedUrl, this.cacheForVirtualCard, "text/html", "UTF-8", historyUrl);
+
+                return true;
+            }
+
+            DownloadWebPageTask task = new DownloadWebPageTask("bookmarks");
+            task.execute(new String[]{urlToGo});
+        } else { */
+        myWebView.loadUrl(urlToGo);
+        //}
 
         return true;
     }
@@ -1970,6 +2027,7 @@ public class SecondActivity extends Activity {
 
 				    if (savMenu != null) {
                         MenuItem menuItemBookmarks = savMenu.findItem(R.id.menu_bookmarks);
+                        MenuItem menuItemUserCard = savMenu.findItem(R.id.menu_usercard);
                         MenuItem menuItemVirtualCard = savMenu.findItem(R.id.menu_virtualcard);
                         if (foundVersion)    // if title ends with " Dolibarr x.y.z" or " Dolibarr x.y.z - multicompany or anytext from module hook setTitleHtml", this is login page or home page
                         {
@@ -2015,11 +2073,15 @@ public class SecondActivity extends Activity {
                             try {
                                 if (m.group(1) != null && Integer.parseInt(m.group(1)) >= 18) {
                                     Log.d(LOG_TAG, "onPageFinished Version major found >= 18, we enable the virtual card menu entry");
+                                    menuItemUserCard.setVisible(true);
                                     menuItemVirtualCard.setVisible(true);
+                                    isUserCardOn = true;
                                     isVirtualCardOn = true;
                                 } else {
                                     Log.d(LOG_TAG, "onPageFinished Version major found < 18, we disable the virtual card menu entry");
+                                    menuItemUserCard.setVisible(false);
                                     menuItemVirtualCard.setVisible(false);
+                                    isUserCardOn = false;
                                     isVirtualCardOn = false;
                                 }
                             } catch (Exception e) {

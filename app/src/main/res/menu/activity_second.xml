@@ -44,9 +44,14 @@
 		android:orderInCategory="50"
 		android:title="@string/menu_multicompany" />
 	<item
-		android:id="@+id/menu_virtualcard"
+		android:id="@+id/menu_usercard"
 		android:icon="@drawable/ic_baseline_badge_24"
 		android:orderInCategory="60"
+		android:title="@string/menu_usercard" />
+	<item
+		android:id="@+id/menu_virtualcard"
+		android:icon="@drawable/ic_baseline_badge_24"
+		android:orderInCategory="62"
 		android:title="@string/menu_virtualcard" />
 
 	<!--
