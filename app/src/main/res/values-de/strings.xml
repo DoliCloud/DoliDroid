@@ -33,7 +33,10 @@
     <string name="title_activity_about"></string>
     <string name="textBack">Zurück</string>
     <string name="textMenu">Menü</string>
+    <string name="textAboutA"> <xliff:g id="textAboutA"> Versionen... </xliff:g></string>
+    <string name="textAboutB"> <xliff:g id="textAboutB"> Instanz-URL ... </xliff:g></string>
     <string name="textAboutB2"> <xliff:g id="textAboutB2"> Gespeicherte Anmeldungen... </xliff:g></string>
+    <string name="textAboutC"> <xliff:g id="textAboutC"> Aktuelle URL und Benutzeragent ... </xliff:g></string>
     <string name="Version">Version</string>
     <string name="VersionStaticResources">Version der lokalen statischen Ressourcen</string>
     <string name="Author">Autor</string>
@@ -60,18 +63,30 @@
     <string name="No">Nein</string>
     <string name="Warning">Warnhinweis</string>
 
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">Entfernen Sie die vordefinierte URL dieser Instanz</string>
+    <string name="DeleteAllPredefinedUrl">Entfernen Sie alle vordefinierten URLs</string>
+
     <!-- Menu main + web -->
     <string name="menu_info">Über DoliDroid</string>
+    <string name="menu_info_short">Über</string>
     <string name="menu_show_bar_on">Menüleiste anzeigen</string>
     <string name="menu_show_bar_off">Menüleiste anzeigen (nein)</string>
     <string name="menu_autofill_on">Login/Kennwort speichern</string>
     <string name="menu_autofill_off">speichere Login / Passwort (nein)</string>
     <string name="menu_uselocalresources_on">Lokale statische Ressourcen benutzen</string>
     <string name="menu_uselocalresources_off">Verwende lokale statische Ressourcen (nein)</string>
+    <string name="AlertHTTPS">Anscheinend hat Ihr Server eine Umleitung auf eine HTTPS-Seite erzwungen. Bitte überprüfen Sie Ihre Dolibarr-URL und verwenden Sie direkt das https-URL-Formular (URL beginnt mit https:// statt http://). Die Verwendung einer URL ohne das s führt aus Sicherheitsgründen dazu, dass Funktionen wie die Cache-Optimierung oder das Herunterladen von Dateien nicht funktionieren.</string>
+    <string name="AlertHTTP">Sie versuchen, auf eine nicht gesicherte Website zuzugreifen (http: statt https:). Aus Sicherheitsgründen kann Android einige Funktionen in dieser App für solche Websites einschränken. Sie sollten Ihre Website sichern, indem Sie ein HTTPS-Zertifikat hinzufügen.</string>
+    <string name="AlertDownloadBadHTTPS">Der Download ist nicht möglich, wenn Sie einen falschen Schemawert für die Verbindung verwendet haben (http vs. https)</string>
+
+    <!-- Menu main page -->
+    <string name="menu_utilities">Dienstprogramme</string>
     <string name="menu_settings">Einstellungen</string>
     <string name="menu_add_url">Hinzufügen einer vordefinierten URL</string>
     <string name="menu_remove_url">Entfernen einer vordefinierten URL</string>
     <string name="menu_clear_all_urls">lösche alle vordefinierte URLs</string>
+    <string name="menu_manage_all_urls">Verwalten Sie vordefinierte URLs</string>
     <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile"> Ich habe noch keine Dolibarr ERP CRM-Instanz, erstellen Sie eine auf DoliCloud.com...</a></string>
 
     <!-- Menu web browser -->
@@ -86,6 +101,8 @@
     <string name="menu_logout">Ausloggen</string>
     <string name="menu_quit">Beenden</string>
     <string name="menu_multicompany">Firma wechseln</string>
+    <string name="menu_usercard">Meine Benutzerdatei</string>
+    <string name="menu_virtualcard">Meine virtuelle Visitenkarte</string>
     <string name="menu_scan">Barcode einscannen</string>
     <string name="menu_photo">Dokument einscannen</string>
 

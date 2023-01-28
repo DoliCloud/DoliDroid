@@ -12,6 +12,8 @@
     <string name="logo_dolidroid">Logo DoliDroid</string>
     <string name="SelectUrl">o seleziona un URL predefinito</string>
     <string name="enterNewUrl">o inserisci un nuovo URL</string>
+    <string name="UrlCopied">URL copiato negli appunti</string>
+
     <!-- Activity web -->
     <string name="title_activity_second"></string>
     <string name="downloadComplete">Download del file completato</string>
@@ -19,10 +21,17 @@
 	<string name="notCompatibleWithVersion">La versione Dolibarr sul server (%1$s) è troppo vecchia. DoliDroid necessita della versione Dolibar %2$s o successiva.</string>
     <string name="notification_error_ssl_cert_invalid">Il certificato SSL di sicurezza del server sembra non valido:</string>
     <string name="notification_error_ssl_cert_invalidbis">Vuoi continuare (il download dei file non sarebbe possibile)?</string>
+    <string name="failedtogetpage">Impossibile ottenere la pagina tramite un download diretto veloce. Sei loggato?</string>
+    <string name="CacheAndHistoryCleared">Cache e cronologia cancellate.</string>
+
     <!-- Activity about -->
     <string name="title_activity_about"></string>
     <string name="textBack">Indietro</string>
     <string name="textMenu">Menu</string>
+    <string name="textAboutA"> <xliff:g id="textAboutA"> Versioni... </xliff:g></string>
+    <string name="textAboutB"> <xliff:g id="textAboutB"> Url istanza... </xliff:g></string>
+    <string name="textAboutB2"> <xliff:g id="textAboutB2"> Login salvati... </xliff:g></string>
+    <string name="textAboutC"> <xliff:g id="textAboutC"> CurrentURL e agente utente... </xliff:g></string>
     <string name="Version">Versione</string>
     <string name="VersionStaticResources">Versione delle risorse statiche locali</string>
     <string name="Author">Autore</string>
@@ -34,6 +43,7 @@
     <string name="DeviceHasMenuHardware">Il dispositivo ha pulsanti hardware</string>
     <string name="DeviceHasDownloadManager">Il dispositivo ha un gestore di download</string>
     <string name="DownloadDirectory">Directory di download</string>
+    <string name="PhotosDirectory">Elenco delle foto</string>
     <string name="DeviceHasPDFViewer">Il dispositivo ha visualizzatori PDF</string>
     <string name="DeviceHasODXViewer">Il dispositivo ha visualizzatori OpenOffice</string>
     <string name="DeviceSize">Dimensioni dello schermo del dispositivo</string>
@@ -46,23 +56,49 @@
     <string name="BasicAuthPassword">Password di autenticazione di base</string>
     <string name="Yes">sì</string>
     <string name="No">No</string>
+    <string name="Warning">Avvertimento</string>
+
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">Rimuovi l\'URL predefinito di questa istanza</string>
+    <string name="DeleteAllPredefinedUrl">Rimuovi tutti gli URL predefiniti</string>
+
     <!-- Menu main + web -->
     <string name="menu_info">Informazioni su DoliDroid</string>
+    <string name="menu_info_short">Di</string>
+    <string name="menu_show_bar_on">Mostra la barra dei menu</string>
     <string name="menu_show_bar_off">Mostra barra dei menu (no)</string>
+    <string name="menu_autofill_on">Salva login/password</string>
     <string name="menu_autofill_off">Salva login / password (no)</string>
+    <string name="menu_uselocalresources_on">Usa risorse statiche locali</string>
     <string name="menu_uselocalresources_off">Usa risorse statiche locali (no)</string>
+    <string name="AlertHTTPS">Sembra che il tuo server abbia forzato un reindirizzamento a una pagina HTTPS. Controlla il tuo URL Dolibarr e utilizza direttamente il modulo URL https (URL che inizia con https:// invece di http://). Continuare a utilizzare un URL senza la s comporterà, per motivi di sicurezza, funzionalità non funzionanti come l\'ottimizzazione della cache o il download di file.</string>
+    <string name="AlertHTTP">Si tenta di accedere a un sito Web non protetto (http: invece di https:). Per motivi di sicurezza, Android potrebbe limitare alcune funzionalità di questa app per tali siti web. Dovresti proteggere il tuo sito Web aggiungendo un certificato HTTPS.</string>
+    <string name="AlertDownloadBadHTTPS">Il download non è possibile quando hai utilizzato un valore errato dello schema per la connessione (http vs https)</string>
+
+    <!-- Menu main page -->
+    <string name="menu_utilities">Utilità</string>
     <string name="menu_settings">impostazioni</string>
     <string name="menu_add_url">Aggiungi URL predefinito</string>
     <string name="menu_remove_url">Rimuovi un URL predefinito</string>
     <string name="menu_clear_all_urls">Cancella URL predefiniti</string>
+    <string name="menu_manage_all_urls">Gestisci gli URL predefiniti</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"> <a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile"> Non ho ancora un\'istanza Dolibarr ERP CRM, creane una su DoliCloud.com... </a></string>
+
     <!-- Menu web browser -->
     <string name="menu_menu">Menu</string>
     <string name="menu_go_to">Accesso veloce</string>
     <string name="menu_search">Ricerca</string>
+    <string name="menu_bookmarks">Segnalibri</string>
     <string name="menu_back">Indietro</string>
     <string name="menu_refresh">Ricarica la pagina</string>
+    <string name="menu_copy_url">Copia l\'URL negli appunti</string>
     <string name="menu_clearcache">Cancella cache</string>
     <string name="menu_logout">Disconnettersi</string>
     <string name="menu_quit">Smettere</string>
     <string name="menu_multicompany">Cambia compagnia</string>
-    </resources>
+    <string name="menu_usercard">Il mio file utente</string>
+    <string name="menu_virtualcard">Il mio biglietto da visita virtuale</string>
+    <string name="menu_scan">Scansiona un codice a barre</string>
+    <string name="menu_photo">Scansiona un documento</string>
+
+</resources>

@@ -16,6 +16,8 @@
     <string name="logo_dolidroid">Logo DoliDroid</string>
     <string name="SelectUrl">of selecteer een vooraf gedefinieerde URL</string>
     <string name="enterNewUrl">of type nieuw URL</string>
+    <string name="UrlCopied">URL gekopieerd naar klembord</string>
+
     <!-- Activity web -->
     <string name="title_activity_second"></string>
     <string name="downloadComplete">Downloaden van het bestand voltooid</string>
@@ -23,10 +25,17 @@
 	<string name="notCompatibleWithVersion">De Dolibarr op de server (%1$s) is te oud. DoliDroid vereist Dolibarr versie (%2$s) of hoger.</string>
     <string name="notification_error_ssl_cert_invalid">Server SSL beveiligingscertificaat lijkt ongeldig:</string>
     <string name="notification_error_ssl_cert_invalidbis">Wilt u verder gaan (downloaden van bestanden zou niet mogelijk zijn)?</string>
+    <string name="failedtogetpage">Kan de pagina niet ophalen door een snelle directe download. Ben je ingelogd?</string>
+    <string name="CacheAndHistoryCleared">Cache en geschiedenis gewist.</string>
+
     <!-- Activity about -->
     <string name="title_activity_about"></string>
     <string name="textBack">Terug</string>
     <string name="textMenu">Menu</string>
+    <string name="textAboutA"> <xliff:g id="textAboutA"> Versies... </xliff:g></string>
+    <string name="textAboutB"> <xliff:g id="textAboutB"> Instantie-URL... </xliff:g></string>
+    <string name="textAboutB2"> <xliff:g id="textAboutB2"> Opgeslagen logins... </xliff:g></string>
+    <string name="textAboutC"> <xliff:g id="textAboutC"> Huidige URL en user-agent... </xliff:g></string>
     <string name="Version">Versie</string>
     <string name="VersionStaticResources">Versie van locale statische bronnen</string>
     <string name="Author">Auteur</string>
@@ -38,6 +47,7 @@
     <string name="DeviceHasMenuHardware">Apparaat heeft hardware-knoppen</string>
     <string name="DeviceHasDownloadManager">Apparaat heeft een download manager</string>
     <string name="DownloadDirectory">Download directory</string>
+    <string name="PhotosDirectory">Foto\'s map</string>
     <string name="DeviceHasPDFViewer">Apparaat heeft PDF-viewers</string>
     <string name="DeviceHasODXViewer">Apparaat heeft OpenOffice-viewers</string>
     <string name="DeviceSize">Apparaat schermgrootte</string>
@@ -50,23 +60,49 @@
     <string name="BasicAuthPassword">Basic auth password</string>
     <string name="Yes">Ja</string>
     <string name="No">Nee</string>
+    <string name="Warning">Waarschuwing</string>
+
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">Verwijder de vooraf gedefinieerde URL van deze instantie</string>
+    <string name="DeleteAllPredefinedUrl">Verwijder alle vooraf gedefinieerde URL\'s</string>
+
     <!-- Menu main + web -->
     <string name="menu_info">Over DoliDroid</string>
+    <string name="menu_info_short">Wat betreft</string>
+    <string name="menu_show_bar_on">Toon menubalk</string>
     <string name="menu_show_bar_off">Toon menubalk (nee)</string>
+    <string name="menu_autofill_on">Sla login/wachtwoord op</string>
     <string name="menu_autofill_off">Houd login/wachtwoord (nee)</string>
+    <string name="menu_uselocalresources_on">Gebruik lokale statische bronnen</string>
     <string name="menu_uselocalresources_off">Gebruik locale statische bronnen (Nee)</string>
+    <string name="AlertHTTPS">Het lijkt erop dat uw server een omleiding naar een HTTPS-pagina heeft afgedwongen. Controleer uw Dolibarr-URL en gebruik rechtstreeks het https-URL-formulier (URL beginnend met https:// in plaats van http://). Het blijven gebruiken van een URL zonder de s zal er om veiligheidsredenen toe leiden dat functies niet werken, zoals cache-optimalisatie of het downloaden van bestanden.</string>
+    <string name="AlertHTTP">U probeert toegang te krijgen tot een niet-beveiligde website (http: in plaats van https:). Om veiligheidsredenen kan Android sommige functies van deze app beperken voor dergelijke websites. U dient uw website te beveiligen door een HTTPS-certificaat toe te voegen.</string>
+    <string name="AlertDownloadBadHTTPS">Downloaden is niet mogelijk wanneer u een slechte waarde van het schema hebt gebruikt om verbinding te maken (http versus https)</string>
+
+    <!-- Menu main page -->
+    <string name="menu_utilities">Nutsvoorzieningen</string>
     <string name="menu_settings">Instellingen</string>
     <string name="menu_add_url">Voeg vooraf gedefinieerde URL toe</string>
     <string name="menu_remove_url">Verwijder een vooraf gedefinieerde URL</string>
     <string name="menu_clear_all_urls">Wis vooraf gedefinieerde URL\'s</string>
+    <string name="menu_manage_all_urls">Beheer vooraf gedefinieerde URL\'s</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"> <a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile"> Ik heb nog geen Dolibarr ERP CRM-instantie, maak er een aan op DoliCloud.com... </a></string>
+
     <!-- Menu web browser -->
     <string name="menu_menu">Menu</string>
     <string name="menu_go_to">Snelle toegang</string>
     <string name="menu_search">Zoeken</string>
+    <string name="menu_bookmarks">Bladwijzers</string>
     <string name="menu_back">Terug</string>
     <string name="menu_refresh">Herlaad pagina</string>
+    <string name="menu_copy_url">Kopieer de URL naar het klembord</string>
     <string name="menu_clearcache">Wis tijdelijke opslag</string>
     <string name="menu_logout">Uitloggen</string>
     <string name="menu_quit">Afsluiten</string>
     <string name="menu_multicompany">Wijzig bedrijf</string>
-    </resources>
+    <string name="menu_usercard">Mijn gebruikersbestand</string>
+    <string name="menu_virtualcard">Mijn virtuele visitekaartje</string>
+    <string name="menu_scan">Scan een streepjescode</string>
+    <string name="menu_photo">Scan een document</string>
+
+</resources>
