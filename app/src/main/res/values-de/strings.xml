@@ -16,22 +16,24 @@
     <string name="logo_dolidroid">Logo DoliDroid</string>
     <string name="SelectUrl">oder wählen Sie eine vordefinierte URL</string>
     <string name="enterNewUrl">oder geben Sie eine neue URL ein</string>
+    <string name="UrlCopied">URL in die Zwischenablage kopiert</string>
 
     <!-- Activity web -->
     <string name="title_activity_second"></string>
     <string name="downloadComplete">Download der Datei abgeschlossen</string>
 	<string name="NoPreviousPageAgainToQuit">Keine vorherige Seite. Verwenden Sie wieder \"Zurück\", um zu beenden.</string>
-	<string name="notCompatibleWithVersion">Die Dolibarr auf dem Server (%1$s) ist zu alt. %2$s Öffnen benötigt.</string>
+	<string name="notCompatibleWithVersion">Die Dolibarr-Version auf dem Server (%1$s) ist zu alt. %2$s wird zum Öffnen benötigt.</string>
+    <string name="notification_error_ssl_cert_invalid">Das SSL Zertifikat des Servers scheint ungültig zu sein. Fortfahren?</string>
+    <string name="notification_error_ssl_cert_invalidbis">Möchten Sie fortfahren? 
+(Ein herunterladen von Dateien wird nicht möglich sein.)</string>
+    <string name="failedtogetpage">Es ist nicht möglich, die Seite über einen schnellen direkten Download zu erhalten. Sind Sie angemeldet?</string>
+    <string name="CacheAndHistoryCleared">Cache und Verlauf gelöscht.</string>
+
     <!-- Activity about -->
     <string name="title_activity_about"></string>
     <string name="textBack">Zurück</string>
     <string name="textMenu">Menü</string>
-    <string name="textAboutA">
-    <xliff:g id="textAboutA">XXX</xliff:g>
-  </string>
-    <string name="textAboutB">
-    <xliff:g id="textAboutB">XXX</xliff:g>
-  </string>
+    <string name="textAboutB2"> <xliff:g id="textAboutB2"> Gespeicherte Anmeldungen... </xliff:g></string>
     <string name="Version">Version</string>
     <string name="VersionStaticResources">Version der lokalen statischen Ressourcen</string>
     <string name="Author">Autor</string>
@@ -39,44 +41,52 @@
     <string name="Compatibility">Kompatibilität</string>
     <string name="License">Lizenz</string>
     <string name="Sources">Quellen</string>
-    <string name="DeviceAPILevel">Gerät API Niveau</string>
+    <string name="DeviceAPILevel">Gerät API Level</string>
     <string name="DeviceHasMenuHardware">Das Gerät hat Hardware-Tasten</string>
     <string name="DeviceHasDownloadManager">Das Gerät hat einen Download-Manager</string>
-    <string name="DownloadDirectory">Laden Verzeichnis</string>
-    <string name="DeviceHasPDFViewer">Das Gerät hat PDF-Betrachter</string>
-    <string name="DeviceHasODXViewer">Das Gerät hat OpenOffice-Betrachter</string>
-    <string name="DeviceSize">Gerätbildschirmgröße</string>
+    <string name="DownloadDirectory">Download-Verzeichnis</string>
+    <string name="PhotosDirectory">Fotoverzeichnis</string>
+    <string name="DeviceHasPDFViewer">Das Gerät hat einen PDF-Betrachter.</string>
+    <string name="DeviceHasODXViewer">Das Gerät hat einen OpenOffice-Betrachter.</string>
+    <string name="DeviceSize">Bildschirmgröße</string>
     <string name="savedDolUrlRoot">Dolibarr Instanz URL</string>
     <string name="currentUrl">Aktuelle URL</string>
     <string name="UserAgent">Benutzeragent</string>
-    <string name="SavedLogin">Saved login</string>
-    <string name="SavedPassword">Saved password</string>
-    <string name="BasicAuthLogin">Basic auth login</string>
-    <string name="BasicAuthPassword">Basic auth password</string>
+    <string name="SavedLogin">gespeichertes Login</string>
+    <string name="SavedPassword">gespeichertes Passwort</string>
+    <string name="BasicAuthLogin">Basis Auth Login</string>
+    <string name="BasicAuthPassword">Basis Auth Passwort</string>
     <string name="Yes">Ja</string>
     <string name="No">Nein</string>
-    
+    <string name="Warning">Warnhinweis</string>
+
     <!-- Menu main + web -->
     <string name="menu_info">Über DoliDroid</string>
     <string name="menu_show_bar_on">Menüleiste anzeigen</string>
     <string name="menu_show_bar_off">Menüleiste anzeigen (nein)</string>
-    <string name="menu_autofill_on">Save Login / Passwort</string>
-    <string name="menu_autofill_off">Save Login / Passwort (nein)</string>
-    <string name="menu_uselocalresources_on">Verwende lokale statische Ressourcen</string>
+    <string name="menu_autofill_on">Login/Kennwort speichern</string>
+    <string name="menu_autofill_off">speichere Login / Passwort (nein)</string>
+    <string name="menu_uselocalresources_on">Lokale statische Ressourcen benutzen</string>
     <string name="menu_uselocalresources_off">Verwende lokale statische Ressourcen (nein)</string>
-
-    <!-- Menu main page -->
     <string name="menu_settings">Einstellungen</string>
-    <string name="menu_add_url">Hinzufügen der vordefinierten URL</string>
+    <string name="menu_add_url">Hinzufügen einer vordefinierten URL</string>
     <string name="menu_remove_url">Entfernen einer vordefinierten URL</string>
-    <string name="menu_clear_all_urls">Klar vordefinierte URLs</string>
+    <string name="menu_clear_all_urls">lösche alle vordefinierte URLs</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile"> Ich habe noch keine Dolibarr ERP CRM-Instanz, erstellen Sie eine auf DoliCloud.com...</a></string>
+
     <!-- Menu web browser -->
     <string name="menu_menu">Menü</string>
-    <string name="menu_go_to">Schneller Zugriff</string>
+    <string name="menu_go_to">Schnellzugriff</string>
     <string name="menu_search">Suchen</string>
+    <string name="menu_bookmarks">Lesezeichen</string>
     <string name="menu_back">Zurück</string>
     <string name="menu_refresh">Seite neu laden</string>
+    <string name="menu_copy_url">Kopiere URL in die Zwischenablage</string>
     <string name="menu_clearcache">Cache löschen</string>
     <string name="menu_logout">Ausloggen</string>
     <string name="menu_quit">Beenden</string>
-    </resources>
+    <string name="menu_multicompany">Firma wechseln</string>
+    <string name="menu_scan">Barcode einscannen</string>
+    <string name="menu_photo">Dokument einscannen</string>
+
+</resources>

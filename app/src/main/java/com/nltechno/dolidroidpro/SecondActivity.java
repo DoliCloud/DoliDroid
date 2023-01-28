@@ -501,7 +501,6 @@ public class SecondActivity extends Activity {
         Log.d(LOG_TAG, "onCreateOptionsMenu prefAlwaysAutoFill value is "+prefAlwaysAutoFill);
         menuItem2.setChecked(prefAlwaysAutoFill);
 
-
         // Update menu label to add the number of predefined URL into label
         MenuItem tmpItem = menu.findItem(R.id.manage_all_urls);
         tmpItem.setVisible(false);
@@ -571,6 +570,19 @@ public class SecondActivity extends Activity {
             }
         }
 
+        Log.d(LOG_TAG, "onCreateOptionsMenu Add menu About");
+        MenuItem menuItemAbout = menu.findItem(R.id.about);
+        if (menuItemAbout != null) {
+            menuItemAbout.setVisible(true);
+            //menuItemAbout.setIcon(getDrawable(R.drawable.ic_baseline_help_outline_24));
+        }
+
+        if (MainActivity.listOfRootUrl != null) {
+            MenuItem tmpItem2 = menu.findItem(R.id.manage_all_urls);
+            tmpItem2.setTitle(getString(R.string.menu_manage_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
+            tmpItem2.setVisible(true);
+        }
+
         Log.d(LOG_TAG, "onCreateOptionsMenu Add menu Copy url");
         MenuItem menuItemAddLink = menu.findItem(R.id.menu_copy_url);
         if (menuItemAddLink != null) {
@@ -590,13 +602,6 @@ public class SecondActivity extends Activity {
         if (menuItemReloadPage != null) {
             menuItemReloadPage.setVisible(true);
             menuItemReloadPage.setIcon(getDrawable(R.drawable.ic_baseline_refresh_24));
-        }
-
-        Log.d(LOG_TAG, "onCreateOptionsMenu Add menu About");
-        MenuItem menuItemAbout = menu.findItem(R.id.about);
-        if (menuItemAbout != null) {
-            menuItemAbout.setVisible(true);
-            //menuItemAbout.setIcon(getDrawable(R.drawable.ic_baseline_help_outline_24));
         }
 
         Log.d(LOG_TAG, "onCreateOptionsMenu Add menu Logout");

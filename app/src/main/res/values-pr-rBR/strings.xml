@@ -15,22 +15,25 @@
     <string name="dolibarr_url">URL Dolibarr</string>
     <string name="logo_dolidroid">Logo DoliDroid</string>
     <string name="SelectUrl">ou selecione um URL predefinido</string>
+    <string name="enterNewUrl">ou insira um novo URL</string>
+    <string name="UrlCopied">URL copiada para área de transferência</string>
+
     <!-- Activity web -->
     <string name="title_activity_second"></string>
     <string name="downloadComplete">Download do arquivo completo</string>
 	<string name="NoPreviousPageAgainToQuit">Nenhuma página anterior. Use Anterior para sair.</string>
 	<string name="notCompatibleWithVersion">O Dolibarr no servidor (%1$s) é muito antiga. DoliDroid requer Dolibarr versão %2$s ou superior.</string>
+    <string name="notification_error_ssl_cert_invalid">Certificado SSL de segurança do servidor parece inválido:</string>
+    <string name="notification_error_ssl_cert_invalidbis">Você quer continuar (o download de arquivos não seria possível)?</string>
+    <string name="CacheAndHistoryCleared">Cache e histórico eliminados.</string>
+
     <!-- Activity about -->
     <string name="title_activity_about"></string>
     <string name="textBack">Anterior</string>
     <string name="textMenu">Menu</string>
-    <string name="textAboutA">
-    <xliff:g id="textAboutA">XXX</xliff:g>
-  </string>
-    <string name="textAboutB">
-    <xliff:g id="textAboutB">XXX</xliff:g>
-  </string>
+    <string name="textAboutA"><xliff:g id="textAboutA">Versões...</xliff:g></string>
     <string name="Version">Versão</string>
+    <string name="VersionStaticResources">Versão de recursos estáticos locais</string>
     <string name="Author">Autor</string>
     <string name="Web">Web</string>
     <string name="Compatibility">Compatibilidade</string>
@@ -40,6 +43,7 @@
     <string name="DeviceHasMenuHardware">O dispositivo tem botões de hardware</string>
     <string name="DeviceHasDownloadManager">O dispositivo tem um gerenciador de downloads</string>
     <string name="DownloadDirectory">Baixar diretório</string>
+    <string name="PhotosDirectory">Diretório de fotos</string>
     <string name="DeviceHasPDFViewer">Dispositivo tem visualizadores de PDF</string>
     <string name="DeviceHasODXViewer">O dispositivo tem visualizadores OpenOffice</string>
     <string name="DeviceSize">Tamanho da tela do dispositivo</string>
@@ -52,14 +56,15 @@
     <string name="BasicAuthPassword">Basic auth password</string>
     <string name="Yes">Sim</string>
     <string name="No">Não</string>
-    
+    <string name="Warning">Atenção</string>
+
     <!-- Menu main + web -->
     <string name="menu_info">Sobre o DoliDroid</string>
-    <string name="menu_show_bar_on">Mostrar barra de menu</string>
+    <string name="menu_info_short">Sobre</string>
+    <string name="menu_show_bar_on">Exibir barra de menu</string>
     <string name="menu_show_bar_off">Mostrar barra de menu (não)</string>
-    <string name="menu_autofill_on">Mantenha login/password</string>
     <string name="menu_autofill_off">Mantenha login/password (não)</string>
-    <!-- Menu main page -->
+    <string name="menu_uselocalresources_off">Use recursos estáticos locais (não)</string>
     <string name="menu_settings">Definições</string>
     <string name="menu_add_url">Adicionar URL predefinido</string>
     <string name="menu_remove_url">Remover um URL predefinido</string>
@@ -73,4 +78,5 @@
     <string name="menu_clearcache">Limpar o cache</string>
     <string name="menu_logout">Terminar sessão</string>
     <string name="menu_quit">Sair</string>
+    <string name="menu_multicompany">Empresa de comutação</string>
     </resources>

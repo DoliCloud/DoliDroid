@@ -1,46 +1,99 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <string name="dolibarr_for_android">Πρόγραμμα πελάτης για Dolibarr σε Android</string>
+    <string name="app_name"><xliff:g id="app_name"> DoliDroid </xliff:g></string>
+    <string name="dolidroidLabel">DoliDroid, Android front-end for Dolibarr ERP-CRM</string>
+    <string name="dolidroidUserAgent">DoliDroid - front-end Android για Dolibarr ERP-CRM</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main"><xliff:g id="title_activity_main"> DoliDroid </xliff:g></string>
+    <string name="dolibarr_for_android">Android client for Dolibarr</string>
     <string name="open">Έναρξη</string>
+    <string name="dolibarr_url">Διεύθυνση URL Dolibarr</string>
     <string name="logo_dolidroid">Λογότυπο DoliDroid</string>
-    <string name="SelectUrl">ή επέλεξε προκαθορισμένο URL</string>
-    <string name="enterNewUrl">ή πληκτρολόγησε νέο URL</string>
+    <string name="SelectUrl">ή επιλέξτε μια προκαθορισμένη διεύθυνση URL</string>
+    <string name="enterNewUrl">ή εισάγετε μια νέα διεύθυνση URL</string>
+    <string name="UrlCopied">Η διεύθυνση URL αντιγράφηκε στο πρόχειρο</string>
 
     <!-- Activity web -->
     <string name="title_activity_second"></string>
     <string name="downloadComplete">Η λήψη του αρχείου ολοκληρώθηκε</string>
 	<string name="NoPreviousPageAgainToQuit">Δεν υπάρχει προηγούμενη σελίδα. Πάτα το πίσω πάλι για έξοδο.</string>
-	<!-- Activity about -->
+	<string name="notCompatibleWithVersion">Η έκδοση Dolibarr στο διακομιστή (%1$s) είναι πολύ παλιά. Το DoliDroid χρειάζεται έκδοση Dolibar %2$s ή μεγαλύτερη.</string>
+    <string name="notification_error_ssl_cert_invalid">Το πιστοποιητικό SSL του διακομιστή ασφαλείας φαίνεται άκυρο:</string>
+    <string name="notification_error_ssl_cert_invalidbis">Θέλετε να συνεχίσετε (η λήψη αρχείων δεν θα ειναι δυνατή);</string>
+    <string name="failedtogetpage">Αποτυχία λήψης σελίδας με γρήγορη άμεση λήψη. Είστε συνδεδεμένος;</string>
+    <string name="CacheAndHistoryCleared">Η προσωρινή μνήμη και το ιστορικό διαγράφηκαν.</string>
+
+    <!-- Activity about -->
     <string name="title_activity_about"></string>
     <string name="textBack">Πίσω</string>
     <string name="textMenu">Μενού</string>
+    <string name="textAboutA"> <xliff:g id="textAboutA"> Εκδόσεις... </xliff:g></string>
+    <string name="textAboutB"> <xliff:g id="textAboutB"> Διεύθυνση URL εγκατάστασης... </xliff:g></string>
+    <string name="textAboutB2"> <xliff:g id="textAboutB2"> Αποθηκευμένες συνδέσεις... </xliff:g></string>
+    <string name="textAboutC"> <xliff:g id="textAboutC"> τρέχουσα URL και user agent... </xliff:g></string>
     <string name="Version">Έκδοση</string>
+    <string name="VersionStaticResources">Έκδοση τοπικών στατικών πόρων</string>
     <string name="Author">Συντάκτης</string>
+    <string name="Web">Web</string>
     <string name="Compatibility">Συμβατότητα</string>
     <string name="License">Άδεια</string>
     <string name="Sources">Πηγές</string>
-    <string name="DeviceHasPDFViewer">Στη συσκευή υπάρχουν προγράμματα προβολής PDF</string>
-    <string name="DeviceHasODXViewer">Στη συσκευή υπάρχουν προγράμματα προβολής OpenOffice</string>
+    <string name="DeviceAPILevel">Επίπεδο API συσκευής</string>
+    <string name="DeviceHasMenuHardware">Η συσκευή διαθέτει hardware κουμπιά</string>
+    <string name="DeviceHasDownloadManager">Η συσκευή διαθέτει πρόγραμμα διαχείρισης λήψεων</string>
+    <string name="DownloadDirectory">Κατάλογος λήψεων</string>
+    <string name="PhotosDirectory">Κατάλογος φωτογραφιών</string>
+    <string name="DeviceHasPDFViewer">Η συσκευή διαθέτει προγράμματα προβολής PDF</string>
+    <string name="DeviceHasODXViewer">Η συσκευή έχει προγράμματα προβολής Libre Office</string>
     <string name="DeviceSize">Μέγεθος οθόνης συσκευής</string>
+    <string name="savedDolUrlRoot">Διεύθυνση URL Dolibarr</string>
     <string name="currentUrl">Τρέχουσα διεύθυνση Url</string>
-    <string name="SavedPassword">Αποθήκευση κωδικού</string>
+    <string name="UserAgent">User Agent</string>
+    <string name="SavedLogin">Αποθηκευμένη σύνδεση</string>
+    <string name="SavedPassword">Αποθηκευμένος κωδικός πρόσβασης</string>
+    <string name="BasicAuthLogin">Βασική ταυτότητα σύνδεσης</string>
+    <string name="BasicAuthPassword">Βασικός κωδικός πρόσβασης auth</string>
     <string name="Yes">Ναι</string>
     <string name="No">Όχι</string>
-    
+    <string name="Warning">Προειδοποίηση</string>
+
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">Καταργήστε την προκαθορισμένη διεύθυνση URL αυτής της εφαρμογής</string>
     <!-- Menu main + web -->
     <string name="menu_info">Σχετικά με το DoliDroid</string>
+    <string name="menu_info_short">Σχετικά με</string>
+    <string name="menu_show_bar_on">Εμφάνιση γραμμής μενού</string>
+    <string name="menu_show_bar_off">Εμφάνιση γραμμής μενού (όχι)</string>
+    <string name="menu_autofill_on">Αποθήκευση σύνδεσης/κωδικού πρόσβασης</string>
+    <string name="menu_autofill_off">Αποθήκευση σύνδεσης / κωδικού πρόσβασης (όχι)</string>
+    <string name="menu_uselocalresources_on">Χρησιμοποιήστε τοπικούς στατικούς πόρους</string>
+    <string name="menu_uselocalresources_off">Χρήση τοπικών στατικών πόρων (όχι)</string>
+    <string name="AlertHTTPS">Φαίνεται ότι ο διακομιστής σας ανάγκασε μια ανακατεύθυνση σε μια σελίδα HTTPS. Ελέγξτε τη διεύθυνση URL του Dolibarr και χρησιμοποιήστε απευθείας τη φόρμα διεύθυνσης URL (URL που ξεκινά με https:// αντί για http://). Η διατήρηση της χρήσης μιας διεύθυνσης URL χωρίς το s θα έχει ως αποτέλεσμα, για λόγους ασφαλείας, να μην λειτουργούν λειτουργίες όπως η βελτιστοποίηση της προσωρινής μνήμης ή η λήψη αρχείων.</string>
+    <string name="AlertHTTP">Προσπαθείτε να αποκτήσετε πρόσβαση σε έναν μη ασφαλή ιστότοπο (http: αντί για https:). Για λόγους ασφαλείας, το Android ενδέχεται να περιορίσει ορισμένες λειτουργίες σε αυτήν την εφαρμογή για τέτοιους ιστότοπους. Θα πρέπει να προστατεύσετε τον ιστότοπό σας προσθέτοντας ένα πιστοποιητικό HTTPS.</string>
+    <string name="AlertDownloadBadHTTPS">Η λήψη δεν είναι δυνατή όταν χρησιμοποιείτε επισφαλείς συνδέσεις (http vs https)</string>
+
     <!-- Menu main page -->
-    <string name="menu_settings">Ρυθμίσιες</string>
+    <string name="menu_utilities">Εργαλεία</string>
+    <string name="menu_settings">Ρυθμίσεις</string>
     <string name="menu_add_url">Προσθήκη προκαθορισμένου URL</string>
     <string name="menu_remove_url">Απομάκρυνση ενός προκαθορισμένου URL</string>
     <string name="menu_clear_all_urls">Καθαρισμός προκαθορισμένων URLs</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"> <a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile"> Δεν έχετε ακόμη εγκαταστήσει το Dolibarr ERP CRM, δημιουργήστε ένα στο DoliCloud.com... </a></string>
+
     <!-- Menu web browser -->
     <string name="menu_menu">Μενού</string>
     <string name="menu_go_to">Γρήγορη πρόσβαση</string>
     <string name="menu_search">Αναζήτηση</string>
+    <string name="menu_bookmarks">Σελιδοδείκτες</string>
     <string name="menu_back">Πίσω</string>
-    <string name="menu_refresh">Ανανέωη σελίδας</string>
+    <string name="menu_refresh">Επαναφόρτωση σελίδας</string>
+    <string name="menu_copy_url">Αντιγράψτε τη διεύθυνση URL στο πρόχειρο</string>
     <string name="menu_clearcache">Καθαρισμός προσωρινής μνήμης</string>
     <string name="menu_logout">Αποσύνδεση</string>
     <string name="menu_quit">Έξοδος</string>
-    </resources>
+    <string name="menu_multicompany">Αλλαγή εταιρείας</string>
+    <string name="menu_scan">Σαρώστε έναν γραμμωτό κώδικα</string>
+    <string name="menu_photo">Σαρώστε ένα έγγραφο</string>
+
+</resources>

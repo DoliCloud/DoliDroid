@@ -16,22 +16,17 @@
     <string name="logo_dolidroid">Logo DoliDroid</string>
     <string name="SelectUrl">of selecteer een vooraf gedefinieerde URL</string>
     <string name="enterNewUrl">of type nieuw URL</string>
-
     <!-- Activity web -->
     <string name="title_activity_second"></string>
     <string name="downloadComplete">Downloaden van het bestand voltooid</string>
 	<string name="NoPreviousPageAgainToQuit">Geen vorige pagina. Gebruik terug opnieuw om te stoppen.</string>
 	<string name="notCompatibleWithVersion">De Dolibarr op de server (%1$s) is te oud. DoliDroid vereist Dolibarr versie (%2$s) of hoger.</string>
+    <string name="notification_error_ssl_cert_invalid">Server SSL beveiligingscertificaat lijkt ongeldig:</string>
+    <string name="notification_error_ssl_cert_invalidbis">Wilt u verder gaan (downloaden van bestanden zou niet mogelijk zijn)?</string>
     <!-- Activity about -->
     <string name="title_activity_about"></string>
     <string name="textBack">Terug</string>
     <string name="textMenu">Menu</string>
-    <string name="textAboutA">
-    <xliff:g id="textAboutA">XXX</xliff:g>
-  </string>
-    <string name="textAboutB">
-    <xliff:g id="textAboutB">XXX</xliff:g>
-  </string>
     <string name="Version">Versie</string>
     <string name="VersionStaticResources">Versie van locale statische bronnen</string>
     <string name="Author">Auteur</string>
@@ -55,17 +50,11 @@
     <string name="BasicAuthPassword">Basic auth password</string>
     <string name="Yes">Ja</string>
     <string name="No">Nee</string>
-    
     <!-- Menu main + web -->
     <string name="menu_info">Over DoliDroid</string>
-    <string name="menu_show_bar_on">Toon menubalk</string>
     <string name="menu_show_bar_off">Toon menubalk (nee)</string>
-    <string name="menu_autofill_on">Houd login/wachtwoord</string>
     <string name="menu_autofill_off">Houd login/wachtwoord (nee)</string>
-    <string name="menu_uselocalresources_on">Gebruik locale statische bronnen</string>
     <string name="menu_uselocalresources_off">Gebruik locale statische bronnen (Nee)</string>
-
-    <!-- Menu main page -->
     <string name="menu_settings">Instellingen</string>
     <string name="menu_add_url">Voeg vooraf gedefinieerde URL toe</string>
     <string name="menu_remove_url">Verwijder een vooraf gedefinieerde URL</string>
@@ -79,4 +68,5 @@
     <string name="menu_clearcache">Wis tijdelijke opslag</string>
     <string name="menu_logout">Uitloggen</string>
     <string name="menu_quit">Afsluiten</string>
+    <string name="menu_multicompany">Wijzig bedrijf</string>
     </resources>

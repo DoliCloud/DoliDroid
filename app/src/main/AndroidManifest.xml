@@ -38,12 +38,22 @@
             android:label="@string/title_activity_main"
             android:theme="@style/DoliDroidThemeFirst"
             android:configChanges="orientation|screenSize">
+            <!-- the tag to say that this is the activity to start on run -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--
+        <activity
+            android:name=".MainActivityTest"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        -->
         <activity
             android:name=".SecondActivity"
             android:label="@string/title_activity_second"

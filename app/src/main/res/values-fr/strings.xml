@@ -12,8 +12,7 @@
     <string name="logo_dolidroid">Logo DoliDroid</string>
     <string name="SelectUrl">ou choisir une URL prédéfinie</string>
     <string name="enterNewUrl">ou entrez une nouvelle URL</string>
-    <string name="AlertHTTPS">Il semble que votre serveur ait forcé une redirection sur une page HTTPS. Merci de vérifier votre URL Dolibarr et utiliser directement la forme en https plutot que http (URL commençant par https:// au lieu de http://). Garder une URL sans le s provoquera, pour des raisons de sécurité, des désactivations de fonctions comme la mise en cache ou le téléchargement de fichiers.</string>
-    <string name="AlertHTTP">Vous accédez à un site web non sécurisé (en http: au lieu de https:). Pour des raisons de sécurité, Android peut désactiver certaines fonctions de cette app pour un tel site. Vous devriez sécuriser votre site en ajoutant un certificat HTTPS.</string>
+    <string name="UrlCopied">URL copiée dans le presse-papiers</string>
 
     <!-- Activity web -->
     <string name="title_activity_second"></string>
@@ -22,13 +21,17 @@
 	<string name="notCompatibleWithVersion">La version de Dolibarr sur le serveur (%1$s) est trop ancienne. DoliDroid requiert la version %2$s de Dolibarr ou supérieure.</string>
     <string name="notification_error_ssl_cert_invalid">Le certificat de sécurité SSL du serveur semble invalide:</string>
     <string name="notification_error_ssl_cert_invalidbis">Voulez-vous continuer (le téléchargement de fichiers ne serait pas possible)?</string>
+    <string name="failedtogetpage">Impossible d\'obtenir la page par un téléchargement direct rapide. Êtes-vous connecté ?</string>
+    <string name="CacheAndHistoryCleared">Cache et historique effacés.</string>
 
     <!-- Activity about -->
     <string name="title_activity_about"></string>
     <string name="textBack">Retour</string>
     <string name="textMenu">Menu</string>
-    <string name="textAboutA">XXX</string>
-    <string name="textAboutB">XXX</string>
+    <string name="textAboutA"> <xliff:g id="textAboutA"> Versions... </xliff:g></string>
+    <string name="textAboutB"> <xliff:g id="textAboutB"> URL du serveur... </xliff:g></string>
+    <string name="textAboutB2"> <xliff:g id="textAboutB2"> Connexions enregistrées... </xliff:g></string>
+    <string name="textAboutC"> <xliff:g id="textAboutC"> URL actuelle et agent utilisateur... </xliff:g></string>
     <string name="Version">Version</string>
     <string name="VersionStaticResources">Version des ressources locales statiques</string>
     <string name="Author">Auteur</string>
@@ -40,6 +43,7 @@
     <string name="DeviceHasMenuHardware">Terminal équipé de boutons matériels</string>
     <string name="DeviceHasDownloadManager">Terminal avec gestionnaire de téléchargement</string>
     <string name="DownloadDirectory">Répertoire de téléchargement</string>
+    <string name="PhotosDirectory">Répertoire de photos</string>
     <string name="DeviceHasPDFViewer">Terminal muni de lecteur PDF enregistré</string>
     <string name="DeviceHasODXViewer">Terminal muni de lecteur OpenOffice enregistré</string>
     <string name="DeviceSize">Taille écran</string>
@@ -52,35 +56,49 @@
     <string name="BasicAuthPassword">Mot de passe authentification Basic</string>
     <string name="Yes">Oui</string>
     <string name="No">Non</string>
-    <string name="Warning">Alerte</string>
-    <string name="DeletePredefinedUrl">Effacer l\'URL prédéfinie de cette instance</string>
+    <string name="Warning">Avertissement</string>
+
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">Supprimer l\'URL prédéfinie de cette instance</string>
+    <string name="DeleteAllPredefinedUrl">Supprimer toutes les URL prédéfinies</string>
 
     <!-- Menu main + web -->
     <string name="menu_info">A propos de DoliDroid</string>
-    <string name="menu_info_short">A propos</string>
-    <string name="menu_show_bar_on">Afficher la barre menu</string>
+    <string name="menu_info_short">À propos de</string>
+    <string name="menu_show_bar_on">Afficher la barre de menus</string>
     <string name="menu_show_bar_off">Afficher la barre menu (non)</string>
-    <string name="menu_autofill_on">Conserver login/pass</string>
-    <string name="menu_autofill_off">Conserver login/pass (non)</string>
-    <string name="menu_uselocalresources_on">Utiliser ressources locales</string>
-    <string name="menu_uselocalresources_off">Utiliser ressources locales (non)</string>
+    <string name="menu_autofill_on">Enregistrer login/mot de passe</string>
+    <string name="menu_autofill_off">Conserver login/passe (non)</string>
+    <string name="menu_uselocalresources_on">Utiliser les ressources statiques locales</string>
+    <string name="menu_uselocalresources_off">Utiliser les ressources locales (non)</string>
+    <string name="AlertHTTPS">Il semble que votre serveur ait forcé une redirection vers une page HTTPS. Merci de vérifier votre URL Dolibarr et d\'utiliser directement la forme URL https (URL commençant par https:// au lieu de http://). Continuer à utiliser une URL sans le s entraînera, pour des raisons de sécurité, des fonctionnalités qui ne fonctionneront pas comme l\'optimisation du cache ou le téléchargement de fichiers.</string>
+    <string name="AlertHTTP">Vous essayez d\'accéder à un site Web non sécurisé (http: au lieu de https:). Pour des raisons de sécurité, Android peut restreindre certaines fonctionnalités de cette application pour ces sites Web. Vous devez sécuriser votre site Web en ajoutant un certificat HTTPS.</string>
+    <string name="AlertDownloadBadHTTPS">Le téléchargement n\'est pas possible lorsque vous avez utilisé une mauvaise valeur de schéma pour vous connecter (http vs https)</string>
 
     <!-- Menu main page -->
+    <string name="menu_utilities">Utilitaires</string>
     <string name="menu_settings">Configuration</string>
     <string name="menu_add_url">Ajouter URL prédéfinie</string>
     <string name="menu_remove_url">Supprimer une URL prédéfinie</string>
     <string name="menu_clear_all_urls">Effacer les URLs prédéfinies</string>
-    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">Je n\'ai pas d\'instance ERP CRM en ligne, j\'en crée une sur DoliCloud.com</a>...</string>
+    <string name="menu_manage_all_urls">Gérer les URLs prédéfinies</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"> <a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile"> Je n\'ai pas encore d\'instance Dolibarr ERP CRM, créez-en une sur DoliCloud.com... </a></string>
 
     <!-- Menu web browser -->
     <string name="menu_menu">Menu</string>
     <string name="menu_go_to">Accès rapide</string>
     <string name="menu_search">Chercher</string>
+    <string name="menu_bookmarks">Signets</string>
     <string name="menu_back">Back</string>
     <string name="menu_refresh">Recharger page</string>
+    <string name="menu_copy_url">Copier l\'URL dans le presse-papiers</string>
     <string name="menu_clearcache">Vider cache</string>
     <string name="menu_logout">Déconnecter</string>
     <string name="menu_quit">Quitter</string>
     <string name="menu_multicompany">Changer de société</string>
+    <string name="menu_usercard">Ma fiche utilisateur</string>
+    <string name="menu_virtualcard">Ma carte de visite virtuelle</string>
+    <string name="menu_scan">Scanner un code-barres</string>
+    <string name="menu_photo">Numériser un document</string>
 
 </resources>

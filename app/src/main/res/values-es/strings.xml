@@ -16,22 +16,17 @@
     <string name="logo_dolidroid">Logo DoliDroid</string>
     <string name="SelectUrl">o seleccione una URL predefinida</string>
     <string name="enterNewUrl">o introduce una nueva URL</string>
-
     <!-- Activity web -->
     <string name="title_activity_second"></string>
     <string name="downloadComplete">Descarga completa de archivo</string>
 	<string name="NoPreviousPageAgainToQuit">No hay página anterior. Presione Atrás de nuevo para salir.</string>
 	<string name="notCompatibleWithVersion">La versión de Dolibarr en el servidor (%1$s) es demasiado antigua. DoliDroid necesita Dolibar versión %2$s o superior.</string>
+    <string name="notification_error_ssl_cert_invalid">El certificado de seguridad SSL del servidor parece inválido:</string>
+    <string name="notification_error_ssl_cert_invalidbis"> ¿Desea continuar (la descarga de archivos no sería posible)?</string>
     <!-- Activity about -->
     <string name="title_activity_about"></string>
     <string name="textBack">Atrás</string>
     <string name="textMenu">Menú</string>
-    <string name="textAboutA">
-    <xliff:g id="textAboutA">XXX</xliff:g>
-  </string>
-    <string name="textAboutB">
-    <xliff:g id="textAboutB">XXX</xliff:g>
-  </string>
     <string name="Version">Versión</string>
     <string name="VersionStaticResources">Versión de recursos estáticos locales</string>
     <string name="Author">Autor</string>
@@ -55,17 +50,11 @@
     <string name="BasicAuthPassword">Basic auth password</string>
     <string name="Yes">Sí</string>
     <string name="No">No</string>
-    
     <!-- Menu main + web -->
     <string name="menu_info">Acerca de DoliDroid</string>
-    <string name="menu_show_bar_on">Mostrar barra de menú</string>
     <string name="menu_show_bar_off">Mostrar barra de menú (no)</string>
-    <string name="menu_autofill_on">Guardar usuario/contraseña</string>
     <string name="menu_autofill_off">Guardar usuario/contraseña (no)</string>
-    <string name="menu_uselocalresources_on">Use recursos estáticos locales</string>
     <string name="menu_uselocalresources_off">Use recursos estáticos locales (no)</string>
-
-    <!-- Menu main page -->
     <string name="menu_settings">Configuración</string>
     <string name="menu_add_url">Añadir URL predefinida</string>
     <string name="menu_remove_url">Quitar una URL predefinida</string>
@@ -79,4 +68,5 @@
     <string name="menu_clearcache">Limpiar caché</string>
     <string name="menu_logout">Desconectar</string>
     <string name="menu_quit">Salir</string>
+    <string name="menu_multicompany">Cambiar empresa</string>
     </resources>

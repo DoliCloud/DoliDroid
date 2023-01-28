@@ -16,7 +16,6 @@
     <string name="logo_dolidroid">Logótipo do DoliDroid</string>
     <string name="SelectUrl">ou selecione um URL predefinido</string>
     <string name="enterNewUrl">ou insira um novo URL</string>
-
     <!-- Activity web -->
     <string name="title_activity_second"></string>
     <string name="downloadComplete">Transferência do ficheiro concluída</string>
@@ -26,12 +25,6 @@
     <string name="title_activity_about"></string>
     <string name="textBack">Anterior</string>
     <string name="textMenu">Menu</string>
-    <string name="textAboutA">
-    <xliff:g id="textAboutA">XXX</xliff:g>
-  </string>
-    <string name="textAboutB">
-    <xliff:g id="textAboutB">XXX</xliff:g>
-  </string>
     <string name="Version">Versão</string>
     <string name="VersionStaticResources">Versão dos recursos estáticos locais</string>
     <string name="Author">Autor</string>
@@ -55,17 +48,11 @@
     <string name="BasicAuthPassword">Palavra-passe de autenticação básica</string>
     <string name="Yes">Sim</string>
     <string name="No">Não</string>
-    
     <!-- Menu main + web -->
     <string name="menu_info">Sobre o DoliDroid</string>
-    <string name="menu_show_bar_on">Mostrar barra de menu</string>
     <string name="menu_show_bar_off">Mostrar barra de menu (não)</string>
-    <string name="menu_autofill_on">Guardar sessão/palavra-passe</string>
     <string name="menu_autofill_off">Guardar sessão/palavra-passe (não)</string>
-    <string name="menu_uselocalresources_on">Usar recursos estáticos locais</string>
     <string name="menu_uselocalresources_off">Usar recursos estáticos locais (não)</string>
-
-    <!-- Menu main page -->
     <string name="menu_settings">Definições</string>
     <string name="menu_add_url">Adicionar URL predefinido</string>
     <string name="menu_remove_url">Remover um URL predefinido</string>
