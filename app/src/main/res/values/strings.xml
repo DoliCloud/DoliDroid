@@ -59,8 +59,9 @@
     <string name="Warning">Warning</string>
 
     <!-- Activity Manage URL -->
-    <string name="DeletePredefinedUrl">Remove the predefined URL of this instance</string>
+    <string name="DeletePredefinedUrl">Remove this predefined URL of this instance</string>
     <string name="DeleteAllPredefinedUrl">Remove all predefined URLs</string>
+    <string name="ListOfUrls">List of Urls</string>
 
     <!-- Menu main + web -->
     <string name="menu_info">About DoliDroid</string>

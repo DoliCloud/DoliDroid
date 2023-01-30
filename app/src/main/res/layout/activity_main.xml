@@ -90,9 +90,9 @@
         android:hint="https://..."
         android:importantForAutofill="no"
         android:inputType="textUri"
-        android:minHeight="48dp"
+        android:minHeight="40dp"
         android:singleLine="true"
-        android:textSize="15sp"
+        android:textSize="16sp"
         tools:ignore="LabelFor">
 
         <requestFocus />

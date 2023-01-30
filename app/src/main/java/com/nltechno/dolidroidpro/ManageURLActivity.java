@@ -42,6 +42,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.security.crypto.EncryptedSharedPreferences;
@@ -97,10 +98,10 @@ public class ManageURLActivity extends Activity {
 
 		setContentView(R.layout.activity_manageurl);
 
-		TextView t2 = findViewById(R.id.TextAbout02);
+		TextView t2 = findViewById(R.id.TextInstanceURLTitle);
 		t2.setMovementMethod(LinkMovementMethod.getInstance());
 
-		TextView t2b = findViewById(R.id.TextAbout02b);
+		TextView t2b = findViewById(R.id.TextSavedLogins);
 		t2b.setMovementMethod(LinkMovementMethod.getInstance());
 
 		Log.d(LOG_TAG, "Open file " + MainActivity.FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());
@@ -303,7 +304,7 @@ public class ManageURLActivity extends Activity {
 
 
 		// Show text section 2
-		TextView textViewAbout2 = findViewById(R.id.TextAbout02);
+		TextView textViewAbout2 = findViewById(R.id.TextInstanceURLTitle);
 		String s2="";
 
         String savedDolRootUrl = intent.getStringExtra("savedDolRootUrl");
@@ -312,11 +313,11 @@ public class ManageURLActivity extends Activity {
 			btn.setVisibility(View.VISIBLE);
 			btn.setEnabled(true);
 
-			findViewById(R.id.imageView02).setVisibility(View.VISIBLE);
-			findViewById(R.id.imageView02).setEnabled(true);
+			//findViewById(R.id.imageView02).setVisibility(View.VISIBLE);
+			//findViewById(R.id.imageView02).setEnabled(true);
 
 			s2+="<font color='#440066'><b>"+getString(R.string.savedDolUrlRoot)+":</b></font><br /><br />\n";
-        	s2+=savedDolRootUrl+"<br />\n";
+        	s2+=savedDolRootUrl+"\n";
 
 			textViewAbout2.setVisibility(View.VISIBLE);
 			textViewAbout2.setEnabled(true);
@@ -326,8 +327,8 @@ public class ManageURLActivity extends Activity {
 			btn.setVisibility(View.INVISIBLE);
 			btn.setEnabled(false);
 
-			findViewById(R.id.imageView02).setVisibility(View.INVISIBLE);
-			findViewById(R.id.imageView02).setEnabled(false);
+			//findViewById(R.id.imageView02).setVisibility(View.INVISIBLE);
+			//findViewById(R.id.imageView02).setEnabled(false);
 
 			textViewAbout2.setVisibility(View.INVISIBLE);
 			textViewAbout2.setEnabled(false);
@@ -364,8 +365,8 @@ public class ManageURLActivity extends Activity {
 		}
 
 
-		// Show text section 2b
-		TextView textViewAbout2b = findViewById(R.id.TextAbout02b);
+		// Show text section of login an pass
+		TextView textViewAbout2b = findViewById(R.id.TextSavedLogins);
 		String s2b="";
 
 		if (savedDolRootUrl != null && ! "".equals(savedDolRootUrl))
@@ -395,7 +396,6 @@ public class ManageURLActivity extends Activity {
 				}
 			}
 
-			s2b+="<br />";
 			s2b+=getString(R.string.SavedLogin)+": "+(username != null ? username : "")+"<br />\n";
 			s2b+=getString(R.string.SavedPassword)+": "+(password != null ? password.replaceAll(".", "*") : "")+"\n";
 
@@ -414,6 +414,22 @@ public class ManageURLActivity extends Activity {
 			textViewAbout2b.setVisibility(View.INVISIBLE);
 			textViewAbout2b.setEnabled(false);
 			textViewAbout2b.setText("");
+		}
+
+
+		// Update menu label to add the number of predefined URL into label
+		TextView textViewListOfUrl = findViewById(R.id.textListOfUrlsTitle);
+		RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) textViewListOfUrl.getLayoutParams();
+		if (s2b != null && ! "".equals(s2b)) {
+			layoutParams.addRule(RelativeLayout.BELOW, R.id.buttonDeletePredefinedUrl);
+		} else {
+			layoutParams.addRule(RelativeLayout.BELOW, R.id.imageTop);
+		}
+		textViewListOfUrl.setLayoutParams(layoutParams);
+		if (MainActivity.listOfRootUrl != null) {
+			textViewListOfUrl.setText(getString(R.string.menu_manage_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
+		} else {
+			textViewListOfUrl.setText(getString(R.string.menu_manage_all_urls) + " (0)");
 		}
 	}
 	
