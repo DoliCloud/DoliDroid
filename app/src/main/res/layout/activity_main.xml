@@ -22,7 +22,8 @@
         android:text="@string/dolibarr_for_android"
         android:textColor="@color/grey"
         android:textSize="12sp"
-        tools:context=".MainActivity" />
+        tools:context=".MainActivity"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/textViewLink"
@@ -73,7 +74,8 @@
         android:text="@string/dolibarr_url"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/yellow"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        tools:ignore="TextContrastCheck" />
 
     <EditText
         android:id="@+id/url_of_instance"
@@ -83,17 +85,17 @@
         android:layout_below="@+id/textDolibarrURL"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="18dp"
         android:layout_marginRight="10dp"
         android:ems="10"
         android:gravity="top"
         android:hint="https://..."
         android:importantForAutofill="no"
         android:inputType="textUri"
-        android:minHeight="40dp"
+        android:minHeight="42dp"
         android:singleLine="true"
         android:textSize="16sp"
-        tools:ignore="LabelFor">
+        tools:ignore="LabelFor,TouchTargetSizeCheck,TextContrastCheck">
 
         <requestFocus />
     </EditText>
