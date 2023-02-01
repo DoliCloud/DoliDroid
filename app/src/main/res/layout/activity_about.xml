@@ -16,7 +16,7 @@
         android:textColor="@color/black">
 
         <TextView
-            android:id="@+id/textAndroidClient"
+            android:id="@+id/textAboutAndroidClient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -27,7 +27,7 @@
             tools:ignore="TextContrastCheck" />
 
         <TextView
-            android:id="@+id/TextAbout01"
+            android:id="@+id/textAboutVersion"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/imageView01"
@@ -42,7 +42,7 @@
             tools:context=".AboutActivity" />
 
         <TextView
-            android:id="@+id/TextAbout03"
+            android:id="@+id/textAboutCurrentUrl"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/imageView03"
@@ -60,7 +60,7 @@
             android:id="@+id/imageView01"
             android:layout_width="48dp"
             android:layout_height="42dp"
-            android:layout_below="@+id/textAndroidClient"
+            android:layout_below="@+id/textAboutAndroidClient"
             android:layout_alignParentStart="false"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
@@ -72,7 +72,7 @@
             android:id="@+id/imageView03"
             android:layout_width="48dp"
             android:layout_height="45dp"
-            android:layout_below="@id/TextAbout01"
+            android:layout_below="@id/textAboutVersion"
             android:layout_alignParentStart="false"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="55dp"

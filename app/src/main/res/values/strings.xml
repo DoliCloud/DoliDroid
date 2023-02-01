@@ -10,7 +10,7 @@
     <string name="open">Start</string>
     <string name="dolibarr_url">Dolibarr URL</string>
     <string name="logo_dolidroid">Logo DoliDroid</string>
-    <string name="SelectUrl">or select a predefined URL</string>
+    <string name="SelectUrl">or select a favorite connection</string>
     <string name="enterNewUrl">or enter a new URL</string>
     <string name="UrlCopied">URL copied into clipboard</string>
 
@@ -48,7 +48,7 @@
     <string name="DeviceHasODXViewer">Device has OpenOffice viewers</string>
     <string name="DeviceSize">Device screen size</string>
     <string name="savedDolUrlRoot">Dolibarr instance Url</string>
-    <string name="currentUrl">Current Url</string>
+    <string name="currentUrl">Current connection</string>
     <string name="UserAgent">User Agent</string>
     <string name="SavedLogin">Saved login</string>
     <string name="SavedPassword">Saved password</string>
@@ -59,9 +59,9 @@
     <string name="Warning">Warning</string>
 
     <!-- Activity Manage URL -->
-    <string name="DeletePredefinedUrl">Remove this predefined URL of this instance</string>
-    <string name="DeleteAllPredefinedUrl">Remove all predefined URLs</string>
-    <string name="ListOfUrls">List of Urls</string>
+    <string name="DeletePredefinedUrl">Remove this connection</string>
+    <string name="DeleteAllPredefinedUrl">Remove all favorites connections</string>
+    <string name="ListOfUrls">List of connections</string>
 
     <!-- Menu main + web -->
     <string name="menu_info">About DoliDroid</string>
@@ -80,9 +80,9 @@
     <string name="menu_utilities">Utilities</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_add_url">Add predefined URL</string>
-    <string name="menu_remove_url">Remove a predefined URL</string>
-    <string name="menu_clear_all_urls">Clear predefined URLs</string>
-    <string name="menu_manage_all_urls">Manage predefined URLs</string>
+    <string name="menu_remove_url">Remove a favorite connection</string>
+    <string name="menu_clear_all_urls">Clear favorites connections</string>
+    <string name="menu_manage_all_urls">Manage favorites connections</string>
     <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">I don\'t have a Dolibarr ERP CRM instance yet, create one on DoliCloud.com...</a></string>
 
     <!-- Menu web browser -->

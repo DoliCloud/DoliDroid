@@ -22,19 +22,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Color;
-import android.graphics.Point;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,7 +37,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.security.crypto.EncryptedSharedPreferences;
@@ -55,7 +47,6 @@ import com.nltechno.utils.Utils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * About activity class
@@ -70,7 +61,6 @@ public class ManageURLActivity extends Activity {
 	static final int RESULT_ABOUT =  RESULT_FIRST_USER;
 
 	ListView listView;
-
 
 	/**
 	 * Called when activity is created
@@ -111,10 +101,10 @@ public class ManageURLActivity extends Activity {
 		Log.d(LOG_TAG, "Open file " + MainActivity.FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());
 
 		// Fill the list of Urls
-		ListView listViewOfUrls = (ListView) findViewById(R.id.list_view);
+		ListView listViewOfUrls = (ListView) findViewById(R.id.listViewConnections);
 		ArrayAdapter<String> arr = new ArrayAdapter<String>(
 				this,
-				android.R.layout.simple_list_item_1,
+				android.R.layout.simple_list_item_activated_1,
 				MainActivity.listOfRootUrl);
 		listViewOfUrls.setAdapter(arr);
 
@@ -245,6 +235,7 @@ public class ManageURLActivity extends Activity {
 		// For api level 24: textViewAbout1.setText(Html.fromHtml(s1, Html.FROM_HTML_MODE_LEGACY));
 
 		// Show text title
+		TextView textListOfCurrentUrl = findViewById(R.id.textListOfCurrentUrl);
 		TextView textViewAbout2 = findViewById(R.id.TextInstanceURLTitle);
 		String s2="";
 
@@ -257,9 +248,10 @@ public class ManageURLActivity extends Activity {
 			//findViewById(R.id.imageView02).setVisibility(View.VISIBLE);
 			//findViewById(R.id.imageView02).setEnabled(true);
 
-			s2+="<font color='#440066'><b>"+getString(R.string.savedDolUrlRoot)+":</b></font><br /><br />\n";
-        	s2+=savedDolRootUrl+"\n";
+        	s2=savedDolRootUrl;
 
+			textListOfCurrentUrl.setVisibility(View.VISIBLE);
+			textListOfCurrentUrl.setEnabled(true);
 			textViewAbout2.setVisibility(View.VISIBLE);
 			textViewAbout2.setEnabled(true);
 			textViewAbout2.setText(Html.fromHtml(s2));
@@ -271,6 +263,9 @@ public class ManageURLActivity extends Activity {
 			//findViewById(R.id.imageView02).setVisibility(View.INVISIBLE);
 			//findViewById(R.id.imageView02).setEnabled(false);
 
+			textListOfCurrentUrl.setVisibility(View.INVISIBLE);
+			textListOfCurrentUrl.setEnabled(false);
+
 			textViewAbout2.setVisibility(View.INVISIBLE);
 			textViewAbout2.setEnabled(false);
 			textViewAbout2.setText("");
@@ -278,7 +273,7 @@ public class ManageURLActivity extends Activity {
 
 
         // Show btn or not
-		// Check if url is inside predefined URL
+		// Check if url is inside favorite URL
 		boolean savedDolRootUrlFoundIntoPredefinedLoginUrl = false;
 		try
 		{
@@ -306,7 +301,7 @@ public class ManageURLActivity extends Activity {
 		}
 
 
-		// Show text section of login an pass
+		// Show text section of login and pass
 		TextView textViewAbout2b = findViewById(R.id.TextSavedLogins);
 		String s2b="";
 
@@ -377,7 +372,7 @@ public class ManageURLActivity extends Activity {
 			textViewListOfUrl.setVisibility(View.INVISIBLE);
 			Button btnClearAll = findViewById(R.id.buttonClearAllUrl);
 			btnClearAll.setVisibility(View.INVISIBLE);
-			ListView listView = findViewById(R.id.list_view);
+			ListView listView = findViewById(R.id.listViewConnections);
 			listView.setVisibility(View.INVISIBLE);
 		}
 

@@ -18,7 +18,7 @@
         android:textColor="@color/black">
 
         <TextView
-            android:id="@+id/textAndroidClient"
+            android:id="@+id/textAboutAndroidClient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -34,7 +34,7 @@
             android:id="@+id/TextInstanceURLTitle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imageTop"
+            android:layout_below="@id/textListOfCurrentUrl"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="18dp"
@@ -62,6 +62,22 @@
             tools:context=".ManageURLActivity" />
 
         <TextView
+            android:id="@+id/textListOfCurrentUrl"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageTop"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="18dp"
+            android:maxLines="50"
+            android:text="@string/currentUrl"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:context=".ManageURLActivity" />
+
+        <TextView
             android:id="@+id/TextSavedLogins"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -84,7 +100,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="14dp"
             android:layout_marginEnd="14dp"
             android:background="#009688"
             android:paddingStart="8dp"
@@ -100,7 +116,7 @@
             android:id="@+id/buttonClearAllUrl"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_below="@id/list_view"
+            android:layout_below="@id/listViewConnections"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="10dp"
@@ -131,12 +147,13 @@
             tools:visibility="visible" />
 
         <ListView
-            android:id="@+id/list_view"
+            android:id="@+id/listViewConnections"
+            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="240dp"
             android:layout_below="@id/textListOfUrlsTitle"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="14dp"
             android:layout_marginEnd="10dp" />
 
     </RelativeLayout>

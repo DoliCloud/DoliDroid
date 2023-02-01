@@ -4,6 +4,9 @@ English DoliDroid ChangeLog
 
 ***** ChangeLog for 3.0 *****
 
+3.0-b57
+- Add a page to manage favorites connections
+
 3.0-b56
 - Fix null pointer error on "Copy current URL" feature.
 - Reorganize menus to prepare future features

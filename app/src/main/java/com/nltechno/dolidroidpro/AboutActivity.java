@@ -17,13 +17,10 @@
 
 package com.nltechno.dolidroidpro;
 
-import java.io.FileOutputStream;
 import java.util.List;
 
 import com.nltechno.utils.Utils;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -46,11 +43,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.TextView;
-
-import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKeys;
 
 /**
  * About activity class
@@ -99,7 +92,7 @@ public class AboutActivity extends Activity {
 		// resource.  By default these links will appear but not
 		// respond to user input.  To make them active, you need to
 		// call setMovementMethod() on the TextView object.
-		TextView t1 = findViewById(R.id.TextAbout01);
+		TextView t1 = findViewById(R.id.textAboutVersion);
 		t1.setMovementMethod(LinkMovementMethod.getInstance());
 
 		Log.d(LOG_TAG, "Open file " + MainActivity.FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());
@@ -120,7 +113,7 @@ public class AboutActivity extends Activity {
 		Intent intent = getIntent();
 
 		// Show text section 1
-		TextView textViewAbout1 = findViewById(R.id.TextAbout01);
+		TextView textViewAbout1 = findViewById(R.id.textAboutVersion);
 		String s1="";
 
 		PackageManager manager = this.getPackageManager();
@@ -211,7 +204,7 @@ public class AboutActivity extends Activity {
 		}
 
 		// Show text section 3
-		TextView textViewAbout3 = findViewById(R.id.TextAbout03);
+		TextView textViewAbout3 = findViewById(R.id.textAboutCurrentUrl);
 		String s3="";
 
 		// Current url
