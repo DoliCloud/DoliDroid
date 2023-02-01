@@ -68,7 +68,6 @@ import androidx.security.crypto.MasterKeys;
  *
  * TargetApi indicates that Lint should treat this type as targeting a given API level, no matter what the project target is.
  */
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class MainActivity extends Activity implements OnItemSelectedListener {
 
 	private static final String LOG_TAG = "DoliDroidMainActivity";
@@ -98,6 +97,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i(LOG_TAG, "onCreate Running with SDK="+Build.VERSION.SDK_INT+" hardware menu="+Utils.hasMenuHardware(this));
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
     	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     	boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
@@ -130,9 +130,6 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
         }
         //this.savWindow.requestFeature(Window.FEATURE_PROGRESS);
         //this.savWindow.setFeatureInt(Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
-
-
-		setContentView(R.layout.activity_main);
 
 		Display display = getWindowManager().getDefaultDisplay();
 		Point size = new Point();

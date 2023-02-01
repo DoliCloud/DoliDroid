@@ -18,7 +18,6 @@
 package com.nltechno.dolidroidpro;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -41,8 +40,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.security.crypto.EncryptedSharedPreferences;
@@ -60,13 +62,15 @@ import java.util.List;
  * 
  * @author eldy@destailleur.fr
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
 public class ManageURLActivity extends Activity {
 
 	private static final String LOG_TAG = "DoliDroidManageURLActivity";
 	private String menuAre="hardwareonly";
 
 	static final int RESULT_ABOUT =  RESULT_FIRST_USER;
+
+	ListView listView;
+
 
 	/**
 	 * Called when activity is created
@@ -75,8 +79,10 @@ public class ManageURLActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i(LOG_TAG, "onCreate savedInstanceState="+savedInstanceState);
 		super.onCreate(savedInstanceState);
+		// Set the XML view to use
+		setContentView(R.layout.activity_manageurl);
 
-    	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     	boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
     	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
     	Log.d(LOG_TAG, "prefAlwaysShowBar="+prefAlwaysShowBar+" prefAlwaysAutoFill="+prefAlwaysAutoFill); 
@@ -96,8 +102,6 @@ public class ManageURLActivity extends Activity {
         	requestWindowFeature(Window.FEATURE_NO_TITLE);	// Hide title with menus
         }
 
-		setContentView(R.layout.activity_manageurl);
-
 		TextView t2 = findViewById(R.id.TextInstanceURLTitle);
 		t2.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -106,15 +110,15 @@ public class ManageURLActivity extends Activity {
 
 		Log.d(LOG_TAG, "Open file " + MainActivity.FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());
 
+		// Fill the list of Urls
+		ListView listViewOfUrls = (ListView) findViewById(R.id.list_view);
+		ArrayAdapter<String> arr = new ArrayAdapter<String>(
+				this,
+				android.R.layout.simple_list_item_1,
+				MainActivity.listOfRootUrl);
+		listViewOfUrls.setAdapter(arr);
 
-		// Update menu label to add the number of predefined URL into label
-		Button buttonClearAllUrl = findViewById(R.id.buttonClearAllUrl);
-		if (MainActivity.listOfRootUrl != null) {
-			buttonClearAllUrl.setText(getString(R.string.DeleteAllPredefinedUrl) + " (" + MainActivity.listOfRootUrl.size() + ")");
-		} else {
-			buttonClearAllUrl.setText(getString(R.string.DeleteAllPredefinedUrl) + " (0)");
-		}
-
+		//ScrollView scrollView_main = (ScrollView) findViewById(R.id.scrollView_main);
 
 		// Create listener to respond to click on button Delete current URL
 		// Not using the android:onClick tag is bugged. Declaring listener is also faster.
@@ -163,27 +167,31 @@ public class ManageURLActivity extends Activity {
 			}
 		});
 
+		// Update menu label to add the number of predefined URL into label
+		Button buttonClearAllUrl = findViewById(R.id.buttonClearAllUrl);
+		if (MainActivity.listOfRootUrl != null) {
+			buttonClearAllUrl.setText(getString(R.string.DeleteAllPredefinedUrl) + " (" + MainActivity.listOfRootUrl.size() + ")");
+		} else {
+			buttonClearAllUrl.setText(getString(R.string.DeleteAllPredefinedUrl) + " (0)");
+		}
+
 		// Create listener to respond to click on button Remove all predefined URL
 		// Not using the android:onClick tag is bugged. Declaring listener is also faster.
-		Button btn2 = findViewById(R.id.buttonClearAllUrl);
-		btn2.setOnClickListener(new View.OnClickListener()
-		{
+		buttonClearAllUrl.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Log.d(LOG_TAG, "We click on Remove all predefined URLs");
 
 				FileOutputStream fos;
-				try
-				{
+				try {
 					File file = new File(getApplicationContext().getFilesDir().toString() + "/" + MainActivity.FILENAME);
-					Log.d(LOG_TAG, "Clear predefined URL list "+MainActivity.FILENAME+" (from ManageURLActivity) by deleting file with full path="+file.getAbsolutePath());
+					Log.d(LOG_TAG, "Clear predefined URL list " + MainActivity.FILENAME + " (from ManageURLActivity) by deleting file with full path=" + file.getAbsolutePath());
 					Boolean result = file.delete();
 					Log.d(LOG_TAG, result.toString());
 
-					MainActivity.listOfRootUrl = new ArrayList<String>();	// Clear array of menu entry
+					MainActivity.listOfRootUrl = new ArrayList<String>();    // Clear array of menu entry
 
 					// Now update button label entry
-					Button buttonClearAllUrl = findViewById(R.id.buttonClearAllUrl);
 					if (MainActivity.listOfRootUrl != null) {
 						buttonClearAllUrl.setText(getString(R.string.DeleteAllPredefinedUrl) + " (" + MainActivity.listOfRootUrl.size() + ")");
 					} else {
@@ -206,13 +214,10 @@ public class ManageURLActivity extends Activity {
 						editorEncrypted.commit();
 
 						Log.d(LOG_TAG, "The encrypted shared preferences file has been cleared");
-					}
-					catch(Exception e) {
+					} catch (Exception e) {
 						Log.w(LOG_TAG, "Failed to clear encrypted shared preferences file");
 					}
-				}
-				catch(Exception ioe)
-				{
+				} catch (Exception ioe) {
 					Log.e(LOG_TAG, "Error");
 				}
 			}
@@ -237,73 +242,9 @@ public class ManageURLActivity extends Activity {
 		Button btn = findViewById(R.id.buttonDeletePredefinedUrl);
 
 
-		// Show text section 1
-		TextView textViewAbout1 = findViewById(R.id.TextAbout01);
-		String s1="";
-
-		PackageManager manager = this.getPackageManager();
-		try
-		{
-			PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-
-			s1+=getString(R.string.Version)+": <b>"+info.versionName+" (build "+info.versionCode+")</b><br />\n";
-			s1+=getString(R.string.VersionStaticResources)+": <b>"+SecondActivity.VERSION_RESOURCES+"</b><br />\n";
-
-			//s+= "PackageName = " + info.packageName + "\n";
-			s1+=getString(R.string.Author)+": <b>Laurent Destailleur</b><br />\n";
-			s1+=getString(R.string.Web)+": <span style=\"color:#008888\"><a href=\"https://www.dolicloud.com?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile\">https://www.dolicloud.com</a></span><br />\n";
-			s1+=getString(R.string.Compatibility)+": <b>Dolibarr 8+</b><br />\n";
-			s1+=getString(R.string.License)+": <b>GPL v3+</b><br />\n";
-			//s1+=getString(R.string.Sources)+": https://www.nltechno.com/services/<br />\n";
-			s1+=getString(R.string.Sources)+": <span style=\"color:#008888\"><a href=\"https://github.com/DoliCloud/DoliDroid.git\">https://github.com/DoliCloud/DoliDroid.git</a></span><br />\n";
-			// This download key allow to download file with name src_dolidroid-info.versionName-downloadkey
-			//String downloadkey=Utils.MD5Hex("dolidroid"+info.versionName.replaceAll("[^0-9.]", "")+"saltnltechno").substring(0, 8);
-			//s1+=getString(R.string.Sources)+" Download Key: dolidroid-"+info.versionName.replaceAll("[^0-9.]", "")+"-"+downloadkey+"<br />\n";
-
-			s1+="<br />\n";
-			
-			s1+=getString(R.string.DeviceAPILevel)+": <b>"+Build.VERSION.SDK_INT+"</b><br />\n";
-			Display display = getWindowManager().getDefaultDisplay();
-			Point size = new Point();
-			display.getSize(size);
-			int width = size.x;
-			int height = size.y;
-			s1+=getString(R.string.DeviceSize)+": <b>"+width+"x"+height+"</b><br />";
-			//s1+=getString(R.string.DeviceHasMenuHardware)+": <b>"+(Utils.hasMenuHardware(this)?getString(R.string.Yes):getString(R.string.No))+"</b><br />\n";
-			s1+=getString(R.string.DeviceHasDownloadManager)+": <b>"+(Utils.isDownloadManagerAvailable(this)?getString(R.string.Yes):getString(R.string.No))+"</b><br />\n";
-
-			// This return /storage/sdcard0/Download for example (we use this for downloading files)
-			String downloaddirpublic=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
-			// This return /storage/sdcard0 for example (we do not use this)
-			//String downloaddir="";
-		    //if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) downloaddir = Environment.getExternalStorageDirectory().getAbsolutePath();
-			s1+=getString(R.string.DownloadDirectory)+": <b>"+downloaddirpublic+"</b><br />\n";
-
-			String photosdirpublic=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
-			//if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) photosdirpublic = Environment.getExternalStorageDirectory().getAbsolutePath();
-			s1+=getString(R.string.PhotosDirectory)+": <b>"+photosdirpublic+"</b><br />\n";
-
-			Intent testIntent = new Intent(Intent.ACTION_VIEW);
-            testIntent.setType("application/pdf"); 
-            List<ResolveInfo> list = manager.queryIntentActivities(testIntent, PackageManager.MATCH_DEFAULT_ONLY); 
-			s1+=getString(R.string.DeviceHasPDFViewer)+": <b>"+(list.size() > 0?getString(R.string.Yes)+" ("+list.size()+")":getString(R.string.No))+"</b><br />\n";
-
-			Intent testIntent2 = new Intent(Intent.ACTION_VIEW);
-            testIntent2.setType("application/vnd.oasis.opendocument.text"); 
-            List<ResolveInfo> list2 = manager.queryIntentActivities(testIntent2, PackageManager.MATCH_DEFAULT_ONLY); 
-			s1+=getString(R.string.DeviceHasODXViewer)+": <b>"+(list2.size() > 0?getString(R.string.Yes)+" ("+list2.size()+")":getString(R.string.No))+"</b>\n";
-           
-			//s+="Permissions = " + info.permissions;
-		}
-		catch(Exception e)
-		{
-			Log.e(LOG_TAG, e.getMessage());
-		}
-
 		// For api level 24: textViewAbout1.setText(Html.fromHtml(s1, Html.FROM_HTML_MODE_LEGACY));
 
-
-		// Show text section 2
+		// Show text title
 		TextView textViewAbout2 = findViewById(R.id.TextInstanceURLTitle);
 		String s2="";
 
@@ -419,18 +360,27 @@ public class ManageURLActivity extends Activity {
 
 		// Update menu label to add the number of predefined URL into label
 		TextView textViewListOfUrl = findViewById(R.id.textListOfUrlsTitle);
-		RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) textViewListOfUrl.getLayoutParams();
-		if (s2b != null && ! "".equals(s2b)) {
-			layoutParams.addRule(RelativeLayout.BELOW, R.id.buttonDeletePredefinedUrl);
+		if (MainActivity.listOfRootUrl.size() > 1) {
+			RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) textViewListOfUrl.getLayoutParams();
+			if (s2b != null && !"".equals(s2b)) {
+				layoutParams.addRule(RelativeLayout.BELOW, R.id.buttonDeletePredefinedUrl);
+			} else {
+				layoutParams.addRule(RelativeLayout.BELOW, R.id.imageTop);
+			}
+			textViewListOfUrl.setLayoutParams(layoutParams);
+			if (MainActivity.listOfRootUrl != null) {
+				textViewListOfUrl.setText(getString(R.string.menu_manage_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
+			} else {
+				textViewListOfUrl.setText(getString(R.string.menu_manage_all_urls) + " (0)");
+			}
 		} else {
-			layoutParams.addRule(RelativeLayout.BELOW, R.id.imageTop);
+			textViewListOfUrl.setVisibility(View.INVISIBLE);
+			Button btnClearAll = findViewById(R.id.buttonClearAllUrl);
+			btnClearAll.setVisibility(View.INVISIBLE);
+			ListView listView = findViewById(R.id.list_view);
+			listView.setVisibility(View.INVISIBLE);
 		}
-		textViewListOfUrl.setLayoutParams(layoutParams);
-		if (MainActivity.listOfRootUrl != null) {
-			textViewListOfUrl.setText(getString(R.string.menu_manage_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
-		} else {
-			textViewListOfUrl.setText(getString(R.string.menu_manage_all_urls) + " (0)");
-		}
+
 	}
 	
     /**

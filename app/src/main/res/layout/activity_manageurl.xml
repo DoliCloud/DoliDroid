@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:theme="@style/DoliDroidThemeFirst"
-    tools:context=".AboutActivity">
+    tools:context=".ManageURLActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,6 +13,8 @@
         android:padding="4dp"
         android:theme="@style/DoliDroidThemeFirst"
         android:background="@color/white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:textColor="@color/black">
 
         <TextView
@@ -23,7 +25,9 @@
             android:layout_marginTop="25dp"
             android:text="@string/dolibarr_for_android"
             android:textColor="@color/grey"
-            tools:context=".AboutActivity"
+            tools:context=".ManageURLActivity"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             tools:ignore="TextContrastCheck" />
 
         <TextView
@@ -33,13 +37,13 @@
             android:layout_below="@id/imageTop"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
+            android:layout_marginEnd="18dp"
             android:maxLines="50"
             android:text="@string/textAboutB"
-            android:textSize="14sp"
-            tools:context=".AboutActivity" />
+            android:textSize="16sp"
+            tools:context=".ManageURLActivity" />
 
         <TextView
             android:id="@+id/textListOfUrlsTitle"
@@ -48,14 +52,14 @@
             android:layout_below="@id/buttonDeletePredefinedUrl"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="44dp"
-            android:layout_marginEnd="14dp"
+            android:layout_marginEnd="18dp"
             android:maxLines="50"
             android:text="@string/ListOfUrls"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textStyle="bold"
-            tools:context=".AboutActivity" />
+            tools:context=".ManageURLActivity" />
 
         <TextView
             android:id="@+id/TextSavedLogins"
@@ -64,13 +68,13 @@
             android:layout_below="@id/TextInstanceURLTitle"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="14dp"
+            android:layout_marginEnd="18dp"
             android:maxLines="50"
             android:text="@string/textAboutB2"
-            android:textSize="14sp"
-            tools:context=".AboutActivity" />
+            android:textSize="16sp"
+            tools:context=".ManageURLActivity" />
 
         <Button
             android:id="@+id/buttonDeletePredefinedUrl"
@@ -80,7 +84,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="14dp"
             android:background="#009688"
             android:paddingStart="8dp"
@@ -96,12 +100,13 @@
             android:id="@+id/buttonClearAllUrl"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_below="@id/textListOfUrlsTitle"
+            android:layout_below="@id/list_view"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginEnd="14dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="14dp"
             android:background="#009688"
             android:paddingStart="8dp"
             android:paddingTop="0dp"
@@ -125,6 +130,14 @@
             tools:ignore="ImageContrastCheck"
             tools:visibility="visible" />
 
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="wrap_content"
+            android:layout_height="240dp"
+            android:layout_below="@id/textListOfUrlsTitle"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp" />
 
     </RelativeLayout>
 

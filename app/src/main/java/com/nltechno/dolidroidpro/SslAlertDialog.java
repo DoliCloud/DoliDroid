@@ -16,7 +16,6 @@
  */
 package com.nltechno.dolidroidpro;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.webkit.SslErrorHandler;
 import android.content.DialogInterface;

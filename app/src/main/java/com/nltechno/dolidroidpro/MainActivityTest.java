@@ -16,7 +16,6 @@
  */
 package com.nltechno.dolidroidpro;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,12 +34,9 @@ import com.nltechno.utils.Utils;
  *
  * TargetApi indicates that Lint should treat this type as targeting a given API level, no matter what the project target is.
  */
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class MainActivityTest extends Activity implements OnItemSelectedListener {
 
 	private static final String LOG_TAG = "DoliDroidMainActivityTest";
-
-	final Activity activity = this;
 
 
 	/**
@@ -50,7 +46,6 @@ public class MainActivityTest extends Activity implements OnItemSelectedListener
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i(LOG_TAG, "onCreate Running with SDK=" + Build.VERSION.SDK_INT + " hardware menu=" + Utils.hasMenuHardware(this));
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.activity_maintest);
 
 	}

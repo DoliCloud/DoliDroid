@@ -68,7 +68,6 @@ import android.os.Environment;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DownloadManager;
@@ -112,7 +111,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 /**
  * Second activity class
  */
-@TargetApi(Build.VERSION_CODES.M)
 @SuppressLint("SetJavaScriptEnabled")
 public class SecondActivity extends Activity {
 
@@ -221,9 +219,10 @@ public class SecondActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
-        super.onCreate(savedInstanceState);
-
         Log.i(LOG_TAG, "onCreate savedInstanceState="+savedInstanceState);
+        super.onCreate(savedInstanceState);
+        // To have the view SecondActivity with WebView included:
+        setContentView(R.layout.activity_second);
 
         // Read the non encrypted share preferences files
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -258,7 +257,7 @@ public class SecondActivity extends Activity {
         //this.savWindow.setFeatureInt(Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
 
         Intent intent = getIntent();
-        String dolRootUrl = intent.getStringExtra("dolRootUrl");        
+        String dolRootUrl = intent.getStringExtra("dolRootUrl");
         String dolRequestUrl = intent.getStringExtra("dolRequestUrl");        
 
         this.savedDolRootUrl = dolRootUrl;      // this include user:pass of http basic urls. Always end with /. Example: hTtP://user:pass@testldr1.with.dolicloud.com:xxx/
@@ -323,9 +322,6 @@ public class SecondActivity extends Activity {
         
         Log.d(LOG_TAG, "onCreate isDownloadManagerAvailable="+Utils.isDownloadManagerAvailable(this));
         Log.d(LOG_TAG, "onCreate We are in onCreate and will load URL urlToGo=" + urlToGo);
-
-        // To have the view SecondActivity with WebView included:
-        setContentView(R.layout.activity_second);
 
         progress = findViewById(R.id.progressBar1);
         progress.setMax(100);
