@@ -1,9 +1,10 @@
 [main]
-host = https://www.transifex.com
-lang_map = fr_FR: fr, es_CA: ca, es_ES: es, de_DE: de, it_IT: it, nl_NL: nl, pt_PT: pt, tr_TR: tr, pt_BR: pr-rBR, el_GR: el
+host     = https://www.transifex.com
+lang_map = es_CA: ca, de_DE: de, el_GR: el, pt_PT: pt, tr_TR: tr, pt_BR: pr-rBR, fr_FR: fr, es_ES: es, it_IT: it, nl_NL: nl
 
-[dolidroid.strings]
+[o:dolibarr-association:p:dolidroid:r:strings]
 file_filter = app/src/main/res/values-<lang>/strings.xml
 source_file = app/src/main/res/values/strings.xml
 source_lang = en_US
-type = ANDROID
+type        = ANDROID
+
