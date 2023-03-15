@@ -17,6 +17,7 @@
 
 package com.nltechno.dolidroidpro;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.nltechno.utils.Utils;
@@ -186,10 +187,11 @@ public class AboutActivity extends Activity {
 		try
 		{
 			Log.d(LOG_TAG, "Loop on listOfRootUrl "+MainActivity.listOfRootUrl.size());
+
 			// Now loop of each entry and rewrite or exclude it
 			for (int i = 0; i < MainActivity.listOfRootUrl.size(); i++)
 			{
-				String s=MainActivity.listOfRootUrl.get(i);
+				String s = MainActivity.listOfRootUrl.get(i).url;
 				Log.d(LOG_TAG, "Check for s="+s+" equal to savedDolRootUrl="+savedDolRootUrl);
 				if (s.equals(savedDolRootUrl))	// Add new value into saved list
 				{

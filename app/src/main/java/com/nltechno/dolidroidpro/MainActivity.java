@@ -73,7 +73,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	private static final String LOG_TAG = "DoliDroidMainActivity";
 	public final static String FILENAME = "dolidroid_prefs";		// File will be into
 	private final static String HOME_URL = "";
-	public static List<String> listOfRootUrl = null;
+	public static List<PredefinedUrl> listOfRootUrl = null;
 	public static int nbOfEntries = 0;
 	private boolean firstCallToOnStart = Boolean.TRUE;
 
@@ -183,12 +183,15 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-    	this.listOfRootUrl = new ArrayList<String>();
+		// The array to contains the list of all predefined URLs
+		// This list is saved into a file named FILENAME
+    	this.listOfRootUrl = new ArrayList<PredefinedUrl>();
 
 		//ArrayAdapter <CharSequence> adapter = new ArrayAdapter <CharSequence> (this, android.R.layout.simple_spinner_item);
 		//adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		ArrayAdapter <CharSequence> adapter = new ArrayAdapter <CharSequence> (this, R.layout.main_spinner_item); // Set style for selected visible value
 		adapter.setDropDownViewResource(R.layout.main_spinner_item);	// Set style for dropdown box
+
 		this.nbOfEntries=0;
 		try {
 			FileInputStream fis = openFileInput(FILENAME);
@@ -201,19 +204,36 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			while ((strLine = br.readLine()) != null) {
 				// Print the content on the console
 				Log.d(LOG_TAG, "Found entry " + this.nbOfEntries + " : " + strLine);
-				if (! this.listOfRootUrl.contains(strLine))
-				{
+				// Check if entry already present
+				int count = 0;
+				boolean entryfound = false;
+				while (count < this.listOfRootUrl.size()) {
+					if (this.listOfRootUrl.get(count).url == strLine) {
+						entryfound = true;
+						break;
+					}
+					count++;
+				}
+
+				if (! entryfound) {
 					this.nbOfEntries++;
 					if (this.nbOfEntries == 1)
 					{
 						homeUrlFirstFound = strLine;
 					}
-					this.listOfRootUrl.add(strLine);
+
+					// Add new entry into the array this.listOfRootUrl
+					PredefinedUrl tmppredefinedurl = new PredefinedUrl();
+					tmppredefinedurl.url = strLine;
+					this.listOfRootUrl.add(tmppredefinedurl);
 				} else {
 					Log.d(LOG_TAG, "Duplicate");
 				}
 			}
-			Collections.sort(this.listOfRootUrl);
+
+			// TODO Sort the array
+			//Collections.sort(this.listOfRootUrl);
+
 			// Close the input stream
 			in.close();
 		} catch (Exception e) {// Catch exception if any
@@ -231,27 +251,27 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		// Set entries to adapter
 		for (int i = 0; i < this.listOfRootUrl.size(); i++)
 		{
-			adapter.add(this.listOfRootUrl.get(i));
+			adapter.add(this.listOfRootUrl.get(i).url);
 		}
 
 		// Show combo list if there is at least 1 choice
-		Spinner spinner1 = findViewById(R.id.combo_list_of_urls);
+		Spinner spinner_for_list_of_predefined_entries = findViewById(R.id.combo_list_of_urls);
 		TextView texViewLink = findViewById(R.id.textViewLink);
 
 		if (this.nbOfEntries > 0) {
-			spinner1.setAdapter(adapter);
-			spinner1.setVisibility(View.VISIBLE);
+			spinner_for_list_of_predefined_entries.setAdapter(adapter);
+			spinner_for_list_of_predefined_entries.setVisibility(View.VISIBLE);
 			texViewLink.setVisibility(View.INVISIBLE);
 
 			if (this.nbOfEntries == 1)
 			{
 				Log.d(LOG_TAG, "Set selection to = "+homeUrlFirstFound);
 				// Only one URL known, we autoselect it
-				//spinner1.setSelection(1, false);
+				//spinner_for_list_of_predefined_entries.setSelection(1, false);
 				homeUrlToSuggest=homeUrlFirstFound;
 			}
 		} else {
-			spinner1.setVisibility(View.INVISIBLE);
+			spinner_for_list_of_predefined_entries.setVisibility(View.INVISIBLE);
 			texViewLink.setVisibility(View.VISIBLE);
 		}
 
@@ -262,7 +282,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		// If listener was not already added, we add one
 		if (firstCallToOnStart) {
 			Log.d(LOG_TAG, "First call to onStart");
-			spinner1.setOnItemSelectedListener(this);	// Enable handler with onItemSelected and onNothingSelected
+			spinner_for_list_of_predefined_entries.setOnItemSelectedListener(this);	// Enable handler with onItemSelected and onNothingSelected
 			firstCallToOnStart = false;
 			editText1.addTextChangedListener(fieldValidatorTextWatcher);
 			editText1.setText(homeUrlToSuggest);
@@ -639,17 +659,32 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
 			for (int i = 0; i < this.listOfRootUrl.size(); i++)
 			{
-				String s=this.listOfRootUrl.get(i)+"\n";
+				String s = this.listOfRootUrl.get(i).url+"\n";
 				Log.d(LOG_TAG, "write " + s);
 				fos.write(s.getBytes());
 			}
-			if (! this.listOfRootUrl.contains(dolRootUrl))	// Add new value into saved list
+
+			// Check if entry already present
+			int count = 0;
+			boolean entryfound = false;
+			while (count < this.listOfRootUrl.size()) {
+				if (this.listOfRootUrl.get(count).url == dolRootUrl) {
+					entryfound = true;
+					break;
+				}
+				count++;
+			}
+
+			if (! entryfound)	// Add new value into saved list
 			{
 				// Add entry into file on disk
 				Log.d(LOG_TAG, "write new value " + Utils.bytesToString(dolRootUrl.getBytes()));
 				fos.write(dolRootUrl.getBytes());
-				// Add entry also into this.listOfRootUrl
-				this.listOfRootUrl.add(dolRootUrl);
+
+				// Add new entry into the array this.listOfRootUrl
+				PredefinedUrl tmppredefinedurl = new PredefinedUrl();
+				tmppredefinedurl.url = dolRootUrl;
+				this.listOfRootUrl.add(tmppredefinedurl);
 			}
 			fos.close();
 		}

@@ -100,15 +100,25 @@ public class ManageURLActivity extends Activity {
 
 		Log.d(LOG_TAG, "Open file " + MainActivity.FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());
 
-		// Fill the list of Urls
+		// Define an array with string to show into the ArrayAdapter list
+		ArrayList<String> listofRootUrlString = new ArrayList<String>();
+		ArrayList<String> listofRootUrlStringEmpty = new ArrayList<String>();
+		int count = 0;
+		while (MainActivity.listOfRootUrl.size() > count) {
+			listofRootUrlString.add(MainActivity.listOfRootUrl.get(count).url);
+			count++;
+		}
+		// Fill the list of Urls into the ArrayAdapter
 		ListView listViewOfUrls = (ListView) findViewById(R.id.listViewConnections);
 		ArrayAdapter<String> arr = new ArrayAdapter<String>(
 				this,
 				android.R.layout.simple_list_item_activated_1,
-				MainActivity.listOfRootUrl);
+				listofRootUrlString);
+		ArrayAdapter<String> arrempty = new ArrayAdapter<String>(
+				this,
+				android.R.layout.simple_list_item_activated_1,
+				listofRootUrlStringEmpty);
 		listViewOfUrls.setAdapter(arr);
-
-		//ScrollView scrollView_main = (ScrollView) findViewById(R.id.scrollView_main);
 
 		// Create listener to respond to click on button Delete current URL
 		// Not using the android:onClick tag is bugged. Declaring listener is also faster.
@@ -125,18 +135,19 @@ public class ManageURLActivity extends Activity {
 					Intent intent = getIntent();
 					String savedDolRootUrl = intent.getStringExtra("savedDolRootUrl");
 
-					// Now loop of each entry and rewrite or exclude it
+					// Now loop of each entry of file MainActivity.FILENAME and rewrite or exclude the entry
 					fos = openFileOutput(MainActivity.FILENAME, Context.MODE_PRIVATE);
 					int itoremove = -1;
 					int sizeofarray = MainActivity.listOfRootUrl.size();
 					for (int i = 0; i < sizeofarray; i++)
 					{
-						String s=MainActivity.listOfRootUrl.get(i);
-						if (! s.equals(savedDolRootUrl))	// Add new value into saved list
-						{
+						String s = MainActivity.listOfRootUrl.get(i).url;
+						if (! s.equals(savedDolRootUrl)) {
+							// Keep this value s
 							Log.d(LOG_TAG, "write " + s);
 							fos.write((s+"\n").getBytes());
 						} else {
+							// We fount the entry to remove
 							Log.d(LOG_TAG, "exclude entry " + s);
 							btn.setEnabled(false);
 							btn.setTextColor(Color.LTGRAY);
@@ -157,6 +168,7 @@ public class ManageURLActivity extends Activity {
 			}
 		});
 
+
 		// Update menu label to add the number of predefined URL into label
 		Button buttonClearAllUrl = findViewById(R.id.buttonClearAllUrl);
 		if (MainActivity.listOfRootUrl != null) {
@@ -172,23 +184,27 @@ public class ManageURLActivity extends Activity {
 			public void onClick(View v) {
 				Log.d(LOG_TAG, "We click on Remove all predefined URLs");
 
-				FileOutputStream fos;
 				try {
+					// Delete the file of predefined URLs MainActivity.FILENAME
 					File file = new File(getApplicationContext().getFilesDir().toString() + "/" + MainActivity.FILENAME);
 					Log.d(LOG_TAG, "Clear predefined URL list " + MainActivity.FILENAME + " (from ManageURLActivity) by deleting file with full path=" + file.getAbsolutePath());
-					Boolean result = file.delete();
-					Log.d(LOG_TAG, result.toString());
+					boolean result = file.delete();
+					Log.d(LOG_TAG, result ? "true" : "false");
 
-					MainActivity.listOfRootUrl = new ArrayList<String>();    // Clear array of menu entry
+					MainActivity.listOfRootUrl = new ArrayList<PredefinedUrl>();    // Clear array of menu entry
 
 					// Now update button label entry
-					if (MainActivity.listOfRootUrl != null) {
-						buttonClearAllUrl.setText(getString(R.string.DeleteAllPredefinedUrl) + " (" + MainActivity.listOfRootUrl.size() + ")");
-					} else {
-						buttonClearAllUrl.setText(getString(R.string.DeleteAllPredefinedUrl) + " (0)");
-					}
+					buttonClearAllUrl.setText(getString(R.string.DeleteAllPredefinedUrl));
+					buttonClearAllUrl.setEnabled(true);
 
-					// Clear saved login / pass too
+					listViewOfUrls.setAdapter(arrempty);
+					TextView textViewListOfUrl = findViewById(R.id.textListOfUrlsTitle);
+					TextView textViewListOfUrl2 = findViewById(R.id.textListOfUrlsTitle2);
+					textViewListOfUrl.setText(getString(R.string.menu_manage_all_urls));
+					textViewListOfUrl.setVisibility(View.VISIBLE);
+					textViewListOfUrl2.setVisibility(View.VISIBLE);
+
+					// Clear also the list of saved login / pass too
 					try {
 						//SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 						String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
@@ -200,7 +216,7 @@ public class ManageURLActivity extends Activity {
 								EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
 						);
 						SharedPreferences.Editor editorEncrypted = sharedPrefsEncrypted.edit();
-						editorEncrypted.clear();
+						editorEncrypted.clear();	// delete the file
 						editorEncrypted.commit();
 
 						Log.d(LOG_TAG, "The encrypted shared preferences file has been cleared");
@@ -281,7 +297,8 @@ public class ManageURLActivity extends Activity {
 			// Now loop of each entry and rewrite or exclude it
 			for (int i = 0; i < MainActivity.listOfRootUrl.size(); i++)
 			{
-				String s=MainActivity.listOfRootUrl.get(i);
+				PredefinedUrl tmppredefinedurl = MainActivity.listOfRootUrl.get(i);
+				String s = tmppredefinedurl.url;
 				Log.d(LOG_TAG, "Check for s="+s+" equal to savedDolRootUrl="+savedDolRootUrl);
 				if (s.equals(savedDolRootUrl))	// Add new value into saved list
 				{
@@ -353,9 +370,11 @@ public class ManageURLActivity extends Activity {
 		}
 
 
-		// Update menu label to add the number of predefined URL into label
+		// Update the menu label to add the number of predefined URL into label
 		TextView textViewListOfUrl = findViewById(R.id.textListOfUrlsTitle);
-		if (MainActivity.listOfRootUrl.size() > 1) {
+		TextView textViewListOfUrl2 = findViewById(R.id.textListOfUrlsTitle2);
+		if (MainActivity.listOfRootUrl.size() >= 1) {
+			// Set position of textViewListOfUrl
 			RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) textViewListOfUrl.getLayoutParams();
 			if (s2b != null && !"".equals(s2b)) {
 				layoutParams.addRule(RelativeLayout.BELOW, R.id.buttonDeletePredefinedUrl);
@@ -363,13 +382,29 @@ public class ManageURLActivity extends Activity {
 				layoutParams.addRule(RelativeLayout.BELOW, R.id.imageTop);
 			}
 			textViewListOfUrl.setLayoutParams(layoutParams);
+
 			if (MainActivity.listOfRootUrl != null) {
 				textViewListOfUrl.setText(getString(R.string.menu_manage_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
+				textViewListOfUrl.setVisibility(View.VISIBLE);
+				textViewListOfUrl2.setVisibility(View.INVISIBLE);
 			} else {
-				textViewListOfUrl.setText(getString(R.string.menu_manage_all_urls) + " (0)");
+				textViewListOfUrl.setText(getString(R.string.menu_manage_all_urls));
+				textViewListOfUrl.setVisibility(View.VISIBLE);
+				textViewListOfUrl2.setVisibility(View.VISIBLE);
 			}
 		} else {
-			textViewListOfUrl.setVisibility(View.INVISIBLE);
+			// Set position of textViewListOfUrl
+			RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) textViewListOfUrl.getLayoutParams();
+			if (s2b != null && !"".equals(s2b)) {
+				layoutParams.addRule(RelativeLayout.BELOW, R.id.buttonDeletePredefinedUrl);
+			} else {
+				layoutParams.addRule(RelativeLayout.BELOW, R.id.imageTop);
+			}
+			textViewListOfUrl.setLayoutParams(layoutParams);
+
+			textViewListOfUrl.setVisibility(View.VISIBLE);
+			textViewListOfUrl2.setVisibility(View.VISIBLE);
+
 			Button btnClearAll = findViewById(R.id.buttonClearAllUrl);
 			btnClearAll.setVisibility(View.INVISIBLE);
 			ListView listView = findViewById(R.id.listViewConnections);

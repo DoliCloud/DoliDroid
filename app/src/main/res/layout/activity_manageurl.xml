@@ -1,21 +1,107 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
     android:theme="@style/DoliDroidThemeFirst"
     tools:context=".ManageURLActivity">
 
     <RelativeLayout
+        android:id="@+id/relativeLayoutManageUrl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:theme="@style/DoliDroidThemeFirst"
+        android:layout_height="match_parent"
         android:background="@color/white"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:textColor="@color/black">
+        android:padding="4dp"
+        android:theme="@style/DoliDroidThemeFirst">
+
+        <Button
+            android:id="@+id/buttonDeletePredefinedUrl"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@+id/TextSavedLogins"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="14dp"
+            android:background="#009688"
+            android:paddingStart="8dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp"
+            android:text="@string/DeletePredefinedUrl"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:id="@+id/buttonClearAllUrl"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="13dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="14dp"
+            android:background="#009688"
+            android:paddingStart="8dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp"
+            android:text="@string/DeleteAllPredefinedUrl"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            tools:ignore="TextContrastCheck" />
+
+        <ImageView
+            android:id="@+id/imageTop"
+            android:layout_width="48dp"
+            android:layout_height="45dp"
+            android:layout_alignParentStart="false"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="55dp"
+            android:contentDescription="@string/logo_dolidroid"
+            android:foregroundTint="#009688"
+            android:src="@drawable/ic_baseline_storage_24"
+            tools:ignore="ImageContrastCheck"
+            tools:visibility="visible" />
+
+        <ListView
+            android:id="@+id/listViewConnections"
+            android:layout_width="wrap_content"
+            android:layout_height="276dp"
+            android:layout_above="@id/buttonClearAllUrl"
+            android:layout_below="@id/textListOfUrlsTitle"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="14dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:footerDividersEnabled="true"
+            android:headerDividersEnabled="true"
+            android:scrollbars="vertical" />
+
+        <TextView
+            android:id="@+id/TextSavedLogins"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/TextInstanceURLTitle"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="18dp"
+            android:lineSpacingExtra="8sp"
+            android:maxLines="50"
+            android:text="@string/textAboutB2"
+            android:textSize="16sp"
+            tools:context=".ManageURLActivity" />
 
         <TextView
             android:id="@+id/textAboutAndroidClient"
@@ -23,11 +109,11 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:text="@string/dolibarr_for_android"
             android:textColor="@color/grey"
             tools:context=".ManageURLActivity"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             tools:ignore="TextContrastCheck" />
 
         <TextView
@@ -62,6 +148,21 @@
             tools:context=".ManageURLActivity" />
 
         <TextView
+            android:id="@+id/textListOfUrlsTitle2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textListOfUrlsTitle"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="18dp"
+            android:maxLines="50"
+            android:text="@string/None"
+            android:textSize="16sp"
+            tools:context=".ManageURLActivity" />
+
+        <TextView
             android:id="@+id/textListOfCurrentUrl"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -69,7 +170,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="18dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="18dp"
             android:maxLines="50"
             android:text="@string/currentUrl"
@@ -77,85 +178,6 @@
             android:textStyle="bold"
             tools:context=".ManageURLActivity" />
 
-        <TextView
-            android:id="@+id/TextSavedLogins"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/TextInstanceURLTitle"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="18dp"
-            android:maxLines="50"
-            android:text="@string/textAboutB2"
-            android:textSize="16sp"
-            tools:context=".ManageURLActivity" />
-
-        <Button
-            android:id="@+id/buttonDeletePredefinedUrl"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_below="@+id/TextSavedLogins"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:background="#009688"
-            android:paddingStart="8dp"
-            android:paddingTop="0dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="4dp"
-            android:text="@string/DeletePredefinedUrl"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            tools:ignore="TextContrastCheck" />
-
-        <Button
-            android:id="@+id/buttonClearAllUrl"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_below="@id/listViewConnections"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="14dp"
-            android:background="#009688"
-            android:paddingStart="8dp"
-            android:paddingTop="0dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="4dp"
-            android:text="@string/DeleteAllPredefinedUrl"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            tools:ignore="TextContrastCheck" />
-
-        <ImageView
-            android:id="@+id/imageTop"
-            android:layout_width="48dp"
-            android:layout_height="45dp"
-            android:layout_alignParentStart="false"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="55dp"
-            android:contentDescription="Manage url logo"
-            android:foregroundTint="#009688"
-            android:src="@drawable/ic_baseline_storage_24"
-            tools:ignore="ImageContrastCheck"
-            tools:visibility="visible" />
-
-        <ListView
-            android:id="@+id/listViewConnections"
-            android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="240dp"
-            android:layout_below="@id/textListOfUrlsTitle"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="10dp" />
-
     </RelativeLayout>
 
-</ScrollView>
+</LinearLayout>
