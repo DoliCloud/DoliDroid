@@ -50,7 +50,6 @@ public class ManageUrlAdapter extends ArrayAdapter<String> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.manage_url_item, parent, false);
-        View activityview = inflater.inflate(R.layout.activity_manageurl, parent, false);
 
         TextView textView = (TextView) rowView.findViewById(R.id.text_view);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.image_view);
@@ -101,7 +100,7 @@ public class ManageUrlAdapter extends ArrayAdapter<String> {
                             tmps += " ("+MainActivity.listOfRootUrl.get(count).getScheme();
                             if (! "".equals(MainActivity.listOfRootUrl.get(count).getBasicAuthLogin())) {
                                 tmps += " - "+MainActivity.listOfRootUrl.get(count).getBasicAuthLogin();
-                                //tmps += ":"+this.listOfRootUrl.get(i).getBasicAuthPass();
+                                tmps += ":"+MainActivity.listOfRootUrl.get(count).getBasicAuthPass();
                             }
                             tmps += ")";
 

@@ -203,7 +203,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				int count = 0;
 				boolean entryfound = false;
 				while (count < this.listOfRootUrl.size()) {
-					if (this.listOfRootUrl.get(count).url == strLine) {
+					if (strLine.equals(this.listOfRootUrl.get(count).url)) {
 						entryfound = true;
 						break;
 					}
@@ -250,7 +250,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			tmps += " ("+this.listOfRootUrl.get(i).getScheme();
 			if (! "".equals(this.listOfRootUrl.get(i).getBasicAuthLogin())) {
 				tmps += " - "+this.listOfRootUrl.get(i).getBasicAuthLogin();
-				//tmps += ":"+this.listOfRootUrl.get(i).getBasicAuthPass();
+				tmps += ":"+this.listOfRootUrl.get(i).getBasicAuthPass();
 			}
 			tmps += ")";
 			adapter.add(tmps);
@@ -628,7 +628,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			int count = 0;
 			boolean entryfound = false;
 			while (count < this.listOfRootUrl.size()) {
-				if (this.listOfRootUrl.get(count).url == dolRootUrl) {
+				if (dolRootUrl.equals(this.listOfRootUrl.get(count).url)) {
 					entryfound = true;
 					break;
 				}
@@ -644,6 +644,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				// Add new entry into the array this.listOfRootUrl
 				PredefinedUrl tmppredefinedurl = new PredefinedUrl();
 				tmppredefinedurl.url = dolRootUrl;
+				tmppredefinedurl.position = 100;
 				this.listOfRootUrl.add(tmppredefinedurl);
 			}
 			fos.close();
