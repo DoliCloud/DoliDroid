@@ -18,13 +18,13 @@ package com.nltechno.dolidroidpro;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,7 +35,6 @@ import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
@@ -55,12 +54,8 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKeys;
 
 
 /**
@@ -189,8 +184,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 		//ArrayAdapter <CharSequence> adapter = new ArrayAdapter <CharSequence> (this, android.R.layout.simple_spinner_item);
 		//adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		ArrayAdapter <CharSequence> adapter = new ArrayAdapter <CharSequence> (this, R.layout.main_spinner_item); // Set style for selected visible value
-		adapter.setDropDownViewResource(R.layout.main_spinner_item);	// Set style for dropdown box
+		ArrayAdapter <CharSequence> adapter = new ArrayAdapter <CharSequence> (this, R.layout.select_url_item); // Set style for selected visible value
+		adapter.setDropDownViewResource(R.layout.select_url_item);	// Set style for dropdown box
 
 		this.nbOfEntries=0;
 		try {
@@ -231,8 +226,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				}
 			}
 
-			// TODO Sort the array
-			//Collections.sort(this.listOfRootUrl);
+			// Sort the array list of URL
+			Collections.sort(this.listOfRootUrl, Comparator.comparing(PredefinedUrl::getSortOrder));
 
 			// Close the input stream
 			in.close();
@@ -248,10 +243,17 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			//adapter.add(getString(R.string.enterNewUrl) + "...");
 			adapter.add(getString(R.string.SelectUrl) + "...");
 		}
-		// Set entries to adapter
+		// Set entries to the adapter
 		for (int i = 0; i < this.listOfRootUrl.size(); i++)
 		{
-			adapter.add(this.listOfRootUrl.get(i).url);
+			String tmps = this.listOfRootUrl.get(i).getDomainUrl().replaceAll("\\/$", "");
+			tmps += " ("+this.listOfRootUrl.get(i).getScheme();
+			if (! "".equals(this.listOfRootUrl.get(i).getBasicAuthLogin())) {
+				tmps += " - "+this.listOfRootUrl.get(i).getBasicAuthLogin();
+				//tmps += ":"+this.listOfRootUrl.get(i).getBasicAuthPass();
+			}
+			tmps += ")";
+			adapter.add(tmps);
 		}
 
 		// Show combo list if there is at least 1 choice
@@ -500,51 +502,6 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 					this.savMenu.findItem(R.id.always_uselocalresources).setChecked(false);
 				}
 				return true;
-	    	/*case R.id.add_url:
-	    		Log.d(LOG_TAG, "Add predefined URL");
-	    		return true;*/
-	    	/*case R.id.remove_url:
-	    		Log.d(LOG_TAG, "Remove predefined URL");
-	    		return true;*/
-	    	/*
-			case R.id.clear_all_urls:
-				File file = new File(getApplicationContext().getFilesDir().toString() + "/" + MainActivity.FILENAME);
-				Log.d(LOG_TAG, "Clear predefined URL list "+MainActivity.FILENAME+" (from MainActivity) by deleting file with full path="+file.getAbsolutePath());
-	    		Boolean result = file.delete();
-				Log.d(LOG_TAG, result.toString());
-	    		// Hide combo
-	    		Spinner spinner1 = findViewById(R.id.combo_list_of_urls);
-	    		spinner1.setVisibility(View.INVISIBLE);
-				TextView texViewLink = findViewById(R.id.textViewLink);
-				texViewLink.setVisibility(View.VISIBLE);
-				// Now update menu entry
-				this.listOfRootUrl = new ArrayList<String>();	// Clear array of menu entry
-				MenuItem tmpItem = this.savMenu.findItem(R.id.manage_all_urls);
-				tmpItem.setTitle(getString(R.string.menu_manage_all_urls) + " (" + this.listOfRootUrl.size() + ")");
-
-				// Clear saved login / pass
-				try {
-					//SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-					String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
-					SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
-							"secret_shared_prefs",
-							masterKeyAlias,
-							getApplicationContext(),
-							EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-							EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-					);
-					Editor editorEncrypted = sharedPrefsEncrypted.edit();
-					editorEncrypted.clear();
-					editorEncrypted.commit();
-
-					Log.d(LOG_TAG, "The encrypted shared preferences file has been cleared");
-				}
-				catch(Exception e) {
-					Log.w(LOG_TAG, "Failed to clear encrypted shared preferences file");
-				}
-
-	    	    return true;
-	    	 */
 			case R.id.manage_all_urls:
 				Log.d(LOG_TAG, "Click onto Manage all URLs");
 				Intent tmpintent = new Intent(MainActivity.this, ManageURLActivity.class);
@@ -575,17 +532,20 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
         Log.d(LOG_TAG, "onItemSelected position="+position+" id="+id+" this.allowChangeText="+this.allowChangeText);
 		EditText freeUrl = (EditText) findViewById(R.id.url_of_instance);
 		Spinner spinnerUrl = (Spinner) findViewById(R.id.combo_list_of_urls);
-		String dolRootUrl = (spinnerUrl.getSelectedItem() == null ? "": spinnerUrl.getSelectedItem().toString());
 		Button startButton = (Button) findViewById(R.id.buttonStart);
 
-		if (position > 0)
-		{
+		if (position > 0) {
 			//startButton.setEnabled(true);
+
+			// Get full URL selected
+			String dolRootUrl = this.listOfRootUrl.get(position - 1).url;
+			//String dolRootUrl = (spinnerUrl.getSelectedItem() == null ? "": spinnerUrl.getSelectedItem().toString());
+
 			freeUrl.setText(dolRootUrl);	// If not empty choice
 			startButton.setTextColor(Color.WHITE);
 
-			this.allowChangeText=Boolean.FALSE;					// We set a flag because after we will make an action that will call same method
-			spinnerUrl.setSelection(0, false);	// This call the onItemSelected. The this.allowChangeText prevent to change the text a second time
+			this.allowChangeText = Boolean.FALSE;					// We set a flag because after we will make an action that will call same method
+			spinnerUrl.setSelection(0, false);	// This re-call the onItemSelected. The this.allowChangeText prevent to change the text a second time
 		}
 		else
 		{
@@ -594,7 +554,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				//freeUrl.setText("");
 				//startButton.setTextColor(Color.WHITE);
 			}
-			this.allowChangeText=Boolean.TRUE;
+			this.allowChangeText = Boolean.TRUE;
 		}
     }
 

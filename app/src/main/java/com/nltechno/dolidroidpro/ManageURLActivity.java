@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Laurent Destailleur  <eldy@users.sourceforge.net>
+/* Copyright (C) 2023 Laurent Destailleur  <eldy@users.sourceforge.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -101,24 +100,27 @@ public class ManageURLActivity extends Activity {
 		Log.d(LOG_TAG, "Open file " + MainActivity.FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());
 
 		// Define an array with string to show into the ArrayAdapter list
-		ArrayList<String> listofRootUrlString = new ArrayList<String>();
-		ArrayList<String> listofRootUrlStringEmpty = new ArrayList<String>();
+		String[] listofRootUrlString = new String[MainActivity.listOfRootUrl.size()];
+		String[] listofRootUrlStringEmpty = new String[0];
 		int count = 0;
-		while (MainActivity.listOfRootUrl.size() > count) {
-			listofRootUrlString.add(MainActivity.listOfRootUrl.get(count).url);
+		while (count < MainActivity.listOfRootUrl.size()) {
+			String tmps = MainActivity.listOfRootUrl.get(count).getDomainUrl().replaceAll("\\/$", "");
+			tmps += " ("+MainActivity.listOfRootUrl.get(count).getScheme();
+			if (! "".equals(MainActivity.listOfRootUrl.get(count).getBasicAuthLogin())) {
+				tmps += " - "+MainActivity.listOfRootUrl.get(count).getBasicAuthLogin();
+				//tmps += ":"+this.listOfRootUrl.get(i).getBasicAuthPass();
+			}
+			tmps += ")";
+
+			listofRootUrlString[count] = tmps;
 			count++;
 		}
+
+		ManageUrlAdapter adapter = new ManageUrlAdapter(this, listofRootUrlString);
+		ManageUrlAdapter adapterempty = new ManageUrlAdapter(this, listofRootUrlStringEmpty);
 		// Fill the list of Urls into the ArrayAdapter
 		ListView listViewOfUrls = (ListView) findViewById(R.id.listViewConnections);
-		ArrayAdapter<String> arr = new ArrayAdapter<String>(
-				this,
-				android.R.layout.simple_list_item_activated_1,
-				listofRootUrlString);
-		ArrayAdapter<String> arrempty = new ArrayAdapter<String>(
-				this,
-				android.R.layout.simple_list_item_activated_1,
-				listofRootUrlStringEmpty);
-		listViewOfUrls.setAdapter(arr);
+		listViewOfUrls.setAdapter(adapter);
 
 		// Create listener to respond to click on button Delete current URL
 		// Not using the android:onClick tag is bugged. Declaring listener is also faster.
@@ -129,6 +131,7 @@ public class ManageURLActivity extends Activity {
 			public void onClick(View v) {
 				Log.d(LOG_TAG, "We click on Delete predefined Url");
 
+				// Code is similar in delete onClick of the delete of the ManageUrlAdapter
 				FileOutputStream fos;
 				try
 				{
@@ -197,7 +200,7 @@ public class ManageURLActivity extends Activity {
 					buttonClearAllUrl.setText(getString(R.string.DeleteAllPredefinedUrl));
 					buttonClearAllUrl.setEnabled(true);
 
-					listViewOfUrls.setAdapter(arrempty);
+					listViewOfUrls.setAdapter(adapterempty);
 					TextView textViewListOfUrl = findViewById(R.id.textListOfUrlsTitle);
 					TextView textViewListOfUrl2 = findViewById(R.id.textListOfUrlsTitle2);
 					textViewListOfUrl.setText(getString(R.string.menu_manage_all_urls));
