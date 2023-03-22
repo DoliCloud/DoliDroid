@@ -122,56 +122,6 @@ public class ManageURLActivity extends Activity {
 		ListView listViewOfUrls = (ListView) findViewById(R.id.listViewConnections);
 		listViewOfUrls.setAdapter(adapter);
 
-		// Create listener to respond to click on button Delete current URL
-		// Not using the android:onClick tag is bugged. Declaring listener is also faster.
-		Button btn = findViewById(R.id.buttonDeletePredefinedUrl);
-		btn.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v) {
-				Log.d(LOG_TAG, "We click on Delete predefined Url");
-
-				// Code is similar in delete onClick of the delete of the ManageUrlAdapter
-				FileOutputStream fos;
-				try
-				{
-					Intent intent = getIntent();
-					String savedDolRootUrl = intent.getStringExtra("savedDolRootUrl");
-
-					// Now loop of each entry of file MainActivity.FILENAME and rewrite or exclude the entry
-					fos = openFileOutput(MainActivity.FILENAME, Context.MODE_PRIVATE);
-					int itoremove = -1;
-					int sizeofarray = MainActivity.listOfRootUrl.size();
-					for (int i = 0; i < sizeofarray; i++)
-					{
-						String s = MainActivity.listOfRootUrl.get(i).url;
-						if (! s.equals(savedDolRootUrl)) {
-							// Keep this value s
-							Log.d(LOG_TAG, "write " + s);
-							fos.write((s+"\n").getBytes());
-						} else {
-							// We fount the entry to remove
-							Log.d(LOG_TAG, "exclude entry " + s);
-							btn.setEnabled(false);
-							btn.setTextColor(Color.LTGRAY);
-							itoremove = i;
-						}
-					}
-					fos.close();
-
-					// If success, we can remove entry from memory array listOfRootUrl
-					if (itoremove >= 0) {
-						MainActivity.listOfRootUrl.remove(itoremove);
-					}
-				}
-				catch(Exception ioe)
-				{
-					Log.e(LOG_TAG, "Error");
-				}
-			}
-		});
-
-
 		// Update menu label to add the number of predefined URL into label
 		Button buttonClearAllUrl = findViewById(R.id.buttonClearAllUrl);
 		if (MainActivity.listOfRootUrl != null) {
@@ -248,9 +198,6 @@ public class ManageURLActivity extends Activity {
 		Intent intent = getIntent();
 
 
-		Button btn = findViewById(R.id.buttonDeletePredefinedUrl);
-
-
 		// For api level 24: textViewAbout1.setText(Html.fromHtml(s1, Html.FROM_HTML_MODE_LEGACY));
 
 		// Show text title
@@ -261,9 +208,6 @@ public class ManageURLActivity extends Activity {
         String savedDolRootUrl = intent.getStringExtra("savedDolRootUrl");
         if (savedDolRootUrl != null && ! "".equals(savedDolRootUrl))
         {
-			btn.setVisibility(View.VISIBLE);
-			btn.setEnabled(true);
-
 			//findViewById(R.id.imageView02).setVisibility(View.VISIBLE);
 			//findViewById(R.id.imageView02).setEnabled(true);
 
@@ -275,10 +219,6 @@ public class ManageURLActivity extends Activity {
 			textViewAbout2.setEnabled(true);
 			textViewAbout2.setText(Html.fromHtml(s2));
 		} else {
-        	// No need to show the button, we don't know the predefined url used.
-			btn.setVisibility(View.INVISIBLE);
-			btn.setEnabled(false);
-
 			//findViewById(R.id.imageView02).setVisibility(View.INVISIBLE);
 			//findViewById(R.id.imageView02).setEnabled(false);
 
@@ -314,12 +254,6 @@ public class ManageURLActivity extends Activity {
 		{
 			Log.e(LOG_TAG, "Error");
 		}
-		if (savedDolRootUrlFoundIntoPredefinedLoginUrl) {
-			btn.setTextColor(Color.WHITE);
-		} else {
-			btn.setTextColor(Color.LTGRAY);
-		}
-
 
 		// Show text section of login and pass
 		TextView textViewAbout2b = findViewById(R.id.TextSavedLogins);
@@ -380,7 +314,7 @@ public class ManageURLActivity extends Activity {
 			// Set position of textViewListOfUrl
 			RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) textViewListOfUrl.getLayoutParams();
 			if (s2b != null && !"".equals(s2b)) {
-				layoutParams.addRule(RelativeLayout.BELOW, R.id.buttonDeletePredefinedUrl);
+				layoutParams.addRule(RelativeLayout.BELOW, R.id.TextSavedLogins);
 			} else {
 				layoutParams.addRule(RelativeLayout.BELOW, R.id.imageTop);
 			}
@@ -399,7 +333,7 @@ public class ManageURLActivity extends Activity {
 			// Set position of textViewListOfUrl
 			RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) textViewListOfUrl.getLayoutParams();
 			if (s2b != null && !"".equals(s2b)) {
-				layoutParams.addRule(RelativeLayout.BELOW, R.id.buttonDeletePredefinedUrl);
+				layoutParams.addRule(RelativeLayout.BELOW, R.id.TextSavedLogins);
 			} else {
 				layoutParams.addRule(RelativeLayout.BELOW, R.id.imageTop);
 			}
