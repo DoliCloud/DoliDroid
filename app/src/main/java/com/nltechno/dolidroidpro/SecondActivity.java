@@ -1855,7 +1855,9 @@ public class SecondActivity extends Activity {
                 return true;
             } else if (! url.startsWith(savedDolBasedUrl) && ! url.startsWith(savedDolBasedUrlWithSForced)
                     && ! url.startsWith(savedDolBasedUrlWithoutUserInfo) && ! url.startsWith(savedDolBasedUrlWithoutUserInfoWithSForced)
-                    && ! url.startsWith("https://accounts.google.com/o/oauth2/"))
+                    //&& ! url.startsWith("https://accounts.google.com/o/oauth2/")
+                    //&& ! url.startsWith("https://accounts.google.com/signin/")
+            )
             {	// This is an external url
                 Log.d(LOG_TAG, "Launch external url in the default browser : " + url);
                 try {
@@ -1950,7 +1952,14 @@ public class SecondActivity extends Activity {
 
 			return false;
 		}
-		
+
+        @JavascriptInterface
+        public void onAuthenticationComplete() {
+            // Called when authentication is complete
+            // Add code to go back to the Android application
+            Log.v(LOG_TAG, "onAuthenticationComplete !!!!!!!!!!!!!!");
+        }
+
 		/**
 		 * Called when a HTTP request is done (not called when cache is used)
 		 * 

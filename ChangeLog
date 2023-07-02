@@ -6,7 +6,7 @@ English DoliDroid ChangeLog
 
 3.0-b57
 - NEW Add a page to manage favorites connections. Can remove one or all connections.
-- NEW Support for Google OAUTH2 openid connect to avoid to leave DoliDroid.
+- Test to support for Google OAUTH2 openid connect to avoid to leave DoliDroid (support disabled by Google).
 
 3.0-b56
 - FIX null pointer error on "Copy current URL" feature.
