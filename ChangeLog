@@ -5,18 +5,19 @@ English DoliDroid ChangeLog
 ***** ChangeLog for 3.0 *****
 
 3.0-b57
-- Add a page to manage favorites connections. Can remove one or all connections.
+- NEW Add a page to manage favorites connections. Can remove one or all connections.
+- NEW Support for Google OAUTH2 openid connect to avoid to leave DoliDroid.
 
 3.0-b56
-- Fix null pointer error on "Copy current URL" feature.
+- FIX null pointer error on "Copy current URL" feature.
 - Reorganize menus to prepare future features
 - Add menu entry "Virtual business card" for future Dolibarr v18
 
 3.0-b55
-- Fix the wheel on long pages
+- FIX the wheel on long pages
 
 3.0-b54
-- Fix error on small screen.
+- FIX error on small screen.
 
 3.0-b53
 - Add a refresh of page on swipe down.

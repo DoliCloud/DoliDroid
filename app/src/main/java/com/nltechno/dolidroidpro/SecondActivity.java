@@ -1853,8 +1853,11 @@ public class SecondActivity extends Activity {
                 } catch (Exception ex) {
                 }
                 return true;
-            } else if (! url.startsWith(savedDolBasedUrl) && ! url.startsWith(savedDolBasedUrlWithSForced)) {	// This is an external url
-                Log.d(LOG_TAG, "Launch external url in default browser : " + url);
+            } else if (! url.startsWith(savedDolBasedUrl) && ! url.startsWith(savedDolBasedUrlWithSForced)
+                    && ! url.startsWith(savedDolBasedUrlWithoutUserInfo) && ! url.startsWith(savedDolBasedUrlWithoutUserInfoWithSForced)
+                    && ! url.startsWith("https://accounts.google.com/o/oauth2/"))
+            {	// This is an external url
+                Log.d(LOG_TAG, "Launch external url in the default browser : " + url);
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     startActivity(intent);
