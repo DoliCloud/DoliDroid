@@ -250,7 +250,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			tmps += " ("+this.listOfRootUrl.get(i).getScheme();
 			if (! "".equals(this.listOfRootUrl.get(i).getBasicAuthLogin())) {
 				tmps += " - "+this.listOfRootUrl.get(i).getBasicAuthLogin();
-				tmps += ":"+this.listOfRootUrl.get(i).getBasicAuthPass();
+				//tmps += ":"+this.listOfRootUrl.get(i).getBasicAuthPass();
+				tmps += ":******";
 			}
 			tmps += ")";
 			adapter.add(tmps);

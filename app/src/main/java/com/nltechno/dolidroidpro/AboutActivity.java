@@ -19,6 +19,7 @@ package com.nltechno.dolidroidpro;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.*;
 
 import com.nltechno.utils.Utils;
 
@@ -213,7 +214,11 @@ public class AboutActivity extends Activity {
         String currentUrl = intent.getStringExtra("currentUrl");
         String title = intent.getStringExtra("title");
         if (currentUrl != null && ! "".equals(currentUrl)) {
-        	s3+="<font color='#440066'><b>"+getString(R.string.currentUrl)+":</b></font><br /><br />\n"+title+"<br />\n"+currentUrl;
+			String pattern = "^(https?://[^:]+):[^@]+@";
+			Pattern regexPattern = Pattern.compile(pattern);
+			Matcher matcher = regexPattern.matcher(currentUrl);
+			String currentUrlWithoutPass = matcher.replaceFirst("$1:******@");
+        	s3+="<font color='#440066'><b>"+getString(R.string.currentUrl)+":</b></font><br /><br />\n"+title+"<br />\n"+currentUrlWithoutPass;
 		}
 		String lastversionfound = intent.getStringExtra("lastversionfound");
         if (lastversionfound != null && ! "".equals(lastversionfound)) {

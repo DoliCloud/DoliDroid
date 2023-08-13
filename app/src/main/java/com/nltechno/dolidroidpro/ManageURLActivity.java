@@ -108,7 +108,8 @@ public class ManageURLActivity extends Activity {
 			tmps += " ("+MainActivity.listOfRootUrl.get(count).getScheme();
 			if (! "".equals(MainActivity.listOfRootUrl.get(count).getBasicAuthLogin())) {
 				tmps += " - "+MainActivity.listOfRootUrl.get(count).getBasicAuthLogin();
-				tmps += ":"+MainActivity.listOfRootUrl.get(count).getBasicAuthPass();
+				//tmps += ":"+MainActivity.listOfRootUrl.get(count).getBasicAuthPass();
+				tmps += "******";
 			}
 			tmps += ")";
 
@@ -123,7 +124,7 @@ public class ManageURLActivity extends Activity {
 		listViewOfUrls.setAdapter(adapter);
 
 		// Update menu label to add the number of predefined URL into label
-		Button buttonClearAllUrl = findViewById(R.id.buttonClearAllUrl);
+		/*Button buttonClearAllUrl = findViewById(R.id.buttonClearAllUrl);
 		if (MainActivity.listOfRootUrl != null) {
 			buttonClearAllUrl.setText(getString(R.string.DeleteAllPredefinedUrl) + " (" + MainActivity.listOfRootUrl.size() + ")");
 		} else {
@@ -181,6 +182,7 @@ public class ManageURLActivity extends Activity {
 				}
 			}
 		});
+		*/
 	}
 
 	
@@ -342,8 +344,9 @@ public class ManageURLActivity extends Activity {
 			textViewListOfUrl.setVisibility(View.VISIBLE);
 			textViewListOfUrl2.setVisibility(View.VISIBLE);
 
-			Button btnClearAll = findViewById(R.id.buttonClearAllUrl);
+			/*Button btnClearAll = findViewById(R.id.buttonClearAllUrl);
 			btnClearAll.setVisibility(View.INVISIBLE);
+			 */
 			ListView listView = findViewById(R.id.listViewConnections);
 			listView.setVisibility(View.INVISIBLE);
 		}
