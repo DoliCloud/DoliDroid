@@ -58,6 +58,7 @@ public class ManageURLAdapter extends ArrayAdapter<String> {
         // TODO From URL get the image and color found into the manifest
         //  this should have been download into another process after first access of login page
         //  by getting manifest found into <link rel="manifest" href="/theme/eldy/manifest.json.php" />
+        // or <meta name="theme-color" content="rgb(224,150,2)">
 
         // Add the listener for actions to do when we click on right cross image
         imageView.setOnClickListener(new View.OnClickListener() {
