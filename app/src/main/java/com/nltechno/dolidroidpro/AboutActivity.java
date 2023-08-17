@@ -217,7 +217,7 @@ public class AboutActivity extends Activity {
 			String pattern = "^(https?://[^:]+):[^@]+@";
 			Pattern regexPattern = Pattern.compile(pattern);
 			Matcher matcher = regexPattern.matcher(currentUrl);
-			String currentUrlWithoutPass = matcher.replaceFirst("$1:******@");
+			String currentUrlWithoutPass = matcher.replaceFirst("$1:*****@");
         	s3+="<font color='#440066'><b>"+getString(R.string.currentUrl)+":</b></font><br /><br />\n"+title+"<br />\n"+currentUrlWithoutPass;
 		}
 		String lastversionfound = intent.getStringExtra("lastversionfound");

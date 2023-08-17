@@ -101,7 +101,7 @@ public class ManageUrlAdapter extends ArrayAdapter<String> {
                             if (! "".equals(MainActivity.listOfRootUrl.get(count).getBasicAuthLogin())) {
                                 tmps += " - "+MainActivity.listOfRootUrl.get(count).getBasicAuthLogin();
                                 //tmps += ":"+MainActivity.listOfRootUrl.get(count).getBasicAuthPass();
-                                tmps += ":******";
+                                tmps += ":*****";
                             }
                             tmps += ")";
 
