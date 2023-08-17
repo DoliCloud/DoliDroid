@@ -18,27 +18,24 @@ package com.nltechno.dolidroidpro;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.FileOutputStream;
 
-public class ManageUrlAdapter extends ArrayAdapter<String> {
+public class ManageURLAdapter extends ArrayAdapter<String> {
     private static final String LOG_TAG = "DoliDroidManageUrlAdapter";
 
     private final Activity activity;
     private final Context context;
     private final String[] values;
 
-    public ManageUrlAdapter(Context context, String[] values) {
+    public ManageURLAdapter(Context context, String[] values) {
         super(context, -1, values);
         Log.d(LOG_TAG, "ManageUrlAdapter constructor");
         this.context = context;
@@ -49,13 +46,20 @@ public class ManageUrlAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        // Build the object for line
         View rowView = inflater.inflate(R.layout.manage_url_item, parent, false);
 
+        // Fill content for rowid = position
         TextView textView = (TextView) rowView.findViewById(R.id.text_view);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.image_view);
-
-
         textView.setText(this.values[position]);
+
+        // TODO From URL get the image and color found into the manifest
+        //  this should have been download into another process after first access of login page
+        //  by getting manifest found into <link rel="manifest" href="/theme/eldy/manifest.json.php" />
+
+        // Add the listener for actions to do when we click on right cross image
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

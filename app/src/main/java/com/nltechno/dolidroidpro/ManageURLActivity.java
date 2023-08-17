@@ -19,10 +19,8 @@ package com.nltechno.dolidroidpro;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
@@ -33,7 +31,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,10 +39,6 @@ import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
 
 import com.nltechno.utils.Utils;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
 
 /**
  * About activity class
@@ -117,8 +110,8 @@ public class ManageURLActivity extends Activity {
 			count++;
 		}
 
-		ManageUrlAdapter adapter = new ManageUrlAdapter(this, listofRootUrlString);
-		ManageUrlAdapter adapterempty = new ManageUrlAdapter(this, listofRootUrlStringEmpty);
+		ManageURLAdapter adapter = new ManageURLAdapter(this, listofRootUrlString);
+		ManageURLAdapter adapterempty = new ManageURLAdapter(this, listofRootUrlStringEmpty);
 		// Fill the list of Urls into the ArrayAdapter
 		ListView listViewOfUrls = (ListView) findViewById(R.id.listViewConnections);
 		listViewOfUrls.setAdapter(adapter);
