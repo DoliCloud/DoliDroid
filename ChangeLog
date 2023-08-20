@@ -4,8 +4,11 @@ English DoliDroid ChangeLog
 
 ***** ChangeLog for 3.0 *****
 
-3.0-b57
+3.0-b58
 - NEW Hide Basic auth pass found into URLs
+- NEW App targets Android 13 (API level 33) or higher
+
+3.0-b57
 - NEW Add a page to manage favorites connections. Can remove one or all connections.
 - Test to support for Google OAUTH2 openid connect to avoid to leave DoliDroid (support disabled by Google).
 
