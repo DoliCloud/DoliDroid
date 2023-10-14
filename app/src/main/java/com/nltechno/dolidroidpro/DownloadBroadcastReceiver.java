@@ -35,11 +35,13 @@ public class DownloadBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
 
-        if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) 
+        //Log.d(LOG_TAG, "onReceive action = "+action);
+
+        if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action))
         {
-        	Log.d(LOG_TAG, "onReceive ACTION_DOWNLOAD_COMPLETE");
+        	Log.d(LOG_TAG, "onReceive ACTION_DOWNLOAD_COMPLETE");   // success or error (may be a timetout error)
             //Show a notification
-			Toast.makeText(context, context.getString(R.string.downloadComplete), Toast.LENGTH_LONG).show();
+			//Toast.makeText(context, context.getString(R.string.downloadComplete), Toast.LENGTH_LONG).show();
         }
         
         if (DownloadManager.ACTION_NOTIFICATION_CLICKED.equals(action)) 

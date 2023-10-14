@@ -1459,6 +1459,20 @@ public class SecondActivity extends Activity {
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.allowScanningByMediaScanner();
 
+        File path = Environment.getExternalStorageDirectory();
+        File tmpFolder = new File(path.getAbsolutePath(), "/"+Environment.DIRECTORY_DOWNLOADS); // Value is "/storage/emulated/0/Download"
+        Log.d(LOG_TAG, tmpFolder.getAbsolutePath());
+
+        if (!tmpFolder.exists()) {  // Should always exists becasue we use the default DIRECTORY_DOWNLOADS
+            Log.d(LOG_TAG, "putDownloadInQueue Folder " + Environment.DIRECTORY_DOWNLOADS + " does not exists. We create it.");
+            boolean resultmkdir = tmpFolder.mkdir();
+            if (resultmkdir) {
+                Log.d(LOG_TAG, "putDownloadInQueue Success to create dir");
+            } else {
+                Log.e(LOG_TAG, "putDownloadInQueue Failed to create dir");
+            }
+        }
+
         Log.d(LOG_TAG, "putDownloadInQueue Set output dirType=" + Environment.DIRECTORY_DOWNLOADS + " subPath="+query);
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, query);
         //request.setDestinationInExternalFilesDir(getApplicationContext(), null, query);
@@ -1466,17 +1480,35 @@ public class SecondActivity extends Activity {
         // Then create the object DownloadManager and enqueue the file
         // Complete tutorial on download manager on http://www.101apps.co.za/index.php/articles/using-the-downloadmanager-to-manage-your-downloads.html
         DownloadManager dmanager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-        long id = dmanager.enqueue(request);
-        Log.d(LOG_TAG, "putDownloadInQueue id="+id);
+        long downloadId = dmanager.enqueue(request);
+        Log.d(LOG_TAG, "putDownloadInQueue downloadId="+downloadId);
 
-        // Once file is enqueue, you just have to wait until the event ACTION_DOWNLOAD_COMPLETE is triggered.
 
-        // Save the request id
+        // Once file is enqueue, you just have to wait until the event ACTION_DOWNLOAD_COMPLETE is triggered in DownloadBroadCasterReceiver.onReceive().
+
+
+        // Now add also a timer to check regurlarly the status of download
         /*
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = sharedPrefs.edit();
-        editor.putLong(strPref_Download_ID, id);
-        editor.commit();
+        DownloadStatusChecker statusChecker = new DownloadStatusChecker(this);
+        statusChecker.startMonitoringDownloads(downloadId, new DownloadStatusChecker.DownloadStatusListener() {
+            @Override
+            public void onDownloadStatusUpdated(int status) {
+                if (status == DownloadManager.STATUS_SUCCESSFUL) {
+                    // Le téléchargement a réussi
+                    Log.d(LOG_TAG, "DownloadStatusChecker downloadId "+downloadId+" Download STATUS_SUCCESSFUL");
+                    statusChecker.stopMonitoringDownloads();    // destroy timer
+                } else if (status == DownloadManager.STATUS_FAILED) {
+                    // Le téléchargement a échoué
+                    Log.d(LOG_TAG, "DownloadStatusChecker downloadId "+downloadId+" Download STATUS_FAILED");
+                    statusChecker.stopMonitoringDownloads();    // destroy timer
+                } else if (status == DownloadManager.STATUS_PAUSED) {
+                    // Le téléchargement est en pause
+                    Log.d(LOG_TAG, "DownloadStatusChecker downloadId "+downloadId+" Download STATUS_PAUSED");
+                } else {
+                    Log.d(LOG_TAG, "DownloadStatusChecker downloadId "+downloadId+" Download manager status = "+status);
+                }
+            }
+        }, 10000); // Vérifiez le statut toutes les 10 secondes (10000 millisecondes)
         */
 
         return true;
@@ -1736,7 +1768,7 @@ public class SecondActivity extends Activity {
                 // Can't make interaction here
                 //Toast.makeText(activity, R.string.AlertDownloadBadHTTPS, Toast.LENGTH_LONG).show();
             } else {
-                Log.v(LOG_TAG, "shouldInterceptRequest Not a download link");
+                Log.v(LOG_TAG, "shouldInterceptRequest "+url+" is not a download link");
             }
 
             return super.shouldInterceptRequest(view, wrr);

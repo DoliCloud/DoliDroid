@@ -73,8 +73,9 @@
         </activity>
 
         <!-- Define a broadcastreceiver -->
+        <!-- Note: If you set android:exported="false", the event "onReceive ACTION_DOWNLOAD_COMPLETE" is not received into DownloadBroadcastReceiver -->
         <receiver android:name="com.nltechno.dolidroidpro.DownloadBroadcastReceiver"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
             </intent-filter>
