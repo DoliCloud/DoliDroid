@@ -17,6 +17,7 @@
 
 package com.nltechno.dolidroidpro;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.*;
@@ -149,6 +150,14 @@ public class AboutActivity extends Activity {
 			//s1+=getString(R.string.DeviceHasMenuHardware)+": <b>"+(Utils.hasMenuHardware(this)?getString(R.string.Yes):getString(R.string.No))+"</b><br />\n";
 			s1+=getString(R.string.DeviceHasDownloadManager)+": <b>"+(Utils.isDownloadManagerAvailable(this)?getString(R.string.Yes):getString(R.string.No))+"</b><br />\n";
 
+			// For  Environment.DIRECTORY_MUSIC, Environment.DIRECTORY_PODCASTS, Environment.DIRECTORY_RINGTONES, Environment.DIRECTORY_ALARMS, Environment.DIRECTORY_NOTIFICATIONS, Environment.DIRECTORY_PICTURES, or Environment.DIRECTORY_MOVIES.
+			// Files in this directory are deleted when application is deleted.
+			//File[] Files = getExternalFilesDirs();
+
+			// File[] Files = getExternalMediaDirs();
+			// Files[0].getAbsolutePath will return "/storage/emulated/0/Android/media/com.nltechno.dolidroidpro"
+			// From Android 30+, it is better to write into media dire with MediaStore
+
 			// This return /storage/sdcard0/Download for example (we use this for downloading files)
 			String downloaddirpublic=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
 			// This return /storage/sdcard0 for example (we do not use this)
@@ -159,6 +168,10 @@ public class AboutActivity extends Activity {
 			String photosdirpublic=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
 			//if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) photosdirpublic = Environment.getExternalStorageDirectory().getAbsolutePath();
 			s1+=getString(R.string.PhotosDirectory)+": <b>"+photosdirpublic+"</b><br />\n";
+
+			String documentdirpublic=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
+			//if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) documentdirpublic = Environment.getExternalStorageDirectory().getAbsolutePath();
+			s1+=getString(R.string.DocumentsDirectory)+": <b>"+documentdirpublic+"</b><br />\n";
 
 			/*
 			Intent testIntent = new Intent(Intent.ACTION_VIEW);
@@ -207,47 +220,6 @@ public class AboutActivity extends Activity {
 		{
 			Log.e(LOG_TAG, "Error");
 		}
-
-		// Show text section 3
-		TextView textViewAbout3 = findViewById(R.id.textAboutCurrentUrl);
-		String s3="";
-
-		// Current url
-        String currentUrl = intent.getStringExtra("currentUrl");
-        String title = intent.getStringExtra("title");
-        if (currentUrl != null && ! "".equals(currentUrl)) {
-			String pattern = "^(https?://[^:]+):[^@]+@";
-			Pattern regexPattern = Pattern.compile(pattern);
-			Matcher matcher = regexPattern.matcher(currentUrl);
-			String currentUrlWithoutPass = matcher.replaceFirst("$1:*****@");
-        	s3+="<font color='#440066'><b>"+getString(R.string.currentUrl)+":</b></font><br /><br />\n"+title+"<br />\n"+currentUrlWithoutPass;
-		}
-		String lastversionfound = intent.getStringExtra("lastversionfound");
-        if (lastversionfound != null && ! "".equals(lastversionfound)) {
-        	s3+="<br /><br />\nDolibarr "+getString(R.string.Version)+": "+lastversionfound+"<br />\n";
-		}
-
-		// User agent
-		// The About view is not a webview, so we must use the userAgent propagated by the SecondActivity. It may be null if not already created.
-        String userAgent = intent.getStringExtra("userAgent");
-        Log.d(LOG_TAG,"userAgent="+userAgent);
-        if (userAgent != null && ! "".equals(userAgent)) {
-        	s3+="<br /><br />\n<font color='#440066'><b>"+getString(R.string.UserAgent)+":</b></font><br /><br />\n"+userAgent+"<br />\n";
-		}
-
-		if (currentUrl != null && ! "".equals(currentUrl)) {
-			findViewById(R.id.imageView03).setVisibility(View.VISIBLE);
-			findViewById(R.id.imageView03).setEnabled(true);
-			textViewAbout3.setText(Html.fromHtml(s3));
-			textViewAbout3.setVisibility(View.VISIBLE);
-			textViewAbout3.setEnabled(true);
-		} else {
-			findViewById(R.id.imageView03).setVisibility(View.INVISIBLE);
-			findViewById(R.id.imageView03).setEnabled(false);
-			textViewAbout3.setText("");
-			textViewAbout3.setVisibility(View.INVISIBLE);
-			textViewAbout3.setEnabled(false);
-		}
 	}
 	
     /**
@@ -268,7 +240,7 @@ public class AboutActivity extends Activity {
      */
     public boolean onOptionsItemSelected(MenuItem item) 
     {
-        Log.d(LOG_TAG, "Click onto menu "+item.toString());
+        Log.d(LOG_TAG, "Click onto menu "+item.toString() + " from AboutActivity");
 
     	switch (item.getItemId())
     	{

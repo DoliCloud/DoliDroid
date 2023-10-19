@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    android:versionCode="58"
+    android:versionCode="59"
     android:versionName="DoliDroid Pro 3.0"
     android:installLocation="auto"
     >
@@ -16,7 +16,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- Dangerous permissions -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />    <!-- Permission in group android.permission-group.STORAGE -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:required="false" />    <!-- Permission in group android.permission-group.STORAGE -->
     <!--<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>-->
     <!--<uses-permission android:name="android.permission.CAMERA"/>-->
     <!--<uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION"/>-->
@@ -63,6 +63,11 @@
         </activity>
         <activity
             android:name=".AboutActivity"
+            android:label="@string/title_activity_about"
+            android:theme="@style/DoliDroidThemeAbout" >
+        </activity>
+        <activity
+            android:name=".AboutInstanceActivity"
             android:label="@string/title_activity_about"
             android:theme="@style/DoliDroidThemeAbout" >
         </activity>

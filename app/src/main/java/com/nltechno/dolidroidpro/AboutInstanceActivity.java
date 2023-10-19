@@ -22,17 +22,12 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,12 +46,12 @@ import java.util.regex.Pattern;
  * @author eldy@destailleur.fr
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-public class InfoInstanceActivity extends Activity {
+public class AboutInstanceActivity extends Activity {
 
-	private static final String LOG_TAG = "DoliDroidInfoInstanceActivity";
+	private static final String LOG_TAG = "DoliDroidAboutInstanceActivity";
 	private String menuAre="hardwareonly";
 
-	static final int RESULT_ABOUT =  RESULT_FIRST_USER;
+	static final int RESULT_ABOUT_INSTANCE =  RESULT_FIRST_USER;
 
 	/**
 	 * Called when activity is created
@@ -86,14 +81,7 @@ public class InfoInstanceActivity extends Activity {
         	requestWindowFeature(Window.FEATURE_NO_TITLE);	// Hide title with menus
         }
 
-		setContentView(R.layout.activity_about);
-
-		// text2 has links specified by putting <a> tags in the string
-		// resource.  By default these links will appear but not
-		// respond to user input.  To make them active, you need to
-		// call setMovementMethod() on the TextView object.
-		TextView t1 = findViewById(R.id.textAboutVersion);
-		t1.setMovementMethod(LinkMovementMethod.getInstance());
+		setContentView(R.layout.activity_about_instance);
 
 		Log.d(LOG_TAG, "Open file " + MainActivity.FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());
 	}
@@ -106,18 +94,11 @@ public class InfoInstanceActivity extends Activity {
 	public void onStart() {
 		Log.d(LOG_TAG, "onStart");
 		super.onStart();
-		
+
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     	//boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
     	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
 		Intent intent = getIntent();
-
-		// Show text section 1
-		TextView textViewAbout1 = findViewById(R.id.textAboutVersion);
-		String s1="";
-
-		textViewAbout1.setText(Html.fromHtml(s1));
-		// For api level 24: textViewAbout1.setText(Html.fromHtml(s1, Html.FROM_HTML_MODE_LEGACY));
 
         String savedDolRootUrl = intent.getStringExtra("savedDolRootUrl");
 
@@ -205,13 +186,13 @@ public class InfoInstanceActivity extends Activity {
      */
     public boolean onOptionsItemSelected(MenuItem item) 
     {
-        Log.d(LOG_TAG, "Click onto menu "+item.toString());
+        Log.d(LOG_TAG, "Click onto menu "+item.toString() + " from AboutInstanceActivity");
 
     	switch (item.getItemId())
     	{
 	    	case R.id.menu_back:
-	    		Log.d(LOG_TAG, "We finish activity resultCode = "+RESULT_ABOUT);
-	    		setResult(RESULT_ABOUT);
+	    		Log.d(LOG_TAG, "We finish activity resultCode = "+RESULT_ABOUT_INSTANCE);
+	    		setResult(RESULT_ABOUT_INSTANCE);
 	    		finish();
 	    		return true;
     	}
@@ -232,8 +213,8 @@ public class InfoInstanceActivity extends Activity {
 	    	// Check if the key event was the Back button and if there's history
 		    if (keyCode == KeyEvent.KEYCODE_MENU || keyCode == KeyEvent.KEYCODE_BACK) 
 		    {
-		    	Log.d(LOG_TAG, "We clicked onto KEYCODE_MENU or KEYCODE_BACK. We finish activity resultCode = "+RESULT_ABOUT);
-	    		setResult(RESULT_ABOUT);
+		    	Log.d(LOG_TAG, "We clicked onto KEYCODE_MENU or KEYCODE_BACK. We finish activity resultCode = "+RESULT_ABOUT_INSTANCE);
+	    		setResult(RESULT_ABOUT_INSTANCE);
 				finish();
 				return true;
 		    }
@@ -248,8 +229,8 @@ public class InfoInstanceActivity extends Activity {
     @SuppressLint("SetJavaScriptEnabled")
 	public void onClickToBack(View v) 
     {
-		Log.d(LOG_TAG, "We finish activity resultCode = "+RESULT_ABOUT);
-		setResult(RESULT_ABOUT);
+		Log.d(LOG_TAG, "We finish activity resultCode = "+RESULT_ABOUT_INSTANCE);
+		setResult(RESULT_ABOUT_INSTANCE);
     	finish();
     } 
     
@@ -259,11 +240,11 @@ public class InfoInstanceActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-    	Log.d(LOG_TAG, "AboutActivity::onActivityResult requestCode = " + requestCode + " resultCode = " + resultCode);
-        if (resultCode==RESULT_ABOUT)
+    	Log.d(LOG_TAG, "AboutInstanceActivity::onActivityResult requestCode = " + requestCode + " resultCode = " + resultCode);
+        if (resultCode==RESULT_ABOUT_INSTANCE)
         {
-			Log.d(LOG_TAG, "AboutActivity::onActivityResult We finish activity resultCode = "+RESULT_ABOUT);
-    		setResult(RESULT_ABOUT);
+			Log.d(LOG_TAG, "AboutInstanceActivity::onActivityResult We finish activity resultCode = "+RESULT_ABOUT_INSTANCE);
+    		setResult(RESULT_ABOUT_INSTANCE);
             finish();
         } 
     }

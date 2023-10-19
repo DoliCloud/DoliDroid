@@ -26,32 +26,6 @@
             android:backgroundTintMode="screen"
             android:src="@drawable/ic_baseline_help_outline_24" />
 
-        <ImageView
-            android:id="@+id/imageView03"
-            android:layout_width="48dp"
-            android:layout_height="45dp"
-            android:layout_below="@id/textAboutVersion"
-            android:layout_alignParentStart="false"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="55dp"
-            android:foregroundTint="#009688"
-            android:src="@drawable/ic_baseline_screenshot_monitor_24" />
-
-        <TextView
-            android:id="@+id/textAboutCurrentUrl"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/imageView03"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:maxLines="50"
-            android:text="@string/textAboutC"
-            android:textSize="14sp"
-            tools:context=".AboutActivity" />
-
         <TextView
             android:id="@+id/textAboutAndroidClient"
             android:layout_width="wrap_content"

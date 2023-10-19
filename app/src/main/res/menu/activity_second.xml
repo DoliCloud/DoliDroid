@@ -89,6 +89,12 @@
 				android:menuCategory="secondary"
 				android:orderInCategory="160"
 				/>
+			<item android:id="@+id/menu_aboutinstance"
+				android:menuCategory="secondary"
+				android:orderInCategory="500"
+				android:showAsAction="withText"
+				android:title="@string/menu_instance"
+				android:titleCondensed="@string/menu_info_instance_short" />
 		</menu>
 	</item>
 

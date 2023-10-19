@@ -185,12 +185,15 @@ public class SecondActivity extends Activity {
     final Activity activity = this;
     private ProgressBar progress;
 
-    static final int REQUEST_ABOUT = RESULT_FIRST_USER;
-    static final int RESULT_ABOUT = RESULT_FIRST_USER;
+    static final int RESULT_SECONDACTIVITY = RESULT_FIRST_USER;
 
     static final int RESULT_WEBVIEW =  RESULT_FIRST_USER+1;
 
+    static final int REQUEST_ABOUT = RESULT_FIRST_USER;
+
     static final int REQUEST_INPUTFILE = RESULT_FIRST_USER+2;    // Use to trap file chooser on input field
+
+    static final int REQUEST_ABOUT_INSTANCE = RESULT_FIRST_USER;
 
     static final int REQUEST_CODE_ASK_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 123;
 
@@ -579,13 +582,6 @@ public class SecondActivity extends Activity {
             tmpItem2.setVisible(true);
         }
 
-        Log.d(LOG_TAG, "onCreateOptionsMenu Add menu Copy url");
-        MenuItem menuItemAddLink = menu.findItem(R.id.menu_copy_url);
-        if (menuItemAddLink != null) {
-            menuItemAddLink.setVisible(true);
-            menuItemAddLink.setIcon(getDrawable(R.drawable.ic_copy));
-        }
-
         Log.d(LOG_TAG, "onCreateOptionsMenu Add menu Clear cache");
         MenuItem menuItemClearCache = menu.findItem(R.id.clearcache);
         if (menuItemClearCache != null) {
@@ -598,6 +594,20 @@ public class SecondActivity extends Activity {
         if (menuItemReloadPage != null) {
             menuItemReloadPage.setVisible(true);
             menuItemReloadPage.setIcon(getDrawable(R.drawable.ic_baseline_refresh_24));
+        }
+
+        Log.d(LOG_TAG, "onCreateOptionsMenu Add menu Copy url");
+        MenuItem menuItemAddLink = menu.findItem(R.id.menu_copy_url);
+        if (menuItemAddLink != null) {
+            menuItemAddLink.setVisible(true);
+            menuItemAddLink.setIcon(getDrawable(R.drawable.ic_copy));
+        }
+
+        Log.d(LOG_TAG, "onCreateOptionsMenu Add menu About instance");
+        MenuItem menuItemAboutInstance = menu.findItem(R.id.menu_aboutinstance);
+        if (menuItemAboutInstance != null) {
+            menuItemAboutInstance.setVisible(true);
+            //menuItemAboutInstance.setIcon(getDrawable(R.drawable.ic_copy));
         }
 
         Log.d(LOG_TAG, "onCreateOptionsMenu Add menu Logout");
@@ -645,6 +655,21 @@ public class SecondActivity extends Activity {
                 return this.codeForVirtualCard();
             case R.id.menu_copy_url:
                 return this.codeForCopyUrl();
+            case R.id.menu_aboutinstance:
+                Log.i(LOG_TAG, "Start activity About instances");
+                //myWebView = findViewById(R.id.webViewContent);
+                Intent intentaboutinstance = new Intent(SecondActivity.this, AboutInstanceActivity.class);
+                intentaboutinstance.putExtra("currentUrl", myWebView.getOriginalUrl());
+                intentaboutinstance.putExtra("userAgent", myWebView.getSettings().getUserAgentString());
+                intentaboutinstance.putExtra("savedDolRootUrl", this.savedDolRootUrl);
+                intentaboutinstance.putExtra("lastversionfound", this.lastversionfound);
+                intentaboutinstance.putExtra("lastversionfoundforasset", this.lastversionfoundforasset);
+                intentaboutinstance.putExtra("title", myWebView.getTitle());
+                intentaboutinstance.putExtra("savedAuthuser", this.savedAuthuser);
+                intentaboutinstance.putExtra("savedAuthpass", this.savedAuthpass);
+                Log.d(LOG_TAG, "startActivityForResult with requestCode="+REQUEST_ABOUT_INSTANCE);
+                startActivityForResult(intentaboutinstance, REQUEST_ABOUT_INSTANCE);
+                return true;
             case R.id.always_show_bar:  // Switch menu bar on/off
                 sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
@@ -754,7 +779,7 @@ public class SecondActivity extends Activity {
                 startActivityForResult(tmpintent1, REQUEST_ABOUT);
                 return true;
             case R.id.about:
-                Log.i(LOG_TAG, "Start activity About");
+                Log.i(LOG_TAG, "Start activity About DoliDroid");
                 //myWebView = findViewById(R.id.webViewContent);
                 Intent intent = new Intent(SecondActivity.this, AboutActivity.class);
                 intent.putExtra("currentUrl", myWebView.getOriginalUrl());
@@ -1293,7 +1318,6 @@ public class SecondActivity extends Activity {
         return true;
     }
 
-
     /**
      * Common code for Back. Called for example by onOptionsItemSelected().
      * codeForBack is in a UI thread
@@ -1364,9 +1388,9 @@ public class SecondActivity extends Activity {
             else
             {
                 Log.d(LOG_TAG, "Second click on Previous when no previous available.");
-                Log.i(LOG_TAG, "We finish activity resultCode="+RESULT_ABOUT);
+                Log.i(LOG_TAG, "We finish activity resultCode="+RESULT_SECONDACTIVITY);
                 this.messageNoPreviousPageShown = false;
-                setResult(RESULT_ABOUT);   // We don't want to quit completely
+                setResult(RESULT_SECONDACTIVITY);   // We don't want to quit completely
                 WebViewDatabase.getInstance(getBaseContext()).clearHttpAuthUsernamePassword();
                 finish();
             }           
@@ -1410,9 +1434,11 @@ public class SecondActivity extends Activity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        Log.d(LOG_TAG, "onRequestPermissionsResult override");
+        Log.d(LOG_TAG, "onRequestPermissionsResult override requestCode="+requestCode+" grantResults length="+grantResults.length);
+
         switch (requestCode) {
             case REQUEST_CODE_ASK_PERMISSIONS_WRITE_EXTERNAL_STORAGE: {
+                Log.d(LOG_TAG, Integer.toString(grantResults[0]));
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -1422,6 +1448,8 @@ public class SecondActivity extends Activity {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                     Log.d(LOG_TAG, "Sorry, permission was not granted by user to do so.");
+
+                    Toast.makeText(activity, "Sorry, permission to write files on storage was not granted by user.", Toast.LENGTH_SHORT).show();
                 }
                 return;
             }
@@ -1763,8 +1791,9 @@ public class SecondActivity extends Activity {
 
             // Check if this is a download from a POST. Show a warning for that.
             if (isADownload) {
+                // I comment this because we reach this page on both GET and POST links
                 // In this case, we entered a HTTP login url but we were redirected to a HTTPS site.
-                Log.w(LOG_TAG, "shouldInterceptRequest AlertDownloadFromAPost Your app tried to make a download from a POST. This is forbidden by Dolibarr good practices. Not supported.");
+                //Log.w(LOG_TAG, "shouldInterceptRequest AlertDownloadFromAPost Your app tried to make a download from a POST. This is forbidden by Dolibarr good practices. Not supported.");
                 // Can't make interaction here
                 //Toast.makeText(activity, R.string.AlertDownloadBadHTTPS, Toast.LENGTH_LONG).show();
             } else {
@@ -1917,11 +1946,21 @@ public class SecondActivity extends Activity {
 				  url = m.group(1);  // The matched substring
 				}*/
 
-				if (! url.contains("dol_hide_topmenu=")) url = url + (url.contains("?")?"&":"?") + "dol_hide_topmenu=1";
-    			if (! url.contains("dol_hide_leftmenu=")) url = url + (url.contains("?")?"&":"?") + "dol_hide_leftmenu=1";
-    			if (! url.contains("dol_optimize_smallscreen=")) url = url + (url.contains("?")?"&":"?") + "dol_optimize_smallscreen=1";
-    			if (! url.contains("dol_no_mouse_hover=")) url = url + (url.contains("?")?"&":"?") + "dol_no_mouse_hover=1";
-    			if (! url.contains("dol_use_jmobile=")) url = url + (url.contains("?")?"&":"?") + "dol_use_jmobile=0";
+				if (! url.contains("dol_hide_topmenu=")) {
+                    url = url + (url.contains("?")?"&":"?") + "dol_hide_topmenu=1";
+                }
+    			if (! url.contains("dol_hide_leftmenu=")) {
+                    url = url + (url.contains("?")?"&":"?") + "dol_hide_leftmenu=1";
+                }
+    			if (! url.contains("dol_optimize_smallscreen=")) {
+                    url = url + (url.contains("?")?"&":"?") + "dol_optimize_smallscreen=1";
+                }
+    			if (! url.contains("dol_no_mouse_hover=")) {
+                    url = url + (url.contains("?")?"&":"?") + "dol_no_mouse_hover=1";
+                }
+    			if (! url.contains("dol_use_jmobile=")) {
+                    url = url + (url.contains("?")?"&":"?") + "dol_use_jmobile=0";
+                }
     			
 				String listOfCookies=this.listCookies();
 
@@ -1931,17 +1970,36 @@ public class SecondActivity extends Activity {
 					saveUrlForonRequestPermissionsResult = url;
 					saveListOfCookiesForonRequestPermissionsResult = listOfCookies;
 
-					// If API 23 or+, we ask permission to user
-					int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-					if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
-						requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS_WRITE_EXTERNAL_STORAGE);
-						return false;
-					}
+                    Log.d(LOG_TAG, "shouldOverrideUrlLoading ask permission to save file");
 
-					Log.d(LOG_TAG, "shouldOverrideUrlLoading url to download = " + url);
+                    int version = Build.VERSION.SDK_INT;
+                    if (version <= 32) {
+                        // If API 23 to 32, we ask permission to user
+                        int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                        if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+                            //boolean needEducativeInfo = shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                            //Log.d(LOG_TAG, "shouldOverrideUrlLoading hasWriteContactsPermission = " + hasWriteContactsPermission + " needEducativeInfo = " + needEducativeInfo);
+
+                            // Now request the permission
+                            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS_WRITE_EXTERNAL_STORAGE);
+
+                            Log.d(LOG_TAG, "shouldOverrideUrlLoading requestPermissions was called, so we exit. The run of putDownloadInQueue will be done by result handler onRequestPermissionsResult()");
+                            return false;
+                        }
+                    } else {
+                        // If API 33, asking WRITE_EXTERNAL_STORAGE is useless. It is never allowed to write outside of app.
+                        boolean isAllowPermissionAllFiles = Environment.isExternalStorageManager();    // Return if app has "All Files Access"
+                        Log.i(LOG_TAG,"shouldOverrideUrlLoading isExternalStorageManager() " + isAllowPermissionAllFiles);
+
+                        // We probably got "false" on isAllowPermissionAllFiles, but never mind, we should not need All Files Access,
+                        // so we continue to try the putDownloadInQueue, we should be allowed on Download
+                    }
+
+					Log.d(LOG_TAG, "shouldOverrideUrlLoading Cal putDownloadInQueue for url to download = " + url);
 
 					putDownloadInQueue(query, url, listOfCookies);
-/*
+
+                    /*
                     DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
                     request.setDescription(query);
                     request.setTitle(query);
@@ -1962,7 +2020,7 @@ public class SecondActivity extends Activity {
                     // Complete tutorial on download manager on http://www.101apps.co.za/index.php/articles/using-the-downloadmanager-to-manage-your-downloads.html
                     DownloadManager dmanager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
                     long id = dmanager.enqueue(request);
-*/
+                    */
 
 					Log.d(LOG_TAG, "shouldOverrideUrlLoading URI has been added in queue - Now waiting event onReceive ACTION_DOWNLOAD_COMPLETE");
 				}
@@ -2306,8 +2364,8 @@ public class SecondActivity extends Activity {
 							Log.d(LOG_TAG, "onPageFinished End of logout page, tagToLogout="+tagToLogout);
 							tagToLogout=false;	// Set to false to avoid infinite loop
 							tagToOverwriteLoginPass=true;
-							Log.i(LOG_TAG, "onPageFinished We finish activity resultCode="+RESULT_ABOUT);
-							setResult(RESULT_ABOUT);
+							Log.i(LOG_TAG, "onPageFinished We finish activity resultCode="+RESULT_SECONDACTIVITY);
+							setResult(RESULT_SECONDACTIVITY);
 					    	WebViewDatabase.getInstance(getBaseContext()).clearHttpAuthUsernamePassword();
 							finish();	// End activity
 						}

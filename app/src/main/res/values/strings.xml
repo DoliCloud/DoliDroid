@@ -44,6 +44,7 @@
     <string name="DeviceHasDownloadManager">Device has a download manager</string>
     <string name="DownloadDirectory">Download directory</string>
     <string name="PhotosDirectory">Photos directory</string>
+    <string name="DocumentsDirectory">Documents directory</string>
     <string name="DeviceHasPDFViewer">Device has PDF viewers</string>
     <string name="DeviceHasODXViewer">Device has OpenOffice viewers</string>
     <string name="DeviceSize">Device screen size</string>
@@ -65,7 +66,9 @@
 
     <!-- Menu main + web -->
     <string name="menu_info">About DoliDroid</string>
+    <string name="menu_instance">About current instance</string>
     <string name="menu_info_short">About</string>
+    <string name="menu_info_instance_short">About instance</string>
     <string name="menu_show_bar_on">Show menu bar</string>
     <string name="menu_show_bar_off">Show menu bar (no)</string>
     <string name="menu_autofill_on">Save login/password</string>

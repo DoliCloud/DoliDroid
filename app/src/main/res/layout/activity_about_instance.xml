@@ -15,22 +15,10 @@
         android:theme="@style/DoliDroidThemeFirst">
 
         <ImageView
-            android:id="@+id/imageView01"
-            android:layout_width="48dp"
-            android:layout_height="42dp"
-            android:layout_below="@+id/textAboutAndroidClient"
-            android:layout_alignParentStart="false"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
-            android:backgroundTint="@color/yellow"
-            android:backgroundTintMode="screen"
-            android:src="@drawable/ic_baseline_help_outline_24" />
-
-        <ImageView
             android:id="@+id/imageView03"
             android:layout_width="48dp"
             android:layout_height="45dp"
-            android:layout_below="@id/textAboutVersion"
+            android:layout_below="@+id/textAboutAndroidClient"
             android:layout_alignParentStart="false"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="55dp"
@@ -62,21 +50,6 @@
             android:textColor="@color/grey"
             tools:context=".AboutActivity"
             tools:ignore="TextContrastCheck" />
-
-        <TextView
-            android:id="@+id/textAboutVersion"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/imageView01"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="14dp"
-            android:maxLines="30"
-            android:text="@string/textAboutA"
-            android:textSize="14sp"
-            tools:context=".AboutActivity" />
 
 
     </RelativeLayout>

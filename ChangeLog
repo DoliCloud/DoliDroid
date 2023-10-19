@@ -4,6 +4,10 @@ English DoliDroid ChangeLog
 
 ***** ChangeLog for 3.0 *****
 
+3.0-b59
+- NEW Hide a page About current instance in menu
+- NEW Fix download of files for some Android version
+
 3.0-b58
 - NEW Hide Basic auth pass found into URLs
 - NEW App targets Android 13 (API level 33) or higher

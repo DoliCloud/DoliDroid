@@ -57,7 +57,7 @@ public class SslAlertDialog {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 handler.cancel();
-                savedactivity.setResult(SecondActivity.RESULT_ABOUT);
+                savedactivity.setResult(SecondActivity.RESULT_SECONDACTIVITY);
                 savedactivity.finish();
             }
         });
