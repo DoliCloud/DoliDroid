@@ -14,8 +14,8 @@
     <string name="open">Start</string>
     <string name="dolibarr_url">Dolibarr URL</string>
     <string name="logo_dolidroid">Logo DoliDroid</string>
-    <string name="SelectUrl">of selecteer een vooraf gedefinieerde URL</string>
-    <string name="enterNewUrl">of type nieuw URL</string>
+    <string name="SelectUrl">of selecteer een favoriete verbinding</string>
+    <string name="enterNewUrl">of type een nieuwe URL</string>
     <string name="UrlCopied">URL gekopieerd naar klembord</string>
 
     <!-- Activity web -->
@@ -52,7 +52,7 @@
     <string name="DeviceHasODXViewer">Apparaat heeft OpenOffice-viewers</string>
     <string name="DeviceSize">Apparaat schermgrootte</string>
     <string name="savedDolUrlRoot">Dolibarr moment Url</string>
-    <string name="currentUrl">Huidige Url</string>
+    <string name="currentUrl">Huidige verbinding</string>
     <string name="UserAgent">Gebruiker Agent</string>
     <string name="SavedLogin">Saved login</string>
     <string name="SavedPassword">Saved password</string>
@@ -63,8 +63,9 @@
     <string name="Warning">Waarschuwing</string>
 
     <!-- Activity Manage URL -->
-    <string name="DeletePredefinedUrl">Verwijder de vooraf gedefinieerde URL van deze instantie</string>
-    <string name="DeleteAllPredefinedUrl">Verwijder alle vooraf gedefinieerde URL\'s</string>
+    <string name="DeletePredefinedUrl">Verwijder deze verbinding</string>
+    <string name="DeleteAllPredefinedUrl">Verwijder alle favorieten verbindingen</string>
+    <string name="ListOfUrls">Lijst van voorkeursverbindingen</string>
 
     <!-- Menu main + web -->
     <string name="menu_info">Over DoliDroid</string>
@@ -83,9 +84,9 @@
     <string name="menu_utilities">Nutsvoorzieningen</string>
     <string name="menu_settings">Instellingen</string>
     <string name="menu_add_url">Voeg vooraf gedefinieerde URL toe</string>
-    <string name="menu_remove_url">Verwijder een vooraf gedefinieerde URL</string>
-    <string name="menu_clear_all_urls">Wis vooraf gedefinieerde URL\'s</string>
-    <string name="menu_manage_all_urls">Beheer vooraf gedefinieerde URL\'s</string>
+    <string name="menu_remove_url">Verwijder een favoriete verbinding</string>
+    <string name="menu_clear_all_urls">Favorieten verbindingen opschonen</string>
+    <string name="menu_manage_all_urls">Beheer favorieten verbindingen</string>
     <string name="dolicloud_register" ignore="MissingTranslation"> <a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile"> Ik heb nog geen Dolibarr ERP CRM-instantie, maak er een aan op DoliCloud.com... </a></string>
 
     <!-- Menu web browser -->
@@ -104,5 +105,6 @@
     <string name="menu_virtualcard">Mijn virtuele visitekaartje</string>
     <string name="menu_scan">Scan een streepjescode</string>
     <string name="menu_photo">Scan een document</string>
+    <string name="None">Geen</string>
 
 </resources>

@@ -14,7 +14,7 @@
     <string name="open">Starten</string>
     <string name="dolibarr_url">Dolibarr URL</string>
     <string name="logo_dolidroid">Logo DoliDroid</string>
-    <string name="SelectUrl">oder wählen Sie eine vordefinierte URL</string>
+    <string name="SelectUrl">oder wähle eine favorisierte Verbindung aus</string>
     <string name="enterNewUrl">oder geben Sie eine neue URL ein</string>
     <string name="UrlCopied">URL in die Zwischenablage kopiert</string>
 
@@ -49,11 +49,12 @@
     <string name="DeviceHasDownloadManager">Das Gerät hat einen Download-Manager</string>
     <string name="DownloadDirectory">Download-Verzeichnis</string>
     <string name="PhotosDirectory">Fotoverzeichnis</string>
+    <string name="DocumentsDirectory">Dokumentenverzeichnis</string>
     <string name="DeviceHasPDFViewer">Das Gerät hat einen PDF-Betrachter.</string>
     <string name="DeviceHasODXViewer">Das Gerät hat einen OpenOffice-Betrachter.</string>
     <string name="DeviceSize">Bildschirmgröße</string>
     <string name="savedDolUrlRoot">Dolibarr Instanz URL</string>
-    <string name="currentUrl">Aktuelle URL</string>
+    <string name="currentUrl">Aktuelle Verbindung</string>
     <string name="UserAgent">Benutzeragent</string>
     <string name="SavedLogin">gespeichertes Login</string>
     <string name="SavedPassword">gespeichertes Passwort</string>
@@ -64,12 +65,15 @@
     <string name="Warning">Warnhinweis</string>
 
     <!-- Activity Manage URL -->
-    <string name="DeletePredefinedUrl">Entfernen Sie die vordefinierte URL dieser Instanz</string>
-    <string name="DeleteAllPredefinedUrl">Entfernen Sie alle vordefinierten URLs</string>
+    <string name="DeletePredefinedUrl">Entferne Verbindung</string>
+    <string name="DeleteAllPredefinedUrl">Entferne alle favorisierten Verbindungen</string>
+    <string name="ListOfUrls">Liste vordefinierter Verbindungen</string>
 
     <!-- Menu main + web -->
     <string name="menu_info">Über DoliDroid</string>
+    <string name="menu_instance">Über die aktuelle Instanz</string>
     <string name="menu_info_short">Über</string>
+    <string name="menu_info_instance_short">Über Instanz</string>
     <string name="menu_show_bar_on">Menüleiste anzeigen</string>
     <string name="menu_show_bar_off">Menüleiste anzeigen (nein)</string>
     <string name="menu_autofill_on">Login/Kennwort speichern</string>
@@ -84,9 +88,9 @@
     <string name="menu_utilities">Dienstprogramme</string>
     <string name="menu_settings">Einstellungen</string>
     <string name="menu_add_url">Hinzufügen einer vordefinierten URL</string>
-    <string name="menu_remove_url">Entfernen einer vordefinierten URL</string>
-    <string name="menu_clear_all_urls">lösche alle vordefinierte URLs</string>
-    <string name="menu_manage_all_urls">Verwalten Sie vordefinierte URLs</string>
+    <string name="menu_remove_url">Entferne eine favorisierte Verbindung</string>
+    <string name="menu_clear_all_urls">Lösche favorisierte Verbindungen</string>
+    <string name="menu_manage_all_urls">Verwalte favorisierte Verbindungen</string>
     <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile"> Ich habe noch keine Dolibarr ERP CRM-Instanz, erstellen Sie eine auf DoliCloud.com...</a></string>
 
     <!-- Menu web browser -->
@@ -105,5 +109,6 @@
     <string name="menu_virtualcard">Meine virtuelle Visitenkarte</string>
     <string name="menu_scan">Barcode einscannen</string>
     <string name="menu_photo">Dokument einscannen</string>
+    <string name="None">Keine(r)</string>
 
 </resources>

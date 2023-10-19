@@ -14,7 +14,6 @@
     <string name="open">Início</string>
     <string name="dolibarr_url">URL Dolibarr</string>
     <string name="logo_dolidroid">Logo DoliDroid</string>
-    <string name="SelectUrl">ou selecione um URL predefinido</string>
     <string name="enterNewUrl">ou insira um novo URL</string>
     <string name="UrlCopied">URL copiada para área de transferência</string>
 
@@ -48,7 +47,6 @@
     <string name="DeviceHasODXViewer">O dispositivo tem visualizadores OpenOffice</string>
     <string name="DeviceSize">Tamanho da tela do dispositivo</string>
     <string name="savedDolUrlRoot">Url de instância Dolibarr</string>
-    <string name="currentUrl">Url atual</string>
     <string name="UserAgent">Agente Usuário</string>
     <string name="SavedLogin">Saved login</string>
     <string name="SavedPassword">Saved password</string>
@@ -67,8 +65,6 @@
     <string name="menu_uselocalresources_off">Use recursos estáticos locais (não)</string>
     <string name="menu_settings">Definições</string>
     <string name="menu_add_url">Adicionar URL predefinido</string>
-    <string name="menu_remove_url">Remover um URL predefinido</string>
-    <string name="menu_clear_all_urls">Limpar URLs predefinidos</string>
     <!-- Menu web browser -->
     <string name="menu_menu">Menu</string>
     <string name="menu_go_to">Acesso rápido</string>

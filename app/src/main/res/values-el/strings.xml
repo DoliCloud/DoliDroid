@@ -10,7 +10,7 @@
     <string name="open">Έναρξη</string>
     <string name="dolibarr_url">Διεύθυνση URL Dolibarr</string>
     <string name="logo_dolidroid">Λογότυπο DoliDroid</string>
-    <string name="SelectUrl">ή επιλέξτε μια προκαθορισμένη διεύθυνση URL</string>
+    <string name="SelectUrl">ή επιλέξτε μια αγαπημένη σύνδεση</string>
     <string name="enterNewUrl">ή εισάγετε μια νέα διεύθυνση URL</string>
     <string name="UrlCopied">Η διεύθυνση URL αντιγράφηκε στο πρόχειρο</string>
 
@@ -48,7 +48,7 @@
     <string name="DeviceHasODXViewer">Η συσκευή έχει προγράμματα προβολής Libre Office</string>
     <string name="DeviceSize">Μέγεθος οθόνης συσκευής</string>
     <string name="savedDolUrlRoot">Διεύθυνση URL Dolibarr</string>
-    <string name="currentUrl">Τρέχουσα διεύθυνση Url</string>
+    <string name="currentUrl">Τρέχουσα σύνδεση</string>
     <string name="UserAgent">User Agent</string>
     <string name="SavedLogin">Αποθηκευμένη σύνδεση</string>
     <string name="SavedPassword">Αποθηκευμένος κωδικός πρόσβασης</string>
@@ -59,8 +59,9 @@
     <string name="Warning">Προειδοποίηση</string>
 
     <!-- Activity Manage URL -->
-    <string name="DeletePredefinedUrl">Καταργήστε την προκαθορισμένη διεύθυνση URL αυτής της εφαρμογής</string>
-    <string name="DeleteAllPredefinedUrl">Καταργήστε όλες τις προκαθορισμένες διευθύνσεις URL</string>
+    <string name="DeletePredefinedUrl">Καταργήστε αυτήν τη σύνδεση</string>
+    <string name="DeleteAllPredefinedUrl">Καταργήστε όλες τις αγαπημένες συνδέσεις</string>
+    <string name="ListOfUrls">Λίστα προκαθορισμένων συνδέσεων</string>
 
     <!-- Menu main + web -->
     <string name="menu_info">Σχετικά με το DoliDroid</string>
@@ -79,9 +80,9 @@
     <string name="menu_utilities">Εργαλεία</string>
     <string name="menu_settings">Ρυθμίσεις</string>
     <string name="menu_add_url">Προσθήκη προκαθορισμένου URL</string>
-    <string name="menu_remove_url">Απομάκρυνση ενός προκαθορισμένου URL</string>
-    <string name="menu_clear_all_urls">Καθαρισμός προκαθορισμένων URLs</string>
-    <string name="menu_manage_all_urls">Διαχειριστείτε προκαθορισμένες διευθύνσεις URL</string>
+    <string name="menu_remove_url">Καταργήστε μια αγαπημένη σύνδεση</string>
+    <string name="menu_clear_all_urls">Εκκαθάριση αγαπημένων συνδέσεων</string>
+    <string name="menu_manage_all_urls">Διαχειριστείτε τις αγαπημένες συνδέσεις</string>
     <string name="dolicloud_register" ignore="MissingTranslation"> <a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile"> Δεν έχετε ακόμη εγκαταστήσει το Dolibarr ERP CRM, δημιουργήστε ένα στο DoliCloud.com... </a></string>
 
     <!-- Menu web browser -->
@@ -100,5 +101,6 @@
     <string name="menu_virtualcard">Η εικονική επαγγελματική μου κάρτα</string>
     <string name="menu_scan">Σαρώστε έναν γραμμωτό κώδικα</string>
     <string name="menu_photo">Σαρώστε ένα έγγραφο</string>
+    <string name="None">Καμία</string>
 
 </resources>
