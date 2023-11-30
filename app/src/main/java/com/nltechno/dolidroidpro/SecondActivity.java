@@ -1831,7 +1831,11 @@ public class SecondActivity extends Activity {
             if (url.startsWith("tel:")) {  // Intercept phone urls
                 Log.d(LOG_TAG, "Launch dialer : " + url);
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
-                startActivity(intent);
+                try {
+                    startActivity(intent);
+                } catch(ActivityNotFoundException e) {
+                    Log.e(LOG_TAG, "No activity to manage Intent ACTION_DIAL");
+                }
                 return true;
             } else if (url.startsWith("geo:")) {  // Intercept geoloc url (map)
                 Log.d(LOG_TAG, "Launch geo : " + url);
