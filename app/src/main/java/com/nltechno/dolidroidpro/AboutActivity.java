@@ -134,6 +134,7 @@ public class AboutActivity extends Activity {
 			s1+=getString(R.string.License)+": <b>GPL v3+</b><br />\n";
 			//s1+=getString(R.string.Sources)+": https://www.nltechno.com/services/<br />\n";
 			s1+=getString(R.string.Sources)+": <span style=\"color:#008888\"><a href=\"https://github.com/DoliCloud/DoliDroid.git\">https://github.com/DoliCloud/DoliDroid.git</a></span><br />\n";
+			s1+=getString(R.string.PrivacyPolicy)+": <span style=\"color:#008888\"><a href=\"https://www.dolicloud.com/en-dolidroid-privacy-policy.php\">https://www.dolicloud.com/en-dolidroid-privacy-policy.php</a></span><br />\n";
 			// This download key allow to download file with name src_dolidroid-info.versionName-downloadkey
 			//String downloadkey=Utils.MD5Hex("dolidroid"+info.versionName.replaceAll("[^0-9.]", "")+"saltnltechno").substring(0, 8);
 			//s1+=getString(R.string.Sources)+" Download Key: dolidroid-"+info.versionName.replaceAll("[^0-9.]", "")+"-"+downloadkey+"<br />\n";
