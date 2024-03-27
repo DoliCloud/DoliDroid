@@ -6,7 +6,7 @@ android {
     // 24=7.0.0 25=7.1.0 26=8.0.0 29=10.0.0 30=11.0.0 31=12.0.0 33=13.0.0
     defaultConfig {
         applicationId "com.nltechno.dolidroidpro"
-        minSdkVersion 25
+        minSdkVersion 26
         targetSdkVersion 33
     }
 
