@@ -4,7 +4,7 @@ English DoliDroid ChangeLog
 
 ***** ChangeLog for 3.0 *****
 
-3.0-b60
+3.0-b61
 - Fix crash when clicking on a phone number with no phone feature.
 - NEW Add the link to the page Privacy Policy
 
