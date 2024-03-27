@@ -607,7 +607,7 @@ public class SecondActivity extends Activity {
         MenuItem menuItemAboutInstance = menu.findItem(R.id.menu_aboutinstance);
         if (menuItemAboutInstance != null) {
             menuItemAboutInstance.setVisible(true);
-            //menuItemAboutInstance.setIcon(getDrawable(R.drawable.ic_copy));
+            menuItemAboutInstance.setIcon(getDrawable(R.drawable.ic_baseline_question_mark_24));
         }
 
         Log.d(LOG_TAG, "onCreateOptionsMenu Add menu Logout");

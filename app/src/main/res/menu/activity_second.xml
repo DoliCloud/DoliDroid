@@ -90,11 +90,13 @@
 				android:orderInCategory="160"
 				/>
 			<item android:id="@+id/menu_aboutinstance"
+				android:title="@string/menu_instance"
+				android:icon="@android:drawable/ic_menu_rotate"
 				android:menuCategory="secondary"
 				android:orderInCategory="500"
 				android:showAsAction="withText"
-				android:title="@string/menu_instance"
-				android:titleCondensed="@string/menu_info_instance_short" />
+				android:titleCondensed="@string/menu_info_instance_short"
+				/>
 		</menu>
 	</item>
 
