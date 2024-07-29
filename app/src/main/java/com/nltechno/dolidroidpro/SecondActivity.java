@@ -42,6 +42,7 @@ import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.scheme.SocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
@@ -49,7 +50,7 @@ import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.params.HttpParams;
 
-import com.nltechno.utils.MySSLSocketFactory;
+//import com.nltechno.utils.MySSLSocketFactory;
 import com.nltechno.utils.Utils;
 
 import android.Manifest;
@@ -854,28 +855,38 @@ public class SecondActivity extends Activity {
 
     /**
      * Return a DefaultHTTPClient with option to support untrusted HTTPS
+     * This object can be used to get content of a HTTP page from code.
      *
      * @return HttpClient       Object derivated from DefaultHttpClient
      */
     public HttpClient getNewHttpClient() {
+        Log.d(LOG_TAG, "getNewHttpClient");
+
         try {
+            /*
+            Disabled, we do not use DefaultHttpClient with custom SSLSocketFactory to manage custom validation of certificate
+            For getting page content from code, we use now the default DefaultHttpClient().
+            It means it works only is HTTP certificate is valid.
+
             KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
             trustStore.load(null, null);
-
+            //trustStore.setCertificateEntry("caCert", caCert);
             MySSLSocketFactory sf = new MySSLSocketFactory(trustStore);
-            sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 
             HttpParams params = new BasicHttpParams();
             HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
             HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
 
+            // Now we set the handler for http and https
             SchemeRegistry registry = new SchemeRegistry();
             registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
-            registry.register(new Scheme("https", sf, 443));
+            registry.register(new Scheme("https", (SocketFactory) sf, 443));
 
-            ClientConnectionManager ccm = new ThreadSafeClientConnManager(params, registry);
+            ClientConnectionManager ccm = new ThreadSafeClientConnManager(params, null);
 
             return new DefaultHttpClient(ccm, params);
+            */
+            return new DefaultHttpClient(); // Will handle an error if HTTPS certificate is wrong.
         } catch (Exception e) {
             return new DefaultHttpClient();
         }
@@ -894,13 +905,15 @@ public class SecondActivity extends Activity {
             super();
             this.mode=mode;
         }
-        
+
         /**
          * Launch download of urls. Return content of response.
          */
         @Override
         protected String doInBackground(String... urls) 
         {
+            Log.d(LOG_TAG, "doInBackground");
+
             StringBuilder response = new StringBuilder();
 
             if (listOfCookiesAfterLogon != null) {      // We do not try to load url if cookies are not yet set
@@ -941,7 +954,7 @@ public class SecondActivity extends Activity {
 
             return response.toString();
         }
-        
+
         /**
          * When an url has been downloaded.
          * Used when download is done by the async Download manager after a DownloadWebPageTask.execute into codeForXXX for example.
@@ -1029,7 +1042,7 @@ public class SecondActivity extends Activity {
             Log.d(LOG_TAG, "end onPostExecute (toremove)");
         }
     }
-        
+
     
     /**
      * Once we click onto SmartPhone hardware key
@@ -1068,6 +1081,7 @@ public class SecondActivity extends Activity {
         Log.d(LOG_TAG, "We called codeForMenu after click on Menu : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
         //myWebView = findViewById(R.id.webViewContent);
 
+        /*
         if (allowCacheForMenuPage) {
             if (this.cacheForMenu != null && this.cacheForMenu.length() > 0) {
                 String historyUrl = urlToGo;
@@ -1079,9 +1093,9 @@ public class SecondActivity extends Activity {
                 DownloadWebPageTask task = new DownloadWebPageTask("menu");
                 task.execute(new String[]{urlToGo});
             }
-        } else {
+        } else { */
             myWebView.loadUrl(urlToGo);
-        }
+        // }
 
         return true;
     }
@@ -1103,6 +1117,7 @@ public class SecondActivity extends Activity {
         Log.d(LOG_TAG, "We called codeForQuickAccess after click on Search : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
         //myWebView = findViewById(R.id.webViewContent);
 
+        /*
         if (allowCacheForQuickAccessPage) {
             if (this.cacheForQuickAccess != null && this.cacheForQuickAccess.length() > 0)
             {
@@ -1117,9 +1132,9 @@ public class SecondActivity extends Activity {
 
             DownloadWebPageTask task = new DownloadWebPageTask("quickaccess");
             task.execute(new String[] { urlToGo });
-        } else {
+        } else { */
             myWebView.loadUrl(urlToGo);
-        }
+        // }
 
         return true;
     }
@@ -1140,7 +1155,7 @@ public class SecondActivity extends Activity {
         Log.d(LOG_TAG, "We called codeForBookmarks after click on Bookmarks : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
         //myWebView = findViewById(R.id.webViewContent);
 
-        if (allowCacheForBookmarkPage) {
+        /*if (allowCacheForBookmarkPage) {
             if (this.cacheForBookmarks != null && this.cacheForBookmarks.length() > 0) {
                 String historyUrl = urlToGo;
                 Log.d(LOG_TAG, "Got content from app cache this.cacheForBookmarks savedDolBasedUrl=" + this.savedDolBasedUrl + " historyUrl=" + historyUrl);
@@ -1153,9 +1168,9 @@ public class SecondActivity extends Activity {
 
             DownloadWebPageTask task = new DownloadWebPageTask("bookmarks");
             task.execute(new String[]{urlToGo});
-        } else {
+        } else { */
             myWebView.loadUrl(urlToGo);
-        }
+        //}
 
         return true;
     }
@@ -1191,7 +1206,7 @@ public class SecondActivity extends Activity {
             DownloadWebPageTask task = new DownloadWebPageTask("bookmarks");
             task.execute(new String[]{urlToGo});
         } else { */
-        myWebView.loadUrl(urlToGo);
+            myWebView.loadUrl(urlToGo);
         //}
 
         return true;
