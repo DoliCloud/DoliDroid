@@ -173,13 +173,18 @@ public class AboutInstanceActivity extends Activity {
 		if (currentUrl != null && ! "".equals(currentUrl)) {
 			findViewById(R.id.imageView03).setVisibility(View.VISIBLE);
 			findViewById(R.id.imageView03).setEnabled(true);
-			textViewAbout3.setText(Html.fromHtml(s3));
+
+			textViewAbout3.setText(Html.fromHtml(s3, Html.FROM_HTML_MODE_COMPACT));
+			textViewAbout3.setMovementMethod(LinkMovementMethod.getInstance());
+
 			textViewAbout3.setVisibility(View.VISIBLE);
 			textViewAbout3.setEnabled(true);
 		} else {
 			findViewById(R.id.imageView03).setVisibility(View.INVISIBLE);
 			findViewById(R.id.imageView03).setEnabled(false);
+
 			textViewAbout3.setText("");
+
 			textViewAbout3.setVisibility(View.INVISIBLE);
 			textViewAbout3.setEnabled(false);
 		}

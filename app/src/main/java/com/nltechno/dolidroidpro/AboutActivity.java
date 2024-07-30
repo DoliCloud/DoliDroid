@@ -211,8 +211,8 @@ public class AboutActivity extends Activity {
 
 		textViewAboutVersion.setText(Html.fromHtml(sVersion, Html.FROM_HTML_MODE_LEGACY));
 
-		textViewAbout2.setText(Html.fromHtml(s1, Html.FROM_HTML_MODE_LEGACY));
-		// For api level 24: textViewAbout1.setText(Html.fromHtml(s1, Html.FROM_HTML_MODE_LEGACY));
+		textViewAbout2.setText(Html.fromHtml(s1, Html.FROM_HTML_MODE_COMPACT));
+		textViewAbout2.setMovementMethod(LinkMovementMethod.getInstance());
 
         String savedDolRootUrl = intent.getStringExtra("savedDolRootUrl");
 
