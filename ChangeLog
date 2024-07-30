@@ -6,7 +6,8 @@ English DoliDroid ChangeLog
 
 3.0-b61
 - Fix crash when clicking on a phone number with no phone feature.
-- NEW Add the link to the page Privacy Policy
+- NEW Add the link to the page Privacy Policy and Author
+- NEW Add screenshot on the About pages
 
 3.0-b59
 - NEW Hide a page About current instance in menu
