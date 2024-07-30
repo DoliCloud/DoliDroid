@@ -22,6 +22,8 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -33,10 +35,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nltechno.utils.Utils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -102,7 +107,19 @@ public class AboutInstanceActivity extends Activity {
 
         String savedDolRootUrl = intent.getStringExtra("savedDolRootUrl");
 
-        // Show btn or not
+		// Set image
+		try {
+			ImageView imageView = findViewById(R.id.imageView03);
+
+			// Charger l'image depuis les assets
+			InputStream inputStream = getAssets().open("screenshot_dolidroid.png");
+			Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+			imageView.setImageBitmap(bitmap);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// Show btn or not
 		// Check if url is inside predefined URL
 		boolean savedDolRootUrlFoundIntoPredefinedLoginUrl = false;
 		try
@@ -138,11 +155,11 @@ public class AboutInstanceActivity extends Activity {
 			Pattern regexPattern = Pattern.compile(pattern);
 			Matcher matcher = regexPattern.matcher(currentUrl);
 			String currentUrlWithoutPass = matcher.replaceFirst("$1:*****@");
-        	s3+="<font color='#440066'><b>"+getString(R.string.currentUrl)+":</b></font><br /><br />\n"+title+"<br />\n"+currentUrlWithoutPass;
+        	s3+="<font color='#440066'><b>"+getString(R.string.currentUrl)+"</b></font><br /><br />\n"+title+"<br />\n"+currentUrlWithoutPass;
 		}
 		String lastversionfound = intent.getStringExtra("lastversionfound");
         if (lastversionfound != null && ! "".equals(lastversionfound)) {
-        	s3+="<br /><br />\nDolibarr "+getString(R.string.Version)+": "+lastversionfound+"<br />\n";
+        	s3+="<br /><br />\nDolibarr "+getString(R.string.Version)+": "+lastversionfound.replace(" ", "").replace(",", ".")+"<br />\n";
 		}
 
 		// User agent
@@ -150,7 +167,7 @@ public class AboutInstanceActivity extends Activity {
         String userAgent = intent.getStringExtra("userAgent");
         Log.d(LOG_TAG,"userAgent="+userAgent);
         if (userAgent != null && ! "".equals(userAgent)) {
-        	s3+="<br /><br />\n<font color='#440066'><b>"+getString(R.string.UserAgent)+":</b></font><br /><br />\n"+userAgent+"<br />\n";
+        	s3+="<br /><br />\n<font color='#440066'><b>"+getString(R.string.UserAgent)+"</b></font><br /><br />\n"+userAgent+"<br />\n";
 		}
 
 		if (currentUrl != null && ! "".equals(currentUrl)) {
@@ -180,7 +197,6 @@ public class AboutInstanceActivity extends Activity {
         return true;
     }
 
-    
     /**
      *	Once we selected a menu option
      */
@@ -248,5 +264,4 @@ public class AboutInstanceActivity extends Activity {
             finish();
         } 
     }
-
 }

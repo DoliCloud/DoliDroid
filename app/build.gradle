@@ -31,7 +31,11 @@ dependencies {
     // Add entry to be able to use androidx.core.content.FileProvider to use Provider for file upload of camera capture on Android >= 30
     implementation 'androidx.core:core:1.10.1'
 
+    // Add swiper
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    // To be able to use CardView so we can add shadow arround images
+    //implementation "'androidx.cardview:cardview:1.0.0"
 
     // Add entry to support ContextCompat.checkSelfPermission for API 23+ even when building for target 21
     //compile 'com.android.support:support-v4:23'

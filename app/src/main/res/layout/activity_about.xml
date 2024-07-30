@@ -2,7 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/white"
     android:theme="@style/DoliDroidThemeFirst"
     tools:context=".AboutActivity">
 
@@ -14,41 +15,69 @@
         android:textColor="@color/black"
         android:theme="@style/DoliDroidThemeFirst">
 
-        <ImageView
-            android:id="@+id/imageView01"
-            android:layout_width="48dp"
-            android:layout_height="42dp"
-            android:layout_below="@+id/textAboutAndroidClient"
-            android:layout_alignParentStart="false"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
-            android:backgroundTint="@color/yellow"
-            android:backgroundTintMode="screen"
-            android:src="@drawable/ic_baseline_help_outline_24" />
-
         <TextView
             android:id="@+id/textAboutAndroidClient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
+            android:gravity="center"
             android:text="@string/dolibarr_for_android"
             android:textColor="@color/grey"
             tools:context=".AboutActivity"
             tools:ignore="TextContrastCheck" />
 
+        <FrameLayout
+            android:id="@+id/FrameLayoutImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textAboutAndroidClient"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="18dp"
+            android:background="@android:color/white"
+            android:elevation="8dp">
+
+            <ImageView
+                android:id="@+id/imageView01"
+                android:layout_width="82dp"
+                android:layout_height="145dp"
+                android:layout_below="@+id/textAboutAndroidClient"
+                android:layout_alignParentStart="false"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/yellow"
+                android:backgroundTintMode="screen"
+                android:src="@drawable/ic_baseline_help_outline_24" />
+        </FrameLayout>
+
         <TextView
             android:id="@+id/textAboutVersion"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imageView01"
+            android:layout_below="@id/FrameLayoutImage"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginStart="14dp"
             android:layout_marginTop="18dp"
             android:layout_marginEnd="14dp"
+            android:gravity="center"
             android:maxLines="30"
             android:text="@string/textAboutA"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            tools:context=".AboutActivity" />
+
+        <TextView
+            android:id="@+id/textAboutVersion2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textAboutVersion"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="14dp"
+            android:maxLines="30"
             android:textSize="14sp"
             tools:context=".AboutActivity" />
 

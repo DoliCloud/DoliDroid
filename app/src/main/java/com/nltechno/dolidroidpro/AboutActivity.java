@@ -17,13 +17,10 @@
 
 package com.nltechno.dolidroidpro;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.*;
-
 import com.nltechno.utils.Utils;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -35,7 +32,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Point;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -47,6 +43,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
+import android.widget.ImageView;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 
 /**
  * About activity class
@@ -115,8 +116,22 @@ public class AboutActivity extends Activity {
     	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
 		Intent intent = getIntent();
 
+		// Set image
+		try {
+			ImageView imageView = findViewById(R.id.imageView01);
+
+			// Charger l'image depuis les assets
+			InputStream inputStream = getAssets().open("screenshot_dolidroid.png");
+			Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+			imageView.setImageBitmap(bitmap);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		// Show text section 1
-		TextView textViewAbout1 = findViewById(R.id.textAboutVersion);
+		TextView textViewAboutVersion = findViewById(R.id.textAboutVersion);
+		TextView textViewAbout2 = findViewById(R.id.textAboutVersion2);
+		String sVersion="";
 		String s1="";
 
 		PackageManager manager = this.getPackageManager();
@@ -124,11 +139,12 @@ public class AboutActivity extends Activity {
 		{
 			PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
 
-			s1+=getString(R.string.Version)+": <b>"+info.versionName+" (build "+info.versionCode+")</b><br />\n";
+			sVersion+="<b>"+info.versionName+" (build "+info.versionCode+")</b>";
+
 			s1+=getString(R.string.VersionStaticResources)+": <b>"+SecondActivity.VERSION_RESOURCES+"</b><br />\n";
 
 			//s+= "PackageName = " + info.packageName + "\n";
-			s1+=getString(R.string.Author)+": <b>Laurent Destailleur</b><br />\n";
+			s1+=getString(R.string.Author)+": <span style=\"color:#008888\"><a href=\"https://www.github.com/eldy\">Laurent Destailleur</a></span><br />\n";
 			s1+=getString(R.string.Web)+": <span style=\"color:#008888\"><a href=\"https://www.dolicloud.com?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile\">https://www.dolicloud.com</a></span><br />\n";
 			s1+=getString(R.string.Compatibility)+": <b>Dolibarr 8+</b><br />\n";
 			s1+=getString(R.string.License)+": <b>GPL v3+</b><br />\n";
@@ -193,7 +209,9 @@ public class AboutActivity extends Activity {
 			Log.e(LOG_TAG, e.getMessage());
 		}
 
-		textViewAbout1.setText(Html.fromHtml(s1));
+		textViewAboutVersion.setText(Html.fromHtml(sVersion, Html.FROM_HTML_MODE_LEGACY));
+
+		textViewAbout2.setText(Html.fromHtml(s1, Html.FROM_HTML_MODE_LEGACY));
 		// For api level 24: textViewAbout1.setText(Html.fromHtml(s1, Html.FROM_HTML_MODE_LEGACY));
 
         String savedDolRootUrl = intent.getStringExtra("savedDolRootUrl");
