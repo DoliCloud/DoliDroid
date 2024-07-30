@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 android {
-    // API Level
+    // API Level - See https://apilevels.com/
     // 16=4.1 17=4.2 19=4.4.2
     // 21=5.0.0 22=5.1.1 23=6.0.0 (android M, need permission requests)
     // 24=7.0.0 25=7.1.0 26=8.0.0 29=10.0.0 30=11.0.0 31=12.0.0 33=13.0.0
+    // 34=14.0.0 35=15.0.0
     defaultConfig {
         applicationId "com.nltechno.dolidroidpro"
-        minSdkVersion 26
+        minSdkVersion 27
         targetSdkVersion 34
     }
 
