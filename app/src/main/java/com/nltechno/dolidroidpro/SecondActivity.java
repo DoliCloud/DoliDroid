@@ -1956,7 +1956,14 @@ public class SecondActivity extends Activity {
 	        {
 				String query=Uri.parse(url).getQuery();
 				if (query != null) {
-                    query = query.replaceAll(".*file=", "").replaceAll("&.*", "").replaceAll(".*/", "");
+                    // Example:
+                    // query=file=myfilename.ext&...&output=file
+                    // query=format=ical&...&output=file
+                    query = query.replaceAll(".*file=", "file=").replaceAll("&.*", "").replaceAll(".*/", "");
+                    if (!query.startsWith("file=")) {
+                        // The parameter file=myfilename.ext was not provided so we use a generic file name
+                        query = "Unknown-filename";
+                    }
                 }
 				Log.d(LOG_TAG, "shouldOverrideUrlLoading Start activity to download file="+query);
 				/*Pattern p = Pattern.compile("file=(.*)\.(pdf|odt|ods)");
