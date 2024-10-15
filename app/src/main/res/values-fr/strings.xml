@@ -100,6 +100,7 @@
     <string name="menu_logout">Déconnecter</string>
     <string name="menu_quit">Quitter</string>
     <string name="menu_multicompany">Changer de société</string>
+    <string name="menu_uploadfile">Importer/Scaner un document</string>
     <string name="menu_usercard">Ma fiche utilisateur</string>
     <string name="menu_virtualcard">Ma carte de visite virtuelle</string>
     <string name="menu_scan">Scanner un code-barres</string>

@@ -118,7 +118,9 @@ public class SecondActivity extends Activity {
 	private static final String LOG_TAG = "DoliDroidSecondActivity";
 	public static final String VERSION_RESOURCES = "14.0";
 
-	private WebView myWebView;
+    boolean isInstalledFromPlayStore = true;
+
+    private WebView myWebView;
 	WebViewClientDoliDroid myWebViewClientDoliDroid;
 	WebChromeClientDoliDroid myWebChromeClientDoliDroid;
 	WebBackForwardList mWebBackForwardList;
@@ -165,12 +167,14 @@ public class SecondActivity extends Activity {
 	private String cacheForMenu;
 	private String cacheForQuickAccess;
     private String cacheForBookmarks;
+    private String cacheForUploadFile;
     private String cacheForMultiCompany;
     private String cacheForVirtualCard;
 
 	private String lastLoadUrl;
     private boolean	isBookmarkOn=true;
 	private boolean	isMulticompanyOn=false;     // Not visible by default
+    private boolean	isUploadFileOn=false;     // Not visible by default
     private boolean	isUserCardOn=false;      // Not visible by default
     private boolean	isVirtualCardOn=false;      // Not visible by default
 
@@ -224,9 +228,19 @@ public class SecondActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) 
     {
         Log.i(LOG_TAG, "onCreate savedInstanceState="+savedInstanceState);
+
         super.onCreate(savedInstanceState);
         // To have the view SecondActivity with WebView included:
         setContentView(R.layout.activity_second);
+
+        PackageManager packageManager = this.getPackageManager();
+        String installerPackageName = packageManager.getInstallerPackageName(this.getPackageName());
+        if ("com.android.vending".equals(installerPackageName)) {
+            isInstalledFromPlayStore = true;
+        } else {
+            isInstalledFromPlayStore = false;
+        }
+        Log.d(LOG_TAG, "onCreate App is installed from: "+installerPackageName);
 
         // Read the non encrypted share preferences files
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -451,31 +465,34 @@ public class SecondActivity extends Activity {
             menu.findItem(R.id.menu_menu).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             menu.findItem(R.id.menu_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             menu.findItem(R.id.menu_bookmarks).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            menu.findItem(R.id.menu_uploadfile).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
-            menu.findItem(R.id.menu_photo).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
-            menu.findItem(R.id.menu_scan).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
+            //menu.findItem(R.id.menu_photo).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
+            //menu.findItem(R.id.menu_scan).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
+            menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
             menu.findItem(R.id.menu_usercard).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);  // Not enough room so we force it on dropdown menu.
             menu.findItem(R.id.menu_virtualcard).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);  // Not enough room so we force it on dropdown menu.
-            menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
 
-            menu.findItem(R.id.menu_photo).setVisible(false);
-            menu.findItem(R.id.menu_scan).setVisible(false);
+            //menu.findItem(R.id.menu_photo).setVisible(false);
+            //menu.findItem(R.id.menu_scan).setVisible(false);
+            menu.findItem(R.id.menu_multicompany).setVisible(false);
             menu.findItem(R.id.menu_usercard).setVisible(false);
             menu.findItem(R.id.menu_virtualcard).setVisible(false);
-            menu.findItem(R.id.menu_multicompany).setVisible(false);
         }
         if (this.menuAre.equals("hardwareonly")) {
             // Move entries from actionbar to list
             menu.findItem(R.id.menu_menu).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             menu.findItem(R.id.menu_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-            menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             menu.findItem(R.id.menu_bookmarks).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-            menu.findItem(R.id.menu_usercard).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-            menu.findItem(R.id.menu_virtualcard).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            menu.findItem(R.id.menu_uploadfile).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+
+            menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             //menu.findItem(R.id.menu_photo).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             //menu.findItem(R.id.menu_scan).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-            menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            menu.findItem(R.id.menu_usercard).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            menu.findItem(R.id.menu_virtualcard).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         }
 
 
@@ -539,6 +556,20 @@ public class SecondActivity extends Activity {
             MenuItem menuItem5 = menu.findItem(R.id.menu_multicompany);
             if (menuItem5 != null) {
                 menuItem5.setVisible(false);
+            }
+        }
+
+        if (isUploadFileOn) {
+            Log.d(LOG_TAG, "onCreateOptionsMenu Upload file feature enabled, we show picto");
+            MenuItem menuItem6 = menu.findItem(R.id.menu_uploadfile);
+            if (menuItem6 != null) {
+                menuItem6.setVisible(true);
+            }
+        } else {
+            Log.d(LOG_TAG, "onCreateOptionsMenu Upload file feature is NOT enabled, we hide picto");
+            MenuItem menuItem6 = menu.findItem(R.id.menu_uploadfile);
+            if (menuItem6 != null) {
+                menuItem6.setVisible(false);
             }
         }
 
@@ -650,6 +681,8 @@ public class SecondActivity extends Activity {
                 return this.codeForBookmarks();
             case R.id.menu_multicompany:
                 return this.codeForMultiCompany();
+            case R.id.menu_uploadfile:
+                return this.codeForUploadFile();
             case R.id.menu_usercard:
                 return this.codeForUserCard();
             case R.id.menu_virtualcard:
@@ -821,6 +854,7 @@ public class SecondActivity extends Activity {
                 this.cacheForMenu=null;
                 this.cacheForQuickAccess=null;
                 this.cacheForBookmarks=null;
+                this.cacheForUploadFile=null;
                 this.cacheForMultiCompany=null;
                 this.cacheForVirtualCard=null;
 
@@ -986,6 +1020,10 @@ public class SecondActivity extends Activity {
                 stringforHistoryUrl = savedDolRootUrl+"core/bookmarks_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
                 stringToCheckInResult = "<!-- Bookmarks -->";
             }
+            if ("uploadfile".equals(this.mode)) {     // Test that result is a bookmark page
+                stringforHistoryUrl = savedDolRootUrl+"core/upload_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
+                stringToCheckInResult = "<!-- Upload file -->";
+            }
             if ("multicompany".equals(this.mode)) {     // Test that result is a multicompany selection page
                 stringforHistoryUrl = savedDolRootUrl+"core/multicompany_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
                 stringToCheckInResult = "<!-- Multicompany selection  -->";
@@ -1014,6 +1052,9 @@ public class SecondActivity extends Activity {
                         }
                         if ("bookmarks".equals(this.mode)) {     // Test that result is the quickaccess page
                             cacheForBookmarks = result;
+                        }
+                        if ("uploadfile".equals(this.mode)) {     // Test that result is the quickaccess page
+                            cacheForUploadFile = result;
                         }
                         if ("virtualcard".equals(this.mode)) {     // Test that result is the quickaccess page
                             cacheForVirtualCard = result;
@@ -1140,7 +1181,28 @@ public class SecondActivity extends Activity {
     }
 
     /**
-     * Common code for Back
+     * Common code for UploadFile
+     * codeForUploadFile is in a UI thread
+     *
+     * @return  boolean             True
+     */
+    private boolean codeForUploadFile() {
+        String urlToGo;
+        boolean allowCacheForUploadFilePage = false;
+
+        urlToGo = this.savedDolRootUrl+"core/upload_page.php?cache=600&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
+
+        // If not found into cache, call URL
+        Log.d(LOG_TAG, "We called codeForUploadFile after click on Uploadfile : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
+
+        //myWebView = findViewById(R.id.webViewContent);
+        myWebView.loadUrl(urlToGo);
+
+        return true;
+    }
+
+    /**
+     * Common code for Bookmark
      * codeForBookmarks is in a UI thread
      *
      * @return  boolean             True
@@ -1271,6 +1333,7 @@ public class SecondActivity extends Activity {
         myWebView.clearHistory();
         this.cacheForMenu = null;
         this.cacheForQuickAccess = null;
+        this.cacheForUploadFile = null;
         this.cacheForBookmarks = null;
         this.cacheForMultiCompany = null;
         //Log.d(LOG_TAG,"Clear also cookies");
@@ -2158,6 +2221,8 @@ public class SecondActivity extends Activity {
                         MenuItem menuItemBookmarks = savMenu.findItem(R.id.menu_bookmarks);
                         MenuItem menuItemUserCard = savMenu.findItem(R.id.menu_usercard);
                         MenuItem menuItemVirtualCard = savMenu.findItem(R.id.menu_virtualcard);
+                        MenuItem menuItemUploadFile = savMenu.findItem(R.id.menu_uploadfile);
+
                         if (foundVersion)    // if title ends with " Dolibarr x.y.z" or " Dolibarr x.y.z - multicompany or anytext from module hook setTitleHtml", this is login page or home page
                         {
                             lastversionfound = m.group(1) + ", " + m.group(2) + ", " + m.group(3);
@@ -2180,6 +2245,22 @@ public class SecondActivity extends Activity {
                                 }
                             } else {
                                 isMulticompanyOn = false;
+                            }
+
+                            // Enable or disable menu entry for Upload File (available from Dolibarr v21)
+                            try {
+                                if (m.group(1) != null && Integer.parseInt(m.group(1)) >= 21 && !isInstalledFromPlayStore) {
+                                    Log.d(LOG_TAG, "onPageFinished Version major found >= 21 and not installed from PlayStore , we enable the upload file entry");
+                                    menuItemUploadFile.setVisible(true);
+                                    isUploadFileOn = true;
+                                } else {
+                                    Log.d(LOG_TAG, "onPageFinished Version major found < 21 or installed from PlayStore, we disable the upload file entry");
+                                    menuItemUploadFile.setVisible(false);
+                                    isUploadFileOn = false;
+                                }
+                            } catch (Exception e) {
+                                Log.d(LOG_TAG, "onPageFinished Failed to parse version found = " + m.group(1));
+                                menuItemUploadFile.setVisible(false);
                             }
 
                             // Enable or disable menu entry for Bookmarks (available from Dolibarr v15)

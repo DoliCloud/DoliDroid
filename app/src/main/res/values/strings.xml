@@ -101,6 +101,7 @@
     <string name="menu_logout">Logout</string>
     <string name="menu_quit">Quit</string>
     <string name="menu_multicompany">Switch company</string>
+    <string name="menu_uploadfile">Import or scan a document</string>
     <string name="menu_usercard">My user file</string>
     <string name="menu_virtualcard">My virtual business card</string>
     <string name="menu_scan">Scan a barcode</string>

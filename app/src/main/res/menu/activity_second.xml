@@ -20,29 +20,37 @@
 		android:orderInCategory="22"
 		android:showAsAction="always"
 		android:title="@string/menu_bookmarks" />
-	<item
-		android:id="@+id/menu_back"
-		android:icon="@mipmap/ic_action_back"
-		android:orderInCategory="30"
-		android:showAsAction="always"
-		android:title="@string/menu_back" />
+
 	<item
 		android:id="@+id/menu_scan"
 		android:icon="@drawable/ic_baseline_star_border_24"
 		android:orderInCategory="40"
 		android:title="@string/menu_scan"
 		android:visible="false" />
+    <item
+        android:id="@+id/menu_photo"
+        android:icon="@android:drawable/ic_input_get"
+        android:orderInCategory="41"
+        android:title="@string/menu_photo"
+        android:visible="false" />
 	<item
-		android:id="@+id/menu_photo"
-		android:icon="@drawable/ic_baseline_star_border_24"
-		android:orderInCategory="41"
-		android:title="@string/menu_photo"
-		android:visible="false" />
+		android:id="@+id/menu_uploadfile"
+		android:icon="@android:drawable/ic_menu_upload"
+		android:orderInCategory="52"
+		android:title="@string/menu_uploadfile" />
+	<item
+		android:id="@+id/menu_back"
+		android:icon="@mipmap/ic_action_back"
+		android:orderInCategory="55"
+		android:showAsAction="always"
+		android:title="@string/menu_back" />
+
 	<item
 		android:id="@+id/menu_multicompany"
 		android:icon="@mipmap/ic_action_multicompany"
-		android:orderInCategory="50"
+		android:orderInCategory="58"
 		android:title="@string/menu_multicompany" />
+
 	<item
 		android:id="@+id/menu_usercard"
 		android:icon="@drawable/ic_baseline_badge_24"
