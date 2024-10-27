@@ -62,6 +62,8 @@ public class AboutActivity extends Activity {
 
 	static final int RESULT_ABOUT =  RESULT_FIRST_USER;
 
+	private String nameOfSourceStore = "Unknown";
+
 	/**
 	 * Called when activity is created
 	 */
@@ -70,7 +72,7 @@ public class AboutActivity extends Activity {
 		Log.i(LOG_TAG, "onCreate savedInstanceState="+savedInstanceState);
 		super.onCreate(savedInstanceState);
 
-    	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     	boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
     	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
     	Log.d(LOG_TAG, "prefAlwaysShowBar="+prefAlwaysShowBar+" prefAlwaysAutoFill="+prefAlwaysAutoFill); 
@@ -139,25 +141,33 @@ public class AboutActivity extends Activity {
 		{
 			PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
 
+			String installerPackageName = manager.getInstallerPackageName(this.getPackageName());
+			if ("com.android.vending".equals(installerPackageName)) {
+				nameOfSourceStore = "Android PlayStore";
+			} else if (installerPackageName != null)   {
+				nameOfSourceStore = installerPackageName;
+			}
+
 			sVersion+="<b>"+info.versionName+" (build "+info.versionCode+")</b>";
 
-			s1+=getString(R.string.VersionStaticResources)+": <b>"+SecondActivity.VERSION_RESOURCES+"</b><br />\n";
-
 			//s+= "PackageName = " + info.packageName + "\n";
-			s1+=getString(R.string.Author)+": <span style=\"color:#008888\"><a href=\"https://www.github.com/eldy\">Laurent Destailleur</a></span><br />\n";
 			s1+=getString(R.string.Web)+": <span style=\"color:#008888\"><a href=\"https://www.dolicloud.com?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile\">https://www.dolicloud.com</a></span><br />\n";
-			s1+=getString(R.string.Compatibility)+": <b>Dolibarr 8+</b><br />\n";
+			s1+=getString(R.string.Sources)+": <span style=\"color:#008888\"><a href=\"https://github.com/DoliCloud/DoliDroid.git\">https://github.com/DoliCloud/DoliDroid.git</a></span><br />\n";
 			s1+=getString(R.string.License)+": <b>GPL v3+</b><br />\n";
 			//s1+=getString(R.string.Sources)+": https://www.nltechno.com/services/<br />\n";
-			s1+=getString(R.string.Sources)+": <span style=\"color:#008888\"><a href=\"https://github.com/DoliCloud/DoliDroid.git\">https://github.com/DoliCloud/DoliDroid.git</a></span><br />\n";
+			s1+=getString(R.string.Author)+": <span style=\"color:#008888\"><a href=\"https://www.github.com/eldy\">Laurent Destailleur</a>, ...</span><br />\n";
 			s1+=getString(R.string.PrivacyPolicy)+": <span style=\"color:#008888\"><a href=\"https://www.dolicloud.com/en-dolidroid-privacy-policy.php\">https://www.dolicloud.com/en-dolidroid-privacy-policy.php</a></span><br />\n";
 			// This download key allow to download file with name src_dolidroid-info.versionName-downloadkey
 			//String downloadkey=Utils.MD5Hex("dolidroid"+info.versionName.replaceAll("[^0-9.]", "")+"saltnltechno").substring(0, 8);
 			//s1+=getString(R.string.Sources)+" Download Key: dolidroid-"+info.versionName.replaceAll("[^0-9.]", "")+"-"+downloadkey+"<br />\n";
+			s1+=getString(R.string.VersionStaticResources)+": <b>"+SecondActivity.VERSION_RESOURCES+"</b><br />\n";
+			s1+=getString(R.string.Compatibility)+": <b>Dolibarr 8+</b><br />\n";
+
 
 			s1+="<br />\n";
 			
 			s1+=getString(R.string.DeviceAPILevel)+": <b>"+Build.VERSION.SDK_INT+"</b><br />\n";
+			s1+=getString(R.string.NameOfSourceStore)+": <b>"+nameOfSourceStore+"</b><br />\n";
 			Display display = getWindowManager().getDefaultDisplay();
 			Point size = new Point();
 			display.getSize(size);

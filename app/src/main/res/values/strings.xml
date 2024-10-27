@@ -38,6 +38,7 @@
     <string name="Web">Web</string>
     <string name="Compatibility">Compatibility</string>
     <string name="License">License</string>
+    <string name="NameOfSourceStore">Source store of installation</string>
     <string name="Sources">Sources</string>
     <string name="PrivacyPolicy">Privacy Policy</string>
     <string name="DeviceAPILevel">Device API Level</string>
