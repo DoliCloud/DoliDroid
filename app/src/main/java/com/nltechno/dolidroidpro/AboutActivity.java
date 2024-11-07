@@ -21,6 +21,7 @@ import com.nltechno.utils.Utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -32,6 +33,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Point;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -48,13 +50,13 @@ import android.widget.ImageView;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.List;
 
 /**
  * About activity class
  * 
  * @author eldy@destailleur.fr
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
 public class AboutActivity extends Activity {
 
 	private static final String LOG_TAG = "DoliDroidAboutActivity";
@@ -136,12 +138,12 @@ public class AboutActivity extends Activity {
 		String sVersion="";
 		String s1="";
 
-		PackageManager manager = this.getPackageManager();
+		PackageManager packageManager = this.getPackageManager();
 		try
 		{
-			PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
+			PackageInfo info = packageManager.getPackageInfo(this.getPackageName(), 0);
 
-			String installerPackageName = manager.getInstallerPackageName(this.getPackageName());
+			String installerPackageName = packageManager.getInstallerPackageName(this.getPackageName());
 			if ("com.android.vending".equals(installerPackageName)) {
 				nameOfSourceStore = "Android PlayStore";
 			} else if (installerPackageName != null)   {
@@ -177,6 +179,7 @@ public class AboutActivity extends Activity {
 			//s1+=getString(R.string.DeviceHasMenuHardware)+": <b>"+(Utils.hasMenuHardware(this)?getString(R.string.Yes):getString(R.string.No))+"</b><br />\n";
 			s1+=getString(R.string.DeviceHasDownloadManager)+": <b>"+(Utils.isDownloadManagerAvailable(this)?getString(R.string.Yes):getString(R.string.No))+"</b><br />\n";
 
+
 			// For  Environment.DIRECTORY_MUSIC, Environment.DIRECTORY_PODCASTS, Environment.DIRECTORY_RINGTONES, Environment.DIRECTORY_ALARMS, Environment.DIRECTORY_NOTIFICATIONS, Environment.DIRECTORY_PICTURES, or Environment.DIRECTORY_MOVIES.
 			// Files in this directory are deleted when application is deleted.
 			//File[] Files = getExternalFilesDirs();
@@ -203,14 +206,58 @@ public class AboutActivity extends Activity {
 			/*
 			Intent testIntent = new Intent(Intent.ACTION_VIEW);
             testIntent.setType("application/pdf"); 
-            List<ResolveInfo> list = manager.queryIntentActivities(testIntent, PackageManager.MATCH_DEFAULT_ONLY); 
+            List<ResolveInfo> list = packageManager.queryIntentActivities(testIntent, PackageManager.MATCH_DEFAULT_ONLY);
 			s1+=getString(R.string.DeviceHasPDFViewer)+": <b>"+(list.size() > 0?getString(R.string.Yes)+" ("+list.size()+")":getString(R.string.No))+"</b><br />\n";
 
 			Intent testIntent2 = new Intent(Intent.ACTION_VIEW);
             testIntent2.setType("application/vnd.oasis.opendocument.text"); 
-            List<ResolveInfo> list2 = manager.queryIntentActivities(testIntent2, PackageManager.MATCH_DEFAULT_ONLY); 
+            List<ResolveInfo> list2 = packageManager.queryIntentActivities(testIntent2, PackageManager.MATCH_DEFAULT_ONLY);
 			s1+=getString(R.string.DeviceHasODXViewer)+": <b>"+(list2.size() > 0?getString(R.string.Yes)+" ("+list2.size()+")":getString(R.string.No))+"</b>\n";
            	*/
+
+			/* Detect the application associated with "mailto:" links */
+			Intent intentTmp = new Intent(Intent.ACTION_SENDTO);
+			intentTmp.setData(Uri.parse("mailto:"));
+
+			List<ResolveInfo> resolveInfoList = packageManager.queryIntentActivities(intentTmp, PackageManager.MATCH_DEFAULT_ONLY);
+			StringBuilder appNames = new StringBuilder();
+			for (ResolveInfo resolveInfo : resolveInfoList) {
+				CharSequence appName = resolveInfo.loadLabel(packageManager);
+				if (! "".equals(appName.toString())) {
+					appNames.append(appName).append(" ");
+				}
+			}
+			s1+=getString(R.string.ApplicationAssociatedWithMailToLink)+": <b>"+(resolveInfoList.isEmpty() ? getString(R.string.None) : appNames.toString())+"</b><br />\n";
+
+			/*ResolveInfo resolveInfo = packageManager.resolveActivity(intentTmp, PackageManager.MATCH_DEFAULT_ONLY);
+			CharSequence appName = "";
+			if (resolveInfo != null) {
+				appName = resolveInfo.loadLabel(packageManager);
+			}
+			s1+=getString(R.string.ApplicationAssociatedWithMailToLink)+": <b>"+(resolveInfo == null ? getString(R.string.None) : appName)+"</b><br />\n";
+			*/
+
+			Intent intentTmp2 = new Intent(Intent.ACTION_DIAL);
+			intentTmp2.setData(Uri.parse("tel:"));
+
+			List<ResolveInfo> resolveInfoList2 = packageManager.queryIntentActivities(intentTmp2, PackageManager.MATCH_DEFAULT_ONLY);
+			StringBuilder appNames2 = new StringBuilder();
+			for (ResolveInfo resolveInfo2 : resolveInfoList2) {
+				CharSequence appName2 = resolveInfo2.loadLabel(packageManager);
+				if (! "".equals(appName2.toString())) {
+					appNames2.append(appName2).append(" ");
+				}
+			}
+			s1+=getString(R.string.ApplicationAssociatedWithTelLink)+": <b>"+(resolveInfoList2.isEmpty() ? getString(R.string.None) : appNames2.toString())+"</b><br />\n";
+
+			/*
+			ResolveInfo resolveInfo2 = packageManager.resolveActivity(intentTmp2, PackageManager.MATCH_DEFAULT_ONLY);
+			CharSequence appName2 = "";
+			if (resolveInfo2 != null) {
+				appName2 = resolveInfo2.loadLabel(packageManager);
+			}
+			s1+=getString(R.string.ApplicationAssociatedWithTelLink)+": <b>"+(resolveInfo2 == null ? getString(R.string.None) : appName2)+"</b><br />\n";
+			*/
 
 			//s+="Permissions = " + info.permissions;
 		}

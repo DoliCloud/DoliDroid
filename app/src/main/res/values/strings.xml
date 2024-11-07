@@ -35,6 +35,8 @@
     <string name="Version">Version</string>
     <string name="VersionStaticResources">Version of local static resources</string>
     <string name="Author">Author</string>
+    <string name="ApplicationAssociatedWithMailToLink">Application associated with "mailto" links</string>
+    <string name="ApplicationAssociatedWithTelLink">Application associated with "tel" links</string>
     <string name="Web">Web</string>
     <string name="Compatibility">Compatibility</string>
     <string name="License">License</string>

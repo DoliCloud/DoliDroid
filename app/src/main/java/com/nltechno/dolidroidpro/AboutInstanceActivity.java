@@ -50,7 +50,6 @@ import java.util.regex.Pattern;
  * 
  * @author eldy@destailleur.fr
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
 public class AboutInstanceActivity extends Activity {
 
 	private static final String LOG_TAG = "DoliDroidAboutInstanceActivity";
