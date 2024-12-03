@@ -22,8 +22,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
 import java.text.SimpleDateFormat;
@@ -235,11 +237,9 @@ public class SecondActivity extends Activity {
 
         PackageManager packageManager = this.getPackageManager();
         String installerPackageName = packageManager.getInstallerPackageName(this.getPackageName());
-        if ("com.android.vending".equals(installerPackageName)) {
-            isInstalledFromPlayStore = true;
-        } else {
-            isInstalledFromPlayStore = false;
-        }
+
+        isInstalledFromPlayStore = "com.android.vending".equals(installerPackageName);
+
         Log.d(LOG_TAG, "onCreate App is installed from: "+installerPackageName);
 
         // Read the non encrypted share preferences files
@@ -1552,7 +1552,17 @@ public class SecondActivity extends Activity {
 
         // First create an object Request
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-        request.setTitle(query);
+
+        String pathOfDownloadeFile = "download-dolidroid";
+        if (query != null) {
+            try {
+                pathOfDownloadeFile = URLDecoder.decode(query.replace("file=", ""), "UTF-8");
+            } catch(UnsupportedEncodingException e) {
+                pathOfDownloadeFile = query.replace("file=", "");
+            }
+        }
+
+        request.setTitle(pathOfDownloadeFile);
         request.setDescription(query);
         request.addRequestHeader("Cookie", listOfCookies);
         if (savedAuthuser != null) {
@@ -1579,8 +1589,8 @@ public class SecondActivity extends Activity {
             }
         }
 
-        Log.d(LOG_TAG, "putDownloadInQueue Set output dirType=" + Environment.DIRECTORY_DOWNLOADS + " subPath="+query);
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, query);
+        Log.d(LOG_TAG, "putDownloadInQueue Set output dirType=" + Environment.DIRECTORY_DOWNLOADS + " subPath="+pathOfDownloadeFile);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, pathOfDownloadeFile);
         //request.setDestinationInExternalFilesDir(getApplicationContext(), null, query);
 
         // Then create the object DownloadManager and enqueue the file
@@ -2022,10 +2032,13 @@ public class SecondActivity extends Activity {
                     // Example:
                     // query=file=myfilename.ext&...&output=file
                     // query=format=ical&...&output=file
-                    query = query.replaceAll(".*file=", "file=").replaceAll("&.*", "").replaceAll(".*/", "");
+                    query = query.replaceAll("^.*file=", "file=").replaceAll("&.*$", "");
+                    query = query.replaceAll("^file=.*/", "file=");
                     if (!query.startsWith("file=")) {
                         // The parameter file=myfilename.ext was not provided so we use a generic file name
                         query = "Unknown-filename";
+                    } else {
+                        query.replaceAll("^file=", "");
                     }
                 }
 				Log.d(LOG_TAG, "shouldOverrideUrlLoading Start activity to download file="+query);
