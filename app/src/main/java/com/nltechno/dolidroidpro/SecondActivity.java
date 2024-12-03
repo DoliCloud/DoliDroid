@@ -2072,7 +2072,7 @@ public class SecondActivity extends Activity {
 					saveUrlForonRequestPermissionsResult = url;
 					saveListOfCookiesForonRequestPermissionsResult = listOfCookies;
 
-                    Log.d(LOG_TAG, "shouldOverrideUrlLoading ask permission to save file");
+					Log.d(LOG_TAG, "shouldOverrideUrlLoading ask permission to save file");
 
                     int version = Build.VERSION.SDK_INT;
                     if (version <= 32) {
