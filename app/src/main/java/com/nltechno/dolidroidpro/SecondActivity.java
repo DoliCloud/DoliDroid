@@ -27,7 +27,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.security.KeyStore;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,20 +36,9 @@ import java.util.regex.Pattern;
 
 // This are classes found with the useLibrary 'org.apache.http.legacy' in the build.gradle file.
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.conn.ClientConnectionManager;
-import org.apache.http.conn.scheme.PlainSocketFactory;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.scheme.SocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpProtocolParams;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.params.HttpParams;
 
 //import com.nltechno.utils.MySSLSocketFactory;
 import com.nltechno.utils.Utils;
@@ -99,7 +87,6 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-//import android.webkit.CookieSyncManager;
 import android.webkit.WebViewDatabase;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -2457,8 +2444,8 @@ public class SecondActivity extends Activity {
 					    	} else {
                                 Log.d(LOG_TAG, "onPageFinished We don't save form fields (prefAlwaysAutoFill is false).");
                             }
-							tagToOverwriteLoginPass=prefAlwaysAutoFill;
-								
+                            tagToOverwriteLoginPass = prefAlwaysAutoFill;
+
 				    		// Clear webview history
 							Log.d(LOG_TAG,"onPageFinished We clear history to removes the login page history entry");
 
