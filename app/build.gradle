@@ -26,6 +26,10 @@ android {
     useLibrary 'org.apache.http.legacy'
     namespace 'com.nltechno.dolidroidpro'
     compileSdk 34
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
 }
 
 dependencies {
