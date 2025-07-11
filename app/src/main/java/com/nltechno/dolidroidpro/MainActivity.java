@@ -65,7 +65,7 @@ import android.widget.TextView;
  */
 public class MainActivity extends Activity implements OnItemSelectedListener {
 
-	private static final String LOG_TAG = "DoliDroidMainActivity";
+	private static final String LOG_TAG = "DoliDroidLogMainActivity";
 	public final static String FILENAME = "dolidroid_prefs";		// File will be into
 	private final static String HOME_URL = "";
 	public static List<PredefinedUrl> listOfRootUrl = null;

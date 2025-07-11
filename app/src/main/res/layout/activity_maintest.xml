@@ -2,16 +2,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:theme="@style/DoliDroidThemeFirst"
+    android:visibility="visible"
     tools:context=".MainActivityTest">
 
-    <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="380dp"
-        android:layout_height="81dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
+    <TextView
+        android:id="@+id/textDolibarrURL2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="@string/dolibarr_url"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/yellow"
+        android:textSize="16sp"
+        android:visibility="visible"
+        tools:ignore="TextContrastCheck" />
 
 
 </RelativeLayout>

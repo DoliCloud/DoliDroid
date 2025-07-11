@@ -29,7 +29,7 @@ import android.widget.TextView;
 import java.io.FileOutputStream;
 
 public class ManageURLAdapter extends ArrayAdapter<String> {
-    private static final String LOG_TAG = "DoliDroidManageUrlAdapter";
+    private static final String LOG_TAG = "DoliDroidLogManageUrlAdapter";
 
     private final Activity activity;
     private final Context context;

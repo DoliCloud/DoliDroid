@@ -36,7 +36,7 @@ import com.nltechno.utils.Utils;
  */
 public class MainActivityTest extends Activity implements OnItemSelectedListener {
 
-	private static final String LOG_TAG = "DoliDroidMainActivityTest";
+	private static final String LOG_TAG = "DoliDroidLogMainActivityTest";
 
 
 	/**

@@ -52,7 +52,7 @@ import java.util.regex.Pattern;
  */
 public class AboutInstanceActivity extends Activity {
 
-	private static final String LOG_TAG = "DoliDroidAboutInstanceActivity";
+	private static final String LOG_TAG = "DoliDroidLogAboutInstanceActivity";
 	private String menuAre="hardwareonly";
 
 	static final int RESULT_ABOUT_INSTANCE =  RESULT_FIRST_USER;

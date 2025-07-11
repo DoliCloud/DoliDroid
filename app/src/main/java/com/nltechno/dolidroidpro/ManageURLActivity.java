@@ -47,7 +47,7 @@ import com.nltechno.utils.Utils;
  */
 public class ManageURLActivity extends Activity {
 
-	private static final String LOG_TAG = "DoliDroidManageURLActivity";
+	private static final String LOG_TAG = "DoliDroidLogManageURLActivity";
 	private String menuAre="hardwareonly";
 
 	static final int RESULT_ABOUT =  RESULT_FIRST_USER;

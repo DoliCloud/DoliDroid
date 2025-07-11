@@ -8,7 +8,7 @@ import android.util.Log;
 
 // 1 instance of this class is created at each download
 public class DownloadStatusChecker {
-    private static final String LOG_TAG = "DoliDroidDownloadStatusChecker";
+    private static final String LOG_TAG = "DoliDroidLogDownloadStatusChecker";
     private Context context;
     private Handler handler;
     private DownloadManager downloadManager;

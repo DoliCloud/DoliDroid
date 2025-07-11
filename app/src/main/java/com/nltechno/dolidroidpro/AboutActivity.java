@@ -58,7 +58,7 @@ import java.util.List;
  */
 public class AboutActivity extends Activity {
 
-	private static final String LOG_TAG = "DoliDroidAboutActivity";
+	private static final String LOG_TAG = "DoliDroidLogAboutActivity";
 	private String menuAre="hardwareonly";
 
 	static final int RESULT_ABOUT =  RESULT_FIRST_USER;
