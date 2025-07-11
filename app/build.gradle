@@ -8,8 +8,7 @@ android {
     defaultConfig {
         applicationId "com.nltechno.dolidroidpro"
         minSdkVersion 26
-        //noinspection EditedTargetSdkVersion
-        targetSdkVersion 34
+        targetSdkVersion 36
     }
 
     buildTypes {

@@ -3,6 +3,7 @@
     android:id="@+id/mainlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:theme="@style/DoliDroidThemeFirst"
     tools:context=".MainActivity">
 
@@ -69,7 +70,6 @@
         android:id="@+id/textDolibarrURL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="28dp"

@@ -162,6 +162,9 @@ public class AboutActivity extends Activity {
 			//s1+=getString(R.string.Sources)+": https://www.nltechno.com/services/<br />\n";
 			s1+=getString(R.string.Author)+": <span style=\"color:#008888\"><a href=\"https://www.github.com/eldy\">Laurent Destailleur</a>, ...</span><br />\n";
 			s1+=getString(R.string.PrivacyPolicy)+": <span style=\"color:#008888\"><a href=\"https://www.dolicloud.com/en-dolidroid-privacy-policy.php\">https://www.dolicloud.com/en-dolidroid-privacy-policy.php</a></span><br />\n";
+
+			s1+="<br />\n";
+
 			// This download key allow to download file with name src_dolidroid-info.versionName-downloadkey
 			//String downloadkey=Utils.MD5Hex("dolidroid"+info.versionName.replaceAll("[^0-9.]", "")+"saltnltechno").substring(0, 8);
 			//s1+=getString(R.string.Sources)+" Download Key: dolidroid-"+info.versionName.replaceAll("[^0-9.]", "")+"-"+downloadkey+"<br />\n";
@@ -171,8 +174,14 @@ public class AboutActivity extends Activity {
 
 			s1+="<br />\n";
 			
-			s1+=getString(R.string.DeviceAPILevel)+": <b>"+Build.VERSION.SDK_INT+"</b><br />\n";
 			s1+=getString(R.string.NameOfSourceStore)+": <b>"+nameOfSourceStore+"</b><br />\n";
+			String targetSdkVersion = String.valueOf(getApplicationContext().getApplicationInfo().targetSdkVersion);
+			s1+=getString(R.string.TargetSDKVersion)+": <b>"+targetSdkVersion+"</b><br />\n";
+
+			s1+="<br />\n";
+
+			s1+=getString(R.string.DeviceAPILevel)+": <b>"+Build.VERSION.SDK_INT+"</b><br />\n";
+
 			Display display = getWindowManager().getDefaultDisplay();
 			Point size = new Point();
 			display.getSize(size);
