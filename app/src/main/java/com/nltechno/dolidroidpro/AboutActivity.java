@@ -27,7 +27,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -124,7 +123,7 @@ public class AboutActivity extends Activity {
 		try {
 			ImageView imageView = findViewById(R.id.imageView01);
 
-			// Charger l'image depuis les assets
+			// Load image from assets
 			InputStream inputStream = getAssets().open("screenshot_dolidroid.png");
 			Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
 			imageView.setImageBitmap(bitmap);
@@ -150,7 +149,7 @@ public class AboutActivity extends Activity {
 				nameOfSourceStore = installerPackageName;
 			}
 
-			sVersion+="<b>"+info.versionName+" (build "+info.versionCode+")</b>";
+			sVersion+="<b>"+info.versionName+" (build "+info.getLongVersionCode()+")</b>";
 
 			//s+= "PackageName = " + info.packageName + "\n";
 			s1+=getString(R.string.Web)+": <span style=\"color:#008888\"><a href=\"https://www.dolicloud.com?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile\">https://www.dolicloud.com</a></span><br />\n";
@@ -189,15 +188,15 @@ public class AboutActivity extends Activity {
 			// From Android 30+, it is better to write into media dire with MediaStore
 
 			// This return /storage/sdcard0/Download for example (we use this for downloading files)
-			String downloaddirpublic=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+			String publicDownloadDirectory=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
 			// This return /storage/sdcard0 for example (we do not use this)
 			//String downloaddir="";
 		    //if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) downloaddir = Environment.getExternalStorageDirectory().getAbsolutePath();
-			s1+=getString(R.string.DownloadDirectory)+": <b>"+downloaddirpublic+"</b><br />\n";
+			s1+=getString(R.string.DownloadDirectory)+": <b>"+publicDownloadDirectory+"</b><br />\n";
 
-			String photosdirpublic=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
-			//if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) photosdirpublic = Environment.getExternalStorageDirectory().getAbsolutePath();
-			s1+=getString(R.string.PhotosDirectory)+": <b>"+photosdirpublic+"</b><br />\n";
+			String publicPhotosDirPath=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
+			//if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) publicPhotosDirPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+			s1+=getString(R.string.PhotosDirectory)+": <b>"+publicPhotosDirPath+"</b><br />\n";
 
 			String documentdirpublic=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
 			//if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) documentdirpublic = Environment.getExternalStorageDirectory().getAbsolutePath();

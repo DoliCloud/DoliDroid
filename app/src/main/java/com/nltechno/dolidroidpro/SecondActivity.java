@@ -47,6 +47,7 @@ import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.DialogInterface;
+import android.content.pm.InstallSourceInfo;
 import android.content.pm.PackageManager;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -223,7 +224,22 @@ public class SecondActivity extends Activity {
         setContentView(R.layout.activity_second);
 
         PackageManager packageManager = this.getPackageManager();
-        String installerPackageName = packageManager.getInstallerPackageName(this.getPackageName());
+        String installerPackageName = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            try {
+                InstallSourceInfo installSourceInfo = packageManager.getInstallSourceInfo(this.getPackageName());
+                installerPackageName = installSourceInfo.getInstallingPackageName();
+            } catch (PackageManager.NameNotFoundException e) {
+                Log.e(LOG_TAG, "Could not get installer package name", e);
+            }
+        } else {
+            // For older Android versions, you can keep the deprecated method,
+            // though be aware of its limitations.
+            // It's good practice to suppress the deprecation warning for this specific case.
+            @SuppressWarnings("deprecation")
+            String deprecatedInstallerPackageName = packageManager.getInstallerPackageName(this.getPackageName());
+            installerPackageName = deprecatedInstallerPackageName;
+        }
 
         isInstalledFromPlayStore = "com.android.vending".equals(installerPackageName);
 

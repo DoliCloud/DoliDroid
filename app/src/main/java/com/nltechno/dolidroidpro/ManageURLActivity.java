@@ -212,7 +212,7 @@ public class ManageURLActivity extends Activity {
 			textListOfCurrentUrl.setEnabled(true);
 			textViewAbout2.setVisibility(View.VISIBLE);
 			textViewAbout2.setEnabled(true);
-			textViewAbout2.setText(Html.fromHtml(s2));
+			textViewAbout2.setText(Html.fromHtml(s2, Html.FROM_HTML_MODE_COMPACT));
 		} else {
 			//findViewById(R.id.imageView02).setVisibility(View.INVISIBLE);
 			//findViewById(R.id.imageView02).setEnabled(false);
@@ -294,7 +294,7 @@ public class ManageURLActivity extends Activity {
 		if (s2b != null && ! "".equals(s2b)) {
 			textViewAbout2b.setVisibility(View.VISIBLE);
 			textViewAbout2b.setEnabled(true);
-			textViewAbout2b.setText(Html.fromHtml(s2b));
+			textViewAbout2b.setText(Html.fromHtml(s2b, Html.FROM_HTML_MODE_COMPACT));
 		} else {
 			textViewAbout2b.setVisibility(View.INVISIBLE);
 			textViewAbout2b.setEnabled(false);

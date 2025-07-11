@@ -7,8 +7,8 @@ android {
     // 34=14.0.0 35=15.0.0
     defaultConfig {
         applicationId "com.nltechno.dolidroidpro"
-        minSdkVersion 26
-        targetSdkVersion 34
+        minSdkVersion 28
+        targetSdkVersion 35
     }
 
     buildTypes {
@@ -18,6 +18,7 @@ android {
             lintOptions {
                 disable 'MissingTranslation'
             }
+            signingConfig signingConfigs.debug
         }
     }
 
@@ -25,7 +26,7 @@ android {
     // Add support for the org.apache.http package
     useLibrary 'org.apache.http.legacy'
     namespace 'com.nltechno.dolidroidpro'
-    compileSdk 34
+    compileSdk 35
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
@@ -34,7 +35,7 @@ android {
 
 dependencies {
     // Add entry to be able to use androidx.core.content.FileProvider to use Provider for file upload of camera capture on Android >= 30
-    implementation 'androidx.core:core:1.10.1'
+    implementation 'androidx.core:core:1.10.0'
 
     // Add swiper to allow to refresh of a web page with a screen swipe bottom
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
@@ -53,9 +54,15 @@ dependencies {
         implementation "androidx.security:security-identity-credential:1.0.0-alpha03"
 
         // For App Authentication APIs
-        implementation "androidx.security:security-app-authenticator:1.0.0-alpha02"
+        implementation "androidx.security:security-app-authenticator:1.0.0-rc01"
 
         // For App Authentication API testing
-        androidTestImplementation "androidx.security:security-app-authenticator:1.0.0-alpha02"
+        androidTestImplementation "androidx.security:security-app-authenticator:1.0.0-rc01"
     }
+}
+
+
+// This section is to add report of use of deprecated methods
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << "-Xlint:deprecation"
 }
