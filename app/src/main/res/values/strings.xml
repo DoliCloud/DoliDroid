@@ -90,7 +90,7 @@
     <string name="menu_remove_url">Remove a favorite connection</string>
     <string name="menu_clear_all_urls">Clear favorites connections</string>
     <string name="menu_manage_all_urls">Manage favorites connections</string>
-    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">I don\'t have a Dolibarr ERP CRM instance yet, create one on DoliCloud.com...</a></string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">I don\'t have a Dolibarr instance yet, I create one on DoliCloud.com...</a></string>
 
     <!-- Menu web browser -->
     <string name="menu_menu">Menu</string>
