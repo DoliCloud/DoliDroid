@@ -149,9 +149,13 @@ public class AboutActivity extends Activity {
 				nameOfSourceStore = installerPackageName;
 			}
 
-			sVersion+="<b>"+info.versionName+" (build "+info.getLongVersionCode()+")</b>";
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                sVersion+="<b>"+info.versionName+" (build "+info.getLongVersionCode()+")</b>";
+            } else {
+				sVersion+="<b>"+info.versionName+" (build "+info.versionCode+")</b>";
+			}
 
-			//s+= "PackageName = " + info.packageName + "\n";
+            //s+= "PackageName = " + info.packageName + "\n";
 			s1+=getString(R.string.Web)+": <span style=\"color:#008888\"><a href=\"https://www.dolicloud.com?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile\">https://www.dolicloud.com</a></span><br />\n";
 			s1+=getString(R.string.Sources)+": <span style=\"color:#008888\"><a href=\"https://github.com/DoliCloud/DoliDroid.git\">https://github.com/DoliCloud/DoliDroid.git</a></span><br />\n";
 			s1+=getString(R.string.License)+": <b>GPL v3+</b><br />\n";
