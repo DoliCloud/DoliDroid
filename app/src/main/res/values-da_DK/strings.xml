@@ -1,0 +1,115 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name"> <xliff:g id="app_name"> DoliDroid </xliff:g></string>
+    <string name="dolidroidLabel">DoliDroid, Android-front-end til Dolibarr ERP-CRM</string>
+    <string name="dolidroidUserAgent">DoliDroid - Android-front-end til Dolibarr ERP-CRM</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main"> <xliff:g id="title_activity_main"> DoliDroid </xliff:g></string>
+    <string name="dolibarr_for_android">Android-klient til Dolibarr</string>
+    <string name="open">Start</string>
+    <string name="dolibarr_url">Dolibarr URL</string>
+    <string name="logo_dolidroid">Logo DoliDroid</string>
+    <string name="SelectUrl">eller vælg en favoritforbindelse</string>
+    <string name="enterNewUrl">eller indtast en ny URL</string>
+    <string name="UrlCopied">URL kopieret til udklipsholder</string>
+
+    <!-- Activity web -->
+    <string name="title_activity_second"></string>
+    <string name="downloadComplete">Download af fil afsluttet</string>
+	<string name="NoPreviousPageAgainToQuit">Ingen forrige side. Brug tilbage igen for at afslutte.</string>
+	<string name="notCompatibleWithVersion">Dolibarr-versionen på serveren (%1$s) er for gammel. DoliDroid har brug for Dolibar-version %2$s eller højere.</string>
+    <string name="notification_error_ssl_cert_invalid">Serversikkerhed SSL-certifikat virker ugyldigt:</string>
+    <string name="notification_error_ssl_cert_invalidbis">Vil du fortsætte (download af filer er ikke mulig)?</string>
+    <string name="failedtogetpage">Siden kunne ikke hentes ved en hurtig direkte download. Er du logget?</string>
+    <string name="CacheAndHistoryCleared">Cache og historie er ryddet.</string>
+
+    <!-- Activity about -->
+    <string name="title_activity_about"></string>
+    <string name="textBack">Tilbage</string>
+    <string name="textMenu">Menu</string>
+    <string name="textAboutA"> <xliff:g id="textAboutA"> versioner... </xliff:g></string>
+    <string name="textAboutB"> <xliff:g id="textAboutB"> Forekomst URL... </xliff:g></string>
+    <string name="textAboutB2"> <xliff:g id="textAboutB2"> Gemte logins... </xliff:g></string>
+    <string name="textAboutC"> <xliff:g id="textAboutC"> Nuværende URL og brugeragent... </xliff:g></string>
+    <string name="Version">Version</string>
+    <string name="VersionStaticResources">Version af lokale statiske ressourcer</string>
+    <string name="Author">Forfatter</string>
+    <string name="ApplicationAssociatedWithMailToLink">Applikation forbundet med \"mailto\"-links</string>
+    <string name="ApplicationAssociatedWithTelLink">Applikation forbundet med \"tlf\"-links</string>
+    <string name="Web">Web</string>
+    <string name="Compatibility">Kompatibilitet</string>
+    <string name="License">Licens</string>
+    <string name="NameOfSourceStore">Kildelager til installation</string>
+    <string name="Sources">Kilder</string>
+    <string name="PrivacyPolicy">Fortrolighedspolitik</string>
+    <string name="DeviceAPILevel">Enheds API-niveau</string>
+    <string name="DeviceHasMenuHardware">Enheden har hardwareknapper</string>
+    <string name="DeviceHasDownloadManager">Enheden har en downloadmanager</string>
+    <string name="DownloadDirectory">Download bibliotek</string>
+    <string name="PhotosDirectory">Fotobibliotek</string>
+    <string name="DocumentsDirectory">Dokumentmappe</string>
+    <string name="DeviceHasPDFViewer">Enheden har PDF-seere</string>
+    <string name="DeviceHasODXViewer">Enheden har OpenOffice-viewer</string>
+    <string name="DeviceSize">Enheds skærmstørrelse</string>
+    <string name="savedDolUrlRoot">Url for Dolibarr-forekomst</string>
+    <string name="currentUrl">Nuværende forbindelse</string>
+    <string name="UserAgent">Brugeragent</string>
+    <string name="SavedLogin">Gemt login</string>
+    <string name="SavedPassword">Gemt kodeord</string>
+    <string name="BasicAuthLogin">Grundlæggende autent login</string>
+    <string name="BasicAuthPassword">Grundlæggende godkendelsesadgangskode</string>
+    <string name="Yes">Ja</string>
+    <string name="No">Nej</string>
+    <string name="Warning">Advarsel</string>
+
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">Fjern denne forbindelse</string>
+    <string name="DeleteAllPredefinedUrl">Fjern alle foretrukne forbindelser</string>
+    <string name="ListOfUrls">Liste over foruddefinerede forbindelser</string>
+
+    <!-- Menu main + web -->
+    <string name="menu_info">Om DoliDroid</string>
+    <string name="menu_instance">Om nuværende eksempel</string>
+    <string name="menu_info_short">Om</string>
+    <string name="menu_info_instance_short">Om eksempel</string>
+    <string name="menu_show_bar_on">Vis menulinje</string>
+    <string name="menu_show_bar_off">Vis menulinje (nej)</string>
+    <string name="menu_autofill_on">Gem login/adgangskode</string>
+    <string name="menu_autofill_off">Gem login / adgangskode (nej)</string>
+    <string name="menu_uselocalresources_on">Brug lokale statiske ressourcer</string>
+    <string name="menu_uselocalresources_off">Brug lokale statiske ressourcer (nej)</string>
+    <string name="AlertHTTPS">Det ser ud til, at din server har tvunget en omdirigering til en HTTPS-side. Tjek venligst din Dolibarr-URL og brug https-URL-formularen direkte (URL der starter med https:// i stedet for http://). Hvis du bliver ved med at bruge en URL uden s\'et, vil det af sikkerhedsmæssige årsager resultere i, at funktioner ikke fungerer som cacheoptimering eller download af filer.</string>
+    <string name="AlertHTTP">Du forsøger at få adgang til et ikke-sikret websted (http: i stedet for https:). Af sikkerhedsmæssige årsager kan Android begrænse nogle funktioner i denne app til sådanne websteder. Du bør sikre dit websted ved at tilføje et HTTPS-certifikat.</string>
+    <string name="AlertDownloadBadHTTPS">Download er ikke muligt, når du brugte en dårlig værdi af skemaet til at oprette forbindelse (http vs https)</string>
+
+    <!-- Menu main page -->
+    <string name="menu_utilities">Hjælpeprogrammer</string>
+    <string name="menu_settings">Indstillinger</string>
+    <string name="menu_add_url">Tilføj foruddefineret URL</string>
+    <string name="menu_remove_url">Fjern en favoritforbindelse</string>
+    <string name="menu_clear_all_urls">Ryd foretrukne forbindelser</string>
+    <string name="menu_manage_all_urls">Administrer favoritforbindelser</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">Jeg har ikke en Dolibarr-instans endnu, jeg opretter en på DoliCloud.com...</a></string>
+
+    <!-- Menu web browser -->
+    <string name="menu_menu">Menu</string>
+    <string name="menu_go_to">Hurtig adgang</string>
+    <string name="menu_search">Søg</string>
+    <string name="menu_bookmarks">Bogmærker</string>
+    <string name="menu_back">Tilbage</string>
+    <string name="menu_refresh">Genindlæs siden</string>
+    <string name="menu_copy_url">Kopier URL til udklipsholder</string>
+    <string name="menu_clearcache">Ryd cache</string>
+    <string name="menu_logout">Log ud</string>
+    <string name="menu_quit">Afslut</string>
+    <string name="menu_multicompany">Skift firma</string>
+    <string name="menu_uploadfile">Importer eller scan et dokument</string>
+    <string name="menu_usercard">Min brugerfil</string>
+    <string name="menu_virtualcard">Mit virtuelle visitkort</string>
+    <string name="menu_scan">Scan en stregkode</string>
+    <string name="menu_photo">Scan et dokument</string>
+    <string name="None">Ingen</string>
+    <string name="TargetSDKVersion">Mål SDK-niveau</string>
+
+</resources>

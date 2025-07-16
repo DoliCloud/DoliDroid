@@ -14,6 +14,7 @@
     <string name="open">Início</string>
     <string name="dolibarr_url">URL Dolibarr</string>
     <string name="logo_dolidroid">Logo DoliDroid</string>
+    <string name="SelectUrl">ou selecione uma conexão favorita</string>
     <string name="enterNewUrl">ou insira um novo URL</string>
     <string name="UrlCopied">URL copiada para área de transferência</string>
 
@@ -24,6 +25,7 @@
 	<string name="notCompatibleWithVersion">O Dolibarr no servidor (%1$s) é muito antiga. DoliDroid requer Dolibarr versão %2$s ou superior.</string>
     <string name="notification_error_ssl_cert_invalid">Certificado SSL de segurança do servidor parece inválido:</string>
     <string name="notification_error_ssl_cert_invalidbis">Você quer continuar (o download de arquivos não seria possível)?</string>
+    <string name="failedtogetpage">Falha ao obter a página por um download direto rápido. Você está logado?</string>
     <string name="CacheAndHistoryCleared">Cache e histórico eliminados.</string>
 
     <!-- Activity about -->
@@ -31,22 +33,31 @@
     <string name="textBack">Anterior</string>
     <string name="textMenu">Menu</string>
     <string name="textAboutA"><xliff:g id="textAboutA">Versões...</xliff:g></string>
+    <string name="textAboutB"><xliff:g id="textAboutB">URL da instância...</xliff:g></string>
+    <string name="textAboutB2"><xliff:g id="textAboutB2">Logins salvos...</xliff:g></string>
+    <string name="textAboutC"><xliff:g id="textAboutC">URL atual e agente do usuário...</xliff:g></string>
     <string name="Version">Versão</string>
     <string name="VersionStaticResources">Versão de recursos estáticos locais</string>
     <string name="Author">Autor</string>
+    <string name="ApplicationAssociatedWithMailToLink">Aplicação associada a links \"mailto\"</string>
+    <string name="ApplicationAssociatedWithTelLink">Aplicação associada a links \"tel\"</string>
     <string name="Web">Web</string>
     <string name="Compatibility">Compatibilidade</string>
     <string name="License">Licença</string>
+    <string name="NameOfSourceStore">Armazenamento de origem da instalação</string>
     <string name="Sources">Fontes</string>
+    <string name="PrivacyPolicy">política de Privacidade</string>
     <string name="DeviceAPILevel">Nível API do dispositivo</string>
     <string name="DeviceHasMenuHardware">O dispositivo tem botões de hardware</string>
     <string name="DeviceHasDownloadManager">O dispositivo tem um gerenciador de downloads</string>
     <string name="DownloadDirectory">Baixar diretório</string>
     <string name="PhotosDirectory">Diretório de fotos</string>
+    <string name="DocumentsDirectory">Diretório de documentos</string>
     <string name="DeviceHasPDFViewer">Dispositivo tem visualizadores de PDF</string>
     <string name="DeviceHasODXViewer">O dispositivo tem visualizadores OpenOffice</string>
     <string name="DeviceSize">Tamanho da tela do dispositivo</string>
     <string name="savedDolUrlRoot">Url de instância Dolibarr</string>
+    <string name="currentUrl">Conexão atual</string>
     <string name="UserAgent">Agente Usuário</string>
     <string name="SavedLogin">Saved login</string>
     <string name="SavedPassword">Saved password</string>
@@ -56,23 +67,49 @@
     <string name="No">Não</string>
     <string name="Warning">Atenção</string>
 
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">Remover esta conexão</string>
+    <string name="DeleteAllPredefinedUrl">Remover todas as conexões favoritas</string>
+    <string name="ListOfUrls">Lista de conexões predefinidas</string>
+
     <!-- Menu main + web -->
     <string name="menu_info">Sobre o DoliDroid</string>
+    <string name="menu_instance">Sobre a instância atual</string>
     <string name="menu_info_short">Sobre</string>
+    <string name="menu_info_instance_short">Sobre a instância</string>
     <string name="menu_show_bar_on">Exibir barra de menu</string>
     <string name="menu_show_bar_off">Mostrar barra de menu (não)</string>
+    <string name="menu_autofill_on">Salvar login/senha</string>
     <string name="menu_autofill_off">Mantenha login/password (não)</string>
+    <string name="menu_uselocalresources_on">Use recursos estáticos locais</string>
     <string name="menu_uselocalresources_off">Use recursos estáticos locais (não)</string>
+    <string name="AlertHTTPS">Parece que seu servidor forçou um redirecionamento para uma página HTTPS. Verifique sua URL Dolibarr e use o formulário de URL https diretamente (URL começando com https:// em vez de http://). Continuar usando uma URL sem o s resultará, por questões de segurança, em recursos que não funcionam, como otimização de cache ou download de arquivos.</string>
+    <string name="AlertHTTP">Você tenta acessar um site não seguro (http: em vez de https:). Por motivos de segurança, o Android pode restringir alguns recursos neste aplicativo para esses sites. Você deve proteger seu site adicionando um certificado HTTPS.</string>
+    <string name="AlertDownloadBadHTTPS">O download não é possível quando você usa um valor incorreto de esquema para conectar (http vs https)</string>
+
+    <!-- Menu main page -->
+    <string name="menu_utilities">Utilitários</string>
     <string name="menu_settings">Definições</string>
     <string name="menu_add_url">Adicionar URL predefinido</string>
+    <string name="menu_remove_url">Remover uma conexão favorita</string>
+    <string name="menu_clear_all_urls">Limpar conexões favoritas</string>
+    <string name="menu_manage_all_urls">Gerenciar conexões favoritas</string>
     <!-- Menu web browser -->
     <string name="menu_menu">Menu</string>
     <string name="menu_go_to">Acesso rápido</string>
     <string name="menu_search">Pesquisar</string>
+    <string name="menu_bookmarks">Marcadores</string>
     <string name="menu_back">Anterior</string>
     <string name="menu_refresh">Recarregar página</string>
+    <string name="menu_copy_url">Copiar URL para a área de transferência</string>
     <string name="menu_clearcache">Limpar o cache</string>
     <string name="menu_logout">Terminar sessão</string>
     <string name="menu_quit">Sair</string>
     <string name="menu_multicompany">Empresa de comutação</string>
+    <string name="menu_uploadfile">Importar ou digitalizar um documento</string>
+    <string name="menu_usercard">Meu arquivo de usuário</string>
+    <string name="menu_virtualcard">Meu cartão de visita virtual</string>
+    <string name="menu_scan">Digitalize um código de barras</string>
+    <string name="menu_photo">Digitalizar um documento</string>
+    <string name="None">Nenhum</string>
     </resources>

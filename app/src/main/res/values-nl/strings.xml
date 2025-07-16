@@ -39,15 +39,20 @@
     <string name="Version">Versie</string>
     <string name="VersionStaticResources">Versie van locale statische bronnen</string>
     <string name="Author">Auteur</string>
+    <string name="ApplicationAssociatedWithMailToLink">Toepassing geassocieerd met \"mailto\"-links</string>
+    <string name="ApplicationAssociatedWithTelLink">Toepassing gekoppeld aan \"tel\"-links</string>
     <string name="Web">Web</string>
     <string name="Compatibility">Compatibiliteit</string>
     <string name="License">Licentie</string>
+    <string name="NameOfSourceStore">Bronopslag van installatie</string>
     <string name="Sources">Bronnen</string>
+    <string name="PrivacyPolicy">Privacybeleid</string>
     <string name="DeviceAPILevel">Apparaat API-niveau</string>
     <string name="DeviceHasMenuHardware">Apparaat heeft hardware-knoppen</string>
     <string name="DeviceHasDownloadManager">Apparaat heeft een download manager</string>
     <string name="DownloadDirectory">Download directory</string>
     <string name="PhotosDirectory">Foto\'s map</string>
+    <string name="DocumentsDirectory">Documentenmap</string>
     <string name="DeviceHasPDFViewer">Apparaat heeft PDF-viewers</string>
     <string name="DeviceHasODXViewer">Apparaat heeft OpenOffice-viewers</string>
     <string name="DeviceSize">Apparaat schermgrootte</string>
@@ -69,7 +74,9 @@
 
     <!-- Menu main + web -->
     <string name="menu_info">Over DoliDroid</string>
+    <string name="menu_instance">Over het huidige exemplaar</string>
     <string name="menu_info_short">Wat betreft</string>
+    <string name="menu_info_instance_short">Over voorbeeld</string>
     <string name="menu_show_bar_on">Toon menubalk</string>
     <string name="menu_show_bar_off">Toon menubalk (nee)</string>
     <string name="menu_autofill_on">Sla login/wachtwoord op</string>
@@ -87,7 +94,7 @@
     <string name="menu_remove_url">Verwijder een favoriete verbinding</string>
     <string name="menu_clear_all_urls">Favorieten verbindingen opschonen</string>
     <string name="menu_manage_all_urls">Beheer favorieten verbindingen</string>
-    <string name="dolicloud_register" ignore="MissingTranslation"> <a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile"> Ik heb nog geen Dolibarr ERP CRM-instantie, maak er een aan op DoliCloud.com... </a></string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">Ik heb nog geen Dolibarr-instantie, ik heb er een aangemaakt op DoliCloud.com...</a></string>
 
     <!-- Menu web browser -->
     <string name="menu_menu">Menu</string>
@@ -101,10 +108,12 @@
     <string name="menu_logout">Uitloggen</string>
     <string name="menu_quit">Afsluiten</string>
     <string name="menu_multicompany">Wijzig bedrijf</string>
+    <string name="menu_uploadfile">Importeer of scan een document</string>
     <string name="menu_usercard">Mijn gebruikersbestand</string>
     <string name="menu_virtualcard">Mijn virtuele visitekaartje</string>
     <string name="menu_scan">Scan een streepjescode</string>
     <string name="menu_photo">Scan een document</string>
     <string name="None">Geen</string>
+    <string name="TargetSDKVersion">Doel SDK-niveau</string>
 
 </resources>

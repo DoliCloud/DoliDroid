@@ -1,0 +1,115 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name"> <xliff:g id="app_name"> دولي دارويد </xliff:g></string>
+    <string name="dolidroidLabel">DoliDroid ، واجهة Android الأمامية لـ Dolibarr ERP-CRM</string>
+    <string name="dolidroidUserAgent">DoliDroid - واجهة Android الأمامية لـ Dolibarr ERP-CRM</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main"> <xliff:g id="title_activity_main"> DoliDroid </xliff:g></string>
+    <string name="dolibarr_for_android">عميل Android لـ Dolibarr</string>
+    <string name="open">بداية</string>
+    <string name="dolibarr_url">عنوان السيرفر </string>
+    <string name="logo_dolidroid">شعار DoliDroid</string>
+    <string name="SelectUrl">أو حدد اتصالا مفضلا</string>
+    <string name="enterNewUrl">أو أدخل عنوان سيرفر جديدًا</string>
+    <string name="UrlCopied">تم نسخ URL إلى الحافظة</string>
+
+    <!-- Activity web -->
+    <string name="title_activity_second"></string>
+    <string name="downloadComplete">اكتمل تنزيل الملف</string>
+	<string name="NoPreviousPageAgainToQuit">لا توجد صفحة سابقة. استخدم مرة أخرى للانسحاب.</string>
+	<string name="notCompatibleWithVersion">إصدار Dolibarr الموجود على الخادم (%1$s) قديم جدًا. يحتاج DoliDroid إلى إصدار Dolibar %2$s أو إصدار أعلى.</string>
+    <string name="notification_error_ssl_cert_invalid">يبدو أن شهادة SSL لأمان الخادم غير صالحة:</string>
+    <string name="notification_error_ssl_cert_invalidbis">هل تريد المتابعة (لن يكون تنزيل الملفات ممكنًا)؟</string>
+    <string name="failedtogetpage">فشل الحصول على الصفحة عن طريق التنزيل المباشر السريع. هل قمت بتسجيل الدخول؟</string>
+    <string name="CacheAndHistoryCleared">تم مسح ذاكرة التخزين المؤقت والتاريخ.</string>
+
+    <!-- Activity about -->
+    <string name="title_activity_about"></string>
+    <string name="textBack">خلف</string>
+    <string name="textMenu">قائمة</string>
+    <string name="textAboutA"> الإصدارات <xliff:g id=\"textAboutA\"> ...</string>
+    <string name="textAboutB"> <xliff:g id=\"textAboutB\"> عنوان URL المثيل ...</string>
+    <string name="textAboutB2"> a05eb72 definitelyb23ez0 عمليات تسجيل الدخول المحفوظة ... </xliff:g></string>
+    <string name="textAboutC"> <xliff:g id="textAboutC"> CurrentURL ووكيل المستخدم ... </xliff:g></string>
+    <string name="Version">الإصدار</string>
+    <string name="VersionStaticResources">نسخة من الموارد الثابتة المحلية</string>
+    <string name="Author">مؤلف</string>
+    <string name="ApplicationAssociatedWithMailToLink">التطبيق المرتبط بروابط \"mailto\"</string>
+    <string name="ApplicationAssociatedWithTelLink">التطبيق المرتبط بروابط \"tel\"</string>
+    <string name="Web">الويب</string>
+    <string name="Compatibility">التوافق</string>
+    <string name="License">رخصة</string>
+    <string name="NameOfSourceStore">مخزن مصدر التثبيت</string>
+    <string name="Sources">مصادر</string>
+    <string name="PrivacyPolicy">سياسة الخصوصية</string>
+    <string name="DeviceAPILevel">مستوى API للجهاز</string>
+    <string name="DeviceHasMenuHardware">الجهاز به أزرار للأجهزة</string>
+    <string name="DeviceHasDownloadManager">الجهاز به مدير تنزيل</string>
+    <string name="DownloadDirectory">دليل التنزيل</string>
+    <string name="PhotosDirectory">دليل الصور</string>
+    <string name="DocumentsDirectory">دليل المستندات</string>
+    <string name="DeviceHasPDFViewer">الجهاز به عارضات PDF</string>
+    <string name="DeviceHasODXViewer">يحتوي الجهاز على عارضين OpenOffice</string>
+    <string name="DeviceSize">حجم شاشة الجهاز</string>
+    <string name="savedDolUrlRoot">عنوان URL لمثيل Dolibarr</string>
+    <string name="currentUrl">الاتصال الحالي</string>
+    <string name="UserAgent">وكيل المستخدم</string>
+    <string name="SavedLogin">تسجيل الدخول المحفوظ</string>
+    <string name="SavedPassword">كلمة المرور المحفوظة</string>
+    <string name="BasicAuthLogin">تسجيل الدخول الأساسي</string>
+    <string name="BasicAuthPassword">كلمة مرور المصادقة الأساسية</string>
+    <string name="Yes">نعم</string>
+    <string name="No">رقم</string>
+    <string name="Warning">تحذير</string>
+
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">قم بإزالة هذا الاتصال</string>
+    <string name="DeleteAllPredefinedUrl">إزالة جميع الاتصالات المفضلة</string>
+    <string name="ListOfUrls">قائمة الاتصالات المحددة مسبقا</string>
+
+    <!-- Menu main + web -->
+    <string name="menu_info">حول DoliDroid</string>
+    <string name="menu_instance">حول البرنامج الحالي</string>
+    <string name="menu_info_short">عن</string>
+    <string name="menu_info_instance_short">حول البرنامج الحالي</string>
+    <string name="menu_show_bar_on">إظهار شريط القوائم</string>
+    <string name="menu_show_bar_off">إظهار شريط القوائم (لا)</string>
+    <string name="menu_autofill_on">حفظ تسجيل الدخول / كلمة المرور</string>
+    <string name="menu_autofill_off">حفظ تسجيل الدخول / كلمة المرور (لا)</string>
+    <string name="menu_uselocalresources_on">استخدم موارد ثابتة محلية</string>
+    <string name="menu_uselocalresources_off">استخدام موارد ثابتة محلية (لا)</string>
+    <string name="AlertHTTPS">يبدو أن خادمك فرض إعادة توجيه إلى صفحة HTTPS. يرجى التحقق من عنوان Dolibarr URL الخاص بك واستخدام نموذج https URL مباشرة (يبدأ URL بـ https: // بدلاً من http: //). سيؤدي الاستمرار في استخدام عنوان URL بدون s ، لأغراض أمنية ، إلى ميزات لا تعمل مثل تحسين ذاكرة التخزين المؤقت أو تنزيل الملفات.</string>
+    <string name="AlertHTTP">تحاول الوصول إلى موقع ويب غير آمن (http: بدلاً من https :). لأسباب أمنية ، قد يقيد Android بعض الميزات في هذا التطبيق لمواقع الويب هذه. يجب عليك تأمين موقع الويب الخاص بك عن طريق إضافة شهادة HTTPS.</string>
+    <string name="AlertDownloadBadHTTPS">لا يمكن التنزيل عند استخدام مخطط ذي قيمة سيئة للاتصال (http مقابل https)</string>
+
+    <!-- Menu main page -->
+    <string name="menu_utilities">خدمات</string>
+    <string name="menu_settings">إعدادات</string>
+    <string name="menu_add_url">إضافة URL محدد مسبقًا</string>
+    <string name="menu_remove_url">إزالة الاتصال المفضل</string>
+    <string name="menu_clear_all_urls">مسح الاتصالات المفضلة</string>
+    <string name="menu_manage_all_urls">إدارة الاتصالات المفضلة</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">ليس لدي نسخة Dolibarr بعد، لقد قمت بإنشاء واحدة على DoliCloud.com...</a></string>
+
+    <!-- Menu web browser -->
+    <string name="menu_menu">قائمة</string>
+    <string name="menu_go_to">وصول سريع</string>
+    <string name="menu_search">يبحث</string>
+    <string name="menu_bookmarks">إشارات مرجعية</string>
+    <string name="menu_back">خلف</string>
+    <string name="menu_refresh">إعادة تحميل الصفحة</string>
+    <string name="menu_copy_url">انسخ URL إلى الحافظة</string>
+    <string name="menu_clearcache">مسح ذاكرة التخزين المؤقت</string>
+    <string name="menu_logout">تسجيل خروج</string>
+    <string name="menu_quit">يترك</string>
+    <string name="menu_multicompany">شركة سويتش</string>
+    <string name="menu_uploadfile">استيراد مستند أو مَسحُهُ ضوئيا</string>
+    <string name="menu_usercard">ملف المستخدم الخاص بي</string>
+    <string name="menu_virtualcard">بطاقة عملي الافتراضية</string>
+    <string name="menu_scan">مسح الرمز الشريطي ضوئيًا</string>
+    <string name="menu_photo">مسح مستند ضوئيًا</string>
+    <string name="None">لايوجد</string>
+    <string name="TargetSDKVersion">مستوى SDK المستهدف</string>
+
+</resources>

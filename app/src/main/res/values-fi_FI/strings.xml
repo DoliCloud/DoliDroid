@@ -1,0 +1,115 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name">Lisenssi</string>
+    <string name="dolidroidLabel">Dolidroid, Android front-end Dolibarr ERP-CRM:lle</string>
+    <string name="dolidroidUserAgent">Dolidroid, Android front-end Dolibarr ERP-CRM:lle</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main"><xliff:g id="title_activity_main"> DoliDroid </xliff:g></string>
+    <string name="dolibarr_for_android">Android client Dolibarr:lle</string>
+    <string name="open">Aloita</string>
+    <string name="dolibarr_url">Dolibarr URL</string>
+    <string name="logo_dolidroid">DoliDroid logo</string>
+    <string name="SelectUrl">tai valitse suosikki</string>
+    <string name="enterNewUrl">tai anna uusi URL</string>
+    <string name="UrlCopied">URL-osoite kopioitu leikepöydälle</string>
+
+    <!-- Activity web -->
+    <string name="title_activity_second"></string>
+    <string name="downloadComplete">Lataus tai tiedosto valmis</string>
+	<string name="NoPreviousPageAgainToQuit">Ei edellistä sivua. Klikkaa \"takaisin\" uudelleen lopettaaksesi.</string>
+	<string name="notCompatibleWithVersion">Dolibarr-versio palvelimella (%1$s) on liian vanha. DoliDroid tarvitsee Dolibar-version %2$s tai uudemman.</string>
+    <string name="notification_error_ssl_cert_invalid">Server turvallisuus SSL sertifikaatti näyttää olevan viallinen:</string>
+    <string name="notification_error_ssl_cert_invalidbis">Haluatko jatkaa (lataukset tai tiedostot eivät ole mahdollisia) ?</string>
+    <string name="failedtogetpage">Sivun hakeminen ei onnistunut nopealla suoralatauksella. Oletko kirjautunut?</string>
+    <string name="CacheAndHistoryCleared">Välimuisti ja historia tyhjennetty.</string>
+
+    <!-- Activity about -->
+    <string name="title_activity_about"></string>
+    <string name="textBack">Takaisin</string>
+    <string name="textMenu">Valikko</string>
+    <string name="textAboutA"> <xliff:g id="textAboutA"> Versiot... </xliff:g></string>
+    <string name="textAboutB"> <xliff:g id="textAboutB"> ilmentymän URL-osoite... </xliff:g></string>
+    <string name="textAboutB2"> <xliff:g id="textAboutB2"> Tallennetut kirjautumiset... </xliff:g></string>
+    <string name="textAboutC"> <xliff:g id="textAboutC"> Nykyinen URL-osoite ja käyttäjäagentti... </xliff:g></string>
+    <string name="Version">Versio</string>
+    <string name="VersionStaticResources">Paikallisten staattisten resurssien versio</string>
+    <string name="Author">Kirjoittaja</string>
+    <string name="ApplicationAssociatedWithMailToLink">Sovellus, joka liittyy \"mailto\"-linkkeihin</string>
+    <string name="ApplicationAssociatedWithTelLink">Sovellus, joka liittyy \"puh\"-linkkeihin</string>
+    <string name="Web">Web</string>
+    <string name="Compatibility">Yhteensopivuus</string>
+    <string name="License">Lisenssi</string>
+    <string name="NameOfSourceStore">Asennuksen lähdevarasto</string>
+    <string name="Sources">Lähteet</string>
+    <string name="PrivacyPolicy">Privacy Policy</string>
+    <string name="DeviceAPILevel">Laitteen API-taso</string>
+    <string name="DeviceHasMenuHardware">Laitteessa on laitteistopainikkeet</string>
+    <string name="DeviceHasDownloadManager">Laitteessa on lataushallinta</string>
+    <string name="DownloadDirectory">Latauskansio</string>
+    <string name="PhotosDirectory">Valokuvakansio</string>
+    <string name="DocumentsDirectory">Dokumenttikansio</string>
+    <string name="DeviceHasPDFViewer">Laitteessa on PDF-katseluohjelmat</string>
+    <string name="DeviceHasODXViewer">Laitteessa on OpenOffice-katseluohjelmat</string>
+    <string name="DeviceSize">Laitteen näytön koko</string>
+    <string name="savedDolUrlRoot">Dolibarrin instanssin URL-osoite</string>
+    <string name="currentUrl">Nykyinen yhteys</string>
+    <string name="UserAgent">Käyttäjä agentti</string>
+    <string name="SavedLogin">Tallennettu kirjautuminen</string>
+    <string name="SavedPassword">Tallennettu salasana</string>
+    <string name="BasicAuthLogin">Oletus autentikoitu kirjautuminen</string>
+    <string name="BasicAuthPassword">Oletus autentikoitu salasana</string>
+    <string name="Yes">Kyllä</string>
+    <string name="No">Ei</string>
+    <string name="Warning">Varoitus</string>
+
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">Poista tämä yhteys</string>
+    <string name="DeleteAllPredefinedUrl">Poista kaikki suosikkiyhteydet</string>
+    <string name="ListOfUrls">Luettelo ennalta määritetyistä yhteyksistä</string>
+
+    <!-- Menu main + web -->
+    <string name="menu_info">DoliDroidista</string>
+    <string name="menu_instance">Tietoja nykyisestä instanssista</string>
+    <string name="menu_info_short">Tietoja</string>
+    <string name="menu_info_instance_short">Instanssi</string>
+    <string name="menu_show_bar_on">Näytä valikkopalkki</string>
+    <string name="menu_show_bar_off">Näytä valikkopalkku (ei)</string>
+    <string name="menu_autofill_on">Tallenna sisäänkirjautuminen/salasana</string>
+    <string name="menu_autofill_off">Tallenna kirjautumistunnus/salasana (ei)</string>
+    <string name="menu_uselocalresources_on">Käytä paikallisia staattisia resursseja</string>
+    <string name="menu_uselocalresources_off">Käytä paikallisia staattisia resursseja (ei)</string>
+    <string name="AlertHTTPS">Näyttää siltä, että palvelimesi pakotti uudelleenohjauksen HTTPS-sivulle. Tarkista Dolibarr-URL-osoitteesi ja käytä suoraan https-URL-lomaketta (URL-osoite, joka alkaa https:// eikä http://). URL-osoitteen käyttäminen ilman s-kirjainta johtaa turvallisuussyistä siihen, että ominaisuudet, kuten välimuistin optimointi tai tiedostojen lataaminen, eivät toimi.</string>
+    <string name="AlertHTTP">Yrität käyttää suojaamatonta verkkosivustoa (http: https::n sijaan). Turvallisuussyistä Android voi rajoittaa joitain tämän sovelluksen ominaisuuksia tällaisille verkkosivustoille. Sinun tulee suojata verkkosivustosi lisäämällä HTTPS-varmenne.</string>
+    <string name="AlertDownloadBadHTTPS">Lataus ei ole mahdollista, jos käytit huonoa kaavan arvoa yhteyden muodostamiseen (http vs.</string>
+
+    <!-- Menu main page -->
+    <string name="menu_utilities">Apuohjelmat</string>
+    <string name="menu_settings">Asetukset</string>
+    <string name="menu_add_url">Lisää oletus URL</string>
+    <string name="menu_remove_url">Poista suosikkiyhteys</string>
+    <string name="menu_clear_all_urls">Tyhjennä suosikkiyhteydet</string>
+    <string name="menu_manage_all_urls">Hallitse suosikkiyhteyksiä</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">Minulla ei ole vielä Dolibarr-instanssia, luon sellaisen DoliCloud.comissa...</a></string>
+
+    <!-- Menu web browser -->
+    <string name="menu_menu">Valikko</string>
+    <string name="menu_go_to">Pikavalinta</string>
+    <string name="menu_search">Etsi</string>
+    <string name="menu_bookmarks">Kirjanmerkit</string>
+    <string name="menu_back">Takaisin</string>
+    <string name="menu_refresh">Lataa sivu uudelleen</string>
+    <string name="menu_copy_url">Kopioi URL leikepöydälle</string>
+    <string name="menu_clearcache">Tyhjennä välimuisti</string>
+    <string name="menu_logout">Kirjaudu ulos</string>
+    <string name="menu_quit">Lopeta</string>
+    <string name="menu_multicompany">Vaihda yritys</string>
+    <string name="menu_uploadfile">Lataa tiedosto</string>
+    <string name="menu_usercard">Käyttäjätiedostoni</string>
+    <string name="menu_virtualcard">Virtuaalinen käyntikorttini</string>
+    <string name="menu_scan">Skannaa viivakoodi</string>
+    <string name="menu_photo">Skannaa asiakirja</string>
+    <string name="None">Ei mitään</string>
+    <string name="TargetSDKVersion">Kohde-SDK-taso</string>
+
+</resources>

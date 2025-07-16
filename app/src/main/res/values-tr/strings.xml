@@ -39,10 +39,14 @@
     <string name="Version">Sürüm</string>
     <string name="VersionStaticResources">Yerel statik kaynakların sürümü</string>
     <string name="Author">Yazar</string>
+    <string name="ApplicationAssociatedWithMailToLink">\"mailto\" bağlantılarıyla ilişkili uygulama</string>
+    <string name="ApplicationAssociatedWithTelLink">\"Tel\" bağlantılarıyla ilişkili uygulama</string>
     <string name="Web">Web</string>
     <string name="Compatibility">Uyumluluk</string>
     <string name="License">Lisans</string>
+    <string name="NameOfSourceStore">Kurulum kaynak deposu</string>
     <string name="Sources">Kaynaklar</string>
+    <string name="PrivacyPolicy">Gizlilik Politikası</string>
     <string name="DeviceAPILevel">Cihaz API Düzeyi</string>
     <string name="DeviceHasMenuHardware">Cihazın donanım düğmeleri var</string>
     <string name="DeviceHasDownloadManager">Cihazın bir indirme yöneticisi var</string>
@@ -90,7 +94,7 @@
     <string name="menu_remove_url">Favori bağlantıyı kaldırma</string>
     <string name="menu_clear_all_urls">Favori bağlantılarını temizle</string>
     <string name="menu_manage_all_urls">Favori bağlantılarını yönet</string>
-    <string name="dolicloud_register" ignore="MissingTranslation"> <a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile"> Henüz bir Dolibarr ERP CRM örneğim yok, DoliCloud.com\'da bir tane oluşturun... </a></string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">Henüz bir Dolibarr örneğim yok, DoliCloud.com\'da bir tane oluşturuyorum...</a></string>
 
     <!-- Menu web browser -->
     <string name="menu_menu">Menü</string>
@@ -104,10 +108,12 @@
     <string name="menu_logout">Oturumu kapat</string>
     <string name="menu_quit">Çık</string>
     <string name="menu_multicompany">Şirket değiştir</string>
+    <string name="menu_uploadfile">Bir belgeyi içe aktarın veya tarayın</string>
     <string name="menu_usercard">kullanıcı dosyam</string>
     <string name="menu_virtualcard">sanal kartvizitim</string>
     <string name="menu_scan">Barkod tarama</string>
     <string name="menu_photo">belge tarama</string>
     <string name="None">Hiçbiri</string>
+    <string name="TargetSDKVersion">Hedef SDK Düzeyi</string>
 
 </resources>

@@ -35,10 +35,14 @@
     <string name="Version">Version</string>
     <string name="VersionStaticResources">Version des ressources locales statiques</string>
     <string name="Author">Auteur</string>
+    <string name="ApplicationAssociatedWithMailToLink">Application associée aux liens « mailto »</string>
+    <string name="ApplicationAssociatedWithTelLink">Application associée aux liens \"tel\"</string>
     <string name="Web">Web</string>
     <string name="Compatibility">Compatibilité</string>
     <string name="License">Licence</string>
+    <string name="NameOfSourceStore">Magasin source d\'installation</string>
     <string name="Sources">Sources</string>
+    <string name="PrivacyPolicy">Politique de confidentialité</string>
     <string name="DeviceAPILevel">Niveau API du terminal</string>
     <string name="DeviceHasMenuHardware">Terminal équipé de boutons matériels</string>
     <string name="DeviceHasDownloadManager">Terminal avec gestionnaire de téléchargement</string>
@@ -86,7 +90,7 @@
     <string name="menu_remove_url">Supprimer une connexion favorite</string>
     <string name="menu_clear_all_urls">Supprimer les connexions favorites</string>
     <string name="menu_manage_all_urls">Gérer les connexions favorites</string>
-    <string name="dolicloud_register" ignore="MissingTranslation"> <a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">Je n\'ai pas encore d\'instance Dolibarr ERP CRM, créez-en une sur DoliCloud.com...</a></string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">Je n\'ai pas encore d\'instance Dolibarr, j\'en crée une sur DoliCloud.com...</a></string>
 
     <!-- Menu web browser -->
     <string name="menu_menu">Menu</string>
@@ -100,11 +104,12 @@
     <string name="menu_logout">Déconnecter</string>
     <string name="menu_quit">Quitter</string>
     <string name="menu_multicompany">Changer de société</string>
-    <string name="menu_uploadfile">Importer/Scaner un document</string>
+    <string name="menu_uploadfile">Importer ou numériser un document</string>
     <string name="menu_usercard">Ma fiche utilisateur</string>
     <string name="menu_virtualcard">Ma carte de visite virtuelle</string>
     <string name="menu_scan">Scanner un code-barres</string>
     <string name="menu_photo">Numériser un document</string>
     <string name="None">Aucun</string>
+    <string name="TargetSDKVersion">Niveau cible du SDK</string>
 
 </resources>

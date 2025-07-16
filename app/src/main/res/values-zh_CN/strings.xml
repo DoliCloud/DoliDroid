@@ -1,0 +1,115 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name"><xliff:g id="app_name">DoliDroid</xliff:g></string>
+    <string name="dolidroidLabel">DoliDroid，Dolibarr ERP-CRM的Android前端</string>
+    <string name="dolidroidUserAgent">DoliDroid - Dolibarr ERP-CRM的Android前端</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main"><xliff:g id="title_activity_main">DoliDroid2</xliff:g></string>
+    <string name="dolibarr_for_android">Dolibarr 的 Android 客户端</string>
+    <string name="open">开始</string>
+    <string name="dolibarr_url">Dolibarr URL</string>
+    <string name="logo_dolidroid">DoliDroid Logo</string>
+    <string name="SelectUrl">或选择喜欢的连接</string>
+    <string name="enterNewUrl">或输入新URL</string>
+    <string name="UrlCopied">复制到剪贴板的URL</string>
+
+    <!-- Activity web -->
+    <string name="title_activity_second"></string>
+    <string name="downloadComplete">文件下载完成</string>
+	<string name="NoPreviousPageAgainToQuit">没有上一页。使用 返回 来退出。</string>
+	<string name="notCompatibleWithVersion">服务器上的 Dolibarr 版本 (%1$s) 太旧了。 DoliDroid 需要 Dolibar 版本 %2$s 或更高版本。</string>
+    <string name="notification_error_ssl_cert_invalid">服务器安全 SSL 证书无效：</string>
+    <string name="notification_error_ssl_cert_invalidbis">是否继续（无法下载文件）？</string>
+    <string name="failedtogetpage">未能通过快速直接下载获得页面。你是否已登录？</string>
+    <string name="CacheAndHistoryCleared">缓存和历史记录已清除</string>
+
+    <!-- Activity about -->
+    <string name="title_activity_about"></string>
+    <string name="textBack">返回</string>
+    <string name="textMenu">菜单</string>
+    <string name="textAboutA"><xliff:g id="textAboutA">版本…</xliff:g></string>
+    <string name="textAboutB"><xliff:g id="textAboutB">实例链接…</xliff:g></string>
+    <string name="textAboutB2"><xliff:g id="textAboutB2">已保存的登录信息…</xliff:g></string>
+    <string name="textAboutC"><xliff:g id="textAboutC">当前URL和用户代理...</xliff:g></string>
+    <string name="Version">版本</string>
+    <string name="VersionStaticResources">本地静态资源的版本</string>
+    <string name="Author">作者</string>
+    <string name="ApplicationAssociatedWithMailToLink">与“mailto”链接关联的应用程序</string>
+    <string name="ApplicationAssociatedWithTelLink">与“tel”链接关联的应用程序</string>
+    <string name="Web">Web</string>
+    <string name="Compatibility">兼容性</string>
+    <string name="License">许可</string>
+    <string name="NameOfSourceStore">安装源商店</string>
+    <string name="Sources">来源</string>
+    <string name="PrivacyPolicy">隐私政策</string>
+    <string name="DeviceAPILevel">设备API等级</string>
+    <string name="DeviceHasMenuHardware">设备有硬件按钮</string>
+    <string name="DeviceHasDownloadManager">设备有下载管理器</string>
+    <string name="DownloadDirectory">下载目录</string>
+    <string name="PhotosDirectory">照片目录</string>
+    <string name="DocumentsDirectory">文件目录</string>
+    <string name="DeviceHasPDFViewer">设备有PDF阅读器</string>
+    <string name="DeviceHasODXViewer">设备有OpenOffice阅读器</string>
+    <string name="DeviceSize">设备屏幕尺寸</string>
+    <string name="savedDolUrlRoot">Dolibarr 实例网址</string>
+    <string name="currentUrl">当前连接</string>
+    <string name="UserAgent">用户代理</string>
+    <string name="SavedLogin">保存的登录信息</string>
+    <string name="SavedPassword">保存的密码</string>
+    <string name="BasicAuthLogin">基本认证登录</string>
+    <string name="BasicAuthPassword">基本认证密码</string>
+    <string name="Yes">是</string>
+    <string name="No">否</string>
+    <string name="Warning">警告</string>
+
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">移除此连接</string>
+    <string name="DeleteAllPredefinedUrl">删除所有收藏的连接</string>
+    <string name="ListOfUrls">预定义连接列表</string>
+
+    <!-- Menu main + web -->
+    <string name="menu_info">关于 DoliDroid</string>
+    <string name="menu_instance">关于当前实例</string>
+    <string name="menu_info_short">关于</string>
+    <string name="menu_info_instance_short">关于实例</string>
+    <string name="menu_show_bar_on">显示菜单栏</string>
+    <string name="menu_show_bar_off">显示菜单栏（否）</string>
+    <string name="menu_autofill_on">保存登录信息/密码</string>
+    <string name="menu_autofill_off">保存登录信息/密码（否）</string>
+    <string name="menu_uselocalresources_on">使用本地静态资源</string>
+    <string name="menu_uselocalresources_off">使用本地静态资源（否）</string>
+    <string name="AlertHTTPS">似乎你的服务器强制重定向到一个HTTPS页面。请检查你的Dolibarr网址，直接使用https网址形式（网址以https:// 开始，而不是http://）。为了安全起见，继续使用没有s的网址会导致缓存优化或下载文件等功能无法工作。</string>
+    <string name="AlertHTTP">您试图访问一个不安全的网站（http:而不是https:）。出于安全原因，安卓可能会限制本应用程序的一些功能，以适应此类网站。您应该通过添加HTTPS证书来保护您的网站。</string>
+    <string name="AlertDownloadBadHTTPS">当您使用错误的方案值进行连接时（http vs https），无法下载</string>
+
+    <!-- Menu main page -->
+    <string name="menu_utilities">实用工具</string>
+    <string name="menu_settings">设置</string>
+    <string name="menu_add_url">添加预定义网址</string>
+    <string name="menu_remove_url">删除收藏的连接</string>
+    <string name="menu_clear_all_urls">清除收藏夹连接</string>
+    <string name="menu_manage_all_urls">管理收藏夹连接</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">我还没有 Dolibarr 实例，我在 DoliCloud.com 上创建了一个……</a></string>
+
+    <!-- Menu web browser -->
+    <string name="menu_menu">菜单</string>
+    <string name="menu_go_to">快速访问</string>
+    <string name="menu_search">搜索</string>
+    <string name="menu_bookmarks">书签</string>
+    <string name="menu_back">返回</string>
+    <string name="menu_refresh">重新下载页面</string>
+    <string name="menu_copy_url">复制网址到剪切板</string>
+    <string name="menu_clearcache">清除缓存</string>
+    <string name="menu_logout">注销</string>
+    <string name="menu_quit">退出</string>
+    <string name="menu_multicompany">切换公司</string>
+    <string name="menu_uploadfile">导入或扫描文档</string>
+    <string name="menu_usercard">我的用户档案</string>
+    <string name="menu_virtualcard">我的虚拟名片</string>
+    <string name="menu_scan">扫描条码</string>
+    <string name="menu_photo">扫描文档</string>
+    <string name="None">没有任何</string>
+    <string name="TargetSDKVersion">目标 SDK 级别</string>
+
+</resources>

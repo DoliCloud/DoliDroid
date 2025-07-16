@@ -1,0 +1,115 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name"><xliff:g id="app_name">DoliDroid</xliff:g></string>
+    <string name="dolidroidLabel">DoliDroid, Android-ის წინა პლატფორმა Dolibarr ERP-CRM-ისთვის</string>
+    <string name="dolidroidUserAgent">DoliDroid - Android-ის წინა პანელი Dolibarr ERP-CRM-ისთვის</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main"><xliff:g id="title_activity_main">DoliDroid</xliff:g></string>
+    <string name="dolibarr_for_android">Android კლიენტი Dolibarr-ისთვის</string>
+    <string name="open">დაწყება</string>
+    <string name="dolibarr_url">დოლიბარის URL</string>
+    <string name="logo_dolidroid">ლოგო DoliDroid</string>
+    <string name="SelectUrl">ან აირჩიეთ საყვარელი კავშირი</string>
+    <string name="enterNewUrl">ან შეიყვანეთ ახალი URL</string>
+    <string name="UrlCopied">URL კოპირებულია ბუფერში</string>
+
+    <!-- Activity web -->
+    <string name="title_activity_second"></string>
+    <string name="downloadComplete">ფაილის ჩამოტვირთვა დასრულდა</string>
+	<string name="NoPreviousPageAgainToQuit">წინა გვერდი არ არის. გასასვლელად გამოიყენეთ „უკან ისევ“.</string>
+	<string name="notCompatibleWithVersion">სერვერზე Dolibarr-ის ვერსია (%1$s) ძალიან ძველია. DoliDroid-ს სჭირდება Dolibar-ის ვერსია %2$s ან უფრო მაღალი.</string>
+    <string name="notification_error_ssl_cert_invalid">სერვერის უსაფრთხოების SSL სერტიფიკატი, როგორც ჩანს, არასწორია:</string>
+    <string name="notification_error_ssl_cert_invalidbis">გსურთ გააგრძელოთ (ფაილების ჩამოტვირთვა შეუძლებელი იქნება)?</string>
+    <string name="failedtogetpage">გვერდის სწრაფი პირდაპირი ჩამოტვირთვა ვერ მოხერხდა. შესული ხართ სისტემაში?</string>
+    <string name="CacheAndHistoryCleared">ქეში და ისტორია გასუფთავებულია.</string>
+
+    <!-- Activity about -->
+    <string name="title_activity_about"></string>
+    <string name="textBack">უკან</string>
+    <string name="textMenu">მენიუ</string>
+    <string name="textAboutA"><xliff:g id="textAboutA">ვერსიები...</xliff:g></string>
+    <string name="textAboutB"><xliff:g id="textAboutB">მაგალითის URL...</xliff:g></string>
+    <string name="textAboutB2"><xliff:g id="textAboutB2">შენახული შესვლა...</xliff:g></string>
+    <string name="textAboutC"><xliff:g id="textAboutC">მიმდინარე URL და მომხმარებლის აგენტი...</xliff:g></string>
+    <string name="Version">ვერსია</string>
+    <string name="VersionStaticResources">ლოკალური სტატიკური რესურსების ვერსია</string>
+    <string name="Author">ავტორი</string>
+    <string name="ApplicationAssociatedWithMailToLink">„mailto“ ბმულებთან დაკავშირებული აპლიკაცია</string>
+    <string name="ApplicationAssociatedWithTelLink">აპლიკაცია, რომელიც დაკავშირებულია „ტელ“ ბმულებთან</string>
+    <string name="Web">ვებ</string>
+    <string name="Compatibility">თავსებადობა</string>
+    <string name="License">ლიცენზია</string>
+    <string name="NameOfSourceStore">ინსტალაციის წყაროს მაღაზია</string>
+    <string name="Sources">წყაროები</string>
+    <string name="PrivacyPolicy">კონფიდენციალურობის პოლიტიკა</string>
+    <string name="DeviceAPILevel">მოწყობილობის API დონე</string>
+    <string name="DeviceHasMenuHardware">მოწყობილობას აქვს აპარატურული ღილაკები</string>
+    <string name="DeviceHasDownloadManager">მოწყობილობას აქვს ჩამოტვირთვის მენეჯერი</string>
+    <string name="DownloadDirectory">ჩამოტვირთვის დირექტორია</string>
+    <string name="PhotosDirectory">ფოტოების დირექტორია</string>
+    <string name="DocumentsDirectory">დოკუმენტების დირექტორია</string>
+    <string name="DeviceHasPDFViewer">მოწყობილობას აქვს PDF ფაილების სანახავი ფაილები.</string>
+    <string name="DeviceHasODXViewer">მოწყობილობას აქვს OpenOffice-ის მნახველები</string>
+    <string name="DeviceSize">მოწყობილობის ეკრანის ზომა</string>
+    <string name="savedDolUrlRoot">Dolibarr-ის ეგზემპლარის URL</string>
+    <string name="currentUrl">მიმდინარე კავშირი</string>
+    <string name="UserAgent">მომხმარებლის აგენტი</string>
+    <string name="SavedLogin">შენახული შესვლა</string>
+    <string name="SavedPassword">შენახული პაროლი</string>
+    <string name="BasicAuthLogin">ძირითადი ავტორიზაციის შესვლა</string>
+    <string name="BasicAuthPassword">ძირითადი ავტორიზაციის პაროლი</string>
+    <string name="Yes">დიახ</string>
+    <string name="No">არა</string>
+    <string name="Warning">გაფრთხილება</string>
+
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">ამ კავშირის წაშლა</string>
+    <string name="DeleteAllPredefinedUrl">ყველა ფავორიტის კავშირის წაშლა</string>
+    <string name="ListOfUrls">წინასწარ განსაზღვრული კავშირების სია</string>
+
+    <!-- Menu main + web -->
+    <string name="menu_info">DoliDroid-ის შესახებ</string>
+    <string name="menu_instance">მიმდინარე ინსტანციის შესახებ</string>
+    <string name="menu_info_short">შესახებ</string>
+    <string name="menu_info_instance_short">ინსტანციის შესახებ</string>
+    <string name="menu_show_bar_on">მენიუს ზოლის ჩვენება</string>
+    <string name="menu_show_bar_off">მენიუს ზოლის ჩვენება (არა)</string>
+    <string name="menu_autofill_on">შეინახეთ შესვლა/პაროლი</string>
+    <string name="menu_autofill_off">შეინახეთ შესვლა/პაროლი (არა)</string>
+    <string name="menu_uselocalresources_on">გამოიყენეთ ადგილობრივი სტატიკური რესურსები</string>
+    <string name="menu_uselocalresources_off">გამოიყენეთ ადგილობრივი სტატიკური რესურსები (არა)</string>
+    <string name="AlertHTTPS">როგორც ჩანს, თქვენმა სერვერმა HTTPS გვერდზე გადამისამართება აიძულა. გთხოვთ, შეამოწმოთ თქვენი Dolibarr URL და პირდაპირ გამოიყენოთ https URL ფორმა (URL იწყება https://-ით http://-ის ნაცვლად). უსაფრთხოების მიზნით, s-ის გარეშე URL-ის გამოყენების გაგრძელება გამოიწვევს ისეთი ფუნქციების გაუმართაობას, როგორიცაა ქეშის ოპტიმიზაცია ან ფაილების ჩამოტვირთვა.</string>
+    <string name="AlertHTTP">თქვენ ცდილობთ დაუცველ ვებსაიტზე (http: https:-ის ნაცვლად) შესვლას. უსაფრთხოების მიზნით, Android-მა შეიძლება შეზღუდოს ამ აპლიკაციის ზოგიერთი ფუნქცია ასეთი ვებსაიტებისთვის. თქვენ უნდა დაიცვათ თქვენი ვებსაიტი HTTPS სერტიფიკატის დამატებით.</string>
+    <string name="AlertDownloadBadHTTPS">ჩამოტვირთვა შეუძლებელია, როდესაც დასაკავშირებლად სქემის არასწორი მნიშვნელობა გამოიყენეთ (http vs https).</string>
+
+    <!-- Menu main page -->
+    <string name="menu_utilities">კომუნალური მომსახურება</string>
+    <string name="menu_settings">პარამეტრები</string>
+    <string name="menu_add_url">წინასწარ განსაზღვრული URL-ის დამატება</string>
+    <string name="menu_remove_url">საყვარელი კავშირის წაშლა</string>
+    <string name="menu_clear_all_urls">ფავორიტების კავშირების გასუფთავება</string>
+    <string name="menu_manage_all_urls">რჩეულების კავშირების მართვა</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">ჯერ არ მაქვს Dolibarr-ის ეგზემპლარი, DoliCloud.com-ზე ვქმნი...</a></string>
+
+    <!-- Menu web browser -->
+    <string name="menu_menu">მენიუ</string>
+    <string name="menu_go_to">სწრაფი წვდომა</string>
+    <string name="menu_search">ძიება</string>
+    <string name="menu_bookmarks">სანიშნეები</string>
+    <string name="menu_back">უკან</string>
+    <string name="menu_refresh">გვერდის ხელახლა ჩატვირთვა</string>
+    <string name="menu_copy_url">URL-ის კოპირება ბუფერში</string>
+    <string name="menu_clearcache">ქეშის გასუფთავება</string>
+    <string name="menu_logout">გასვლა</string>
+    <string name="menu_quit">გასვლა</string>
+    <string name="menu_multicompany">კომპანიის შეცვლა</string>
+    <string name="menu_uploadfile">დოკუმენტის იმპორტი ან სკანირება</string>
+    <string name="menu_usercard">ჩემი მომხმარებლის ფაილი</string>
+    <string name="menu_virtualcard">ჩემი ვირტუალური სავიზიტო ბარათი</string>
+    <string name="menu_scan">შტრიხკოდის სკანირება</string>
+    <string name="menu_photo">დოკუმენტის სკანირება</string>
+    <string name="None">არცერთი</string>
+    <string name="TargetSDKVersion">სამიზნე SDK დონე</string>
+
+</resources>

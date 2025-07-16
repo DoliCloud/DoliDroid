@@ -1,30 +1,26 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <string name="app_name">
-    <xliff:g id="app_name">DoliDroid</xliff:g>
-  </string>
+    <string name="app_name"><xliff:g id="app_name">DoliDroid</xliff:g></string>
     <string name="dolidroidLabel">DoliDroid, interfaz Android para ERP-CRM Dolibarr</string>
-    <string name="dolidroidUserAgent">DoliDroid, interfaz Android para ERP-CRM Dolibarr</string>
+    <string name="dolidroidUserAgent">DoliDroid - interfaz Android para ERP-CRM Dolibarr</string>
     
     <!-- Activity main -->
-    <string name="title_activity_main">
-    <xliff:g id="title_activity_main">DoliDroid</xliff:g>
-  </string>
+    <string name="title_activity_main"><xliff:g id="title_activity_main">DoliDroid</xliff:g></string>
     <string name="dolibarr_for_android">Cliente Android para Dolibarr</string>
     <string name="open">Iniciar</string>
-    <string name="dolibarr_url">URL Dolibarr</string>
-    <string name="logo_dolidroid">Logo DoliDroid</string>
+    <string name="dolibarr_url">Dirección URL de Dolibarr</string>
+    <string name="logo_dolidroid">Logo de DoliDroid</string>
     <string name="SelectUrl">o seleccione una conexión favorita</string>
-    <string name="enterNewUrl">o introduce una nueva URL</string>
+    <string name="enterNewUrl">o ingresa una nueva URL</string>
     <string name="UrlCopied">URL copiada en el portapapeles</string>
 
     <!-- Activity web -->
     <string name="title_activity_second"></string>
     <string name="downloadComplete">Descarga completa de archivo</string>
 	<string name="NoPreviousPageAgainToQuit">No hay página anterior. Presione Atrás de nuevo para salir.</string>
-	<string name="notCompatibleWithVersion">La versión de Dolibarr en el servidor (%1$s) es demasiado antigua. DoliDroid necesita Dolibar versión %2$s o superior.</string>
-    <string name="notification_error_ssl_cert_invalid">El certificado de seguridad SSL del servidor parece inválido:</string>
-    <string name="notification_error_ssl_cert_invalidbis"> ¿Desea continuar (la descarga de archivos no sería posible)?</string>
+	<string name="notCompatibleWithVersion">La versión de Dolibarr en el servidor (%1$s) está obsoleta. DoliDroid necesita Dolibar versión %2$s o superior.</string>
+    <string name="notification_error_ssl_cert_invalid">El certificado de seguridad SSL del servidor parece ser inválido:</string>
+    <string name="notification_error_ssl_cert_invalidbis">¿Desea continuar? (la descarga de archivos no sería posible)</string>
     <string name="failedtogetpage">No se pudo obtener la página mediante una descarga directa rápida. ¿Estás logueado?</string>
     <string name="CacheAndHistoryCleared">Caché e historial borrados.</string>
 
@@ -37,39 +33,39 @@
     <string name="textAboutB2"> <xliff:g id="textAboutB2"> Inicios de sesión guardados... </xliff:g></string>
     <string name="textAboutC"> <xliff:g id="textAboutC"> URL actual y agente de usuario... </xliff:g></string>
     <string name="Version">Versión</string>
-    <string name="VersionStaticResources">Versión de recursos estáticos locales</string>
+    <string name="VersionStaticResources">Versión de los recursos estáticos locales</string>
     <string name="Author">Autor</string>
     <string name="ApplicationAssociatedWithMailToLink">Aplicación asociada a enlaces \"mailto\"</string>
     <string name="ApplicationAssociatedWithTelLink">Aplicación asociada a enlaces \"tel\"</string>
-    <string name="Web">Red</string>
+    <string name="Web">Sitio Web</string>
     <string name="Compatibility">Compatibilidad</string>
     <string name="License">Licencia</string>
     <string name="NameOfSourceStore">Almacén de origen de la instalación</string>
     <string name="Sources">Fuentes</string>
-    <string name="PrivacyPolicy">política de privacidad</string>
-    <string name="DeviceAPILevel">Nivel API del dispositivo</string>
+    <string name="PrivacyPolicy">Política de Privacidad</string>
+    <string name="DeviceAPILevel">Nivel de API del dispositivo</string>
     <string name="DeviceHasMenuHardware">El dispositivo tiene botones de hardware</string>
     <string name="DeviceHasDownloadManager">El dispositivo tiene un gestor de descargas</string>
-    <string name="DownloadDirectory">Descarga directorio</string>
+    <string name="DownloadDirectory">Directorio para descargas</string>
     <string name="PhotosDirectory">directorio de fotos</string>
     <string name="DocumentsDirectory">Directorio de documentos</string>
     <string name="DeviceHasPDFViewer">El dispositivo tiene visores de PDF</string>
     <string name="DeviceHasODXViewer">El dispositivo tiene visores de OpenOffice</string>
     <string name="DeviceSize">Tamaño de la pantalla del dispositivo</string>
-    <string name="savedDolUrlRoot">Ejemplo de URL de Dolibarr</string>
+    <string name="savedDolUrlRoot">URL de la instancia de Dolibarr</string>
     <string name="currentUrl">Conexión actual</string>
-    <string name="UserAgent">Agente de usuario</string>
-    <string name="SavedLogin">Saved login</string>
-    <string name="SavedPassword">Saved password</string>
-    <string name="BasicAuthLogin">Basic auth login</string>
-    <string name="BasicAuthPassword">Basic auth password</string>
-    <string name="Yes">Sí</string>
+    <string name="UserAgent">Usuario del Agente</string>
+    <string name="SavedLogin">Ingreso guardado</string>
+    <string name="SavedPassword">Contraseña guardada</string>
+    <string name="BasicAuthLogin">Inicio de sesión básico</string>
+    <string name="BasicAuthPassword">Inicio de sesión con contraseña</string>
+    <string name="Yes">Si</string>
     <string name="No">No</string>
     <string name="Warning">Advertencia</string>
 
     <!-- Activity Manage URL -->
-    <string name="DeletePredefinedUrl">Eliminar esta conexión</string>
-    <string name="DeleteAllPredefinedUrl">Eliminar todas las conexiones favoritas</string>
+    <string name="DeletePredefinedUrl">Quitar esta conexión</string>
+    <string name="DeleteAllPredefinedUrl">Quitar todas las conexiones favoritas</string>
     <string name="ListOfUrls">Lista de conexiones predefinidas</string>
 
     <!-- Menu main + web -->
@@ -78,11 +74,11 @@
     <string name="menu_info_short">Acerca de</string>
     <string name="menu_info_instance_short">Acerca de la instancia</string>
     <string name="menu_show_bar_on">Mostrar barra de menú</string>
-    <string name="menu_show_bar_off">Mostrar barra de menú (no)</string>
+    <string name="menu_show_bar_off">Ocultar barra de menú</string>
     <string name="menu_autofill_on">Guardar nombre de usuario/contraseña</string>
-    <string name="menu_autofill_off">Guardar usuario/contraseña (no)</string>
+    <string name="menu_autofill_off">No guardar usuario/contraseña</string>
     <string name="menu_uselocalresources_on">Usar recursos estáticos locales</string>
-    <string name="menu_uselocalresources_off">Use recursos estáticos locales (no)</string>
+    <string name="menu_uselocalresources_off">No usar recursos estáticos locales</string>
     <string name="AlertHTTPS">Parece que su servidor forzó una redirección a una página HTTPS. Verifique su URL de Dolibarr y use el formulario de URL https directamente (la URL comienza con https:// en lugar de http://). Seguir usando una URL sin la s resultará, por razones de seguridad, en características que no funcionarán, como la optimización de caché o la descarga de archivos.</string>
     <string name="AlertHTTP">Intenta acceder a un sitio web no seguro (http: en lugar de https:). Por motivos de seguridad, Android puede restringir algunas funciones de esta aplicación para dichos sitios web. Debe proteger su sitio web agregando un certificado HTTPS.</string>
     <string name="AlertDownloadBadHTTPS">La descarga no es posible cuando usó un valor incorrecto del esquema para conectarse (http vs https)</string>
@@ -91,8 +87,8 @@
     <string name="menu_utilities">Utilidades</string>
     <string name="menu_settings">Configuración</string>
     <string name="menu_add_url">Añadir URL predefinida</string>
-    <string name="menu_remove_url">Eliminar una conexión favorita</string>
-    <string name="menu_clear_all_urls">Borrar conexiones favoritas</string>
+    <string name="menu_remove_url">Quitar una conexión favorita</string>
+    <string name="menu_clear_all_urls">Limpiar todas las conexiones favoritas</string>
     <string name="menu_manage_all_urls">Administrar conexiones favoritas</string>
     <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">Todavía no tengo una instancia de Dolibarr, creo una en DoliCloud.com...</a></string>
 

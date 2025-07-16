@@ -39,10 +39,14 @@
     <string name="Version">Versão</string>
     <string name="VersionStaticResources">Versão dos recursos estáticos locais</string>
     <string name="Author">Autor</string>
+    <string name="ApplicationAssociatedWithMailToLink">Aplicação associada a links \"mailto\"</string>
+    <string name="ApplicationAssociatedWithTelLink">Aplicação associada a links \"tel\"</string>
     <string name="Web">Web</string>
     <string name="Compatibility">Compatibilidade</string>
     <string name="License">Licença</string>
+    <string name="NameOfSourceStore">Armazenamento de origem da instalação</string>
     <string name="Sources">Fontes</string>
+    <string name="PrivacyPolicy">política de Privacidade</string>
     <string name="DeviceAPILevel">Nível API do Dispositivo</string>
     <string name="DeviceHasMenuHardware">O dispositivo tem botões de hardware</string>
     <string name="DeviceHasDownloadManager">O dispositivo tem um gestor de transferências</string>
@@ -90,7 +94,7 @@
     <string name="menu_remove_url">Remover uma ligação favorita</string>
     <string name="menu_clear_all_urls">Limpar ligações favoritas</string>
     <string name="menu_manage_all_urls">Gerir ligações favoritas</string>
-    <string name="dolicloud_register" ignore="MissingTranslation"> <a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile"> Ainda não tenho uma instância Dolibarr ERP CRM, crie uma em DoliCloud.com... </a></string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">Ainda não tenho uma instância do Dolibarr, criei uma no DoliCloud.com...</a></string>
 
     <!-- Menu web browser -->
     <string name="menu_menu">Menu</string>
@@ -104,10 +108,12 @@
     <string name="menu_logout">Terminar sessão</string>
     <string name="menu_quit">Sair</string>
     <string name="menu_multicompany">Troque de empresa</string>
+    <string name="menu_uploadfile">Importar ou digitalizar um documento</string>
     <string name="menu_usercard">meu arquivo de usuário</string>
     <string name="menu_virtualcard">Meu cartão de visita virtual</string>
     <string name="menu_scan">Escanear um código de barras</string>
     <string name="menu_photo">digitalizar um documento</string>
     <string name="None">Nenhum</string>
+    <string name="TargetSDKVersion">Nível do SDK de destino</string>
 
 </resources>

@@ -1,0 +1,115 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name"> <xliff:g id="app_name"> DoliDroid </xliff:g></string>
+    <string name="dolidroidLabel">DoliDroid, Android-интерфейс для Dolibarr ERP-CRM</string>
+    <string name="dolidroidUserAgent">DoliDroid - Android-интерфейс для Dolibarr ERP-CRM</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main"> <xliff:g id="title_activity_main"> DoliDroid </xliff:g></string>
+    <string name="dolibarr_for_android">Android-клиент для Dolibarr</string>
+    <string name="open">Начинать</string>
+    <string name="dolibarr_url">URL-адрес Dolibarr</string>
+    <string name="logo_dolidroid">Логотип DoliDroid</string>
+    <string name="SelectUrl">или выберите любимое соединение</string>
+    <string name="enterNewUrl">или введите новый URL</string>
+    <string name="UrlCopied">URL скопирован в буфер обмена</string>
+
+    <!-- Activity web -->
+    <string name="title_activity_second"></string>
+    <string name="downloadComplete">Скачивание файла завершено</string>
+	<string name="NoPreviousPageAgainToQuit">Нет предыдущей страницы. Используйте снова, чтобы выйти.</string>
+	<string name="notCompatibleWithVersion">Версия Dolibarr на сервере (%1$s) слишком старая. Для DoliDroid требуется версия Dolibar %2$s или выше.</string>
+    <string name="notification_error_ssl_cert_invalid">SSL-сертификат безопасности сервера кажется недействительным:</string>
+    <string name="notification_error_ssl_cert_invalidbis">Вы хотите продолжить (загрузка файлов невозможна)?</string>
+    <string name="failedtogetpage">Не удалось получить страницу быстрой прямой загрузкой. Вы зарегистрированы?</string>
+    <string name="CacheAndHistoryCleared">Кэш и история очищены.</string>
+
+    <!-- Activity about -->
+    <string name="title_activity_about"></string>
+    <string name="textBack">Назад</string>
+    <string name="textMenu">Меню</string>
+    <string name="textAboutA"> <xliff:g id="textAboutA"> Версии... </xliff:g></string>
+    <string name="textAboutB"> <xliff:g id="textAboutB"> URL экземпляра... </xliff:g></string>
+    <string name="textAboutB2"> <xliff:g id="textAboutB2"> Сохраненные логины... </xliff:g></string>
+    <string name="textAboutC"> <xliff:g id="textAboutC"> CurrentURL и пользовательский агент... </xliff:g></string>
+    <string name="Version">Версия</string>
+    <string name="VersionStaticResources">Версия локальных статических ресурсов</string>
+    <string name="Author">Автор</string>
+    <string name="ApplicationAssociatedWithMailToLink">Приложение, связанное со ссылками «mailto»</string>
+    <string name="ApplicationAssociatedWithTelLink">Приложение, связанное со ссылками \"tel\"</string>
+    <string name="Web">Интернет</string>
+    <string name="Compatibility">Совместимость</string>
+    <string name="License">Лицензия</string>
+    <string name="NameOfSourceStore">Исходный магазин установки</string>
+    <string name="Sources">Источники</string>
+    <string name="PrivacyPolicy">политика конфиденциальности</string>
+    <string name="DeviceAPILevel">Уровень API устройства</string>
+    <string name="DeviceHasMenuHardware">Устройство имеет аппаратные кнопки</string>
+    <string name="DeviceHasDownloadManager">На устройстве есть менеджер загрузок</string>
+    <string name="DownloadDirectory">Каталог загрузок</string>
+    <string name="PhotosDirectory">Каталог фотографий</string>
+    <string name="DocumentsDirectory">Каталог документов</string>
+    <string name="DeviceHasPDFViewer">На устройстве есть программа для просмотра PDF-файлов.</string>
+    <string name="DeviceHasODXViewer">На устройстве есть программы просмотра OpenOffice</string>
+    <string name="DeviceSize">Размер экрана устройства</string>
+    <string name="savedDolUrlRoot">URL-адрес экземпляра Dolibarr</string>
+    <string name="currentUrl">Текущее подключение</string>
+    <string name="UserAgent">Пользовательский агент</string>
+    <string name="SavedLogin">Сохраненный логин</string>
+    <string name="SavedPassword">Сохраненный пароль</string>
+    <string name="BasicAuthLogin">Базовая авторизация входа</string>
+    <string name="BasicAuthPassword">Базовый пароль авторизации</string>
+    <string name="Yes">да</string>
+    <string name="No">Нет</string>
+    <string name="Warning">Предупреждение</string>
+
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">Удалить это соединение</string>
+    <string name="DeleteAllPredefinedUrl">Удалить все избранные соединения</string>
+    <string name="ListOfUrls">Список предопределенных соединений</string>
+
+    <!-- Menu main + web -->
+    <string name="menu_info">О DoliDroid</string>
+    <string name="menu_instance">О текущем экземпляре</string>
+    <string name="menu_info_short">О</string>
+    <string name="menu_info_instance_short">О примере</string>
+    <string name="menu_show_bar_on">Показать строку меню</string>
+    <string name="menu_show_bar_off">Показать строку меню (нет)</string>
+    <string name="menu_autofill_on">Сохранить логин/пароль</string>
+    <string name="menu_autofill_off">Сохранить логин / пароль (нет)</string>
+    <string name="menu_uselocalresources_on">Используйте локальные статические ресурсы</string>
+    <string name="menu_uselocalresources_off">Использовать локальные статические ресурсы (нет)</string>
+    <string name="AlertHTTPS">Кажется, ваш сервер принудительно перенаправляет на страницу HTTPS. Пожалуйста, проверьте свой URL-адрес Dolibarr и используйте форму URL-адреса https напрямую (URL-адрес начинается с https:// вместо http://). Продолжение использования URL-адреса без s приведет к тому, что в целях безопасности не будут работать такие функции, как оптимизация кеша или загрузка файлов.</string>
+    <string name="AlertHTTP">Вы пытаетесь получить доступ к незащищенному веб-сайту (http: вместо https:). Из соображений безопасности Android может ограничить некоторые функции этого приложения для таких веб-сайтов. Вы должны защитить свой сайт, добавив сертификат HTTPS.</string>
+    <string name="AlertDownloadBadHTTPS">Загрузка невозможна, если вы использовали неверное значение схемы для подключения (http или https).</string>
+
+    <!-- Menu main page -->
+    <string name="menu_utilities">Утилиты</string>
+    <string name="menu_settings">Настройки</string>
+    <string name="menu_add_url">Добавить предопределенный URL</string>
+    <string name="menu_remove_url">Удалить любимое соединение</string>
+    <string name="menu_clear_all_urls">Очистить избранные соединения</string>
+    <string name="menu_manage_all_urls">Управление избранными соединениями</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">У меня пока нет экземпляра Dolibarr, я создаю его на DoliCloud.com...</a></string>
+
+    <!-- Menu web browser -->
+    <string name="menu_menu">Меню</string>
+    <string name="menu_go_to">Быстрый доступ</string>
+    <string name="menu_search">Поиск</string>
+    <string name="menu_bookmarks">Закладки</string>
+    <string name="menu_back">Назад</string>
+    <string name="menu_refresh">Перезагрузить страницу</string>
+    <string name="menu_copy_url">Скопировать URL в буфер обмена</string>
+    <string name="menu_clearcache">Очистить кэш</string>
+    <string name="menu_logout">Выйти</string>
+    <string name="menu_quit">Закрыть</string>
+    <string name="menu_multicompany">Сменить компанию</string>
+    <string name="menu_uploadfile">Импортировать или отсканировать документ</string>
+    <string name="menu_usercard">Мой пользовательский файл</string>
+    <string name="menu_virtualcard">Моя виртуальная визитка</string>
+    <string name="menu_scan">Сканировать штрих-код</string>
+    <string name="menu_photo">Сканировать документ</string>
+    <string name="None">Никто</string>
+    <string name="TargetSDKVersion">Целевой уровень SDK</string>
+
+</resources>

@@ -1,0 +1,115 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name"><xliff:g id="app_name">DoliDroid</xliff:g></string>
+    <string name="dolidroidLabel">DoliDroid, Dolibarr ERP-CRM 的 Android 操作界面</string>
+    <string name="dolidroidUserAgent">DoliDroid, Dolibarr ERP-CRM 的 Android 操作界面</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main"><xliff:g id="title_activity_main">DoliDroid</xliff:g></string>
+    <string name="dolibarr_for_android">Dolibarr 的 Android 客戶端</string>
+    <string name="open">開始</string>
+    <string name="dolibarr_url">Dolibarr網址</string>
+    <string name="logo_dolidroid">DoliDroid Logo</string>
+    <string name="SelectUrl">或選擇一個喜歡的連結</string>
+    <string name="enterNewUrl">或輸入新網址</string>
+    <string name="UrlCopied">網址已複製到剪貼簿</string>
+
+    <!-- Activity web -->
+    <string name="title_activity_second"></string>
+    <string name="downloadComplete">檔案下載完成</string>
+	<string name="NoPreviousPageAgainToQuit">沒有上一頁。再次使用返回退出。</string>
+	<string name="notCompatibleWithVersion">服務器（%1$s）上的Dolibarr版本太舊。 DoliDroid需要Dolibarr版本%2$s或更高版本。</string>
+    <string name="notification_error_ssl_cert_invalid">服務器安全性SSL證書似乎無效：</string>
+    <string name="notification_error_ssl_cert_invalidbis">您是否要繼續（無法下載文件）？</string>
+    <string name="failedtogetpage">快速直接下載獲取頁面失敗。您已經登入了嗎？</string>
+    <string name="CacheAndHistoryCleared">快取與歷史記錄已刪除。</string>
+
+    <!-- Activity about -->
+    <string name="title_activity_about"></string>
+    <string name="textBack">上一步</string>
+    <string name="textMenu">選單</string>
+    <string name="textAboutA"><xliff:g id="textAboutA">版本...</xliff:g></string>
+    <string name="textAboutB"><xliff:g id="textAboutB">實際網址...</xliff:g></string>
+    <string name="textAboutB2"><xliff:g id="textAboutB2">登入已儲存...</xliff:g></string>
+    <string name="textAboutC"> <xliff:g id="textAboutC"> 目前網址與用戶... </xliff:g></string>
+    <string name="Version">版本</string>
+    <string name="VersionStaticResources">本地靜態資源的版本</string>
+    <string name="Author">作者</string>
+    <string name="ApplicationAssociatedWithMailToLink">與“mailto”連結關聯的應用程式</string>
+    <string name="ApplicationAssociatedWithTelLink">與“tel”連結關聯的應用程式</string>
+    <string name="Web">網頁</string>
+    <string name="Compatibility">相容性</string>
+    <string name="License">授權</string>
+    <string name="NameOfSourceStore">安裝源商店</string>
+    <string name="Sources">資料來源</string>
+    <string name="PrivacyPolicy">隱私權政策</string>
+    <string name="DeviceAPILevel">設備 API 等級</string>
+    <string name="DeviceHasMenuHardware">裝置有實體按鈕</string>
+    <string name="DeviceHasDownloadManager">裝置有下載管理器</string>
+    <string name="DownloadDirectory">下載目錄</string>
+    <string name="PhotosDirectory">照片目錄</string>
+    <string name="DocumentsDirectory">文件目錄</string>
+    <string name="DeviceHasPDFViewer">裝置有 PDF 瀏覽器</string>
+    <string name="DeviceHasODXViewer">裝置有 OpenOffice 瀏覽器</string>
+    <string name="DeviceSize">裝置螢幕尺寸</string>
+    <string name="savedDolUrlRoot">Dolibarr 實際網址</string>
+    <string name="currentUrl">目前連接</string>
+    <string name="UserAgent">使用者代理</string>
+    <string name="SavedLogin">儲存的登入</string>
+    <string name="SavedPassword">儲存的密碼</string>
+    <string name="BasicAuthLogin">基本身份驗證登入</string>
+    <string name="BasicAuthPassword">基本身份驗證密碼</string>
+    <string name="Yes">是</string>
+    <string name="No">沒有</string>
+    <string name="Warning">警告</string>
+
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">刪除此連結</string>
+    <string name="DeleteAllPredefinedUrl">刪除所有收藏夾的連結</string>
+    <string name="ListOfUrls">預定義連線列表</string>
+
+    <!-- Menu main + web -->
+    <string name="menu_info">關於 DoliDroid</string>
+    <string name="menu_instance">關於目前實例</string>
+    <string name="menu_info_short">關於</string>
+    <string name="menu_info_instance_short">關於實例</string>
+    <string name="menu_show_bar_on">顯示選單欄</string>
+    <string name="menu_show_bar_off">顯示選單欄（否）</string>
+    <string name="menu_autofill_on">儲存登入帳戶/密碼</string>
+    <string name="menu_autofill_off">儲存 登入帳戶/密碼（否）</string>
+    <string name="menu_uselocalresources_on">使用本地靜態資源</string>
+    <string name="menu_uselocalresources_off">使用本地靜態資源（否）</string>
+    <string name="AlertHTTPS">您的伺服器似乎強制重新轉向到 HTTPS 頁面。請檢查您的 Dolibarr URL 並直接使用 https URL 形式（URL 以 https:// 開頭而不是 http://）。出於安全目的，繼續使用沒有加密的網址將導致快取優化或下載檔案等功能無法正常工作。</string>
+    <string name="AlertHTTP">您嘗試訪問一個不安全的網站（http: 而不是 https:）。出於安全原因，Android 可能會針對此類網站限制此應用程式的某些功能。您應該增加 HTTPS 證書來保護您的網站。</string>
+    <string name="AlertDownloadBadHTTPS">當您使用錯誤的方式進行連接時無法下載（http vs https）</string>
+
+    <!-- Menu main page -->
+    <string name="menu_utilities">主選單</string>
+    <string name="menu_settings">設定</string>
+    <string name="menu_add_url">增加預定義的網址</string>
+    <string name="menu_remove_url">刪除收藏夾的連結</string>
+    <string name="menu_clear_all_urls">清除收藏夾的連結</string>
+    <string name="menu_manage_all_urls">管理收藏夾的連結</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href=\"https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile\">我還沒有 Dolibarr 實例，我在 DoliCloud.com 上創建了一個…>TXPROTECT-e406587d8c-</string>
+
+    <!-- Menu web browser -->
+    <string name="menu_menu">選單</string>
+    <string name="menu_go_to">快速訪問</string>
+    <string name="menu_search">搜尋</string>
+    <string name="menu_bookmarks">書籤</string>
+    <string name="menu_back">返回</string>
+    <string name="menu_refresh">重新載入頁面</string>
+    <string name="menu_copy_url">將網址複製到剪貼簿</string>
+    <string name="menu_clearcache">清除快取</string>
+    <string name="menu_logout">登出</string>
+    <string name="menu_quit">退出</string>
+    <string name="menu_multicompany">切換公司</string>
+    <string name="menu_uploadfile">導入或掃描文檔</string>
+    <string name="menu_usercard">我的用戶檔案</string>
+    <string name="menu_virtualcard">我的虛擬名片</string>
+    <string name="menu_scan">掃描條碼</string>
+    <string name="menu_photo">掃描文件</string>
+    <string name="None">沒有任何</string>
+    <string name="TargetSDKVersion">目標 SDK 級別</string>
+
+</resources>

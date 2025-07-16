@@ -1,0 +1,115 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name"> <xliff:g id="app_name"> DoliDroid </xliff:g></string>
+    <string name="dolidroidLabel">DoliDroid、DolibarrERP-CRMのAndroidフロントエンド</string>
+    <string name="dolidroidUserAgent">DoliDroid-DolibarrERP-CRMのAndroidフロントエンド</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main"> <xliff:g id="title_activity_main"> DoliDroid </xliff:g></string>
+    <string name="dolibarr_for_android">Dolibarr用のAndroidクライアント</string>
+    <string name="open">開始</string>
+    <string name="dolibarr_url">DolibarrのURL</string>
+    <string name="logo_dolidroid">ロゴDoliDroid</string>
+    <string name="SelectUrl">またはお気に入りの接続を選択してください</string>
+    <string name="enterNewUrl">または新しいURLを入力すること</string>
+    <string name="UrlCopied">クリップボードにコピーされた URL</string>
+
+    <!-- Activity web -->
+    <string name="title_activity_second"></string>
+    <string name="downloadComplete">ファイルのダウンロードが完了した</string>
+	<string name="NoPreviousPageAgainToQuit">前ページなし。元に戻るで終了。</string>
+	<string name="notCompatibleWithVersion">サーバー(%1$s)のDolibarrバージョンが古すぎる。 DoliDroidには、Dolibarバージョン%2$s以降が必要。</string>
+    <string name="notification_error_ssl_cert_invalid">サーバーセキュリティSSL証明書が無効らしい：</string>
+    <string name="notification_error_ssl_cert_invalidbis">続行 か(ファイルのダウンロード不可)？</string>
+    <string name="failedtogetpage">高速直接ダウンロードによるページの取得に失敗しました。ログインしていますか？</string>
+    <string name="CacheAndHistoryCleared">キャッシュと履歴が消去されました。</string>
+
+    <!-- Activity about -->
+    <string name="title_activity_about"></string>
+    <string name="textBack">バック</string>
+    <string name="textMenu">メニュー</string>
+    <string name="textAboutA"> <xliff:g id="textAboutA"> バージョン... </xliff:g></string>
+    <string name="textAboutB"> <xliff:g id="textAboutB"> インスタンス URL... </xliff:g></string>
+    <string name="textAboutB2"> <xliff:g id="textAboutB2"> 保存されたログイン... </xliff:g></string>
+    <string name="textAboutC"> <xliff:g id="textAboutC"> 現在の URL とユーザー エージェント... </xliff:g></string>
+    <string name="Version">バージョン</string>
+    <string name="VersionStaticResources">ローカル静的リソースのバージョン</string>
+    <string name="Author">著者</string>
+    <string name="ApplicationAssociatedWithMailToLink">「mailto」リンクに関連付けられたアプリケーション</string>
+    <string name="ApplicationAssociatedWithTelLink">「tel」リンクに関連付けられたアプリケーション</string>
+    <string name="Web">ウェブ</string>
+    <string name="Compatibility">互換性</string>
+    <string name="License">ライセンス</string>
+    <string name="NameOfSourceStore">インストールのソースストア</string>
+    <string name="Sources">ソース</string>
+    <string name="PrivacyPolicy">プライバシーポリシー</string>
+    <string name="DeviceAPILevel">デバイスAPIレベル</string>
+    <string name="DeviceHasMenuHardware">デバイスにはハードウェアボタンがある</string>
+    <string name="DeviceHasDownloadManager">デバイスにはダウンロードマネージャーがある</string>
+    <string name="DownloadDirectory">ダウンロードディレクトリ</string>
+    <string name="PhotosDirectory">写真ディレクトリ</string>
+    <string name="DocumentsDirectory">ドキュメントディレクトリ</string>
+    <string name="DeviceHasPDFViewer">デバイスにはPDFビューアがある</string>
+    <string name="DeviceHasODXViewer">デバイスにはOpenOfficeビューアがある</string>
+    <string name="DeviceSize">デバイスの画面サイズ</string>
+    <string name="savedDolUrlRoot">DolibarrインスタンスのURL</string>
+    <string name="currentUrl">現在の接続</string>
+    <string name="UserAgent">ユーザーエージェント</string>
+    <string name="SavedLogin">保存されたログイン</string>
+    <string name="SavedPassword">保存されたパスワード</string>
+    <string name="BasicAuthLogin">基本認証ログイン</string>
+    <string name="BasicAuthPassword">基本認証パスワード</string>
+    <string name="Yes">はい</string>
+    <string name="No">番号</string>
+    <string name="Warning">警告</string>
+
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">この接続を削除</string>
+    <string name="DeleteAllPredefinedUrl">お気に入りの接続をすべて削除</string>
+    <string name="ListOfUrls">定義済み接続のリスト</string>
+
+    <!-- Menu main + web -->
+    <string name="menu_info">DoliDroidについて</string>
+    <string name="menu_instance">現在のインスタンスについて</string>
+    <string name="menu_info_short">だいたい</string>
+    <string name="menu_info_instance_short">インスタンスについて</string>
+    <string name="menu_show_bar_on">メニューバーを表示</string>
+    <string name="menu_show_bar_off">メニューバーを表示(いいえ)</string>
+    <string name="menu_autofill_on">ログイン/パスワードを保存</string>
+    <string name="menu_autofill_off">ログイン/パスワードを保存(いいえ)</string>
+    <string name="menu_uselocalresources_on">ローカルの静的リソースを使用する</string>
+    <string name="menu_uselocalresources_off">ローカル静的リソースを使用する(いいえ)</string>
+    <string name="AlertHTTPS">サーバーが HTTPS ページへのリダイレクトを強制しているようです。 Dolibarr URL を確認し、https URL フォームを直接使用してください (http:// ではなく https:// で始まる URL)。 s のない URL を使用し続けると、セキュリティ上の理由から、キャッシュの最適化やファイルのダウンロードなどの機能が機能しなくなります。</string>
+    <string name="AlertHTTP">セキュリティで保護されていない Web サイト (https: ではなく http:) にアクセスしようとしています。セキュリティ上の理由から、Android は、このような Web サイトの一部の機能をこのアプリに制限する場合があります。 HTTPS 証明書を追加して、Web サイトを保護する必要があります。</string>
+    <string name="AlertDownloadBadHTTPS">接続に不正なスキームの値を使用した場合 (http と https)、ダウンロードできません</string>
+
+    <!-- Menu main page -->
+    <string name="menu_utilities">ユーティリティ</string>
+    <string name="menu_settings">設定</string>
+    <string name="menu_add_url">事前定義されたURLを追加 </string>
+    <string name="menu_remove_url">お気に入りの接続を削除する</string>
+    <string name="menu_clear_all_urls">お気に入りの接続をクリア</string>
+    <string name="menu_manage_all_urls">お気に入りの接続を管理する</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">まだ Dolibarr インスタンスを持っていないので、DoliCloud.com で作成しました...</a></string>
+
+    <!-- Menu web browser -->
+    <string name="menu_menu">メニュー</string>
+    <string name="menu_go_to">迅速なアクセス</string>
+    <string name="menu_search">探す</string>
+    <string name="menu_bookmarks">ブックマーク</string>
+    <string name="menu_back">バック</string>
+    <string name="menu_refresh">ページをリロード</string>
+    <string name="menu_copy_url">URL をクリップボードにコピー</string>
+    <string name="menu_clearcache">キャッシュの消去</string>
+    <string name="menu_logout">ログアウト</string>
+    <string name="menu_quit">終了</string>
+    <string name="menu_multicompany">法人切替</string>
+    <string name="menu_uploadfile">ドキュメントをインポートまたはスキャンする</string>
+    <string name="menu_usercard">私のユーザーファイル</string>
+    <string name="menu_virtualcard">私の仮想名刺</string>
+    <string name="menu_scan">バーコードをスキャンする</string>
+    <string name="menu_photo">ドキュメントをスキャンする</string>
+    <string name="None">なし</string>
+    <string name="TargetSDKVersion">ターゲットSDKレベル</string>
+
+</resources>

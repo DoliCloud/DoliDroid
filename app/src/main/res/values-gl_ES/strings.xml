@@ -1,0 +1,115 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name"> <xliff:g id="app_name"> DoliDroid </xliff:g></string>
+    <string name="dolidroidLabel">DoliDroid, interface de Android para Dolibarr ERP-CRM</string>
+    <string name="dolidroidUserAgent">DoliDroid: interface de Android para Dolibarr ERP-CRM</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main"> <xliff:g id="title_activity_main"> DoliDroid </xliff:g></string>
+    <string name="dolibarr_for_android">Cliente de Android para Dolibarr</string>
+    <string name="open">Inicio</string>
+    <string name="dolibarr_url">URL de Dolibarr</string>
+    <string name="logo_dolidroid">Logo DoliDroid</string>
+    <string name="SelectUrl">ou escolla unha conexión predefinida</string>
+    <string name="enterNewUrl">ou introduza un novo URL</string>
+    <string name="UrlCopied">URL copiouse no portapapeis</string>
+
+    <!-- Activity web -->
+    <string name="title_activity_second"></string>
+    <string name="downloadComplete">Descarga do ficheiro completada</string>
+	<string name="NoPreviousPageAgainToQuit">Sen páxina previa. Use atraso de novo para saír.</string>
+	<string name="notCompatibleWithVersion">A versión de Dolibarr no servidor (%1$s) é demasiado antiga. DoliDroid necesita a versión de Dolibar %2$s ou superior.</string>
+    <string name="notification_error_ssl_cert_invalid">O certificado SSL de seguridade do servidor non parece válido:</string>
+    <string name="notification_error_ssl_cert_invalidbis">Está certo de querer continuar (podería non ser posible a descarga de ficheiros)?</string>
+    <string name="failedtogetpage">Produciuse un erro ao obter a páxina mediante unha descarga rápida directa . Está rexistrado?</string>
+    <string name="CacheAndHistoryCleared">Borráronse a caché e o historial.</string>
+
+    <!-- Activity about -->
+    <string name="title_activity_about"></string>
+    <string name="textBack">Atrás</string>
+    <string name="textMenu">Menú</string>
+    <string name="textAboutA"> <xliff:g id="textAboutA"> Versións... </xliff:g></string>
+    <string name="textAboutB"> <xliff:g id="textAboutB"> URL da instancia... </xliff:g></string>
+    <string name="textAboutB2"> <xliff:g id="textAboutB2"> Accesos gardados... </xliff:g></string>
+    <string name="textAboutC"> <xliff:g id="textAboutC"> URL actual e axente de usuario... </xliff:g></string>
+    <string name="Version">Versión</string>
+    <string name="VersionStaticResources">Versión dos recursos estáticos locais</string>
+    <string name="Author">Autor</string>
+    <string name="ApplicationAssociatedWithMailToLink">Aplicación asociada a ligazóns \"mailto\".</string>
+    <string name="ApplicationAssociatedWithTelLink">Aplicación asociada a ligazóns \"tel\".</string>
+    <string name="Web">Web</string>
+    <string name="Compatibility">Compatibilidade</string>
+    <string name="License">Licenza</string>
+    <string name="NameOfSourceStore">Fonte orixe da instalación</string>
+    <string name="Sources">Fontes</string>
+    <string name="PrivacyPolicy">Política de Privacidade</string>
+    <string name="DeviceAPILevel">Nivel de API do dispositivo</string>
+    <string name="DeviceHasMenuHardware">O dispositivo ten botóns de hardware</string>
+    <string name="DeviceHasDownloadManager">O dispositivo ten un xestor de descargas</string>
+    <string name="DownloadDirectory">Descargar directorio</string>
+    <string name="PhotosDirectory">Directorio de fotos</string>
+    <string name="DocumentsDirectory">Directorio de documentos</string>
+    <string name="DeviceHasPDFViewer">O dispositivo ten visores de PDF</string>
+    <string name="DeviceHasODXViewer">O dispositivo ten visores de OpenOffice</string>
+    <string name="DeviceSize">Tamaño da pantalla do dispositivo</string>
+    <string name="savedDolUrlRoot">URL de instancia de Dolibarr</string>
+    <string name="currentUrl">Conexión actual</string>
+    <string name="UserAgent">Axente de usuario</string>
+    <string name="SavedLogin">Acceso gardado</string>
+    <string name="SavedPassword">Contrasinal gardado</string>
+    <string name="BasicAuthLogin">Inicio de sesión de autenticación básica</string>
+    <string name="BasicAuthPassword">Contrasinal de autenticación básico</string>
+    <string name="Yes">Si</string>
+    <string name="No">Non</string>
+    <string name="Warning">Aviso</string>
+
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">Elimina esta conexión</string>
+    <string name="DeleteAllPredefinedUrl">Elimina todas as conexións favoritas</string>
+    <string name="ListOfUrls">Lista de conexións predefinidas</string>
+
+    <!-- Menu main + web -->
+    <string name="menu_info">Sobre DoliDroid</string>
+    <string name="menu_instance">Sobre a instancia actual</string>
+    <string name="menu_info_short">Sobre</string>
+    <string name="menu_info_instance_short">Sobre a instancia</string>
+    <string name="menu_show_bar_on">Amosar a barra de menú</string>
+    <string name="menu_show_bar_off">Amosar barra de menú (non)</string>
+    <string name="menu_autofill_on">Gardar inicio de sesión/contrasinal</string>
+    <string name="menu_autofill_off">Gardar inicio de sesión/contrasinal (non)</string>
+    <string name="menu_uselocalresources_on">Usa recursos estáticos locais</string>
+    <string name="menu_uselocalresources_off">Usa recursos estáticos locais (non)</string>
+    <string name="AlertHTTPS">Parece que o seu servidor forzou un redireccionamento a unha páxina HTTPS. Comprobe o seu URL Dolibarr e use o formulario de URL https directamente (URL que comeza por https:// en lugar de http://). Seguir usando un URL sen a s provocará, por motivos de seguridade, características que non funcionen como a optimización da caché ou a descarga de ficheiros.</string>
+    <string name="AlertHTTP">Tenta acceder a un sitio web non protexido (http: en lugar de https:). Por motivos de seguridade, Android pode restrinxir algunhas funcións desta aplicación para estes sitios web. Debe protexer o seu sitio web engadindo un certificado HTTPS.</string>
+    <string name="AlertDownloadBadHTTPS">A descarga non é posible ao utilizar un mal valor do esquema para conectarse (http vs https)</string>
+
+    <!-- Menu main page -->
+    <string name="menu_utilities">Utilidades</string>
+    <string name="menu_settings">Configuración</string>
+    <string name="menu_add_url">Engadir URL predefinido</string>
+    <string name="menu_remove_url">Eliminar a conexión predefinida</string>
+    <string name="menu_clear_all_urls">Borrar conexións predefinidas</string>
+    <string name="menu_manage_all_urls">Xestiona conexións predefinidas</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">Aínda non teño unha instancia de Dolibarr, creei unha en DoliCloud.com...</a></string>
+
+    <!-- Menu web browser -->
+    <string name="menu_menu">Menú</string>
+    <string name="menu_go_to">Acceso rápido</string>
+    <string name="menu_search">Busca</string>
+    <string name="menu_bookmarks">Marcadores</string>
+    <string name="menu_back">Atrás</string>
+    <string name="menu_refresh">Recargar a páxina</string>
+    <string name="menu_copy_url">Copia o URL no portapapeis</string>
+    <string name="menu_clearcache">Borrar caché</string>
+    <string name="menu_logout">Pechar sesión</string>
+    <string name="menu_quit">Saír</string>
+    <string name="menu_multicompany">Cambia de empresa</string>
+    <string name="menu_uploadfile">Importar ou escanear un documento</string>
+    <string name="menu_usercard">O meu ficheiro de usuario</string>
+    <string name="menu_virtualcard">A miña tarxeta de visita virtual</string>
+    <string name="menu_scan">Escanear un código de barras</string>
+    <string name="menu_photo">Escanear un documento</string>
+    <string name="None">Ningún</string>
+    <string name="TargetSDKVersion">Nivel do SDK de destino</string>
+
+</resources>

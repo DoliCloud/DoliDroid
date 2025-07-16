@@ -35,15 +35,20 @@
     <string name="Version">Έκδοση</string>
     <string name="VersionStaticResources">Έκδοση τοπικών στατικών πόρων</string>
     <string name="Author">Συντάκτης</string>
+    <string name="ApplicationAssociatedWithMailToLink">Εφαρμογή που σχετίζεται με συνδέσμους \"mailto\".</string>
+    <string name="ApplicationAssociatedWithTelLink">Εφαρμογή που σχετίζεται με συνδέσμους \"tel.\".</string>
     <string name="Web">Web</string>
     <string name="Compatibility">Συμβατότητα</string>
     <string name="License">Άδεια</string>
+    <string name="NameOfSourceStore">Πηγή αποθήκευσης εγκατάστασης</string>
     <string name="Sources">Πηγές</string>
+    <string name="PrivacyPolicy">Πολιτική προστασίας δεδομένων προσωπικού χαρακτήρα</string>
     <string name="DeviceAPILevel">Επίπεδο API συσκευής</string>
     <string name="DeviceHasMenuHardware">Η συσκευή διαθέτει hardware κουμπιά</string>
     <string name="DeviceHasDownloadManager">Η συσκευή διαθέτει πρόγραμμα διαχείρισης λήψεων</string>
     <string name="DownloadDirectory">Κατάλογος λήψεων</string>
     <string name="PhotosDirectory">Κατάλογος φωτογραφιών</string>
+    <string name="DocumentsDirectory">Κατάλογος εγγράφων</string>
     <string name="DeviceHasPDFViewer">Η συσκευή διαθέτει προγράμματα προβολής PDF</string>
     <string name="DeviceHasODXViewer">Η συσκευή έχει προγράμματα προβολής Libre Office</string>
     <string name="DeviceSize">Μέγεθος οθόνης συσκευής</string>
@@ -65,7 +70,9 @@
 
     <!-- Menu main + web -->
     <string name="menu_info">Σχετικά με το DoliDroid</string>
+    <string name="menu_instance">Σχετικά με την τρέχουσα έκδοση</string>
     <string name="menu_info_short">Σχετικά με</string>
+    <string name="menu_info_instance_short">Σχετικά με την έκδοση</string>
     <string name="menu_show_bar_on">Εμφάνιση γραμμής μενού</string>
     <string name="menu_show_bar_off">Εμφάνιση γραμμής μενού (όχι)</string>
     <string name="menu_autofill_on">Αποθήκευση σύνδεσης/κωδικού πρόσβασης</string>
@@ -83,7 +90,7 @@
     <string name="menu_remove_url">Καταργήστε μια αγαπημένη σύνδεση</string>
     <string name="menu_clear_all_urls">Εκκαθάριση αγαπημένων συνδέσεων</string>
     <string name="menu_manage_all_urls">Διαχειριστείτε τις αγαπημένες συνδέσεις</string>
-    <string name="dolicloud_register" ignore="MissingTranslation"> <a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile"> Δεν έχετε ακόμη εγκαταστήσει το Dolibarr ERP CRM, δημιουργήστε ένα στο DoliCloud.com... </a></string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">Δεν έχω ακόμα μια παρουσία Dolibarr, δημιουργώ μία στο DoliCloud.com...</a></string>
 
     <!-- Menu web browser -->
     <string name="menu_menu">Μενού</string>
@@ -97,10 +104,12 @@
     <string name="menu_logout">Αποσύνδεση</string>
     <string name="menu_quit">Έξοδος</string>
     <string name="menu_multicompany">Αλλαγή εταιρείας</string>
+    <string name="menu_uploadfile">Εισαγωγή ή σάρωση ενός εγγράφου</string>
     <string name="menu_usercard">Το αρχείο χρήστη μου</string>
     <string name="menu_virtualcard">Η εικονική επαγγελματική μου κάρτα</string>
     <string name="menu_scan">Σαρώστε έναν γραμμωτό κώδικα</string>
     <string name="menu_photo">Σαρώστε ένα έγγραφο</string>
     <string name="None">Καμία</string>
+    <string name="TargetSDKVersion">Επίπεδο SDK στόχου</string>
 
 </resources>

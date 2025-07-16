@@ -1,0 +1,115 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name"> <xliff:g id="app_name"> DoliDroid </xliff:g></string>
+    <string name="dolidroidLabel">DoliDroid, Android-gränssnitt för Dolibarr ERP-CRM</string>
+    <string name="dolidroidUserAgent">DoliDroid - Android-gränssnitt för Dolibarr ERP-CRM</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main"> <xliff:g id="title_activity_main"> DoliDroid </xliff:g></string>
+    <string name="dolibarr_for_android">Android-klient för Dolibarr</string>
+    <string name="open">Start</string>
+    <string name="dolibarr_url">Dolibarr URL</string>
+    <string name="logo_dolidroid">Logotyp DoliDroid</string>
+    <string name="SelectUrl">eller välj en favoritanslutning</string>
+    <string name="enterNewUrl">eller ange en ny webbadress</string>
+    <string name="UrlCopied">URL kopierad till urklipp</string>
+
+    <!-- Activity web -->
+    <string name="title_activity_second"></string>
+    <string name="downloadComplete">Nedladdning av filen är klar</string>
+	<string name="NoPreviousPageAgainToQuit">Ingen föregående sida. Tryck på bakåt igen för att avsluta.</string>
+	<string name="notCompatibleWithVersion">Dolibarr-versionen på servern (%1$s) är för gammal. DoliDroid behöver Dolibar-version %2$s eller högre.</string>
+    <string name="notification_error_ssl_cert_invalid">Serversäkerhet SSL-certifikat verkar ogiltigt:</string>
+    <string name="notification_error_ssl_cert_invalidbis">Vill du fortsätta (nedladdning av filer kommer inte vara möjligt)?</string>
+    <string name="failedtogetpage">Kunde inte hämta sidan via snabb direktnedladdning. Är du inloggad?</string>
+    <string name="CacheAndHistoryCleared">Cache och historik rensad.</string>
+
+    <!-- Activity about -->
+    <string name="title_activity_about"></string>
+    <string name="textBack">Bakåt</string>
+    <string name="textMenu">Meny</string>
+    <string name="textAboutA"><xliff:g id="textAboutA">Versioner...</xliff:g></string>
+    <string name="textAboutB"><xliff:g id="textAboutB">Instans-URL...</xliff:g></string>
+    <string name="textAboutB2"><xliff:g id="textAboutB2">Sparade inloggningar...</xliff:g></string>
+    <string name="textAboutC"><xliff:g id="textAboutC">NuvarandeURL och användaragent...</xliff:g></string>
+    <string name="Version">Version</string>
+    <string name="VersionStaticResources">Version av lokala statiska resurser</string>
+    <string name="Author">Författare</string>
+    <string name="ApplicationAssociatedWithMailToLink">Applikation kopplad till \"mailto\"-länkar</string>
+    <string name="ApplicationAssociatedWithTelLink">Applikation kopplad till \"tel\"-länkar</string>
+    <string name="Web">Webb</string>
+    <string name="Compatibility">Kompatibilitet</string>
+    <string name="License">Licens</string>
+    <string name="NameOfSourceStore">Källlager för installation</string>
+    <string name="Sources">Källor</string>
+    <string name="PrivacyPolicy">Sekretesspolicy</string>
+    <string name="DeviceAPILevel">API-nivå för enheten</string>
+    <string name="DeviceHasMenuHardware">Enheten har hårdvaruknappar</string>
+    <string name="DeviceHasDownloadManager">Enheten har en nedladdningshanterare</string>
+    <string name="DownloadDirectory">Ladda ner katalog</string>
+    <string name="PhotosDirectory">Bildmapp</string>
+    <string name="DocumentsDirectory">Dokumentkatalog</string>
+    <string name="DeviceHasPDFViewer">Enheten har PDF-visare</string>
+    <string name="DeviceHasODXViewer">Enheten har OpenOffice-visare</string>
+    <string name="DeviceSize">Enhetens skärmstorlek</string>
+    <string name="savedDolUrlRoot">URL för Dolibarr-installation</string>
+    <string name="currentUrl">Aktuell anslutning</string>
+    <string name="UserAgent">Användaragent</string>
+    <string name="SavedLogin">Sparad inloggning</string>
+    <string name="SavedPassword">Sparat lösenord</string>
+    <string name="BasicAuthLogin">Grundläggande inloggningsid</string>
+    <string name="BasicAuthPassword">Grundläggande autentiseringslösenord</string>
+    <string name="Yes">Ja</string>
+    <string name="No">Nej</string>
+    <string name="Warning">Varning</string>
+
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">Ta bort den här anslutningen</string>
+    <string name="DeleteAllPredefinedUrl">Ta bort alla favoritanslutningar</string>
+    <string name="ListOfUrls">Lista över fördefinierade anslutningar</string>
+
+    <!-- Menu main + web -->
+    <string name="menu_info">Om DoliDroid</string>
+    <string name="menu_instance">Om aktuell instans</string>
+    <string name="menu_info_short">Om</string>
+    <string name="menu_info_instance_short">Om exempel</string>
+    <string name="menu_show_bar_on">Visa menyrad</string>
+    <string name="menu_show_bar_off">Visa menyraden (nej)</string>
+    <string name="menu_autofill_on">Spara inloggning/lösenord</string>
+    <string name="menu_autofill_off">Spara inloggning / lösenord (nej)</string>
+    <string name="menu_uselocalresources_on">Använd lokal statisk resurs</string>
+    <string name="menu_uselocalresources_off">Använd lokala statiska resurser (nej)</string>
+    <string name="AlertHTTPS">Det verkar som att din server tvingar omdirigering till HTTPS. Kontrollera din Dolibarr-URL och använd HTTPS-adressen direkt. Att använda HTTP innebär en säkerhetsrisk och att funktioner inte fungerar korrekt.</string>
+    <string name="AlertHTTP">Du försöker ansluta till en osäker webbplats (http: istället för https:). Av säkerhetsskäl kan Android därför begränsa vissa funktioner i denna app. Du bör säkra webbplatsen med ett SSL-certifikat.</string>
+    <string name="AlertDownloadBadHTTPS">Nedladdning är inte möjlig via osäker anslutning (http istället för https)</string>
+
+    <!-- Menu main page -->
+    <string name="menu_utilities">Verktyg</string>
+    <string name="menu_settings">inställningar</string>
+    <string name="menu_add_url">Lägg till fördefinierad URL</string>
+    <string name="menu_remove_url">Ta bort en favoritanslutning</string>
+    <string name="menu_clear_all_urls">Rensa favoritanslutningar</string>
+    <string name="menu_manage_all_urls">Hantera favoritanslutningar</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">Jag har ingen Dolibarr-instans än, jag skapar en på DoliCloud.com...</a></string>
+
+    <!-- Menu web browser -->
+    <string name="menu_menu">Meny</string>
+    <string name="menu_go_to">Snabbåtkomst</string>
+    <string name="menu_search">Sök</string>
+    <string name="menu_bookmarks">Bokmärken</string>
+    <string name="menu_back">Tillbaka</string>
+    <string name="menu_refresh">Ladda om sidan</string>
+    <string name="menu_copy_url">Kopia URL till urklipp</string>
+    <string name="menu_clearcache">Rensa cache</string>
+    <string name="menu_logout">Logga ut</string>
+    <string name="menu_quit">Avsluta</string>
+    <string name="menu_multicompany">Byt företag</string>
+    <string name="menu_uploadfile">Importera eller skanna ett dokument</string>
+    <string name="menu_usercard">Min användarfil</string>
+    <string name="menu_virtualcard">Mitt virtuella visitkort</string>
+    <string name="menu_scan">Scanna en streckkod</string>
+    <string name="menu_photo">Scanna ett dokument</string>
+    <string name="None">Ingen</string>
+    <string name="TargetSDKVersion">Mål-SDK-nivå</string>
+
+</resources>

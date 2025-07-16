@@ -1,0 +1,115 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name"><xliff:g id="app_name">DoliDroid</xliff:g></string>
+    <string name="dolidroidLabel">DoliDroid, front-end Android pentru Dolibarr ERP-CRM </string>
+    <string name="dolidroidUserAgent">DoliDroid - front-end Android pentru Dolibarr ERP-CRM </string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main"><xliff:g id="title_activity_main">DoliDroid</xliff:g></string>
+    <string name="dolibarr_for_android">Client Android pentru Dolibarr</string>
+    <string name="open">Start</string>
+    <string name="dolibarr_url">URL Dolibarr</string>
+    <string name="logo_dolidroid">Logo DoliDroid</string>
+    <string name="SelectUrl">sau selectează o conexiune favorită</string>
+    <string name="enterNewUrl">Sau introdu un nou URL</string>
+    <string name="UrlCopied">URL copiat în clipboard</string>
+
+    <!-- Activity web -->
+    <string name="title_activity_second"></string>
+    <string name="downloadComplete">Descărcarea fişierului finalizată</string>
+	<string name="NoPreviousPageAgainToQuit">Nicio pagină anterioară. Apasă Înapoi din noi pentru ieşire.</string>
+	<string name="notCompatibleWithVersion">Versiunea Dolibarr de pe server (%1$s) este prea veche. DoliDroid are nevoie de versiunea de Dolibarr %2$s sau una mai nouă.</string>
+    <string name="notification_error_ssl_cert_invalid">Certificatul SSL a server-ului pare să fie invalid: </string>
+    <string name="notification_error_ssl_cert_invalidbis">Vrei să continui (descărcarea de fişiere nu va fi posibilă) ?</string>
+    <string name="failedtogetpage">Eșec la obținerea paginii prin descărcare directă rapidă. Ești autentificat ?</string>
+    <string name="CacheAndHistoryCleared">Memoria cache și istoricul au fost șterse.</string>
+
+    <!-- Activity about -->
+    <string name="title_activity_about"></string>
+    <string name="textBack">Înapoi</string>
+    <string name="textMenu">Meniu</string>
+    <string name="textAboutA"><xliff:g id="textAboutA">Versiuni...</xliff:g></string>
+    <string name="textAboutB"><xliff:g id="textAboutB">URL instanță...</xliff:g></string>
+    <string name="textAboutB2"><xliff:g id="textAboutB2">Autentificări salvate...</xliff:g></string>
+    <string name="textAboutC"><xliff:g id="textAboutC">CurrentURL și user agent...</xliff:g></string>
+    <string name="Version">Versiune</string>
+    <string name="VersionStaticResources">Versiune resurse statice locale</string>
+    <string name="Author">Autor</string>
+    <string name="ApplicationAssociatedWithMailToLink">Aplicație asociată cu link-uri \"mailto\".</string>
+    <string name="ApplicationAssociatedWithTelLink">Aplicație asociată cu link-uri \"tel\".</string>
+    <string name="Web">Web</string>
+    <string name="Compatibility">Compatibilitate</string>
+    <string name="License">Licenţă</string>
+    <string name="NameOfSourceStore">Magazin sursă instalare</string>
+    <string name="Sources">Surse</string>
+    <string name="PrivacyPolicy">Politica de confidențialitate</string>
+    <string name="DeviceAPILevel">Nivel API dispozitiv</string>
+    <string name="DeviceHasMenuHardware">Dispozitivul are butoane hardware</string>
+    <string name="DeviceHasDownloadManager">Dispozitivul are manager de descărcări</string>
+    <string name="DownloadDirectory">Director descărcare</string>
+    <string name="PhotosDirectory">Director fotografii</string>
+    <string name="DocumentsDirectory">Directorul de documente</string>
+    <string name="DeviceHasPDFViewer">Dispozitivul are viewer-e PDF</string>
+    <string name="DeviceHasODXViewer">Dispozitivul are viewer-e OpenOffice</string>
+    <string name="DeviceSize">Dimensiune ecran dispozitiv</string>
+    <string name="savedDolUrlRoot">URL instanţă Dolibarr</string>
+    <string name="currentUrl">Conexiune curentă</string>
+    <string name="UserAgent">Agent utilizator</string>
+    <string name="SavedLogin">Autentificare salvată</string>
+    <string name="SavedPassword">Parolă salvată</string>
+    <string name="BasicAuthLogin">Autentificare Basic auth</string>
+    <string name="BasicAuthPassword">Parolă Basic auth</string>
+    <string name="Yes">Da</string>
+    <string name="No">Nu</string>
+    <string name="Warning">Avertizare</string>
+
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">Șterge această conexiune</string>
+    <string name="DeleteAllPredefinedUrl">Șterge toate conexiunile favorite</string>
+    <string name="ListOfUrls">Listă conexiuni predefinite</string>
+
+    <!-- Menu main + web -->
+    <string name="menu_info">Despre Dolidroid</string>
+    <string name="menu_instance">Despre instanța curentă</string>
+    <string name="menu_info_short">Despre</string>
+    <string name="menu_info_instance_short">Despre instanță</string>
+    <string name="menu_show_bar_on">Afișare bară meniu</string>
+    <string name="menu_show_bar_off">Afişează bară meniu (nu)</string>
+    <string name="menu_autofill_on">Salvare login/parolă</string>
+    <string name="menu_autofill_off">Salvare login/parolă (nu)</string>
+    <string name="menu_uselocalresources_on">Folosește resurse statice locale</string>
+    <string name="menu_uselocalresources_off">Foloseşte resursele statice locale (nu)</string>
+    <string name="AlertHTTPS">Se pare că serverul a forțat o redirecționare către o pagină HTTPS. Verifică adresa URL Dolibarr și utilizează direct formularul URL https (URL care începe cu https:// în loc de http://). Continuarea utilizării unei adrese URL fără s va avea ca rezultat, din motive de securitate, funcțiile care nu funcționează, cum ar fi optimizarea cache-ului sau descărcarea fișierelor.</string>
+    <string name="AlertHTTP">Încerci să accesezi un site web nesecurizat (http: în loc de https:). Din motive de securitate, Android poate restricționa anumite funcții în această aplicație pentru astfel de site-uri web. Ar trebui să vă securizați site-ul adăugând un certificat HTTPS.</string>
+    <string name="AlertDownloadBadHTTPS">Descărcarea nu este posibilă când ai folosit o valoare incorectă a schemei pentru a te conecta (http vs https) </string>
+
+    <!-- Menu main page -->
+    <string name="menu_utilities">Utilitare</string>
+    <string name="menu_settings">Setări</string>
+    <string name="menu_add_url">Adaugă URL predefinit</string>
+    <string name="menu_remove_url">Șterge o conexiune favorită</string>
+    <string name="menu_clear_all_urls">Șterge conexiuni favorite</string>
+    <string name="menu_manage_all_urls">Administrare conexiuni favorite</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">Nu am încă o instanță Dolibarr, am creat una pe DoliCloud.com...</a></string>
+
+    <!-- Menu web browser -->
+    <string name="menu_menu">Meniu</string>
+    <string name="menu_go_to">Acces rapid</string>
+    <string name="menu_search">Căutare</string>
+    <string name="menu_bookmarks">Bookmark-uri</string>
+    <string name="menu_back">Înapoi</string>
+    <string name="menu_refresh">Reîncarcă pagina</string>
+    <string name="menu_copy_url">Copiere URL în clipboard</string>
+    <string name="menu_clearcache">Goleşte cache-ul</string>
+    <string name="menu_logout">Deconectare</string>
+    <string name="menu_quit">Ieşire</string>
+    <string name="menu_multicompany">Schimbă compania</string>
+    <string name="menu_uploadfile">Import sau scanare document</string>
+    <string name="menu_usercard">Fișierul meu de utilizator</string>
+    <string name="menu_virtualcard">Cardul meu virtual</string>
+    <string name="menu_scan">Scanare cod de bare</string>
+    <string name="menu_photo">Scanare document</string>
+    <string name="None">Nimic</string>
+    <string name="TargetSDKVersion">Nivelul SDK țintă</string>
+
+</resources>

@@ -1,0 +1,115 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name"> <xliff:g id="app_name"> DoliDroid </xliff:g></string>
+    <string name="dolidroidLabel">DoliDroid, Android front-end pro Dolibarr ERP-CRM</string>
+    <string name="dolidroidUserAgent">DoliDroid - Android front-end pro Dolibarr ERP-CRM</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main"> <xliff:g id="title_activity_main"> DoliDroid </xliff:g></string>
+    <string name="dolibarr_for_android">Klient Android pro Dolibarr</string>
+    <string name="open">Start</string>
+    <string name="dolibarr_url">URL adresa Dolibarr</string>
+    <string name="logo_dolidroid">Logo DoliDroid</string>
+    <string name="SelectUrl">nebo vyberte oblíbené připojení</string>
+    <string name="enterNewUrl">nebo vyber přednastavenou URL</string>
+    <string name="UrlCopied">Adresa URL zkopírována do schránky</string>
+
+    <!-- Activity web -->
+    <string name="title_activity_second"></string>
+    <string name="downloadComplete">Stahování souboru dokončeno</string>
+	<string name="NoPreviousPageAgainToQuit">Předchozí strana neexistuje. Stiskni znovu zpět pro ukončení.</string>
+	<string name="notCompatibleWithVersion">Verze Dolibarru na serveru (%1$s) je příliš stará. DoliDroid vyžaduje verzi Dolibaru nejméně %2$s.</string>
+    <string name="notification_error_ssl_cert_invalid">Bezpečnostní SSL certifikát serveru se zdá být neplatný.</string>
+    <string name="notification_error_ssl_cert_invalidbis">Chceš pokračovat (stahování souborů nebude možné)?</string>
+    <string name="failedtogetpage">Nepodařilo se získat stránku rychlým přímým stažením. Jste přihlášeni?</string>
+    <string name="CacheAndHistoryCleared">Mezipaměť a historie byly vymazány.</string>
+
+    <!-- Activity about -->
+    <string name="title_activity_about"></string>
+    <string name="textBack">Zpět</string>
+    <string name="textMenu">Menu</string>
+    <string name="textAboutA"> <xliff:g id="textAboutA"> Verze... </xliff:g></string>
+    <string name="textAboutB"> <xliff:g id="textAboutB"> Adresa URL instance... </xliff:g></string>
+    <string name="textAboutB2"> <xliff:g id="textAboutB2"> Uložená přihlášení... </xliff:g></string>
+    <string name="textAboutC"> <xliff:g id="textAboutC"> Aktuální adresa URL a uživatelský agent... </xliff:g></string>
+    <string name="Version">Verze</string>
+    <string name="VersionStaticResources">Verze lokálních statických zdrojů</string>
+    <string name="Author">Autor</string>
+    <string name="ApplicationAssociatedWithMailToLink">Aplikace spojená s odkazy „mailto“</string>
+    <string name="ApplicationAssociatedWithTelLink">Aplikace spojená s odkazy „tel“</string>
+    <string name="Web">Web</string>
+    <string name="Compatibility">Kompatibilita</string>
+    <string name="License">Licence</string>
+    <string name="NameOfSourceStore">Zdrojový úložiště instalace</string>
+    <string name="Sources">Zdroje</string>
+    <string name="PrivacyPolicy">Zásady ochrany osobních údajů</string>
+    <string name="DeviceAPILevel">API úroveň zařízení</string>
+    <string name="DeviceHasMenuHardware">Zařízení disponuje hardwarovými tlačítky</string>
+    <string name="DeviceHasDownloadManager">Zařízení obsahuje správce stahování</string>
+    <string name="DownloadDirectory">Adresář pro stahování</string>
+    <string name="PhotosDirectory">Adresář fotografií</string>
+    <string name="DocumentsDirectory">Adresář dokumentů</string>
+    <string name="DeviceHasPDFViewer">Zařízení obsahuje zobrazovače PDF</string>
+    <string name="DeviceHasODXViewer">Zařízení obsahuje zobrazovače OpenOffice</string>
+    <string name="DeviceSize">Velikost displeje zařízení</string>
+    <string name="savedDolUrlRoot">Adresa URL instance Dolibarr</string>
+    <string name="currentUrl">Aktuální připojení</string>
+    <string name="UserAgent">User Agent</string>
+    <string name="SavedLogin">Uložené jméno</string>
+    <string name="SavedPassword">Uložené heslo</string>
+    <string name="BasicAuthLogin">Základní auth jméno</string>
+    <string name="BasicAuthPassword">Základní auth heslo</string>
+    <string name="Yes">Ano</string>
+    <string name="No">Ne</string>
+    <string name="Warning">Varování</string>
+
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">Odebrat toto připojení</string>
+    <string name="DeleteAllPredefinedUrl">Odebrat všechna oblíbená připojení</string>
+    <string name="ListOfUrls">Seznam předdefinovaných připojení</string>
+
+    <!-- Menu main + web -->
+    <string name="menu_info">O aplikaci DoliDroid</string>
+    <string name="menu_instance">O aktuální instanci</string>
+    <string name="menu_info_short">O</string>
+    <string name="menu_info_instance_short">O instanci</string>
+    <string name="menu_show_bar_on">Zobrazit panel nabídek</string>
+    <string name="menu_show_bar_off">Zobraz lištu menu (ne)</string>
+    <string name="menu_autofill_on">Uložit přihlašovací jméno/heslo</string>
+    <string name="menu_autofill_off">Uložit jméno/heslo (ne)</string>
+    <string name="menu_uselocalresources_on">Používejte místní statické zdroje</string>
+    <string name="menu_uselocalresources_off">Použij místní statické zdroje (ne)</string>
+    <string name="AlertHTTPS">Zdá se, že váš server si vynutil přesměrování na stránku HTTPS. Zkontrolujte prosím svou URL Dolibarr a použijte přímo formulář https URL (URL začínající https:// místo http://). Ponechání adresy URL bez s bude mít z bezpečnostních důvodů za následek nefunkčnost funkcí, jako je optimalizace mezipaměti nebo stahování souborů.</string>
+    <string name="AlertHTTP">Pokusíte se o přístup k nezabezpečenému webu (http: namísto https:). Z bezpečnostních důvodů může Android pro takové weby omezit některé funkce této aplikace. Svůj web byste měli zabezpečit přidáním HTTPS certifikátu.</string>
+    <string name="AlertDownloadBadHTTPS">Stažení není možné, když jste pro připojení použili špatnou hodnotu schématu (http vs https)</string>
+
+    <!-- Menu main page -->
+    <string name="menu_utilities">Utility</string>
+    <string name="menu_settings">Nastavení</string>
+    <string name="menu_add_url">Doplň přednastavenou URL adresu</string>
+    <string name="menu_remove_url">Odebrat oblíbené připojení</string>
+    <string name="menu_clear_all_urls">Vymazat oblíbené připojení</string>
+    <string name="menu_manage_all_urls">Správa oblíbených připojení</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">Zatím nemám instanci Dolibarr, vytvořil jsem si ji na DoliCloud.com...</a></string>
+
+    <!-- Menu web browser -->
+    <string name="menu_menu">Menu</string>
+    <string name="menu_go_to">Rychlý přístup</string>
+    <string name="menu_search">Hledej</string>
+    <string name="menu_bookmarks">Záložky</string>
+    <string name="menu_back">Zpět</string>
+    <string name="menu_refresh">Obnov stránku</string>
+    <string name="menu_copy_url">Zkopírujte URL do schránky</string>
+    <string name="menu_clearcache">Vyčisti mezipaměť</string>
+    <string name="menu_logout">Odhlášení</string>
+    <string name="menu_quit">Konec</string>
+    <string name="menu_multicompany">Přepni společnost</string>
+    <string name="menu_uploadfile">Import nebo skenování dokumentu</string>
+    <string name="menu_usercard">Můj uživatelský soubor</string>
+    <string name="menu_virtualcard">Moje virtuální vizitka</string>
+    <string name="menu_scan">Naskenujte čárový kód</string>
+    <string name="menu_photo">Naskenujte dokument</string>
+    <string name="None">Žádný</string>
+    <string name="TargetSDKVersion">Cílová úroveň SDK</string>
+
+</resources>

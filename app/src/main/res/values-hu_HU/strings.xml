@@ -1,0 +1,115 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name"> <xliff:g id="app_name"> DoliDroid </xliff:g></string>
+    <string name="dolidroidLabel">DoliDroid, Android kezelőfelület a Dolibarr ERP-CRM-hez</string>
+    <string name="dolidroidUserAgent">DoliDroid – Android kezelőfelület a Dolibarr ERP-CRM-hez</string>
+    
+    <!-- Activity main -->
+    <string name="title_activity_main"> <xliff:g id="title_activity_main"> DoliDroid </xliff:g></string>
+    <string name="dolibarr_for_android">Android kliens a Dolibarr számára</string>
+    <string name="open">Kezdés</string>
+    <string name="dolibarr_url">Dolibarr URL</string>
+    <string name="logo_dolidroid">DoliDroid logó</string>
+    <string name="SelectUrl">vagy válasszon egy kedvenc kapcsolatot</string>
+    <string name="enterNewUrl">vagy írjon be egy új URL-t</string>
+    <string name="UrlCopied">Az URL a vágólapra másolva</string>
+
+    <!-- Activity web -->
+    <string name="title_activity_second"></string>
+    <string name="downloadComplete">A fájl letöltése befejeződött</string>
+	<string name="NoPreviousPageAgainToQuit">Nincs előző oldal. A kilépéshez használja újra.</string>
+	<string name="notCompatibleWithVersion">A kiszolgálón lévő Dolibarr verzió (%1$s) túl régi. A DoliDroidnak a Dolibar %2$s vagy újabb verziójára van szüksége.</string>
+    <string name="notification_error_ssl_cert_invalid">A szerver biztonsági SSL tanúsítványa érvénytelennek tűnik:</string>
+    <string name="notification_error_ssl_cert_invalidbis">Folytatja (a fájlok letöltése nem lehetséges)?</string>
+    <string name="failedtogetpage">Gyors közvetlen letöltéssel nem sikerült elérni az oldalt. Be vagy jelentkezve?</string>
+    <string name="CacheAndHistoryCleared">A gyorsítótár és az előzmények törölve.</string>
+
+    <!-- Activity about -->
+    <string name="title_activity_about"></string>
+    <string name="textBack">Vissza</string>
+    <string name="textMenu">Menü</string>
+    <string name="textAboutA"> <xliff:g id="textAboutA"> Verziók... </xliff:g></string>
+    <string name="textAboutB"> <xliff:g id="textAboutB"> Példány URL... </xliff:g></string>
+    <string name="textAboutB2"> <xliff:g id="textAboutB2"> Mentett bejelentkezések... </xliff:g></string>
+    <string name="textAboutC"> <xliff:g id="textAboutC"> Jelenlegi URL és felhasználói ügynök... </xliff:g></string>
+    <string name="Version">Verzió</string>
+    <string name="VersionStaticResources">A helyi statikus erőforrások verziója</string>
+    <string name="Author">Szerző</string>
+    <string name="ApplicationAssociatedWithMailToLink">„mailto” hivatkozásokhoz társított alkalmazás</string>
+    <string name="ApplicationAssociatedWithTelLink">„tel” hivatkozásokhoz társított alkalmazás</string>
+    <string name="Web">Web</string>
+    <string name="Compatibility">Kompatibilitás</string>
+    <string name="License">Engedély</string>
+    <string name="NameOfSourceStore">A telepítés forrástárolója</string>
+    <string name="Sources">Források</string>
+    <string name="PrivacyPolicy">Adatvédelmi szabályzat</string>
+    <string name="DeviceAPILevel">Eszköz API-szint</string>
+    <string name="DeviceHasMenuHardware">A készülék hardveres gombokkal rendelkezik</string>
+    <string name="DeviceHasDownloadManager">Az eszköz letöltéskezelővel rendelkezik</string>
+    <string name="DownloadDirectory">Könyvtár letöltése</string>
+    <string name="PhotosDirectory">Fotók könyvtár</string>
+    <string name="DocumentsDirectory">Dokumentumok könyvtár</string>
+    <string name="DeviceHasPDFViewer">A készülék PDF olvasókkal rendelkezik</string>
+    <string name="DeviceHasODXViewer">A készülék OpenOffice olvasókkal rendelkezik</string>
+    <string name="DeviceSize">A készülék képernyő mérete</string>
+    <string name="savedDolUrlRoot">Dolibarr példány URL-je</string>
+    <string name="currentUrl">Jelenlegi kapcsolat</string>
+    <string name="UserAgent">Felhasználói ügynök</string>
+    <string name="SavedLogin">Mentett bejelentkezés</string>
+    <string name="SavedPassword">Mentett jelszó</string>
+    <string name="BasicAuthLogin">Alapszintű hitelesítési bejelentkezés</string>
+    <string name="BasicAuthPassword">Alapszintű hitelesítési jelszó</string>
+    <string name="Yes">Igen</string>
+    <string name="No">Nem</string>
+    <string name="Warning">Figyelem</string>
+
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">Távolítsa el ezt a kapcsolatot</string>
+    <string name="DeleteAllPredefinedUrl">Távolítsa el az összes kedvenc kapcsolatot</string>
+    <string name="ListOfUrls">Az előre meghatározott kapcsolatok listája</string>
+
+    <!-- Menu main + web -->
+    <string name="menu_info">A DoliDroidról</string>
+    <string name="menu_instance">Az aktuális példányról</string>
+    <string name="menu_info_short">Névjegy</string>
+    <string name="menu_info_instance_short">A példányról</string>
+    <string name="menu_show_bar_on">Menüsor megjelenítése</string>
+    <string name="menu_show_bar_off">Menüsor megjelenítése (nem)</string>
+    <string name="menu_autofill_on">Mentse el a bejelentkezési azonosítót/jelszót</string>
+    <string name="menu_autofill_off">Bejelentkezés/jelszó mentése (nem)</string>
+    <string name="menu_uselocalresources_on">Használjon helyi statikus erőforrásokat</string>
+    <string name="menu_uselocalresources_off">Helyi statikus erőforrások használata (nem)</string>
+    <string name="AlertHTTPS">Úgy tűnik, hogy a szerver egy HTTPS-oldalra kényszerítette az átirányítást. Kérjük, ellenőrizze Dolibarr URL-jét, és használja közvetlenül a https URL űrlapot (az URL a http:// helyett https:// karakterekkel kezdődik). Az s nélküli URL használata biztonsági okokból olyan funkciókat eredményez, mint a gyorsítótár optimalizálás vagy a fájlok letöltése.</string>
+    <string name="AlertHTTP">Nem biztonságos webhelyet próbál elérni (https: helyett http:). Biztonsági okokból az Android korlátozhat bizonyos funkciókat ebben az alkalmazásban az ilyen webhelyeken. Biztosítsa webhelyét HTTPS-tanúsítvány hozzáadásával.</string>
+    <string name="AlertDownloadBadHTTPS">A letöltés nem lehetséges, ha rossz sémaértéket használt a csatlakozáshoz (http és https)</string>
+
+    <!-- Menu main page -->
+    <string name="menu_utilities">Segédprogramok</string>
+    <string name="menu_settings">Beállítások</string>
+    <string name="menu_add_url">Adjon hozzá előre meghatározott URL-t</string>
+    <string name="menu_remove_url">Távolítsa el a kedvenc kapcsolatot</string>
+    <string name="menu_clear_all_urls">Tisztítsa meg a kedvencek kapcsolatait</string>
+    <string name="menu_manage_all_urls">Kedvenc kapcsolatok kezelése</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">Még nincs Dolibarr példányom, létrehozok egyet a DoliCloud.com oldalon...</a></string>
+
+    <!-- Menu web browser -->
+    <string name="menu_menu">Menü</string>
+    <string name="menu_go_to">Gyors hozzáférés</string>
+    <string name="menu_search">Keresés</string>
+    <string name="menu_bookmarks">Könyvjelzők</string>
+    <string name="menu_back">Vissza</string>
+    <string name="menu_refresh">Oldal újratöltése</string>
+    <string name="menu_copy_url">URL másolása a vágólapra</string>
+    <string name="menu_clearcache">Törölje a gyorsítótárat</string>
+    <string name="menu_logout">Kijelentkezés</string>
+    <string name="menu_quit">Kilépés</string>
+    <string name="menu_multicompany">Válts céget</string>
+    <string name="menu_uploadfile">Dokumentum importálása vagy beolvasása</string>
+    <string name="menu_usercard">Saját felhasználói fájl</string>
+    <string name="menu_virtualcard">Virtuális névjegyem</string>
+    <string name="menu_scan">Vonalkód beolvasása</string>
+    <string name="menu_photo">Dokumentum beolvasása</string>
+    <string name="None">Egyik sem</string>
+    <string name="TargetSDKVersion">Cél SDK szint</string>
+
+</resources>
