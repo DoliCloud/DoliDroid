@@ -9,5 +9,5 @@
     android:gravity="start"
     android:textColor="@color/black"
     android:padding="8dp"
-    android:textSize="18dp"
+    android:textSize="16sp"
     />

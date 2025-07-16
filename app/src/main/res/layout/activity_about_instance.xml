@@ -1,5 +1,4 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
@@ -30,11 +29,9 @@
                 android:id="@+id/imageView03"
                 android:layout_width="82dp"
                 android:layout_height="145dp"
-                android:layout_below="@+id/textAboutAndroidClient"
-                android:layout_alignParentStart="false"
-                android:layout_centerHorizontal="true"
                 android:foregroundTint="#009688"
-                android:src="@drawable/ic_baseline_screenshot_monitor_24" />
+                android:src="@drawable/ic_baseline_screenshot_monitor_24"
+                tools:ignore="ContentDescription" />
         </FrameLayout>
 
         <TextView

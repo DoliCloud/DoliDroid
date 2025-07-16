@@ -185,7 +185,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		//ArrayAdapter <CharSequence> adapter = new ArrayAdapter <CharSequence> (this, android.R.layout.simple_spinner_item);
 		//adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		ArrayAdapter <CharSequence> adapter = new ArrayAdapter <CharSequence> (this, R.layout.select_url_item); // Set style for selected visible value
-		adapter.setDropDownViewResource(R.layout.select_url_item);	// Set style for dropdown box
+		// Set style for dropdown box (the font size of for the combo box of pre-defined URLs)
+		adapter.setDropDownViewResource(R.layout.select_url_item);
 
 		this.nbOfEntries=0;
 		try {

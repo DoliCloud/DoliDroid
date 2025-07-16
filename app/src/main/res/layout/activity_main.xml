@@ -97,7 +97,7 @@
         android:minHeight="42dp"
         android:singleLine="true"
         android:textSize="16sp"
-        tools:ignore="LabelFor,TouchTargetSizeCheck,TextContrastCheck">
+        tools:ignore="HardcodedText,LabelFor,TextContrastCheck,TouchTargetSizeCheck">
 
         <requestFocus />
     </EditText>

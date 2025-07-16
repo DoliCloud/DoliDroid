@@ -9,17 +9,18 @@
 	android:fitsSystemWindows="true"
 	android:padding="10dp">
 
+	<!-- Use 0dp for layout_width as it is faster than "match_parent" -->
 	<TextView
 		android:id="@+id/text_view"
-		android:layout_width="match_parent"
-		android:layout_height="32dp"
+		android:layout_width="0dp"
+		android:layout_height="48dp"
 		android:layout_weight="1"
 		android:gravity="center_vertical" />
 
 	<ImageView
 		android:id="@+id/image_view"
-		android:layout_width="wrap_content"
-		android:layout_height="32dp"
+		android:layout_width="48dp"
+		android:layout_height="48dp"
 		android:clickable="true"
 		android:contentDescription="@string/DeletePredefinedUrl"
 		android:src="@drawable/baseline_delete_forever_24" />

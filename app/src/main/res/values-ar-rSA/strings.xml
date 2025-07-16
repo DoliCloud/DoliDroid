@@ -28,9 +28,9 @@
     <string name="title_activity_about"></string>
     <string name="textBack">خلف</string>
     <string name="textMenu">قائمة</string>
-    <string name="textAboutA"> الإصدارات <xliff:g id=\"textAboutA\"> ...</string>
-    <string name="textAboutB"> <xliff:g id=\"textAboutB\"> عنوان URL المثيل ...</string>
-    <string name="textAboutB2"> a05eb72 definitelyb23ez0 عمليات تسجيل الدخول المحفوظة ... </xliff:g></string>
+    <string name="textAboutA"> الإصدارات <xliff:g id="textAboutA"> ...</xliff:g></string>
+    <string name="textAboutB"> <xliff:g id="textAboutB"> عنوان URL المثيل ...</xliff:g></string>
+    <string name="textAboutB2"> عمليات تسجيل الدخول المحفوظة ... </string>
     <string name="textAboutC"> <xliff:g id="textAboutC"> CurrentURL ووكيل المستخدم ... </xliff:g></string>
     <string name="Version">الإصدار</string>
     <string name="VersionStaticResources">نسخة من الموارد الثابتة المحلية</string>

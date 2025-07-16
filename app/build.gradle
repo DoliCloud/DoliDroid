@@ -35,7 +35,7 @@ android {
 
 dependencies {
     // Add entry to be able to use androidx.core.content.FileProvider to use Provider for file upload of camera capture on Android >= 30
-    implementation 'androidx.core:core:1.10.0'
+    implementation 'androidx.core:core:1.12.0'
 
     // Add swiper to allow to refresh of a web page with a screen swipe bottom
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
@@ -62,7 +62,7 @@ dependencies {
 }
 
 
-// This section is to add report of use of deprecated methods
+// This section is to add a report of the use of deprecated methods in IDE after the build
 tasks.withType(JavaCompile).configureEach {
     options.compilerArgs << "-Xlint:deprecation"
 }

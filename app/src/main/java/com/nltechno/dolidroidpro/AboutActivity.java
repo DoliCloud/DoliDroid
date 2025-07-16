@@ -182,8 +182,15 @@ public class AboutActivity extends Activity {
 
 			s1+=getString(R.string.DeviceAPILevel)+": <b>"+Build.VERSION.SDK_INT+"</b><br />\n";
 
-			Display display = getWindowManager().getDefaultDisplay();
-			Point size = new Point();
+			// Get display size
+            Display display = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                display = getDisplay();
+            } else {
+				display = getWindowManager().getDefaultDisplay();
+			}
+
+            Point size = new Point();
 			display.getSize(size);
 			int width = size.x;
 			int height = size.y;

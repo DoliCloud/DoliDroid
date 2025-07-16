@@ -106,7 +106,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 public class SecondActivity extends Activity {
 
 	private static final String LOG_TAG = "DoliDroidLogSecondActivity";
-	public static final String VERSION_RESOURCES = "14.0";
+	public static final String VERSION_RESOURCES = "22.0";
 
     boolean isInstalledFromPlayStore = true;
 
