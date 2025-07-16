@@ -1,6 +1,6 @@
 [main]
 host     = https://www.transifex.com
-lang_map = es_CA: ca, de_DE: de, el_GR: el, pt_PT: pt, tr_TR: tr, pt_BR: pr-rBR, fr_FR: fr, es_ES: es, it_IT: it, nl_NL: nl
+lang_map = ar_SA: ar-rSA, bg_BG: bg, ca_ES: ca, cs_CZ: cz, da_DK: da, de_DE: de, el_GR: el, es_AR: es-rAR, fi_FI: fi, fr_FR: fr, es_ES: es, gl_ES: gl-rES, hu_HU: hu, it_IT: it, ja_JP: ja, ka_GE: ka, nl_NL: nl, pt_PT: pt, ro_RO: ro, ru_RU: ru, sv_SE: sv, tr_TR: tr, pt_BR: pt-rBR, zh_CN: zh-rCN, zh_TW: zh-rTW  
 
 [o:dolibarr-association:p:dolidroid:r:strings]
 file_filter = app/src/main/res/values-<lang>/strings.xml
