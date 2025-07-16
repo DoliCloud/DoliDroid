@@ -1,45 +1,59 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <string name="app_name">DoliDroid</string>
+    <string name="app_name"><xliff:g id=\"app_name\">DoliDroid</xliff:g></string>
     <string name="dolidroidLabel">DoliDroid, front-end d\'Android per l\'ERP-CRM Dolibarr</string>
     <string name="dolidroidUserAgent">DoliDroid - front-end d\'Android per l\'ERP-CRM Dolibarr</string>
     
     <!-- Activity main -->
-    <string name="title_activity_main">DoliDroid</string>
+    <string name="title_activity_main"><xliff:g id=\"title_activity_main\">DoliDroid</xliff:g></string>
     <string name="dolibarr_for_android">Client d\'Android per Dolibarr</string>
     <string name="open">Inici</string>
     <string name="dolibarr_url">URL Dolibarr</string>
     <string name="logo_dolidroid">Logo DoliDroid</string>
-    <string name="SelectUrl">o selecciona una URL predefinida</string>
+    <string name="SelectUrl">o seleccioneu una connexió preferida</string>
     <string name="enterNewUrl">o introdueix una URL nova</string>
+    <string name="UrlCopied">URL copiat al porta-retalls</string>
 
     <!-- Activity web -->
     <string name="title_activity_second"></string>
     <string name="downloadComplete">Descàrrega del fitxer completada</string>
 	<string name="NoPreviousPageAgainToQuit">Sense pàgina anterior. Fes enrera de nou per sortir.</string>
 	<string name="notCompatibleWithVersion">La versió de Dolibarr del servidor (%1$s) és massa antiga. DoliDroid necessita la versió de Dolibarr %2$s o superior.</string>
+    <string name="notification_error_ssl_cert_invalid">El certificat de seguretat SSL del servidor sembla que no és vàlid:</string>
+    <string name="notification_error_ssl_cert_invalidbis">Vols continuar (la descàrrega de fitxers no seria possible)?</string>
+    <string name="failedtogetpage">No s\'ha pogut obtenir la pàgina mitjançant una baixada directa ràpida. Estàs registrat?</string>
+    <string name="CacheAndHistoryCleared">S\'han esborrat la memòria cau i l\'historial.</string>
+
     <!-- Activity about -->
     <string name="title_activity_about"></string>
     <string name="textBack">Enrera</string>
     <string name="textMenu">Menú</string>
-    <string name="textAboutA">XXX</string>
-    <string name="textAboutB">XXX</string>
+    <string name="textAboutA"> <xliff:g id="textAboutA"> Versions... </xliff:g></string>
+    <string name="textAboutB"> <xliff:g id="textAboutB"> URL de la instància... </xliff:g></string>
+    <string name="textAboutB2"> <xliff:g id="textAboutB2"> Inicis de sessió desats... </xliff:g></string>
+    <string name="textAboutC"> <xliff:g id="textAboutC"> CurrentURL i agent d\'usuari... </xliff:g></string>
     <string name="Version">Versió</string>
     <string name="VersionStaticResources">Versió de recursos estàtics locals</string>
     <string name="Author">Autor</string>
+    <string name="ApplicationAssociatedWithMailToLink">Aplicació associada amb enllaços \"mailto\".</string>
+    <string name="ApplicationAssociatedWithTelLink">Aplicació associada amb enllaços \"tel\".</string>
     <string name="Web">Web</string>
     <string name="Compatibility">Compatibilitat</string>
     <string name="License">Llicència</string>
+    <string name="NameOfSourceStore">Magatzem font de la instal·lació</string>
     <string name="Sources">Fonts</string>
+    <string name="PrivacyPolicy">Política de privadesa</string>
     <string name="DeviceAPILevel">Nivell de l\'API del dispositiu</string>
     <string name="DeviceHasMenuHardware">El dispositiu té botons del maquinari</string>
     <string name="DeviceHasDownloadManager">El dispositiu té un gestor de baixades</string>
     <string name="DownloadDirectory">Descarrega el directori</string>
+    <string name="PhotosDirectory">Directori de fotos</string>
+    <string name="DocumentsDirectory">Directori de documents</string>
     <string name="DeviceHasPDFViewer">El dispositiu té visors de PDF</string>
     <string name="DeviceHasODXViewer">El dispositiu té visors d\'OpenOffice</string>
     <string name="DeviceSize">Mida de la pantalla del dispositiu</string>
     <string name="savedDolUrlRoot">Url d\'instància de Dolibarr</string>
-    <string name="currentUrl">Url actual</string>
+    <string name="currentUrl">Connexió actual</string>
     <string name="UserAgent">Agent d\'usuari</string>
     <string name="SavedLogin">Inici de sessió desat</string>
     <string name="SavedPassword">Contrasenya desada</string>
@@ -47,28 +61,55 @@
     <string name="BasicAuthPassword">Contrasenya d\'autenticació bàsica</string>
     <string name="Yes">Sí</string>
     <string name="No">No</string>
-    
+    <string name="Warning">Avís</string>
+
+    <!-- Activity Manage URL -->
+    <string name="DeletePredefinedUrl">Elimina aquesta connexió</string>
+    <string name="DeleteAllPredefinedUrl">Elimina totes les connexions preferides</string>
+    <string name="ListOfUrls">Llista de connexions predefinides</string>
+
     <!-- Menu main + web -->
     <string name="menu_info">Sobre DoliDroid</string>
-    <string name="menu_show_bar_on">Mostra la barra de menú</string>
+    <string name="menu_instance">Sobre la instància actual</string>
+    <string name="menu_info_short">Sobre</string>
+    <string name="menu_info_instance_short">Sobre instància</string>
+    <string name="menu_show_bar_on">Mostra la barra de menús</string>
     <string name="menu_show_bar_off">Mostra la barra de menú (no)</string>
-    <string name="menu_autofill_on">Desa el nom d\'usuari / contrasenya</string>
+    <string name="menu_autofill_on">Desa l\'inici de sessió/contrasenya</string>
     <string name="menu_autofill_off">Desa el nom d\'usuari / contrasenya (no)</string>
-    <string name="menu_uselocalresources_on">Utilitza recursos estàtics locals</string>
+    <string name="menu_uselocalresources_on">Utilitzeu recursos estàtics locals</string>
     <string name="menu_uselocalresources_off">Utilitza recursos estàtics locals (no)</string>
+    <string name="AlertHTTPS">Sembla que el vostre servidor va forçar una redirecció a una pàgina HTTPS. Si us plau, comproveu el vostre URL de Dolibarr i utilitzeu directament el formulari d\'URL https (URL que comença per https:// en lloc de http://). Si continueu utilitzant un URL sense la s, per motius de seguretat, les funcions no funcionen com l\'optimització de la memòria cau o la descàrrega de fitxers.</string>
+    <string name="AlertHTTP">Intenteu accedir a un lloc web no segur (http: en lloc de https:). Per motius de seguretat, Android pot restringir algunes funcions d\'aquesta aplicació per a aquests llocs web. Hauríeu de protegir el vostre lloc web afegint un certificat HTTPS.</string>
+    <string name="AlertDownloadBadHTTPS">La descàrrega no és possible quan utilitzeu un mal valor de l\'esquema per connectar-vos (http vs https)</string>
 
     <!-- Menu main page -->
+    <string name="menu_utilities">Utilitats</string>
     <string name="menu_settings">Configuració</string>
     <string name="menu_add_url">Afegeix una URL predefinida</string>
-    <string name="menu_remove_url">Elimina una URL predefinida</string>
-    <string name="menu_clear_all_urls">Esborra les URL predefinides</string>
+    <string name="menu_remove_url">Elimina una connexió preferida</string>
+    <string name="menu_clear_all_urls">Esborra les connexions favorites</string>
+    <string name="menu_manage_all_urls">Gestioneu les connexions preferides</string>
+    <string name="dolicloud_register" ignore="MissingTranslation"><a href="https://myaccount.dolicloud.com/register.php?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile">Encara no tinc cap instància de Dolibarr, en creo una a DoliCloud.com...</a></string>
+
     <!-- Menu web browser -->
     <string name="menu_menu">Menú</string>
     <string name="menu_go_to">Accés ràpid</string>
     <string name="menu_search">Cerca</string>
+    <string name="menu_bookmarks">Adreces d\'interès</string>
     <string name="menu_back">Enrera</string>
     <string name="menu_refresh">Recarrega la pàgina</string>
+    <string name="menu_copy_url">Copia l\'URL al porta-retalls</string>
     <string name="menu_clearcache">Neteja memòria cau</string>
     <string name="menu_logout">Tancar sessió</string>
     <string name="menu_quit">Surt</string>
-    </resources>
+    <string name="menu_multicompany">Canvia l\'empresa</string>
+    <string name="menu_uploadfile">Importa o escaneja un document</string>
+    <string name="menu_usercard">El meu fitxer d\'usuari</string>
+    <string name="menu_virtualcard">La meva targeta de visita virtual</string>
+    <string name="menu_scan">Escaneja un codi de barres</string>
+    <string name="menu_photo">Escaneja un document</string>
+    <string name="None">Cap</string>
+    <string name="TargetSDKVersion">Nivell de l\'SDK objectiu</string>
+
+</resources>
