@@ -2794,17 +2794,19 @@ public class SecondActivity extends Activity {
 
                 Log.d(LOG_TAG, "onShowFileChooser use custom selector enableCamera="+enableCamera);
 
-                //Adjust the camera in a way that specifies the storage location for taking pictures
-                //String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator;
-                // Environment.getExternalFilesDir()
+                // Adjust the camera in a way that specifies the storage location for taking documents
+                // getExternalStoragePublicDirectory and getExternalStorageDirectory must be avoid now.
+                // DIRECTORY_DOWNLOAD, DIRECTORY_PICTURES ou DIRECTORY_DOCUMENTS
                 String filePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES) + File.separator;
 
                 Log.d(LOG_TAG, "filePath = "+filePath);
 
                 // Create the storage directory if it does not exist
                 File tmpDir = new File(filePath);
-                if (!tmpDir.exists() && !tmpDir.mkdirs()){
+                if (!tmpDir.exists() && !tmpDir.mkdirs()) {
                     Log.e(LOG_TAG, "failed to create directory");
+                } else {
+                    Log.d(LOG_TAG, "directory already exists");
                 }
 
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -2832,61 +2834,66 @@ public class SecondActivity extends Activity {
 
                 // Add also the selector to capture a photo with name imageUri
                 if (enableCamera) {
-                    String AuthorityString = context.getApplicationContext().getPackageName() + ".provider";
-                    outputFileUri = FileProvider.getUriForFile(context, AuthorityString, new File(mCameraPhotoPathString));
-                    context.getApplicationContext().grantUriPermission(context.getApplicationContext().getPackageName(), outputFileUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                    try {
+                        String AuthorityString = context.getApplicationContext().getPackageName() + ".provider";
+                        outputFileUri = FileProvider.getUriForFile(context, AuthorityString, new File(mCameraPhotoPathString));
+                        context.getApplicationContext().grantUriPermission(context.getApplicationContext().getPackageName(), outputFileUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
-                    Log.d(LOG_TAG, "onShowFileChooser AuthorityString = "+AuthorityString +" imageUri = "+imageUri+" outputFileUri = "+outputFileUri);
+                        Log.d(LOG_TAG, "onShowFileChooser AuthorityString = " + AuthorityString + " imageUri = " + imageUri + " outputFileUri = " + outputFileUri);
 
-                    /*
-                    Option 1: Detect all intent available and forge chooserIntent with that
+                        /*
+                        Option 1: Detect all intent available and forge chooserIntent with that
 
-                    List<Intent> allIntents = new ArrayList();
-                    Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    List<android.content.pm.ResolveInfo> listCam = pm.queryIntentActivities(captureIntent, 0);
-                    for (ResolveInfo res : listCam) {
-                        Intent intent = new Intent(captureIntent);
-                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                        intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-                        intent.setPackage(res.activityInfo.packageName);
-                        if (outputFileUri != null) {
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+                        List<Intent> allIntents = new ArrayList();
+                        Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        List<android.content.pm.ResolveInfo> listCam = pm.queryIntentActivities(captureIntent, 0);
+                        for (ResolveInfo res : listCam) {
+                            Intent intent = new Intent(captureIntent);
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+                            intent.setPackage(res.activityInfo.packageName);
+                            if (outputFileUri != null) {
+                                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+                            }
+                            allIntents.add(intent);
                         }
-                        allIntents.add(intent);
+
+                        // collect all gallery intents
+                        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);       // Note ACTION_PICK should be considered deprecated
+                        galleryIntent.setType("image/*");
+                        List<android.content.pm.ResolveInfo> listGallery = pm.queryIntentActivities(galleryIntent, 0);
+                        for (ResolveInfo res : listGallery) {
+                            Intent intent = new Intent(galleryIntent);
+                            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+                            intent.setPackage(res.activityInfo.packageName);
+                            allIntents.add(intent);
+                        }
+
+                        // the main intent is the last in the list (fucking android) so pickup the useless one
+                        Intent mainIntent = (Intent) allIntents.get(allIntents.size() - 1);
+                        allIntents.remove(mainIntent);
+
+                        // Create a chooser from the main intent
+                        chooserIntent = Intent.createChooser(mainIntent, "File Chooser");
+
+                        // Add all other intents
+                        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
+                        */
+
+                        /*
+                         Option 2 - Just add the ACTION_IMAGE_CAPTURE to default
+                         */
+                        Intent takePictureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                        //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);    // Works on Android < 30 only
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+
+                        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Parcelable[]{takePictureIntent});
+                        chooserIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                     }
-
-                    // collect all gallery intents
-                    Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);       // Note ACTION_PICK should be considered deprecated
-                    galleryIntent.setType("image/*");
-                    List<android.content.pm.ResolveInfo> listGallery = pm.queryIntentActivities(galleryIntent, 0);
-                    for (ResolveInfo res : listGallery) {
-                        Intent intent = new Intent(galleryIntent);
-                        intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-                        intent.setPackage(res.activityInfo.packageName);
-                        allIntents.add(intent);
+                    catch(Exception e) {
+                        Log.e(LOG_TAG, e.getMessage());
                     }
-
-                    // the main intent is the last in the list (fucking android) so pickup the useless one
-                    Intent mainIntent = (Intent) allIntents.get(allIntents.size() - 1);
-                    allIntents.remove(mainIntent);
-
-                    // Create a chooser from the main intent
-                    chooserIntent = Intent.createChooser(mainIntent, "File Chooser");
-
-                    // Add all other intents
-                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
-                    */
-
-                    /*
-                     Option 2 - Just add the ACTION_IMAGE_CAPTURE to default
-                     */
-                    Intent takePictureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                    //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);    // Works on Android < 30 only
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-
-                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Parcelable[]{takePictureIntent});
-                    chooserIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 }
 
                 // Start activity to choose file
