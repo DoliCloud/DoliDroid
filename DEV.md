@@ -9,9 +9,11 @@ Plug the phone to computer and smartphone should appears in the list of devices.
 Try to run the emulator profile from command line with
 export ANDROID_SDK_ROOT=~/Android/Sdk
 cd ~/.android/avd/XXX
-emulator -avd Pixel_8a
+emulator -avd XXX
 
 If error vulkan, try
-emulator -avd Pixel_8a -gpu swiftshader_indirect
+emulator -avd XXX -gpu swiftshader_indirect
 
-If it's ok, then edit the Device profile to et the Graphics acceleration to "Software"
+If it's ok, then edit the Device profile to et the Graphics acceleration to "Software". This will modify
+the file config.ini into the XXX directory.
+
