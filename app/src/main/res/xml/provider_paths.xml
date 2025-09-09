@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    // !!!! Note: If we modify Pictures here with DoliDroid, then when
+    // !!!! Note: If we modify "Pictures" here with "DoliDroid", then when
     // selecting a file qualified for camera input (like the user photo),
     // the selector to choose camera is not enabled.
 
     // store in public directory for sharing. Associate with getExternalStorageDirectory
-    // file path will be storage/emulated/0/Pictures/
+    // file path will be storage/emulated/0/The Path/
     // Use not recommended by Google
     <external-path name="my_shared_images" path="Pictures/"/>
 
