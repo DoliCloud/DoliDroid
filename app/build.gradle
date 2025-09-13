@@ -22,9 +22,9 @@ android {
         }
     }
 
-
     // Add support for the org.apache.http package
     useLibrary 'org.apache.http.legacy'
+
     namespace 'com.nltechno.dolidroidpro'
     compileSdk 34
     compileOptions {
@@ -48,6 +48,7 @@ dependencies {
 
     // Dependencies added to use the EncryptedSharedPreferences.
     dependencies {
+        // Crypt libraries used to encrypt the secret_shared_prefs file for saved login/pass
         implementation "androidx.security:security-crypto:1.0.0"
 
         // For Identity Credential APIs

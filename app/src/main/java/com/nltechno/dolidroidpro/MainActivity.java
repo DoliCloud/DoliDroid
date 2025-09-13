@@ -18,6 +18,7 @@ package com.nltechno.dolidroidpro;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -56,6 +57,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKeys;
 
 
 /**
@@ -457,9 +461,12 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
     	switch (item.getItemId())
     	{
     		case R.id.always_show_bar:
+				// Same code into MainActivity and SecondActivity
 	        	boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
-	    		Log.d(LOG_TAG, "Click onto switch show bar, prefAlwaysShowBar is "+prefAlwaysShowBar);
+
+	    		Log.i(LOG_TAG, "Click onto switch show bar, prefAlwaysShowBar is "+prefAlwaysShowBar);
 	    		prefAlwaysShowBar=!prefAlwaysShowBar;
+
 	        	editor.putBoolean("prefAlwaysShowBar", prefAlwaysShowBar);
 	        	editor.apply();
 	    		Log.d(LOG_TAG, "Switched value is now "+prefAlwaysShowBar);
@@ -473,9 +480,12 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				}
 	    		return true;
     		case R.id.always_autofill:
+				// Same code into MainActivity and SecondActivity
 	        	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
-	    		Log.d(LOG_TAG, "Click onto switch autofill, prefAlwaysAutoFill is "+prefAlwaysAutoFill);
+
+	    		Log.i(LOG_TAG, "Click onto switch autofill, prefAlwaysAutoFill is "+prefAlwaysAutoFill);
 	    		prefAlwaysAutoFill=!prefAlwaysAutoFill;
+
 	        	editor.putBoolean("prefAlwaysAutoFill", prefAlwaysAutoFill);
 	        	editor.commit();
 	    		Log.d(LOG_TAG, "Switched value is now "+prefAlwaysAutoFill);
@@ -486,7 +496,41 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				} else {
 	        		//this.savMenu.findItem(R.id.always_autofill).setTitle(getString(R.string.menu_autofill_off));
 					this.savMenu.findItem(R.id.always_autofill).setChecked(false);
+
+					// Clear saved login / pass
+					try {
+						//SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+						String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
+						SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
+								"secret_shared_prefs",
+								masterKeyAlias,
+								getApplicationContext(),
+								EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+								EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+						);
+						Editor editorEncrypted = sharedPrefsEncrypted.edit();
+						editorEncrypted.clear();
+						editorEncrypted.commit();
+
+						Log.d(LOG_TAG, "The encrypted shared preferences file has been cleared");
+					}
+					catch(Exception e) {
+						Log.w(LOG_TAG, "Failed to clear encrypted shared preferences file, we try by deleting the file");
+						File prefsFile = new File(getApplicationContext().getFilesDir(), "../shared_prefs/secret_shared_prefs.xml");
+						if (prefsFile.exists()) {
+							Log.d(LOG_TAG, "File "+prefsFile+" exists, we delete it");
+							try {
+								boolean deleted = prefsFile.delete();
+								Log.d(LOG_TAG, "File " + prefsFile + " deleted = " + deleted);
+							} catch(Exception e2) {
+								// Keep empty
+								Log.d(LOG_TAG, "Failed to delete file " + prefsFile);
+							}
+						}
+
+					}
 				}
+				invalidateOptionsMenu();
 	    		return true;
 			case R.id.always_uselocalresources:
 				boolean prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);

@@ -11,12 +11,17 @@
 
     // store in Android app package name directory. Associate with getExternalFilesDir
     // file path will be storage/emulated/0/Android/data/com.example.ex/files/The Path/
+    // Used by DoliDroid to store a downloaded file
     // Removed when app is uninstalled
     <external-files-path name="my_images" path="Pictures/"/>
 
     // store in root directory. Cannot access without root. Associate with getFilesDir
     // file path will be storage/data/user/0/Android/data/com.example.ex/files/The Path/
-    // not visible from a file explorer.
+    // not visible from a file explorer or USB access from desktop.
     // Removed when app is uninstalled
     <files-path name="my_internal_images" path="Pictures/"/>
+
+    // DoliDroid also uses this path to store some data:
+    // Used by DoliDroid for clear file getApplicationContext().getFilesDir()+"dolidroid_pref"
+    // Used also to store getApplicationContext().getFilesDir()+"/../shared_prefs/secret_shared_prefs.xml"
 </paths>

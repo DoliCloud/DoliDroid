@@ -87,8 +87,10 @@ public class ManageURLActivity extends Activity {
 		TextView t2 = findViewById(R.id.TextInstanceURLTitle);
 		t2.setMovementMethod(LinkMovementMethod.getInstance());
 
+		/*
 		TextView t2b = findViewById(R.id.TextSavedLogins);
 		t2b.setMovementMethod(LinkMovementMethod.getInstance());
+		*/
 
 		Log.d(LOG_TAG, "Open file " + MainActivity.FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());
 
@@ -115,67 +117,6 @@ public class ManageURLActivity extends Activity {
 		// Fill the list of Urls into the ArrayAdapter
 		ListView listViewOfUrls = (ListView) findViewById(R.id.listViewConnections);
 		listViewOfUrls.setAdapter(adapter);
-
-		// Update menu label to add the number of predefined URL into label
-		/*Button buttonClearAllUrl = findViewById(R.id.buttonClearAllUrl);
-		if (MainActivity.listOfRootUrl != null) {
-			buttonClearAllUrl.setText(getString(R.string.DeleteAllPredefinedUrl) + " (" + MainActivity.listOfRootUrl.size() + ")");
-		} else {
-			buttonClearAllUrl.setText(getString(R.string.DeleteAllPredefinedUrl) + " (0)");
-		}
-
-		// Create listener to respond to click on button Remove all predefined URL
-		// Not using the android:onClick tag is bugged. Declaring listener is also faster.
-		buttonClearAllUrl.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Log.d(LOG_TAG, "We click on Remove all predefined URLs");
-
-				try {
-					// Delete the file of predefined URLs MainActivity.FILENAME
-					File file = new File(getApplicationContext().getFilesDir().toString() + "/" + MainActivity.FILENAME);
-					Log.d(LOG_TAG, "Clear predefined URL list " + MainActivity.FILENAME + " (from ManageURLActivity) by deleting file with full path=" + file.getAbsolutePath());
-					boolean result = file.delete();
-					Log.d(LOG_TAG, result ? "true" : "false");
-
-					MainActivity.listOfRootUrl = new ArrayList<PredefinedUrl>();    // Clear array of menu entry
-
-					// Now update button label entry
-					buttonClearAllUrl.setText(getString(R.string.DeleteAllPredefinedUrl));
-					buttonClearAllUrl.setEnabled(true);
-
-					listViewOfUrls.setAdapter(adapterempty);
-					TextView textViewListOfUrl = findViewById(R.id.textListOfUrlsTitle);
-					TextView textViewListOfUrl2 = findViewById(R.id.textListOfUrlsTitle2);
-					textViewListOfUrl.setText(getString(R.string.menu_manage_all_urls));
-					textViewListOfUrl.setVisibility(View.VISIBLE);
-					textViewListOfUrl2.setVisibility(View.VISIBLE);
-
-					// Clear also the list of saved login / pass too
-					try {
-						//SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-						String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
-						SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
-								"secret_shared_prefs",
-								masterKeyAlias,
-								getApplicationContext(),
-								EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-								EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-						);
-						SharedPreferences.Editor editorEncrypted = sharedPrefsEncrypted.edit();
-						editorEncrypted.clear();	// delete the file
-						editorEncrypted.commit();
-
-						Log.d(LOG_TAG, "The encrypted shared preferences file has been cleared");
-					} catch (Exception e) {
-						Log.w(LOG_TAG, "Failed to clear encrypted shared preferences file");
-					}
-				} catch (Exception ioe) {
-					Log.e(LOG_TAG, "Error");
-				}
-			}
-		});
-		*/
 	}
 
 	
@@ -251,8 +192,11 @@ public class ManageURLActivity extends Activity {
 		}
 
 		// Show text section of login and pass
+		/*
 		TextView textViewAbout2b = findViewById(R.id.TextSavedLogins);
+		*/
 		String s2b="";
+
 
 		if (savedDolRootUrl != null && ! "".equals(savedDolRootUrl))
 		{
@@ -291,6 +235,7 @@ public class ManageURLActivity extends Activity {
 			if (savedAuthpass != null) s2b+=getString(R.string.BasicAuthPassword)+": "+savedAuthpass.replaceAll(".", "*")+"\n";
 		}
 
+		/*
 		if (s2b != null && ! "".equals(s2b)) {
 			textViewAbout2b.setVisibility(View.VISIBLE);
 			textViewAbout2b.setEnabled(true);
@@ -300,7 +245,7 @@ public class ManageURLActivity extends Activity {
 			textViewAbout2b.setEnabled(false);
 			textViewAbout2b.setText("");
 		}
-
+		*/
 
 		// Update the menu label to add the number of predefined URL into label
 		TextView textViewListOfUrl = findViewById(R.id.textListOfUrlsTitle);
@@ -309,7 +254,7 @@ public class ManageURLActivity extends Activity {
 			// Set position of textViewListOfUrl
 			RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) textViewListOfUrl.getLayoutParams();
 			if (s2b != null && !"".equals(s2b)) {
-				layoutParams.addRule(RelativeLayout.BELOW, R.id.TextSavedLogins);
+				layoutParams.addRule(RelativeLayout.BELOW, R.id.TextInstanceURLTitle);
 			} else {
 				layoutParams.addRule(RelativeLayout.BELOW, R.id.imageTop);
 			}
@@ -328,7 +273,7 @@ public class ManageURLActivity extends Activity {
 			// Set position of textViewListOfUrl
 			RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) textViewListOfUrl.getLayoutParams();
 			if (s2b != null && !"".equals(s2b)) {
-				layoutParams.addRule(RelativeLayout.BELOW, R.id.TextSavedLogins);
+				layoutParams.addRule(RelativeLayout.BELOW, R.id.TextInstanceURLTitle);
 			} else {
 				layoutParams.addRule(RelativeLayout.BELOW, R.id.imageTop);
 			}
@@ -337,9 +282,6 @@ public class ManageURLActivity extends Activity {
 			textViewListOfUrl.setVisibility(View.VISIBLE);
 			textViewListOfUrl2.setVisibility(View.VISIBLE);
 
-			/*Button btnClearAll = findViewById(R.id.buttonClearAllUrl);
-			btnClearAll.setVisibility(View.INVISIBLE);
-			 */
 			ListView listView = findViewById(R.id.listViewConnections);
 			listView.setVisibility(View.INVISIBLE);
 		}

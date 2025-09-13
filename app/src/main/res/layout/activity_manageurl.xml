@@ -48,22 +48,6 @@
             android:scrollbars="vertical" />
 
         <TextView
-            android:id="@+id/TextSavedLogins"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/TextInstanceURLTitle"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="18dp"
-            android:lineSpacingExtra="8sp"
-            android:maxLines="50"
-            android:text="@string/textAboutB2"
-            android:textSize="16sp"
-            tools:context=".ManageURLActivity" />
-
-        <TextView
             android:id="@+id/textAboutAndroidClient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -95,7 +79,7 @@
             android:id="@+id/textListOfUrlsTitle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/TextSavedLogins"
+            android:layout_below="@+id/TextInstanceURLTitle"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="18dp"

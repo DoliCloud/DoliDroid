@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -356,7 +357,6 @@ public class SecondActivity extends Activity {
 
         this.savedUserAgent = myWebView.getSettings().getUserAgentString() + " - " + getString(R.string.dolidroidUserAgent);
 
-        myWebView.getSettings().setJavaScriptEnabled(true);
         myWebView.getSettings().setAllowContentAccess(true);
         myWebView.getSettings().setAllowFileAccess(true);
         //myWebView.getSettings().setAllowFileAccessFromFileURLs(true);
@@ -380,6 +380,8 @@ public class SecondActivity extends Activity {
         //myWebView.getSettings().setRenderPriority(RenderPriority.HIGH);
         //myWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
+        // Init code to allow js injection and execution
+        myWebView.getSettings().setJavaScriptEnabled(true);
         final MyJavaScriptInterface myJavaScriptInterface = new MyJavaScriptInterface(activity);
         myWebView.addJavascriptInterface(myJavaScriptInterface, "HTMLOUT");
 
@@ -709,6 +711,7 @@ public class SecondActivity extends Activity {
                 return true;
             case R.id.always_show_bar:  // Switch menu bar on/off
                 sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                // Same code into MainActivity and SecondActivity
                 boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
 
                 Log.i(LOG_TAG, "Click onto switch show bar, prefAlwaysShowBar is "+prefAlwaysShowBar);
@@ -744,6 +747,7 @@ public class SecondActivity extends Activity {
                 return true;
             case R.id.always_autofill:  // Switch menu bar on/off for "Save login/password"
                 sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                // Same code into MainActivity and SecondActivity
                 boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
 
                 Log.i(LOG_TAG, "Click onto switch autofill, prefAlwaysAutoFill is "+prefAlwaysAutoFill);
@@ -777,7 +781,19 @@ public class SecondActivity extends Activity {
                         Log.d(LOG_TAG, "The encrypted shared preferences file has been cleared");
                     }
                     catch(Exception e) {
-                        Log.w(LOG_TAG, "Failed to clear encrypted shared preferences file");
+                        Log.w(LOG_TAG, "Failed to clear encrypted shared preferences file, we try by deleting the file");
+                        File prefsFile = new File(getApplicationContext().getFilesDir(), "../shared_prefs/secret_shared_prefs.xml");
+                        if (prefsFile.exists()) {
+                            Log.d(LOG_TAG, "File "+prefsFile+" exists, we delete it");
+                            try {
+                                boolean deleted = prefsFile.delete();
+                                Log.d(LOG_TAG, "File " + prefsFile + " deleted = " + deleted);
+                            } catch(Exception e2) {
+                                // Keep empty
+                                Log.d(LOG_TAG, "Failed to delete file " + prefsFile);
+                            }
+                        }
+
                     }
                 }
                 invalidateOptionsMenu();
@@ -1661,8 +1677,8 @@ public class SecondActivity extends Activity {
 		        "function dolidroidParseFormAfterSubmit(event) {" +
 		        "    var form = this;" +
 		        "    if (this.tagName.toLowerCase() != 'form') form = this.form;" +    
-		        "    var data = '';" +
-		        "    if (!form.method)  form.method = 'get';" +
+		        "    if (!form.method) form.method = 'get';" +
+                "    var data = '';" +
 		        "    data += 'method=' + form.method;" +
 		        "    data += '&action=' + form.action;" +        
 		        "    var inputs = document.forms[0].getElementsByTagName('input');" +
@@ -1671,11 +1687,12 @@ public class SecondActivity extends Activity {
 		        "         if (field.type != 'submit' && field.type != 'reset' && field.type != 'button')" +
 		        "             data += '&' + field.name + '=' + field.value;" +
 		        "    }" +
-                "    console.log('We have set a data string to '+data);" +
-		        "    window.HTMLOUT.functionJavaCalledByJsProcessFormSubmit(data);" +
-                "    console.log('Finished');" +
+                "    console.log('Injected js code run: We have set a js variable data to '+data);" +
+                "    console.log('Now we execute Java code functionJavaCalledByJsProcessFormSubmit(data)');" +
+		        "    if (window.HTMLOUT) { window.HTMLOUT.functionJavaCalledByJsProcessFormSubmit(data); } else { console.error('HTMLOUT handler not valid'); } " +
+                "    console.log('Injected js code finished');" +
 		        "}" +
-		        "" +
+		        " " +
 		        "for (var form_idx = 0; form_idx < document.forms.length; ++form_idx) {" +
 		        "    document.forms[form_idx].addEventListener('submit', dolidroidParseFormAfterSubmit, false);" +
 		        "}" +
@@ -2243,7 +2260,7 @@ public class SecondActivity extends Activity {
                         {
                             lastversionfound = m.group(1) + ", " + m.group(2) + ", " + m.group(3);
                             lastversionfoundforasset = m.group(1) + "." + m.group(2);
-                            Log.i(LOG_TAG, "onPageFinished Title of page is: " + this.webViewtitle + " - url=" + url + " - Found login or home page + version: " + lastversionfound + " - Suggest to use asset: " + lastversionfoundforasset);
+                            Log.i(LOG_TAG, "onPageFinished Page title=" + this.webViewtitle + " - url=" + url + " - Found login or home page + version: " + lastversionfound + " - Suggest to use asset: " + lastversionfoundforasset);
 
                             MenuItem menuItemMultiCompany = savMenu.findItem(R.id.menu_multicompany);
                             if (menuItemMultiCompany != null) {
@@ -2320,11 +2337,13 @@ public class SecondActivity extends Activity {
                         }*/
                     }
 
-				    if (patternLoginPage.matcher(this.webViewtitle).find() || patternLoginPage2.matcher(this.webViewtitle).find())	// if title ends with "Login Dolixxx x.y.z", this is login page or home page
-				    {
-                        // This is login page
+                    // If title match pattern, this is a special page (login page or home page)
+                    // patternLoginPage = Login Doli[a-zA-Z]+ (\d+)\.(\d+)\.([^\s]+)    for Dolibarr <= 3.6
+                    // @ (?:Doli[a-zA-Z]+ |)(\d+)\.(\d+)\.([^\s]+)                      for Dolibarr > 3.7
+                    if (patternLoginPage.matcher(this.webViewtitle).find() || patternLoginPage2.matcher(this.webViewtitle).find()) {
+                        // This is login page, so we will read file "secret_shared_prefs" and inject result.
 				    	if (url.equals(savedDolRootUrl)) {
-							Log.w(LOG_TAG, "onPageFinished We ignore page since url is not a specific page (not /index.php, not /mypage.php, ...)");
+							Log.w(LOG_TAG, "onPageFinished We ignore page since url is not a special page (not /index.php, not /mypage.php, ...)");
 				    	} else {
 							synchronized (this) 
 							{
@@ -2413,12 +2432,11 @@ public class SecondActivity extends Activity {
 				    	}
 
                         myWebView.clearHistory();   // So it removes all history and the new loadUrl will be alone and first in list
-                    }
-				    else	// This is not login page
-				    {
+                    } else { // This is not login page
+                        Log.d(LOG_TAG, "onPageFinished tagLastLoginPassToSavedLoginPass="+tagLastLoginPassToSavedLoginPass);
+
 				    	//Log.d(LOG_TAG, "Title of page is: "+myWebView.getTitle()+" - Login tag or Version not found");
-				    	if (tagLastLoginPassToSavedLoginPass)
-				    	{
+				    	if (tagLastLoginPassToSavedLoginPass) {
 				    		Log.i(LOG_TAG, "onPageFinished We have just received a page that is not Login page after submitting login form.");
 				    		tagLastLoginPassToSavedLoginPass=false;
 
@@ -2427,7 +2445,7 @@ public class SecondActivity extends Activity {
 
 					    	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
 					    	if (prefAlwaysAutoFill) {
-						    	Log.d(LOG_TAG, "onPageFinished We save some fields of the submited form (prefAlwaysAutoFill is true) into a file (secret_shared_prefs).");
+						    	Log.d(LOG_TAG, "onPageFinished We save some fields of the submitted form (prefAlwaysAutoFill is true) into a file (secret_shared_prefs).");
 
 						    	// Retrieve last values used submitted for username and password
                                 // to save them with a name depending on URL.
@@ -2456,6 +2474,7 @@ public class SecondActivity extends Activity {
                                 }
                                 catch(Exception e) {
                                     Log.w(LOG_TAG, "onPageFinished Failed to read or write into EncryptedSharedPreferences.");
+                                    Log.w(LOG_TAG, e.getMessage());
                                 }
 					    	} else {
                                 Log.d(LOG_TAG, "onPageFinished We don't save form fields (prefAlwaysAutoFill is false).");
@@ -2963,7 +2982,7 @@ public class SecondActivity extends Activity {
      */
     public class MyJavaScriptInterface
     {
-        private static final String LOG_TAG = "DoliDroidMyJavaScriptInterface";
+        private static final String LOG_TAG = "DoliDroidLogMyJavaScriptInterface";
         Context mContext;
         Activity activity;
 
@@ -3005,13 +3024,21 @@ public class SecondActivity extends Activity {
         @JavascriptInterface
         public void functionJavaCalledByJsProcessFormSubmit(String data)
         {
-            Log.i(LOG_TAG, "functionJavaCalledByJsProcessFormSubmit execution of code infected by jsInjectCodeForSetForm with data="+data);
+            Log.i(LOG_TAG, "functionJavaCalledByJsProcessFormSubmit execution of code injected by jsInjectCodeForSetForm with data="+data);
             String[] tmpdata = data.split("&");
 
             // Save the username and password into temporary var lastsubmit-username and lastsubmit-password
             try {
                 //SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
+
+                File prefsFile = new File(getApplicationContext().getFilesDir(), "../shared_prefs/secret_shared_prefs.xml");
+                if (prefsFile.exists()) {
+                    Log.d(LOG_TAG, "The file "+prefsFile+" already exists");
+                } else {
+                    Log.d(LOG_TAG, "The file "+prefsFile+" does not exists yet");
+                }
+
                 SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
                         "secret_shared_prefs",
                         masterKeyAlias,
@@ -3040,7 +3067,9 @@ public class SecondActivity extends Activity {
                 editor.apply();
             }
             catch(Exception e) {
+                // Pb read/write file getApplicationContext().getFilesDir()."../shared_prefs/secret_shared_prefs"
                 Log.w(LOG_TAG, "functionJavaCalledByJsProcessFormSubmit Failed to read the EncryptedSharedPreferences");
+                Log.e(LOG_TAG, Objects.requireNonNull(e.getMessage()));
             }
         }
     }
