@@ -9,7 +9,6 @@
     <!-- Some Chromebooks don't support touch. Although not essential,
          it's a good idea to explicitly include this declaration. -->
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
-    <!--<uses-feature android:name="android.hardware.camera" android:required="false" />-->
     <uses-feature android:name="android.hardware.camera2.full" android:required="false" />
 
     <!-- Normal permissions (PROTECTION_NORMAL) -->
@@ -77,7 +76,7 @@
             android:theme="@style/DoliDroidThemeAbout" >
         </activity>
 
-        <!-- Define a broadcastreceiver -->
+        <!-- Define a broadcast receiver -->
         <!-- Note: If you set android:exported="false", the event "onReceive ACTION_DOWNLOAD_COMPLETE" is not received into DownloadBroadcastReceiver -->
         <receiver android:name="com.nltechno.dolidroidpro.DownloadBroadcastReceiver"
             android:exported="true">

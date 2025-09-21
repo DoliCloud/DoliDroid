@@ -1107,14 +1107,14 @@ public class SecondActivity extends Activity {
     /**
      * Once we click onto SmartPhone hardware key
      */
+    @SuppressLint("GestureBackNavigation")
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) 
     {
-        if (event.getAction() == KeyEvent.ACTION_DOWN) 
-        {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
             // Check if the key event was the Back button
-            if ((keyCode == KeyEvent.KEYCODE_BACK)) 
-            {
+            if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+                Log.d(LOG_TAG, "We pressed the key back on smartphone");
                 return this.codeForBack();
             }
         }
@@ -1594,12 +1594,15 @@ public class SecondActivity extends Activity {
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.allowScanningByMediaScanner();
 
-        File path = Environment.getExternalStorageDirectory();
-        File tmpFolder = new File(path.getAbsolutePath(), "/"+Environment.DIRECTORY_DOWNLOADS); // Value is "/storage/emulated/0/Download"
+        //File path = Environment.getExternalStorageDirectory();  // getExternalStorageDirectory+DIRECTORY_DOWNLOADS should be similar to dir of setDestinationInExternalPublicDir
+        //String fullPath = path.getAbsolutePath(), "/"+Environment.DIRECTORY_DOWNLOADS;
+        //String fullPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+        String fullPath = String.valueOf(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS));
+        File tmpFolder = new File(fullPath); // Value is "/storage/emulated/0/Download"
         Log.d(LOG_TAG, tmpFolder.getAbsolutePath());
 
-        if (!tmpFolder.exists()) {  // Should always exists becasue we use the default DIRECTORY_DOWNLOADS
-            Log.d(LOG_TAG, "putDownloadInQueue Folder " + Environment.DIRECTORY_DOWNLOADS + " does not exists. We create it.");
+        if (!tmpFolder.exists()) {  // Should always exists because we use the default DIRECTORY_DOWNLOADS
+            Log.d(LOG_TAG, "putDownloadInQueue Folder " + tmpFolder + " does not exists. We create it.");
             boolean resultmkdir = tmpFolder.mkdir();
             if (resultmkdir) {
                 Log.d(LOG_TAG, "putDownloadInQueue Success to create dir");
@@ -1608,42 +1611,44 @@ public class SecondActivity extends Activity {
             }
         }
 
-        Log.d(LOG_TAG, "putDownloadInQueue Set output dirType=" + Environment.DIRECTORY_DOWNLOADS + " subPath="+pathOfDownloadeFile);
+        Log.d(LOG_TAG, "putDownloadInQueue Set output dirType=" + Environment.DIRECTORY_DOWNLOADS + ", subPath="+pathOfDownloadeFile+" (should be "+tmpFolder+")");
+        // Storing in dedicated dir does not work
+        // request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_DOWNLOADS, pathOfDownloadeFile);
+        // so we store file in common public download dir
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, pathOfDownloadeFile);
-        //request.setDestinationInExternalFilesDir(getApplicationContext(), null, query);
 
         // Then create the object DownloadManager and enqueue the file
         // Complete tutorial on download manager on http://www.101apps.co.za/index.php/articles/using-the-downloadmanager-to-manage-your-downloads.html
-        DownloadManager dmanager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-        long downloadId = dmanager.enqueue(request);
+        DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+        long downloadId = downloadManager.enqueue(request);
         Log.d(LOG_TAG, "putDownloadInQueue downloadId="+downloadId);
 
 
         // Once file is enqueue, you just have to wait until the event ACTION_DOWNLOAD_COMPLETE is triggered in DownloadBroadCasterReceiver.onReceive().
 
 
-        // Now add also a timer to check regurlarly the status of download
+        // Now add also a timer to check regularly the status of download
         /*
         DownloadStatusChecker statusChecker = new DownloadStatusChecker(this);
         statusChecker.startMonitoringDownloads(downloadId, new DownloadStatusChecker.DownloadStatusListener() {
             @Override
             public void onDownloadStatusUpdated(int status) {
                 if (status == DownloadManager.STATUS_SUCCESSFUL) {
-                    // Le téléchargement a réussi
+                    // download is ok
                     Log.d(LOG_TAG, "DownloadStatusChecker downloadId "+downloadId+" Download STATUS_SUCCESSFUL");
                     statusChecker.stopMonitoringDownloads();    // destroy timer
                 } else if (status == DownloadManager.STATUS_FAILED) {
-                    // Le téléchargement a échoué
+                    // download failed
                     Log.d(LOG_TAG, "DownloadStatusChecker downloadId "+downloadId+" Download STATUS_FAILED");
                     statusChecker.stopMonitoringDownloads();    // destroy timer
                 } else if (status == DownloadManager.STATUS_PAUSED) {
-                    // Le téléchargement est en pause
+                    // download in pause
                     Log.d(LOG_TAG, "DownloadStatusChecker downloadId "+downloadId+" Download STATUS_PAUSED");
                 } else {
                     Log.d(LOG_TAG, "DownloadStatusChecker downloadId "+downloadId+" Download manager status = "+status);
                 }
             }
-        }, 10000); // Vérifiez le statut toutes les 10 secondes (10000 millisecondes)
+        }, 10000); // Check status every 10 seconds (10000 milliseconds)
         */
 
         return true;
@@ -2814,8 +2819,6 @@ public class SecondActivity extends Activity {
                 Log.d(LOG_TAG, "onShowFileChooser use custom selector enableCamera="+enableCamera);
 
                 // Adjust the camera in a way that specifies the storage location for taking documents
-                // getExternalStoragePublicDirectory and getExternalStorageDirectory must be avoid now.
-                // DIRECTORY_DOWNLOAD, DIRECTORY_PICTURES ou DIRECTORY_DOCUMENTS
                 String filePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES) + File.separator;
 
                 Log.d(LOG_TAG, "filePath = "+filePath);

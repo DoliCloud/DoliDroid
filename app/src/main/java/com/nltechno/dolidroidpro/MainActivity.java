@@ -660,7 +660,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		FileOutputStream fos;
 		try
 		{
-			Log.d(LOG_TAG, "Open file " + FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());
+			Log.d(LOG_TAG, "Open file " + MainActivity.FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());
 
 			fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
 			for (int i = 0; i < this.listOfRootUrl.size(); i++)

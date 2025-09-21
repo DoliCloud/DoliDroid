@@ -19,6 +19,7 @@ package com.nltechno.dolidroidpro;
 
 import com.nltechno.utils.Utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -46,6 +47,7 @@ import android.view.Window;
 import android.widget.TextView;
 import android.widget.ImageView;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -168,15 +170,14 @@ public class AboutActivity extends Activity {
 			// This download key allow to download file with name src_dolidroid-info.versionName-downloadkey
 			//String downloadkey=Utils.MD5Hex("dolidroid"+info.versionName.replaceAll("[^0-9.]", "")+"saltnltechno").substring(0, 8);
 			//s1+=getString(R.string.Sources)+" Download Key: dolidroid-"+info.versionName.replaceAll("[^0-9.]", "")+"-"+downloadkey+"<br />\n";
-			s1+=getString(R.string.VersionStaticResources)+": <b>"+SecondActivity.VERSION_RESOURCES+"</b><br />\n";
 			s1+=getString(R.string.Compatibility)+": <b>Dolibarr 8+</b><br />\n";
-
+			s1+=getString(R.string.VersionStaticResources)+": <b>"+SecondActivity.VERSION_RESOURCES+"</b><br />\n";
+			String targetSdkVersion = String.valueOf(getApplicationContext().getApplicationInfo().targetSdkVersion);
+			s1+=getString(R.string.TargetSDKVersion)+": <b>"+targetSdkVersion+"</b><br />\n";
 
 			s1+="<br />\n";
 			
 			s1+=getString(R.string.NameOfSourceStore)+": <b>"+nameOfSourceStore+"</b><br />\n";
-			String targetSdkVersion = String.valueOf(getApplicationContext().getApplicationInfo().targetSdkVersion);
-			s1+=getString(R.string.TargetSDKVersion)+": <b>"+targetSdkVersion+"</b><br />\n";
 
 			s1+="<br />\n";
 
@@ -199,10 +200,6 @@ public class AboutActivity extends Activity {
 			s1+=getString(R.string.DeviceHasDownloadManager)+": <b>"+(Utils.isDownloadManagerAvailable(this)?getString(R.string.Yes):getString(R.string.No))+"</b><br />\n";
 
 
-			// For  Environment.DIRECTORY_MUSIC, Environment.DIRECTORY_PODCASTS, Environment.DIRECTORY_RINGTONES, Environment.DIRECTORY_ALARMS, Environment.DIRECTORY_NOTIFICATIONS, Environment.DIRECTORY_PICTURES, or Environment.DIRECTORY_MOVIES.
-			// Files in this directory are deleted when application is deleted.
-			//File[] Files = getExternalFilesDirs();
-
 			// File[] Files = getExternalMediaDirs();
 			// Files[0].getAbsolutePath will return "/storage/emulated/0/Android/media/com.nltechno.dolidroidpro"
 			// From Android 30+, it is better to write into media dire with MediaStore
@@ -211,16 +208,17 @@ public class AboutActivity extends Activity {
 			String publicDownloadDirectory=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
 			// This return /storage/sdcard0 for example (we do not use this)
 			//String downloaddir="";
-		    //if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) downloaddir = Environment.getExternalStorageDirectory().getAbsolutePath();
 			s1+=getString(R.string.DownloadDirectory)+": <b>"+publicDownloadDirectory+"</b><br />\n";
 
-			String publicPhotosDirPath=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
-			//if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) publicPhotosDirPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+			Context context = getApplicationContext();
+
+			//String publicPhotosDirPath=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
+			String publicPhotosDirPath=getExternalFilesDir(Environment.DIRECTORY_PICTURES) + File.separator;
 			s1+=getString(R.string.PhotosDirectory)+": <b>"+publicPhotosDirPath+"</b><br />\n";
 
-			String documentdirpublic=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
-			//if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) documentdirpublic = Environment.getExternalStorageDirectory().getAbsolutePath();
-			s1+=getString(R.string.DocumentsDirectory)+": <b>"+documentdirpublic+"</b><br />\n";
+			//String documentdirpublic=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
+			//String documentdirpublic=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
+			//s1+=getString(R.string.DocumentsDirectory)+": <b>"+documentdirpublic+"</b><br />\n";
 
 			/*
 			Intent testIntent = new Intent(Intent.ACTION_VIEW);
@@ -234,27 +232,8 @@ public class AboutActivity extends Activity {
 			s1+=getString(R.string.DeviceHasODXViewer)+": <b>"+(list2.size() > 0?getString(R.string.Yes)+" ("+list2.size()+")":getString(R.string.No))+"</b>\n";
            	*/
 
-			/* Detect the application associated with "mailto:" links */
-			Intent intentTmp = new Intent(Intent.ACTION_SENDTO);
-			intentTmp.setData(Uri.parse("mailto:"));
 
-			List<ResolveInfo> resolveInfoList = packageManager.queryIntentActivities(intentTmp, PackageManager.MATCH_DEFAULT_ONLY);
-			StringBuilder appNames = new StringBuilder();
-			for (ResolveInfo resolveInfo : resolveInfoList) {
-				CharSequence appName = resolveInfo.loadLabel(packageManager);
-				if (! "".equals(appName.toString())) {
-					appNames.append(appName).append(" ");
-				}
-			}
-			s1+=getString(R.string.ApplicationAssociatedWithMailToLink)+": <b>"+(resolveInfoList.isEmpty() ? getString(R.string.None) : appNames.toString())+"</b><br />\n";
-
-			/*ResolveInfo resolveInfo = packageManager.resolveActivity(intentTmp, PackageManager.MATCH_DEFAULT_ONLY);
-			CharSequence appName = "";
-			if (resolveInfo != null) {
-				appName = resolveInfo.loadLabel(packageManager);
-			}
-			s1+=getString(R.string.ApplicationAssociatedWithMailToLink)+": <b>"+(resolveInfo == null ? getString(R.string.None) : appName)+"</b><br />\n";
-			*/
+			/* Detect the application associated with "mailto:" and "tel" links */
 
 			Intent intentTmp2 = new Intent(Intent.ACTION_DIAL);
 			intentTmp2.setData(Uri.parse("tel:"));
@@ -277,6 +256,29 @@ public class AboutActivity extends Activity {
 			}
 			s1+=getString(R.string.ApplicationAssociatedWithTelLink)+": <b>"+(resolveInfo2 == null ? getString(R.string.None) : appName2)+"</b><br />\n";
 			*/
+
+
+			Intent intentTmp = new Intent(Intent.ACTION_SENDTO);
+			intentTmp.setData(Uri.parse("mailto:"));
+
+			List<ResolveInfo> resolveInfoList = packageManager.queryIntentActivities(intentTmp, PackageManager.MATCH_DEFAULT_ONLY);
+			StringBuilder appNames = new StringBuilder();
+			for (ResolveInfo resolveInfo : resolveInfoList) {
+				CharSequence appName = resolveInfo.loadLabel(packageManager);
+				if (! "".equals(appName.toString())) {
+					appNames.append(appName).append(" ");
+				}
+			}
+			s1+=getString(R.string.ApplicationAssociatedWithMailToLink)+": <b>"+(resolveInfoList.isEmpty() ? getString(R.string.None) : appNames.toString())+"</b><br />\n";
+
+			/*ResolveInfo resolveInfo = packageManager.resolveActivity(intentTmp, PackageManager.MATCH_DEFAULT_ONLY);
+			CharSequence appName = "";
+			if (resolveInfo != null) {
+				appName = resolveInfo.loadLabel(packageManager);
+			}
+			s1+=getString(R.string.ApplicationAssociatedWithMailToLink)+": <b>"+(resolveInfo == null ? getString(R.string.None) : appName)+"</b><br />\n";
+			*/
+
 
 			//s+="Permissions = " + info.permissions;
 		}
