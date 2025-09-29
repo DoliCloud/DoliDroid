@@ -36,7 +36,6 @@ import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -64,7 +63,6 @@ import androidx.security.crypto.MasterKeys;
 
 /**
  * Main activity class
- *
  * TargetApi indicates that Lint should treat this type as targeting a given API level, no matter what the project target is.
  */
 public class MainActivity extends Activity implements OnItemSelectedListener {
@@ -79,10 +77,9 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	private boolean allowChangeText=Boolean.FALSE;
 
 	private Menu savMenu;
-	private String menuAre="hardwareonly";
 
-	static final int REQUEST_ABOUT = RESULT_FIRST_USER+0;
-	static final int RESULT_ABOUT = RESULT_FIRST_USER+0;
+	static final int REQUEST_ABOUT = RESULT_FIRST_USER;
+	static final int RESULT_ABOUT = RESULT_FIRST_USER;
 
 	static final int REQUEST_WEBVIEW = RESULT_FIRST_USER+1;
 
@@ -103,20 +100,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
     	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
     	Log.d(LOG_TAG, "prefAlwaysShowBar="+prefAlwaysShowBar+" prefAlwaysAutoFill="+prefAlwaysAutoFill);
 
-    	// For main page, we always show bar
-    	prefAlwaysShowBar=true;
-    	Log.d(LOG_TAG, "prefAlwaysShowBar for main page="+prefAlwaysShowBar);
-
     	// Define kind of menu we want to use
-        boolean hasMenuHardware = Utils.hasMenuHardware(this);
-        if (! hasMenuHardware || prefAlwaysShowBar)
-        {
-        	this.menuAre="actionbar";
-        }
-        Log.d(LOG_TAG, "hasMenuHardware="+hasMenuHardware+" menuAre="+this.menuAre);
+		// For main page, we always show bar
+       	String menuAre="actionbar";		// Can be menuAre="hardwareonly"
+        Log.d(LOG_TAG, "menuAre="+menuAre);
 
         // menuAre is defined to actionbar or hardwareonly
-        if (! this.menuAre.equals("actionbar"))
+        /*
+		if (! menuAre.equals("actionbar"))
         {
         	// We choose menu using hardware
        		// Hide actionbar without hiding title (no requestFeature(Window.FEATURE_NO_TITLE) because there is no way to restore actionbar after
@@ -127,13 +118,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
        		catch(Exception e)
        		{}
         }
+        */
         //this.savWindow.requestFeature(Window.FEATURE_PROGRESS);
         //this.savWindow.setFeatureInt(Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
 
 		Display display = getWindowManager().getDefaultDisplay();
 		Point size = new Point();
 		display.getSize(size);
-		int width = size.x;
+		//int width = size.x;
 		int height = size.y;
 		Log.d(LOG_TAG, "Screen height is "+height);
 		if (height < 1100) {
@@ -154,8 +146,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		// Not using the android:onClick tag is bugged.
 		// Declaring listener is also faster.
 		Button btn = findViewById(R.id.buttonStart);
-		btn.setOnClickListener(new View.OnClickListener()
-		{
+		btn.setOnClickListener(new View.OnClickListener() {
 		    @Override
 		    public void onClick(View v) {
 		    	try {
@@ -184,11 +175,11 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 		// The array to contains the list of all predefined URLs
 		// This list is saved into a file named FILENAME
-    	this.listOfRootUrl = new ArrayList<PredefinedUrl>();
+    	this.listOfRootUrl = new ArrayList<>();
 
 		//ArrayAdapter <CharSequence> adapter = new ArrayAdapter <CharSequence> (this, android.R.layout.simple_spinner_item);
 		//adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		ArrayAdapter <CharSequence> adapter = new ArrayAdapter <CharSequence> (this, R.layout.select_url_item); // Set style for selected visible value
+		ArrayAdapter <CharSequence> adapter = new ArrayAdapter <> (this, R.layout.select_url_item); // Set style for selected visible value
 		// Set style for dropdown box (the font size of for the combo box of pre-defined URLs)
 		adapter.setDropDownViewResource(R.layout.select_url_item);
 
@@ -241,17 +232,15 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		}
 
 		// Loop on this.listOfRootUrl
-		if (this.listOfRootUrl.size() != 1) {
-			adapter.add(getString(R.string.SelectUrl) + "...");
-		}
-		else {
-			//adapter.add(getString(R.string.enterNewUrl) + "...");
-			adapter.add(getString(R.string.SelectUrl) + "...");
-		}
+		//if (this.listOfRootUrl.size() != 1) {
+		//	adapter.add(getString(R.string.SelectUrl) + "...");
+		//} else {
+		adapter.add(getString(R.string.SelectUrl) + "...");
+		//}
+
 		// Set entries to the adapter
-		for (int i = 0; i < this.listOfRootUrl.size(); i++)
-		{
-			String tmps = this.listOfRootUrl.get(i).getDomainUrl().replaceAll("\\/$", "");
+		for (int i = 0; i < this.listOfRootUrl.size(); i++) {
+			String tmps = this.listOfRootUrl.get(i).getDomainUrl().replaceAll("/+$", "");
 			tmps += " ("+this.listOfRootUrl.get(i).getScheme();
 			if (! "".equals(this.listOfRootUrl.get(i).getBasicAuthLogin())) {
 				tmps += " - "+this.listOfRootUrl.get(i).getBasicAuthLogin();
@@ -297,7 +286,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		}
 
 		// Init with button disabled
-		if (editText1.getText().toString().equals("")) {
+		if (editText1.getText().toString().isEmpty()) {
 			Button startButton = findViewById(R.id.buttonStart);
 			startButton.setEnabled(false);
 			startButton.setClickable(false);
@@ -576,9 +565,9 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	public void onItemSelected(AdapterView<?> parent, View v, int position, long id)
 	{
         Log.d(LOG_TAG, "onItemSelected position="+position+" id="+id+" this.allowChangeText="+this.allowChangeText);
-		EditText freeUrl = (EditText) findViewById(R.id.url_of_instance);
-		Spinner spinnerUrl = (Spinner) findViewById(R.id.combo_list_of_urls);
-		Button startButton = (Button) findViewById(R.id.buttonStart);
+		EditText freeUrl = findViewById(R.id.url_of_instance);
+		Spinner spinnerUrl = findViewById(R.id.combo_list_of_urls);
+		Button startButton = findViewById(R.id.buttonStart);
 
 		if (position > 0) {
 			//startButton.setEnabled(true);
@@ -610,9 +599,9 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
     public void onNothingSelected(AdapterView<?> parent)
     {
         Log.d(LOG_TAG, "onNothingSelected");
-		EditText freeUrl = (EditText) findViewById(R.id.url_of_instance);
+		EditText freeUrl = findViewById(R.id.url_of_instance);
 		freeUrl.setText("");
-		Button startButton = (Button) findViewById(R.id.buttonStart);
+		Button startButton = findViewById(R.id.buttonStart);
 		startButton.setEnabled(false);
     }
 
@@ -626,7 +615,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	{
 		// Do click handling here
 
-		final EditText freeUrl = (EditText) findViewById(R.id.url_of_instance);
+		final EditText freeUrl = findViewById(R.id.url_of_instance);
 		String dolRequestUrl = freeUrl.getText().toString();
 		String dolRootUrl = freeUrl.getText().toString();
 		dolRequestUrl = dolRequestUrl.replace("\\", "/").trim();
@@ -650,6 +639,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			String parttoremove = dolRootUrl.replaceAll("http(s|)://([^/]+)/", "");
 			dolRootUrl = dolRootUrl.replace(parttoremove, "");
 		}
+		dolRootUrl = dolRootUrl.replaceAll(" ", "");
 		dolRootUrl = dolRootUrl.replace(":///", "://");
 		if (! dolRootUrl.endsWith("/")) {
 			dolRootUrl = dolRootUrl.concat("/");
