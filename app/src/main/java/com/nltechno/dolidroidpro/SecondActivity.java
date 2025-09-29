@@ -29,6 +29,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
@@ -283,7 +284,9 @@ public class SecondActivity extends Activity {
         String dolRequestUrl = intent.getStringExtra("dolRequestUrl");        
 
         this.savedDolRootUrl = dolRootUrl;      // this include user:pass of http basic urls. Always end with /. Example: hTtP://user:pass@testldr1.with.dolicloud.com:xxx/
-        this.savedDolRootUrl = this.savedDolRootUrl.replaceAll("^(?i)http(s?):", "http$1:");
+        if (this.savedDolRootUrl != null) {
+            this.savedDolRootUrl = this.savedDolRootUrl.replaceAll("^(?i)http(s?):", "http$1:");
+        }
         this.savedDolScheme=Uri.parse(this.savedDolRootUrl).getScheme();                     // Example: http
         this.savedDolPort=Uri.parse(this.savedDolRootUrl).getPort();
         this.savedDolHost=Uri.parse(this.savedDolRootUrl).getHost();
@@ -304,7 +307,7 @@ public class SecondActivity extends Activity {
         }
         this.savedDolRootUrlWithSForced = "https:"+this.savedDolRootUrl.replace("http:", "").replace("https:", "");
         this.savedDolBasedUrl = this.savedDolScheme+"://"+this.savedDolUserInfoEncoded+("".equals(this.savedDolUserInfoEncoded) ? "" : "@")+this.savedDolHost+(includePort ? ":"+this.savedDolPort : "");   // Example: http://user:pass@testldr1.with.dolicloud.com:xxx
-		this.savedDolBasedUrlWithSForced = "https:"+this.savedDolBasedUrl.replace("http:", "").replace("https:", "");
+        this.savedDolBasedUrlWithSForced = "https:"+this.savedDolBasedUrl.replace("http:", "").replace("https:", "");
         this.savedDolBasedUrlWithoutUserInfo = this.savedDolScheme+"://"+this.savedDolHost+(includePort ? ":"+this.savedDolPort : "");	// Example: http://testldr1.with.dolicloud.com
         this.savedDolBasedUrlWithoutUserInfoWithSForced = "https:"+this.savedDolBasedUrlWithoutUserInfo.replace("http:", "").replace("https:", "");
 
@@ -331,13 +334,17 @@ public class SecondActivity extends Activity {
             }
         }
         catch (MalformedURLException e) {
-            Log.w(LOG_TAG, e.getMessage());
+            if (e.getMessage() == null) {
+                Log.w(LOG_TAG, "Malformed URL Exception");
+            } else {
+                Log.w(LOG_TAG, e.getMessage());
+            }
         }
         Log.d(LOG_TAG, "onCreate We have original root url = "+dolRootUrl);
         Log.d(LOG_TAG, "onCreate => savedDolRootUrl=" + this.savedDolRootUrl + " - savedDolRootUrlRel=" + this.savedDolRootUrlRel + " - savedDolRootUrlWithSForced = " + this.savedDolRootUrlWithSForced);
         Log.d(LOG_TAG, "onCreate => savedDolBasedUrl=" + this.savedDolBasedUrl + " - savedDolBasedUrlWithSForced=" + this.savedDolBasedUrlWithSForced);
 
-        String urlToGo = ""; 
+        String urlToGo;
         if (! dolRequestUrl.contains("?") && ! dolRequestUrl.contains(".php")) urlToGo = dolRequestUrl+"index.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
         else if (dolRequestUrl.contains("?")) urlToGo = dolRequestUrl+"&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
         else urlToGo = dolRequestUrl+"?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
@@ -956,7 +963,7 @@ public class SecondActivity extends Activity {
         DownloadWebPageTask(String mode)
         {
             super();
-            this.mode=mode;
+            this.mode = mode;
         }
 
         /**
@@ -1449,7 +1456,7 @@ public class SecondActivity extends Activity {
             // back to reach this home page, we got an error of cache when making the goBack (even if we remove the myWebView.clearHistory after login).
             // So we disable the goBack for this case.
             Log.d(LOG_TAG, "We disable the goBack for this case. We replace it with the case there is no previous page.");
-            if ("".equals(previousUrl)) {
+            if (previousUrl.isEmpty()) {
                 // No previous page
                 b = false;
             } else {
@@ -1537,8 +1544,7 @@ public class SecondActivity extends Activity {
             case REQUEST_CODE_ASK_PERMISSIONS_WRITE_EXTERNAL_STORAGE: {
                 Log.d(LOG_TAG, Integer.toString(grantResults[0]));
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted, yay! Do the task we need to do.
                     putDownloadInQueue(saveQueryForonRequestPermissionsResult, saveUrlForonRequestPermissionsResult, saveListOfCookiesForonRequestPermissionsResult);
                 } else {
@@ -1574,11 +1580,7 @@ public class SecondActivity extends Activity {
 
         String pathOfDownloadeFile = "download-dolidroid";
         if (query != null) {
-            try {
-                pathOfDownloadeFile = URLDecoder.decode(query.replace("file=", ""), "UTF-8");
-            } catch(UnsupportedEncodingException e) {
-                pathOfDownloadeFile = query.replace("file=", "");
-            }
+            pathOfDownloadeFile = URLDecoder.decode(query.replace("file=", ""), StandardCharsets.UTF_8);
         }
 
         request.setTitle(pathOfDownloadeFile);
@@ -1811,13 +1813,8 @@ public class SecondActivity extends Activity {
 				}
 				
 				// Format fileName to have a relative URL from root
-				if (fileName != null)
-				{
-					if (this.secondActivity.savedDolRootUrlRel.equals("/")) {
-					    fileName=fileName.replaceFirst(this.secondActivity.savedDolRootUrlRel, "");
-                    } else {
-					    fileName=fileName.replaceFirst(this.secondActivity.savedDolRootUrlRel, "");
-                    }
+				if (fileName != null) {
+				    fileName=fileName.replaceFirst(this.secondActivity.savedDolRootUrlRel, "");
 					if (fileName.startsWith("/")) {
 					    fileName=fileName.substring(1);
                     }
@@ -2021,7 +2018,6 @@ public class SecondActivity extends Activity {
 
                     Intent emailIntent = new Intent(Intent.ACTION_SEND, Uri.parse(url));
                     emailIntent.setDataAndType(Uri.parse(url), "message/rfc822");
-                    emailIntent.setType("message/rfc822");
                     emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{recipient});
                     if (hasEmailCC) { emailIntent.putExtra(android.content.Intent.EXTRA_CC, theEmailCC); }
                     if (hasEmailBCC) { emailIntent.putExtra(android.content.Intent.EXTRA_BCC, theEmailBCC); }
@@ -2029,6 +2025,7 @@ public class SecondActivity extends Activity {
                     if (hasBody) { emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, theBody); }
                     startActivity(Intent.createChooser(emailIntent, "Email..."));
                 } catch (Exception ex) {
+                    // Nothing done
                 }
                 return true;
             } else if (! url.startsWith(savedDolBasedUrl) && ! url.startsWith(savedDolBasedUrlWithSForced)
@@ -2042,6 +2039,7 @@ public class SecondActivity extends Activity {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     startActivity(intent);
                 } catch (Exception ex) {
+                    // Nothing done
                 }
                 return true;
             }
@@ -2063,7 +2061,7 @@ public class SecondActivity extends Activity {
                         // The parameter file=myfilename.ext was not provided so we use a generic file name
                         query = "Unknown-filename";
                     } else {
-                        query.replaceAll("^file=", "");
+                        query = query.replaceAll("^file=", "");
                     }
                 }
 				Log.d(LOG_TAG, "shouldOverrideUrlLoading Start activity to download file="+query);
@@ -2153,12 +2151,12 @@ public class SecondActivity extends Activity {
 				}
 				catch(IllegalArgumentException ie)
 				{
-					Log.e(LOG_TAG, ie.getMessage());
+					Log.e(LOG_TAG, Objects.requireNonNull(ie.getMessage(), "IllegalArgumentException message=null"));
 					Toast.makeText(activity, ie.getMessage(), Toast.LENGTH_LONG).show();
 				}
 				catch(Exception e)
 				{
-					Log.e(LOG_TAG, e.getMessage());
+					Log.e(LOG_TAG, Objects.requireNonNull(e.getMessage(), "Exception message=null"));
 					Toast.makeText(activity, e.getMessage(), Toast.LENGTH_LONG).show();
 				}
 
@@ -2399,7 +2397,7 @@ public class SecondActivity extends Activity {
                                         String username = sharedPrefsEncrypted.getString(savedDolRootUrl + "-username", "");
                                         String password = sharedPrefsEncrypted.getString(savedDolRootUrl + "-password", "");
 
-                                        if ((username != null && !"".equals(username)) || (password != null && !"".equals(password))) {
+                                        if ((username != null && !"".equals(username)) || (password != null && !password.isEmpty())) {
                                             tagToOverwriteLoginPass = false;  // So we autofill form only the first time.
                                             Log.d(LOG_TAG, "onPageFinished Prepare js to autofill login form with username=" + username + " password=" + password.replaceAll(".", "*"));
                                             //Log.d(LOG_TAG, "onPageFinished Prepare js to autofill login form with username="+username+" password="+password);
@@ -2493,7 +2491,7 @@ public class SecondActivity extends Activity {
 				    	} else {
                             // This is a common page (no tag on login or version and not a page just after a login)
                             WebBackForwardList tmpWebBackForwardList = myWebView.copyBackForwardList();
-                            int currentindexinhistory = tmpWebBackForwardList.getCurrentIndex();
+                            //int currentindexinhistory = tmpWebBackForwardList.getCurrentIndex();
                             if (tagClearHistoryAfterFinished > 0) {
                                 tagClearHistoryAfterFinished = 0;
                                 myWebView.clearHistory();   // So it removes the login page history entry (we don't want to have it when making go back)
@@ -2509,8 +2507,8 @@ public class SecondActivity extends Activity {
 						if (tagToLogout)
 						{
 							Log.d(LOG_TAG, "onPageFinished End of logout page, tagToLogout="+tagToLogout);
-							tagToLogout=false;	// Set to false to avoid infinite loop
-							tagToOverwriteLoginPass=true;
+							tagToLogout = false;	// Set to false to avoid infinite loop
+							tagToOverwriteLoginPass = true;
 							Log.i(LOG_TAG, "onPageFinished We finish activity resultCode="+RESULT_SECONDACTIVITY);
 							setResult(RESULT_SECONDACTIVITY);
 					    	WebViewDatabase.getInstance(getBaseContext()).clearHttpAuthUsernamePassword();
@@ -2614,7 +2612,7 @@ public class SecondActivity extends Activity {
 		    Log.e(LOG_TAG, "onReceivedError code: " + error.getErrorCode() + " on URL " + request.getUrl() + ": " + error.getDescription());
             super.onReceivedError(view, request, error);
 
-            if ("net::ERR_ACCESS_DENIED".equals(error.getDescription())) {
+            if ("net::ERR_ACCESS_DENIED".contentEquals(error.getDescription())) {
                 Toast.makeText(activity, "Your WebView failed to gain permission for action (submit a captured file ?), for an unknown reason.", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(activity, "Your Internet Connection may not be active Or " + error.getDescription() + ".", Toast.LENGTH_LONG).show();
@@ -2784,10 +2782,10 @@ public class SecondActivity extends Activity {
             boolean usecustomselect = true;
 
             // Log info on the input type=file attributes
-            int nbOfAttributes = acceptAttribute.length;
-            for (int i = 0; i < nbOfAttributes; i++) {
-                // For example: acceptAttribute[i]="image/*"
-                Log.d(LOG_TAG, "acceptAttribute=" + acceptAttribute[i] + " nameAttribute=" + nameAttribute);
+            //int nbOfAttributes = acceptAttribute.length;
+            for (String s : acceptAttribute) {
+                // For example: s="image/*"
+                Log.d(LOG_TAG, "acceptAttribute=" + s + " nameAttribute=" + nameAttribute);
             }
 
             if (mFilePathCallback != null) {
@@ -2914,7 +2912,7 @@ public class SecondActivity extends Activity {
                         chooserIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                     }
                     catch(Exception e) {
-                        Log.e(LOG_TAG, e.getMessage());
+                        Log.e(LOG_TAG, Objects.requireNonNull(e.getMessage(), "Exception"));
                     }
                 }
 
@@ -3087,8 +3085,7 @@ public class SecondActivity extends Activity {
     {
         Log.i(LOG_TAG, "onActivityResult requestCode = "+requestCode+" resultCode = "+resultCode + " mFilePathCallback = " + mFilePathCallback);
 
-        if (requestCode != REQUEST_INPUTFILE)
-        {
+        if (requestCode != REQUEST_INPUTFILE) {
             Log.d(LOG_TAG, "onActivityResult not a return after an input file selection");
             // Not a file upload, we make standard action.
             super.onActivityResult(requestCode, resultCode, data);
@@ -3105,7 +3102,7 @@ public class SecondActivity extends Activity {
         Log.d(LOG_TAG, "onActivityResult we should have just selected a file from an external activity");
 
         if (data != null) {
-            Log.d(LOG_TAG, "onActivityResult data = "+data.toString());
+            Log.d(LOG_TAG, "onActivityResult data = "+data);
         } else {
             Log.d(LOG_TAG, "onActivityResult data is null");
         }
@@ -3166,7 +3163,7 @@ public class SecondActivity extends Activity {
 
                     results = new Uri[]{imageUri};
 
-                    Log.d(LOG_TAG, "onActivityResult results="+results.toString());
+                    Log.d(LOG_TAG, "onActivityResult results="+ Arrays.toString(results));
 
                     mFilePathCallback.onReceiveValue(results);
                 }
@@ -3202,7 +3199,7 @@ public class SecondActivity extends Activity {
                     }
                 }
 
-                Log.d(LOG_TAG, "onActivityResult results="+results.toString());
+                Log.d(LOG_TAG, "onActivityResult results="+ Arrays.toString(results));
 
                 mFilePathCallback.onReceiveValue(results);
             }
