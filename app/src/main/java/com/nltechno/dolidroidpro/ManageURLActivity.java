@@ -48,7 +48,6 @@ import com.nltechno.utils.Utils;
 public class ManageURLActivity extends Activity {
 
 	private static final String LOG_TAG = "DoliDroidLogManageURLActivity";
-	private String menuAre="hardwareonly";
 
 	static final int RESULT_ABOUT =  RESULT_FIRST_USER;
 
@@ -72,15 +71,7 @@ public class ManageURLActivity extends Activity {
 
     	// Define kind of menu we want to use
         boolean hasMenuHardware = Utils.hasMenuHardware(this);
-       	this.menuAre="actionbar";
-        Log.d(LOG_TAG, "hasMenuHardware="+hasMenuHardware+" menuAre="+this.menuAre);
-
-        // menuAre is defined to 'actionbar' or 'hardware'
-        if (menuAre.equals("actionbar")) {
-        	// Nothing
-        } else {	// Menu are hardware
-        	requestWindowFeature(Window.FEATURE_NO_TITLE);	// Hide title with menus
-        }
+        Log.d(LOG_TAG, "hasMenuHardware="+hasMenuHardware);
 
 		TextView t2 = findViewById(R.id.TextInstanceURLTitle);
 		t2.setMovementMethod(LinkMovementMethod.getInstance());

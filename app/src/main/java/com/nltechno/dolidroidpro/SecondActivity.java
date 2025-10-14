@@ -62,7 +62,6 @@ import android.os.Environment;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
@@ -170,7 +169,6 @@ public class SecondActivity extends Activity {
     private boolean	isUserCardOn=false;      // Not visible by default
     private boolean	isVirtualCardOn=false;      // Not visible by default
 
-	private String menuAre="hardwareonly";
 	private Menu savMenu;
 	private boolean messageNoPreviousPageShown =false;
 	String listOfCookiesAfterLogon=null;
@@ -259,23 +257,7 @@ public class SecondActivity extends Activity {
 
         // Define kind of menu we want to use
         boolean hasMenuHardware = Utils.hasMenuHardware(this);
-        this.menuAre="actionbar";
-        Log.d(LOG_TAG, "onCreate hasMenuHardware="+hasMenuHardware+" menuAre="+this.menuAre);
-
-        // menuAre is defined to actionbar or hardwareonly
-        if (this.menuAre.equals("actionbar"))
-        {
-            //getActionBar().setHomeButtonEnabled(true);
-            //getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        else 
-        {   // We choose menu using hardware
-            // Hide actionbar without hiding title (no requestFeature(Window.FEATURE_NO_TITLE) because there is no way to restore actionbar after 
-            ActionBar actionBar = getActionBar();
-            if (actionBar != null) actionBar.hide();
-        }
-        //this.savWindow.requestFeature(Window.FEATURE_PROGRESS);
-        //this.savWindow.setFeatureInt(Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
+        Log.d(LOG_TAG, "onCreate hasMenuHardware="+hasMenuHardware);
 
         Intent intent = getIntent();
         String dolRootUrl = intent.getStringExtra("dolRootUrl");
@@ -460,50 +442,27 @@ public class SecondActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        Log.d(LOG_TAG, "onCreateOptionsMenu this.menuAre="+this.menuAre);
+        Log.d(LOG_TAG, "onCreateOptionsMenu");
 
         getMenuInflater().inflate(R.menu.activity_second, menu);    // Deploy android menu
 
-        // When there is hardware button and not using "actionbar", we remove the back from menu
-        if (Utils.hasMenuHardware(activity) && ! this.menuAre.equals("actionbar"))
-        {
-            Log.d(LOG_TAG, "onCreateOptionsMenu Hide button back because there is hardware and this.menuAre="+this.menuAre);
-            menu.findItem(R.id.menu_back).setVisible(false);
-        }
+        menu.findItem(R.id.menu_menu).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        menu.findItem(R.id.menu_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        menu.findItem(R.id.menu_bookmarks).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        menu.findItem(R.id.menu_uploadfile).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
-        if (this.menuAre.equals("actionbar")) {
-            menu.findItem(R.id.menu_menu).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            menu.findItem(R.id.menu_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            menu.findItem(R.id.menu_bookmarks).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            menu.findItem(R.id.menu_uploadfile).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        //menu.findItem(R.id.menu_photo).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
+        //menu.findItem(R.id.menu_scan).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
+        menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
+        menu.findItem(R.id.menu_usercard).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);  // Not enough room so we force it on dropdown menu.
+        menu.findItem(R.id.menu_virtualcard).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);  // Not enough room so we force it on dropdown menu.
 
-            //menu.findItem(R.id.menu_photo).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
-            //menu.findItem(R.id.menu_scan).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
-            menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
-            menu.findItem(R.id.menu_usercard).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);  // Not enough room so we force it on dropdown menu.
-            menu.findItem(R.id.menu_virtualcard).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);  // Not enough room so we force it on dropdown menu.
-
-            //menu.findItem(R.id.menu_photo).setVisible(false);
-            //menu.findItem(R.id.menu_scan).setVisible(false);
-            menu.findItem(R.id.menu_multicompany).setVisible(false);
-            menu.findItem(R.id.menu_usercard).setVisible(false);
-            menu.findItem(R.id.menu_virtualcard).setVisible(false);
-        }
-        if (this.menuAre.equals("hardwareonly")) {
-            // Move entries from actionbar to list
-            menu.findItem(R.id.menu_menu).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-            menu.findItem(R.id.menu_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-            menu.findItem(R.id.menu_bookmarks).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-            menu.findItem(R.id.menu_uploadfile).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-            menu.findItem(R.id.menu_back).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-
-            menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-            //menu.findItem(R.id.menu_photo).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-            //menu.findItem(R.id.menu_scan).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-            menu.findItem(R.id.menu_usercard).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-            menu.findItem(R.id.menu_virtualcard).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-        }
+        //menu.findItem(R.id.menu_photo).setVisible(false);
+        //menu.findItem(R.id.menu_scan).setVisible(false);
+        menu.findItem(R.id.menu_multicompany).setVisible(false);
+        menu.findItem(R.id.menu_usercard).setVisible(false);
+        menu.findItem(R.id.menu_virtualcard).setVisible(false);
 
 
         // Handle for the non encrypted shared preferences file

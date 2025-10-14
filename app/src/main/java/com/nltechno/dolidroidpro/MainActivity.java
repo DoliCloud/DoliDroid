@@ -31,6 +31,7 @@ import java.util.Locale;
 
 import com.nltechno.utils.Utils;
 
+import android.content.RestrictionsManager;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Build;
@@ -100,28 +101,6 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
     	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
     	Log.d(LOG_TAG, "prefAlwaysAutoFill="+prefAlwaysAutoFill);
-
-    	// Define kind of menu we want to use
-		// For main page, we always show bar
-       	String menuAre="actionbar";		// Can be menuAre="hardwareonly"
-        Log.d(LOG_TAG, "menuAre="+menuAre);
-
-        // menuAre is defined to actionbar or hardwareonly
-        /*
-		if (! menuAre.equals("actionbar"))
-        {
-        	// We choose menu using hardware
-       		// Hide actionbar without hiding title (no requestFeature(Window.FEATURE_NO_TITLE) because there is no way to restore actionbar after
-       		try {
-       			ActionBar actionBar = getActionBar();
-       			if (actionBar != null) actionBar.hide();
-       		}
-       		catch(Exception e)
-       		{}
-        }
-        */
-        //this.savWindow.requestFeature(Window.FEATURE_PROGRESS);
-        //this.savWindow.setFeatureInt(Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
 
 		Display display = getWindowManager().getDefaultDisplay();
 		Point size = new Point();
@@ -272,6 +251,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		} else {
 			spinner_for_list_of_predefined_entries.setVisibility(View.INVISIBLE);
 			texViewLink.setVisibility(View.VISIBLE);
+		}
+
+		// Check if a default URL exists as a MDM Managed Configuration
+		RestrictionsManager myManagedConfigurationMgr = (RestrictionsManager) getSystemService(Context.RESTRICTIONS_SERVICE);
+		Bundle myManagedConfiguration = myManagedConfigurationMgr.getApplicationRestrictions();
+		if (myManagedConfiguration.containsKey("managedConfigurationDefaultURL") && myManagedConfiguration.getString("managedConfigurationDefaultURL") != null && !"".equals(myManagedConfiguration.getString("managedConfigurationDefaultURL"))) {
+			homeUrlToSuggest = myManagedConfiguration.getString("managedConfigurationDefaultURL");
+			Log.d(LOG_TAG, "A managed configuration was found with value: " + homeUrlToSuggest);
 		}
 
 		// Init url with hard coded value

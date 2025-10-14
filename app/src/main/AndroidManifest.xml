@@ -80,7 +80,7 @@
         <!-- Define the file used for Managed Configuration -->
         <meta-data android:name="android.content.APP_RESTRICTIONS" android:resource="@xml/managed_configurations" />
 
-        <!-- Define a broadcast receiver -->
+        <!-- Define a broadcast receiver to receive message Download complete -->
         <!-- Note: If you set android:exported="false", the event "onReceive ACTION_DOWNLOAD_COMPLETE" is not received into DownloadBroadcastReceiver -->
         <receiver android:name="com.nltechno.dolidroidpro.DownloadBroadcastReceiver"
             android:exported="true">

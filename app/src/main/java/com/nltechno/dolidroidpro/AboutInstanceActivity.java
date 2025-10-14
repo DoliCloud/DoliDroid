@@ -54,7 +54,6 @@ import java.util.regex.Pattern;
 public class AboutInstanceActivity extends Activity {
 
 	private static final String LOG_TAG = "DoliDroidLogAboutInstanceActivity";
-	private String menuAre="hardwareonly";
 
 	static final int RESULT_ABOUT_INSTANCE =  RESULT_FIRST_USER;
 
@@ -74,15 +73,7 @@ public class AboutInstanceActivity extends Activity {
 
     	// Define kind of menu we want to use
         boolean hasMenuHardware = Utils.hasMenuHardware(this);
-       	this.menuAre="actionbar";
-        Log.d(LOG_TAG, "hasMenuHardware="+hasMenuHardware+" menuAre="+this.menuAre);
-
-        // menuAre is defined to 'actionbar' or 'hardware'
-        if (menuAre.equals("actionbar")) {
-        	// Nothing
-        } else {	// Menu are hardware
-        	requestWindowFeature(Window.FEATURE_NO_TITLE);	// Hide title with menus
-        }
+        Log.d(LOG_TAG, "hasMenuHardware="+hasMenuHardware);
 
 		setContentView(R.layout.activity_about_instance);
 
