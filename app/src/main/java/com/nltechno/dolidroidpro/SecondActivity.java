@@ -248,20 +248,18 @@ public class SecondActivity extends Activity {
         Log.d(LOG_TAG, "onCreate App is installed from: "+installerPackageName);
 
         // Read the non encrypted share preferences files
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
+        //SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
+
         boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
         prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
-        Log.d(LOG_TAG, "onCreate Read the non encrypted shared preferences file: prefAlwaysShowBar="+prefAlwaysShowBar+" prefAlwaysAutoFill="+prefAlwaysAutoFill+" prefAlwaysUseLocResouces="+prefAlwaysUseLocalResources);
+        Log.d(LOG_TAG, "onCreate Read the non encrypted shared preferences file: prefAlwaysAutoFill="+prefAlwaysAutoFill+" prefAlwaysUseLocResouces="+prefAlwaysUseLocalResources);
         
         tagToOverwriteLoginPass=prefAlwaysAutoFill;
 
         // Define kind of menu we want to use
         boolean hasMenuHardware = Utils.hasMenuHardware(this);
-        if (! hasMenuHardware || prefAlwaysShowBar)
-        {
-            this.menuAre="actionbar";
-        }
+        this.menuAre="actionbar";
         Log.d(LOG_TAG, "onCreate hasMenuHardware="+hasMenuHardware+" menuAre="+this.menuAre);
 
         // menuAre is defined to actionbar or hardwareonly
@@ -509,20 +507,8 @@ public class SecondActivity extends Activity {
 
 
         // Handle for the non encrypted shared preferences file
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-
-        // Hide menu show bar if there is no hardware, change label otherwise
-        MenuItem menuItem = menu.findItem(R.id.always_show_bar);
-        if (Utils.hasMenuHardware(activity)) {
-            menuItem.setVisible(true);
-            boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
-            Log.d(LOG_TAG, "onCreateOptionsMenu prefAlwaysShowBar value is "+prefAlwaysShowBar);
-            menuItem.setChecked(prefAlwaysShowBar);
-        } else {
-            menuItem.setVisible(false);
-        }
-
+        //SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
 
         // Hide menu show bar if phone too old, change label otherwise
         MenuItem menuItem2 = menu.findItem(R.id.always_autofill);
@@ -672,7 +658,7 @@ public class SecondActivity extends Activity {
      *  @param  MenuItem    item    Menu item selected
      *  @return boolean             True if we selected a menu managed, False otherwise
      */
-    public boolean onOptionsItemSelected(MenuItem item) 
+    public boolean onOptionsItemSelected(MenuItem item)
     {
         Log.i(LOG_TAG, "SecondActivity::onOptionsItemSelected Click onto menu: item="+item.toString());
 
@@ -716,44 +702,10 @@ public class SecondActivity extends Activity {
                 Log.d(LOG_TAG, "startActivityForResult with requestCode="+REQUEST_ABOUT_INSTANCE);
                 startActivityForResult(intentaboutinstance, REQUEST_ABOUT_INSTANCE);
                 return true;
-            case R.id.always_show_bar:  // Switch menu bar on/off
-                sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                // Same code into MainActivity and SecondActivity
-                boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
-
-                Log.i(LOG_TAG, "Click onto switch show bar, prefAlwaysShowBar is "+prefAlwaysShowBar);
-                prefAlwaysShowBar=!prefAlwaysShowBar;
-
-                editor = sharedPrefs.edit();
-                editor.putBoolean("prefAlwaysShowBar", prefAlwaysShowBar);
-                editor.apply();
-                Log.d(LOG_TAG, "Switched value is now "+prefAlwaysShowBar);
-                // Update show bar or not
-                if (prefAlwaysShowBar) 
-                {
-                    //this.savMenu.findItem(R.id.always_show_bar).setTitle(getString(R.string.menu_show_bar_on));
-                    this.savMenu.findItem(R.id.always_show_bar).setChecked(true);
-                    this.menuAre="actionbar";
-                    // Reload menu
-                    invalidateOptionsMenu();
-                    // Enable menu on screen
-                    ActionBar actionBar = getActionBar();
-                    if (actionBar != null) actionBar.show();
-                }
-                else
-                {
-                    //this.savMenu.findItem(R.id.always_show_bar).setTitle(getString(R.string.menu_show_bar_off));
-                    this.savMenu.findItem(R.id.always_show_bar).setChecked(false);
-                    this.menuAre="hardwareonly";
-                    // Disable menu from screen
-                    ActionBar actionBar = getActionBar();
-                    if (actionBar != null) actionBar.hide();
-                    // Reload menu
-                    invalidateOptionsMenu();
-                }
-                return true;
             case R.id.always_autofill:  // Switch menu bar on/off for "Save login/password"
                 sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                //sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
+
                 // Same code into MainActivity and SecondActivity
                 boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
 
@@ -772,7 +724,6 @@ public class SecondActivity extends Activity {
 
                     // Clear saved login / pass
                     try {
-                        //SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
                         SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
                                 "secret_shared_prefs",
@@ -810,6 +761,8 @@ public class SecondActivity extends Activity {
                 prefAlwaysUseLocalResources=!prefAlwaysUseLocalResources;
 
                 sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                //sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
+
                 editor = sharedPrefs.edit();
                 editor.putBoolean("prefAlwaysUseLocalResources", prefAlwaysUseLocalResources);
                 editor.apply();
@@ -1578,12 +1531,20 @@ public class SecondActivity extends Activity {
         // First create an object Request
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
 
-        String pathOfDownloadeFile = "download-dolidroid";
+        String pathOfDownloadedFile = "download-dolidroid";
         if (query != null) {
-            pathOfDownloadeFile = URLDecoder.decode(query.replace("file=", ""), StandardCharsets.UTF_8);
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    pathOfDownloadedFile = URLDecoder.decode(query.replace("file=", ""), StandardCharsets.UTF_8);
+                } else {
+                    pathOfDownloadedFile = URLDecoder.decode(query.replace("file=", ""), "UTF-8");
+                }
+            } catch (UnsupportedEncodingException e) {
+                pathOfDownloadedFile = "download-dolidroid";
+            }
         }
 
-        request.setTitle(pathOfDownloadeFile);
+        request.setTitle(pathOfDownloadedFile);
         request.setDescription(query);
         request.addRequestHeader("Cookie", listOfCookies);
         if (savedAuthuser != null) {
@@ -1613,11 +1574,11 @@ public class SecondActivity extends Activity {
             }
         }
 
-        Log.d(LOG_TAG, "putDownloadInQueue Set output dirType=" + Environment.DIRECTORY_DOWNLOADS + ", subPath="+pathOfDownloadeFile+" (should be "+tmpFolder+")");
+        Log.d(LOG_TAG, "putDownloadInQueue Set output dirType=" + Environment.DIRECTORY_DOWNLOADS + ", subPath="+pathOfDownloadedFile+" (should be "+tmpFolder+")");
         // Storing in dedicated dir does not work
         // request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_DOWNLOADS, pathOfDownloadeFile);
         // so we store file in common public download dir
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, pathOfDownloadeFile);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, pathOfDownloadedFile);
 
         // Then create the object DownloadManager and enqueue the file
         // Complete tutorial on download manager on http://www.101apps.co.za/index.php/articles/using-the-downloadmanager-to-manage-your-downloads.html
@@ -2384,7 +2345,6 @@ public class SecondActivity extends Activity {
 							    	try {
                                         Log.d(LOG_TAG, "onPageFinished Open file to read shared preferences (secret_shared_prefs)");
 
-                                        //SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                                         String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
                                         SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
                                                 "secret_shared_prefs",
@@ -2443,7 +2403,8 @@ public class SecondActivity extends Activity {
 				    		Log.i(LOG_TAG, "onPageFinished We have just received a page that is not Login page after submitting login form.");
 				    		tagLastLoginPassToSavedLoginPass=false;
 
-					    	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+					    	//SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                            SharedPreferences sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
 					    	// shared pref file is into /data/data/package.name/shared_prefs/settings.xml but can be read by root only.
 
 					    	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
@@ -2453,7 +2414,6 @@ public class SecondActivity extends Activity {
 						    	// Retrieve last values used submitted for username and password
                                 // to save them with a name depending on URL.
                                 try {
-                                    //SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                                     String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
                                     SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
                                             "secret_shared_prefs",
@@ -3030,7 +2990,6 @@ public class SecondActivity extends Activity {
 
             // Save the username and password into temporary var lastsubmit-username and lastsubmit-password
             try {
-                //SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
 
                 File prefsFile = new File(getApplicationContext().getFilesDir(), "../shared_prefs/secret_shared_prefs.xml");

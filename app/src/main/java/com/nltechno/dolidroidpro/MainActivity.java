@@ -95,10 +95,11 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-    	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-    	boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
+    	//SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		SharedPreferences sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
+
     	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
-    	Log.d(LOG_TAG, "prefAlwaysShowBar="+prefAlwaysShowBar+" prefAlwaysAutoFill="+prefAlwaysAutoFill);
+    	Log.d(LOG_TAG, "prefAlwaysAutoFill="+prefAlwaysAutoFill);
 
     	// Define kind of menu we want to use
 		// For main page, we always show bar
@@ -171,7 +172,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		String homeUrlToSuggest = HOME_URL;
 		String homeUrlFirstFound = "";
 
-		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		//SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		SharedPreferences sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
 
 		// The array to contains the list of all predefined URLs
 		// This list is saved into a file named FILENAME
@@ -293,26 +295,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			startButton.setTextColor(Color.LTGRAY);
 		}
 
-		if (this.savMenu != null)	// Menu may not be initialized yet
-		{
-	        // Hide menu show bar if there is no hardware, change label otherwise
-	    	MenuItem menuItem = this.savMenu.findItem(R.id.always_show_bar);
-	    	if (Utils.hasMenuHardware(activity))
-	    	{
-				menuItem.setVisible(true);
-		    	boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
-		    	Log.d(LOG_TAG, "prefAlwaysShowBar value is "+prefAlwaysShowBar);
-		    	if (prefAlwaysShowBar) {
-		    		menuItem.setTitle(getString(R.string.menu_show_bar_on));
-				} else {
-		    		menuItem.setTitle(getString(R.string.menu_show_bar_off));
-				}
-	    	}
-	    	else
-	    	{
-	    		menuItem.setVisible(false);
-	    	}
-
+		if (this.savMenu != null) {	// If menu has been initialized, we can fill/modify it.
 	        // Hide menu show bar if phone too old, change label otherwise
 			MenuItem menuItem2 = this.savMenu.findItem(R.id.always_autofill);
     		boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
@@ -323,6 +306,17 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			} else {
     			//menuItem2.setTitle(getString(R.string.menu_autofill_off));
 				menuItem2.setChecked(false);
+			}
+
+			MenuItem menuItem4 = this.savMenu.findItem(R.id.always_uselocalresources);
+			boolean prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
+			Log.d(LOG_TAG, "prefAlwaysUseLocalResources value is "+prefAlwaysUseLocalResources);
+			if (prefAlwaysUseLocalResources) {
+				//menuItem4.setTitle(getString(R.string.menu_autofill_on));
+				menuItem4.setChecked(true);
+			} else {
+				//menuItem4.setTitle(getString(R.string.menu_autofill_off));
+				menuItem4.setChecked(false);
 			}
 
     		if (this.listOfRootUrl != null) {
@@ -371,24 +365,11 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-    	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+    	//SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		SharedPreferences sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
 
     	getMenuInflater().inflate(R.menu.activity_main, menu);
     	Log.d(LOG_TAG, "onCreateOptionsMenu");
-
-    	MenuItem menuItem  = menu.findItem(R.id.always_show_bar);
-
-        // Hide menu show bar if there is no hardware
-        if (Utils.hasMenuHardware(activity)) {
-			menuItem.setVisible(true);
-        	boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
-        	Log.d(LOG_TAG, "prefAlwaysShowBar value is "+prefAlwaysShowBar);
-        	if (prefAlwaysShowBar) menuItem.setTitle(getString(R.string.menu_show_bar_on));
-        	else menuItem.setTitle(getString(R.string.menu_show_bar_off));
-        } else {
-        	// When there is no hardware button and not using "actionbar", we remove the 'always show bar' menu
-        	menuItem.setVisible(false);
-        }
 
 		MenuItem menuItem2 = menu.findItem(R.id.always_autofill);
    		boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
@@ -411,8 +392,10 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		}
 
 		MenuItem menuItem4 = menu.findItem(R.id.always_uselocalresources);
+		boolean prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
+		Log.d(LOG_TAG, "prefAlwaysUseLocalResources value is "+prefAlwaysUseLocalResources);
 		if (menuItem4 != null) {
-			if (prefAlwaysAutoFill) {
+			if (prefAlwaysUseLocalResources) {
 				//menuItem4.setTitle(getString(R.string.menu_uselocalresources_on));
 				menuItem4.setChecked(true);
 			} else {
@@ -444,30 +427,13 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
      */
     public boolean onOptionsItemSelected(MenuItem item)
     {
-    	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+    	//SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		SharedPreferences sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
+
 		Editor editor = sharedPrefs.edit();
 
     	switch (item.getItemId())
     	{
-    		case R.id.always_show_bar:
-				// Same code into MainActivity and SecondActivity
-	        	boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
-
-	    		Log.i(LOG_TAG, "Click onto switch show bar, prefAlwaysShowBar is "+prefAlwaysShowBar);
-	    		prefAlwaysShowBar=!prefAlwaysShowBar;
-
-	        	editor.putBoolean("prefAlwaysShowBar", prefAlwaysShowBar);
-	        	editor.apply();
-	    		Log.d(LOG_TAG, "Switched value is now "+prefAlwaysShowBar);
-	    		// Update men label
-	        	if (prefAlwaysShowBar) {
-	        		//this.savMenu.findItem(R.id.always_show_bar).setTitle(getString(R.string.menu_show_bar_on));
-					this.savMenu.findItem(R.id.always_show_bar).setChecked(true);
-				} else {
-	        		//this.savMenu.findItem(R.id.always_show_bar).setTitle(getString(R.string.menu_show_bar_off));
-					this.savMenu.findItem(R.id.always_show_bar).setChecked(false);
-				}
-	    		return true;
     		case R.id.always_autofill:
 				// Same code into MainActivity and SecondActivity
 	        	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
@@ -536,6 +502,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 					//this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_off));
 					this.savMenu.findItem(R.id.always_uselocalresources).setChecked(false);
 				}
+				invalidateOptionsMenu();
 				return true;
 			case R.id.manage_all_urls:
 				Log.d(LOG_TAG, "Click onto Manage all URLs");

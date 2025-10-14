@@ -19,6 +19,7 @@ package com.nltechno.dolidroidpro;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -64,17 +65,15 @@ public class ManageURLActivity extends Activity {
 		// Set the XML view to use
 		setContentView(R.layout.activity_manageurl);
 
-		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-    	boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
+		//SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		SharedPreferences sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
+
     	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
-    	Log.d(LOG_TAG, "prefAlwaysShowBar="+prefAlwaysShowBar+" prefAlwaysAutoFill="+prefAlwaysAutoFill); 
+    	Log.d(LOG_TAG, "prefAlwaysAutoFill="+prefAlwaysAutoFill);
 
     	// Define kind of menu we want to use
         boolean hasMenuHardware = Utils.hasMenuHardware(this);
-        if (! hasMenuHardware || prefAlwaysShowBar)
-        {
-        	this.menuAre="actionbar";
-        }
+       	this.menuAre="actionbar";
         Log.d(LOG_TAG, "hasMenuHardware="+hasMenuHardware+" menuAre="+this.menuAre);
 
         // menuAre is defined to 'actionbar' or 'hardware'
@@ -128,8 +127,9 @@ public class ManageURLActivity extends Activity {
 		Log.d(LOG_TAG, "onStart");
 		super.onStart();
 		
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-    	//boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
+        //SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		SharedPreferences sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
+
     	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
 		Intent intent = getIntent();
 
@@ -207,7 +207,6 @@ public class ManageURLActivity extends Activity {
 			if (tagToOverwriteLoginPass)	// If we are allowed to overwrite username/pass into fields
 			{
 				try {
-					//SharedPreferences sharedPrefsEncrypted = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 					String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
 					SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
 							"secret_shared_prefs",

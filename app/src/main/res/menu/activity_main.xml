@@ -9,13 +9,6 @@
 
 		<menu android:id="@+id/sousmenu">
 			<item
-				android:id="@+id/always_show_bar"
-				android:checkable="true"
-				android:menuCategory="secondary"
-				android:orderInCategory="120"
-				android:title="@string/menu_show_bar_on"
-				android:visible="false" />
-			<item
 				android:id="@+id/always_autofill"
 				android:checkable="true"
 				android:menuCategory="secondary"

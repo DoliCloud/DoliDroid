@@ -76,6 +76,10 @@
             android:theme="@style/DoliDroidThemeAbout" >
         </activity>
 
+
+        <!-- Define the file used for Managed Configuration -->
+        <meta-data android:name="android.content.APP_RESTRICTIONS" android:resource="@xml/managed_configurations" />
+
         <!-- Define a broadcast receiver -->
         <!-- Note: If you set android:exported="false", the event "onReceive ACTION_DOWNLOAD_COMPLETE" is not received into DownloadBroadcastReceiver -->
         <receiver android:name="com.nltechno.dolidroidpro.DownloadBroadcastReceiver"
@@ -84,6 +88,7 @@
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
             </intent-filter>
         </receiver>
+
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -75,17 +75,15 @@ public class AboutActivity extends Activity {
 		Log.i(LOG_TAG, "onCreate savedInstanceState="+savedInstanceState);
 		super.onCreate(savedInstanceState);
 
-		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-    	boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
+		//SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		SharedPreferences sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
+
     	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
-    	Log.d(LOG_TAG, "prefAlwaysShowBar="+prefAlwaysShowBar+" prefAlwaysAutoFill="+prefAlwaysAutoFill); 
+    	Log.d(LOG_TAG, "prefAlwaysAutoFill="+prefAlwaysAutoFill);
 
     	// Define kind of menu we want to use
         boolean hasMenuHardware = Utils.hasMenuHardware(this);
-        if (! hasMenuHardware || prefAlwaysShowBar)
-        {
-        	this.menuAre="actionbar";
-        }
+       	this.menuAre="actionbar";
         Log.d(LOG_TAG, "hasMenuHardware="+hasMenuHardware+" menuAre="+this.menuAre);
 
         // menuAre is defined to 'actionbar' or 'hardware'
@@ -116,8 +114,9 @@ public class AboutActivity extends Activity {
 		Log.d(LOG_TAG, "onStart");
 		super.onStart();
 		
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-    	//boolean prefAlwaysShowBar = sharedPrefs.getBoolean("prefAlwaysShowBar", true);
+        //SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		SharedPreferences sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
+
     	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
 		Intent intent = getIntent();
 

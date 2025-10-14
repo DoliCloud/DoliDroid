@@ -111,5 +111,7 @@
     <string name="menu_photo">Scan a document</string>
     <string name="None">None</string>
     <string name="TargetSDKVersion">Target SDK Level</string>
+    <string name="defaultURL">Default URL</string>
+    <string name="defaultURLDesc">The default URL to connect to, suggested on first screen.\nUsing another URL still remain possible.</string>
 
 </resources>
