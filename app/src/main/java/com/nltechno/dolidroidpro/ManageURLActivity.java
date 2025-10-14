@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -203,9 +202,8 @@ public class ManageURLActivity extends Activity {
 			// Saved user/pass
 			String username=null;
 			String password=null;
-			Boolean tagToOverwriteLoginPass = prefAlwaysAutoFill;
-			if (tagToOverwriteLoginPass)	// If we are allowed to overwrite username/pass into fields
-			{
+
+			if (prefAlwaysAutoFill)	{ // If we are allowed to overwrite username/pass into fields
 				try {
 					String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
 					SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
@@ -234,25 +232,13 @@ public class ManageURLActivity extends Activity {
 			if (savedAuthpass != null) s2b+=getString(R.string.BasicAuthPassword)+": "+savedAuthpass.replaceAll(".", "*")+"\n";
 		}
 
-		/*
-		if (s2b != null && ! "".equals(s2b)) {
-			textViewAbout2b.setVisibility(View.VISIBLE);
-			textViewAbout2b.setEnabled(true);
-			textViewAbout2b.setText(Html.fromHtml(s2b, Html.FROM_HTML_MODE_COMPACT));
-		} else {
-			textViewAbout2b.setVisibility(View.INVISIBLE);
-			textViewAbout2b.setEnabled(false);
-			textViewAbout2b.setText("");
-		}
-		*/
-
 		// Update the menu label to add the number of predefined URL into label
 		TextView textViewListOfUrl = findViewById(R.id.textListOfUrlsTitle);
 		TextView textViewListOfUrl2 = findViewById(R.id.textListOfUrlsTitle2);
 		if (MainActivity.listOfRootUrl.size() >= 1) {
 			// Set position of textViewListOfUrl
 			RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) textViewListOfUrl.getLayoutParams();
-			if (s2b != null && !"".equals(s2b)) {
+			if (!"".equals(s2b)) {
 				layoutParams.addRule(RelativeLayout.BELOW, R.id.TextInstanceURLTitle);
 			} else {
 				layoutParams.addRule(RelativeLayout.BELOW, R.id.imageTop);
@@ -271,7 +257,7 @@ public class ManageURLActivity extends Activity {
 		} else {
 			// Set position of textViewListOfUrl
 			RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) textViewListOfUrl.getLayoutParams();
-			if (s2b != null && !"".equals(s2b)) {
+			if (!"".equals(s2b)) {
 				layoutParams.addRule(RelativeLayout.BELOW, R.id.TextInstanceURLTitle);
 			} else {
 				layoutParams.addRule(RelativeLayout.BELOW, R.id.imageTop);
