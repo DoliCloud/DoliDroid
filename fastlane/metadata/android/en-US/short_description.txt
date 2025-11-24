@@ -1,0 +1,1 @@
+Front-end application to use any Dolibarr ERP CRM instances
