@@ -43,7 +43,7 @@ public class MainActivityTest extends Activity implements OnItemSelectedListener
 	 * Called when activity is created
 	 */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		Log.i(LOG_TAG, "onCreate Running with SDK=" + Build.VERSION.SDK_INT + " hardware menu=" + Utils.hasMenuHardware(this));
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_maintest);
@@ -54,7 +54,7 @@ public class MainActivityTest extends Activity implements OnItemSelectedListener
 	 * Called when activity start
 	 */
 	@Override
-	public void onStart() {
+	protected void onStart() {
 		Log.i(LOG_TAG, "onStart MainActivity");
 		super.onStart();
 

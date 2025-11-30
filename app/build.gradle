@@ -26,7 +26,8 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     namespace 'com.nltechno.dolidroidpro'
-    compileSdk 34
+    compileSdk 36
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
@@ -40,6 +41,10 @@ dependencies {
     // Add swiper to allow to refresh of a web page with a screen swipe bottom
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
+    // To use AppCompatActivity instead of Activity
+    implementation "androidx.activity:activity:1.8.2"
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+
     // To be able to use CardView so we can add shadow around images
     //implementation "'androidx.cardview:cardview:1.0.0"
 
@@ -47,21 +52,25 @@ dependencies {
     //compile 'com.android.support:support-v4:23'
 
     // Dependencies added to use the EncryptedSharedPreferences.
-    dependencies {
-        // Crypt libraries used to encrypt the secret_shared_prefs file for saved login/pass
-        implementation "androidx.security:security-crypto:1.0.0"
+    // Crypt libraries used to encrypt the secret_shared_prefs file for saved login/pass
+    implementation "androidx.security:security-crypto:1.0.0"
 
-        // For Identity Credential APIs
-        implementation "androidx.security:security-identity-credential:1.0.0-alpha03"
+    // For Identity Credential APIs
+    implementation "androidx.security:security-identity-credential:1.0.0-alpha03"
 
-        // For App Authentication APIs
-        implementation "androidx.security:security-app-authenticator:1.0.0-rc01"
+    // For App Authentication APIs
+    implementation "androidx.security:security-app-authenticator:1.0.0-rc01"
 
-        // For App Authentication API testing
-        androidTestImplementation "androidx.security:security-app-authenticator:1.0.0-rc01"
-    }
+    // For App Authentication API testing
+    androidTestImplementation "androidx.security:security-app-authenticator:1.0.0-rc01"
 }
 
+// Forcer une version unique de Kotlin pour toutes les dépendances
+configurations.all {
+    resolutionStrategy {
+        force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22"
+    }
+}
 
 // This section is to add a report of the use of deprecated methods in IDE after the build
 tasks.withType(JavaCompile).configureEach {

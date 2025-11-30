@@ -94,11 +94,13 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.app.AlertDialog;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import androidx.activity.OnBackPressedCallback;
 
 /**
  * Second activity class
@@ -141,8 +143,8 @@ public class SecondActivity extends Activity {
 	public boolean sslErrorWasAccepted=false;
     public boolean httpWarningWasViewed=false;
 
-	private String lastversionfound;
-	private String lastversionfoundforasset;
+	private String lastVersionFound;
+	private String lastVersionFoundForAsset;
 
 
 	// Variables used to manage cache and error retry
@@ -216,7 +218,7 @@ public class SecondActivity extends Activity {
     // This is a UI Thread
     @SuppressLint("SetJavaScriptEnabled")
     @Override
-    public void onCreate(Bundle savedInstanceState) 
+    protected void onCreate(Bundle savedInstanceState)
     {
         Log.i(LOG_TAG, "onCreate savedInstanceState="+savedInstanceState);
 
@@ -237,7 +239,6 @@ public class SecondActivity extends Activity {
             // For older Android versions, you can keep the deprecated method,
             // though be aware of its limitations.
             // It's good practice to suppress the deprecation warning for this specific case.
-            @SuppressWarnings("deprecation")
             String deprecatedInstallerPackageName = packageManager.getInstallerPackageName(this.getPackageName());
             installerPackageName = deprecatedInstallerPackageName;
         }
@@ -417,8 +418,6 @@ public class SecondActivity extends Activity {
         });
     }
 
-
-	
 	/**
 	 * Called when activity start
 	 */
@@ -624,7 +623,7 @@ public class SecondActivity extends Activity {
 
         SharedPreferences sharedPrefs;
         Editor editor;
-        String urlToGo = ""; 
+        String urlToGo;
 
         // On which menu entry did you click ?
         switch (item.getItemId())
@@ -654,8 +653,8 @@ public class SecondActivity extends Activity {
                 intentaboutinstance.putExtra("currentUrl", myWebView.getOriginalUrl());
                 intentaboutinstance.putExtra("userAgent", myWebView.getSettings().getUserAgentString());
                 intentaboutinstance.putExtra("savedDolRootUrl", this.savedDolRootUrl);
-                intentaboutinstance.putExtra("lastversionfound", this.lastversionfound);
-                intentaboutinstance.putExtra("lastversionfoundforasset", this.lastversionfoundforasset);
+                intentaboutinstance.putExtra("lastversionfound", this.lastVersionFound);
+                intentaboutinstance.putExtra("lastversionfoundforasset", this.lastVersionFoundForAsset);
                 intentaboutinstance.putExtra("title", myWebView.getTitle());
                 intentaboutinstance.putExtra("savedAuthuser", this.savedAuthuser);
                 intentaboutinstance.putExtra("savedAuthpass", this.savedAuthpass);
@@ -743,8 +742,8 @@ public class SecondActivity extends Activity {
                 tmpintent1.putExtra("currentUrl", myWebView.getOriginalUrl());
                 tmpintent1.putExtra("userAgent", myWebView.getSettings().getUserAgentString());
                 tmpintent1.putExtra("savedDolRootUrl", this.savedDolRootUrl);
-                tmpintent1.putExtra("lastversionfound", this.lastversionfound);
-                tmpintent1.putExtra("lastversionfoundforasset", this.lastversionfoundforasset);
+                tmpintent1.putExtra("lastversionfound", this.lastVersionFound);
+                tmpintent1.putExtra("lastversionfoundforasset", this.lastVersionFoundForAsset);
                 tmpintent1.putExtra("title", myWebView.getTitle());
                 tmpintent1.putExtra("savedAuthuser", this.savedAuthuser);
                 tmpintent1.putExtra("savedAuthpass", this.savedAuthpass);
@@ -758,8 +757,8 @@ public class SecondActivity extends Activity {
                 intent.putExtra("currentUrl", myWebView.getOriginalUrl());
                 intent.putExtra("userAgent", myWebView.getSettings().getUserAgentString());
                 intent.putExtra("savedDolRootUrl", this.savedDolRootUrl);
-                intent.putExtra("lastversionfound", this.lastversionfound);
-                intent.putExtra("lastversionfoundforasset", this.lastversionfoundforasset);
+                intent.putExtra("lastversionfound", this.lastVersionFound);
+                intent.putExtra("lastversionfoundforasset", this.lastVersionFoundForAsset);
                 intent.putExtra("title", myWebView.getTitle());
                 intent.putExtra("savedAuthuser", this.savedAuthuser);
                 intent.putExtra("savedAuthpass", this.savedAuthpass);
@@ -2182,9 +2181,9 @@ public class SecondActivity extends Activity {
 
                         if (foundVersion)    // if title ends with " Dolibarr x.y.z" or " Dolibarr x.y.z - multicompany or anytext from module hook setTitleHtml", this is login page or home page
                         {
-                            lastversionfound = m.group(1) + ", " + m.group(2) + ", " + m.group(3);
-                            lastversionfoundforasset = m.group(1) + "." + m.group(2);
-                            Log.i(LOG_TAG, "onPageFinished Page title=" + this.webViewtitle + " - url=" + url + " - Found login or home page + version: " + lastversionfound + " - Suggest to use asset: " + lastversionfoundforasset);
+                            lastVersionFound = m.group(1) + ", " + m.group(2) + ", " + m.group(3);
+                            lastVersionFoundForAsset = m.group(1) + "." + m.group(2);
+                            Log.i(LOG_TAG, "onPageFinished Page title=" + this.webViewtitle + " - url=" + url + " - Found login or home page + version: " + lastVersionFound + " - Suggest to use asset: " + lastVersionFoundForAsset);
 
                             MenuItem menuItemMultiCompany = savMenu.findItem(R.id.menu_multicompany);
                             if (menuItemMultiCompany != null) {
@@ -2287,10 +2286,10 @@ public class SecondActivity extends Activity {
 									versionOk = false;
 								}
 								if (versionOk) {
-								    Log.d(LOG_TAG, "onPageFinished Dolidroid is compatible with your Dolibarr "+lastversionfound);
+								    Log.d(LOG_TAG, "onPageFinished Dolidroid is compatible with your Dolibarr "+lastVersionFound);
                                 } else {
-									Log.w(LOG_TAG, "onPageFinished Dolidroid is NOT compatible with your Dolibarr "+lastversionfound);
-									final Toast aToast = Toast.makeText(activity, getString(R.string.notCompatibleWithVersion, (lastversionfound == null ? this.webViewtitle : lastversionfound), "3.4"), Toast.LENGTH_SHORT);
+									Log.w(LOG_TAG, "onPageFinished Dolidroid is NOT compatible with your Dolibarr "+lastVersionFound);
+									final Toast aToast = Toast.makeText(activity, getString(R.string.notCompatibleWithVersion, (lastVersionFound == null ? this.webViewtitle : lastVersionFound), "3.4"), Toast.LENGTH_SHORT);
 									new CountDownTimer(5000, 1000)	// 5 seconds
 									{
 									    public void onTick(long millisUntilFinished) {aToast.show();}

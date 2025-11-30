@@ -70,7 +70,7 @@ public class AboutActivity extends Activity {
 	 * Called when activity is created
 	 */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		Log.i(LOG_TAG, "onCreate savedInstanceState="+savedInstanceState);
 		super.onCreate(savedInstanceState);
 
@@ -142,11 +142,11 @@ public class AboutActivity extends Activity {
 				nameOfSourceStore = installerPackageName;
 			}
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                sVersion+="<b>"+info.versionName+" (build "+info.getLongVersionCode()+")</b>";
-            } else {
-				sVersion+="<b>"+info.versionName+" (build "+info.versionCode+")</b>";
-			}
+            //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            //    sVersion+="<b>"+info.versionName+" (build "+info.getLongVersionCode()+")</b>";
+            //} else {
+			sVersion+="<b>DoliDroid "+info.versionName+"</b>";
+			//}
 
             //s+= "PackageName = " + info.packageName + "\n";
 			s1+=getString(R.string.Web)+": <span style=\"color:#008888\"><a href=\"https://www.dolicloud.com?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile\">https://www.dolicloud.com</a></span><br />\n";

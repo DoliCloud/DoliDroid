@@ -10,7 +10,7 @@
     <string name="open">Accéder</string>
     <string name="dolibarr_url">URL de Dolibarr</string>
     <string name="logo_dolidroid">Logo DoliDroid</string>
-    <string name="SelectUrl">ou sélectionner une connexion en favoris</string>
+    <string name="SelectUrl">ou choisir une connexion en favoris</string>
     <string name="enterNewUrl">ou entrez une nouvelle URL</string>
     <string name="UrlCopied">URL copiée dans le presse-papiers</string>
 

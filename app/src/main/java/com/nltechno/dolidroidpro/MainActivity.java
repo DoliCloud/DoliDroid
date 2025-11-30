@@ -91,7 +91,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	 * Called when activity is created
 	 */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		Log.i(LOG_TAG, "onCreate Running with SDK="+Build.VERSION.SDK_INT+" hardware menu="+Utils.hasMenuHardware(this));
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);

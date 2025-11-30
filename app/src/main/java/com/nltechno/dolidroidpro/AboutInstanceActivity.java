@@ -61,7 +61,7 @@ public class AboutInstanceActivity extends Activity {
 	 * Called when activity is created
 	 */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		Log.i(LOG_TAG, "onCreate savedInstanceState="+savedInstanceState);
 		super.onCreate(savedInstanceState);
 
