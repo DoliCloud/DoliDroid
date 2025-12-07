@@ -22,15 +22,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,8 +52,6 @@ public class ManageURLActivity extends Activity {
 	private static final String LOG_TAG = "DoliDroidLogManageURLActivity";
 
 	static final int RESULT_ABOUT =  RESULT_FIRST_USER;
-
-	ListView listView;
 
 	/**
 	 * Called when activity is created
@@ -88,21 +88,25 @@ public class ManageURLActivity extends Activity {
 		String[] listofRootUrlStringEmpty = new String[0];
 		int count = 0;
 		while (count < MainActivity.listOfRootUrl.size()) {
-			String tmps = MainActivity.listOfRootUrl.get(count).getDomainUrl().replaceAll("\\/$", "");
-			tmps += " ("+MainActivity.listOfRootUrl.get(count).getScheme();
+			String line1 = MainActivity.listOfRootUrl.get(count).getDomainUrl().replaceAll("\\\\/$", "");
+			String line2 = MainActivity.listOfRootUrl.get(count).getScheme();
+			line2 += "://";
 			if (! "".equals(MainActivity.listOfRootUrl.get(count).getBasicAuthLogin())) {
-				tmps += " - "+MainActivity.listOfRootUrl.get(count).getBasicAuthLogin();
+				line2 += " - "+MainActivity.listOfRootUrl.get(count).getBasicAuthLogin();
 				//tmps += ":"+MainActivity.listOfRootUrl.get(count).getBasicAuthPass();
-				tmps += ":*****";
+				line2 += ":*****";
 			}
-			tmps += ")";
 
-			listofRootUrlString[count] = tmps;
+			SpannableString spannableLine2 = new SpannableString(line2);
+			spannableLine2.setSpan(new ForegroundColorSpan(Color.BLUE), 0, line2.length(), 0);
+
+			listofRootUrlString[count] = spannableLine2 + "\n" + line1;
 			count++;
 		}
 
 		ManageURLAdapter adapter = new ManageURLAdapter(this, listofRootUrlString);
-		ManageURLAdapter adapterempty = new ManageURLAdapter(this, listofRootUrlStringEmpty);
+		//ManageURLAdapter adapterempty = new ManageURLAdapter(this, listofRootUrlStringEmpty);
+
 		// Fill the list of Urls into the ArrayAdapter
 		ListView listViewOfUrls = (ListView) findViewById(R.id.listViewConnections);
 		listViewOfUrls.setAdapter(adapter);
@@ -129,7 +133,7 @@ public class ManageURLActivity extends Activity {
 		// Show text title
 		TextView textListOfCurrentUrl = findViewById(R.id.textListOfCurrentUrl);
 		TextView textViewAbout2 = findViewById(R.id.TextInstanceURLTitle);
-		String s2="";
+		String s2 = "";
 
         String savedDolRootUrl = intent.getStringExtra("savedDolRootUrl");
         if (savedDolRootUrl != null && ! "".equals(savedDolRootUrl))
@@ -137,7 +141,7 @@ public class ManageURLActivity extends Activity {
 			//findViewById(R.id.imageView02).setVisibility(View.VISIBLE);
 			//findViewById(R.id.imageView02).setEnabled(true);
 
-        	s2=savedDolRootUrl;
+        	s2 = savedDolRootUrl;
 
 			textListOfCurrentUrl.setVisibility(View.VISIBLE);
 			textListOfCurrentUrl.setEnabled(true);
@@ -226,7 +230,7 @@ public class ManageURLActivity extends Activity {
 		// Update the menu label to add the number of predefined URL into label
 		TextView textViewListOfUrl = findViewById(R.id.textListOfUrlsTitle);
 		TextView textViewListOfUrl2 = findViewById(R.id.textListOfUrlsTitle2);
-		if (MainActivity.listOfRootUrl.size() >= 1) {
+		if (!MainActivity.listOfRootUrl.isEmpty()) {
 			// Set position of textViewListOfUrl
 			RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) textViewListOfUrl.getLayoutParams();
 			if (!"".equals(s2b)) {

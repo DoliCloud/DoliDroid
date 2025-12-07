@@ -18,6 +18,9 @@ package com.nltechno.dolidroidpro;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +28,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import java.io.FileOutputStream;
 
@@ -43,8 +48,9 @@ public class ManageURLAdapter extends ArrayAdapter<String> {
         this.activity = (Activity) context;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // Build the object for line
@@ -101,16 +107,16 @@ public class ManageURLAdapter extends ArrayAdapter<String> {
                         String[] listofRootUrlString = new String[MainActivity.listOfRootUrl.size()];
                         int count = 0;
                         while (count < MainActivity.listOfRootUrl.size()) {
-                            String tmps = MainActivity.listOfRootUrl.get(count).getDomainUrl().replaceAll("\\/$", "");
-                            tmps += " ("+MainActivity.listOfRootUrl.get(count).getScheme();
+                            String line1 = MainActivity.listOfRootUrl.get(count).getDomainUrl().replaceAll("\\\\/$", "");
+                            String line2 = " "+MainActivity.listOfRootUrl.get(count).getScheme();
+                            line2 += "://";
                             if (! "".equals(MainActivity.listOfRootUrl.get(count).getBasicAuthLogin())) {
-                                tmps += " - "+MainActivity.listOfRootUrl.get(count).getBasicAuthLogin();
+                                line2 += " - "+MainActivity.listOfRootUrl.get(count).getBasicAuthLogin();
                                 //tmps += ":"+MainActivity.listOfRootUrl.get(count).getBasicAuthPass();
-                                tmps += ":*****";
+                                line2 += ":*****";
                             }
-                            tmps += ")";
 
-                            listofRootUrlString[count] = tmps;
+                            listofRootUrlString[count] = line1 + "\n" + line2;
                             count++;
                         }
 

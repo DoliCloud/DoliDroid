@@ -18,16 +18,13 @@
 package com.nltechno.dolidroidpro;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -35,7 +32,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 

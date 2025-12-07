@@ -95,6 +95,7 @@ import android.widget.Toast;
 import android.app.AlertDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.FileProvider;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
@@ -123,11 +124,7 @@ public class SecondActivity extends Activity {
 	private String savedDolRootUrl;
 	private String savedDolRootUrlWithSForced;
 	private String savedDolRootUrlRel;
-	private String savedDolScheme;
-	private int savedDolPort;
-	private String savedDolHost;
-	private String savedDolUserInfoEncoded;
-	private String savedDolBasedUrl;
+    private String savedDolBasedUrl;
 	private String savedDolBasedUrlWithSForced;
 	private String savedDolBasedUrlWithoutUserInfo;
     private String savedDolBasedUrlWithoutUserInfoWithSForced;
@@ -239,8 +236,7 @@ public class SecondActivity extends Activity {
             // For older Android versions, you can keep the deprecated method,
             // though be aware of its limitations.
             // It's good practice to suppress the deprecation warning for this specific case.
-            String deprecatedInstallerPackageName = packageManager.getInstallerPackageName(this.getPackageName());
-            installerPackageName = deprecatedInstallerPackageName;
+            installerPackageName = packageManager.getInstallerPackageName(this.getPackageName());
         }
 
         isInstalledFromPlayStore = "com.android.vending".equals(installerPackageName);
@@ -269,28 +265,28 @@ public class SecondActivity extends Activity {
         if (this.savedDolRootUrl != null) {
             this.savedDolRootUrl = this.savedDolRootUrl.replaceAll("^(?i)http(s?):", "http$1:");
         }
-        this.savedDolScheme=Uri.parse(this.savedDolRootUrl).getScheme();                     // Example: http
-        this.savedDolPort=Uri.parse(this.savedDolRootUrl).getPort();
-        this.savedDolHost=Uri.parse(this.savedDolRootUrl).getHost();
-        this.savedDolUserInfoEncoded=Uri.parse(this.savedDolRootUrl).getEncodedUserInfo();   // user:pass
-        if (this.savedDolUserInfoEncoded == null) {
-            this.savedDolUserInfoEncoded = "";
+        String savedDolScheme = Uri.parse(this.savedDolRootUrl).getScheme();                     // Example: http
+        int savedDolPort = Uri.parse(this.savedDolRootUrl).getPort();
+        String savedDolHost = Uri.parse(this.savedDolRootUrl).getHost();
+        String savedDolUserInfoEncoded = Uri.parse(this.savedDolRootUrl).getEncodedUserInfo();   // user:pass
+        if (savedDolUserInfoEncoded == null) {
+            savedDolUserInfoEncoded = "";
         }
-        if (this.savedDolScheme != null)
-            this.savedDolScheme = this.savedDolScheme.toLowerCase(Locale.ROOT);
-        boolean includePort = (this.savedDolPort > 0);  // Do we have to include the port into the base url ?
-        if ("http".equals(this.savedDolScheme) && this.savedDolPort == 80) {
+        if (savedDolScheme != null)
+            savedDolScheme = savedDolScheme.toLowerCase(Locale.ROOT);
+        boolean includePort = (savedDolPort > 0);  // Do we have to include the port into the base url ?
+        if ("http".equals(savedDolScheme) && savedDolPort == 80) {
             includePort = false;
             this.savedDolRootUrl = this.savedDolRootUrl.replace(":80", "");
         }
-        if ("https".equals(this.savedDolScheme) && this.savedDolPort == 443) {
+        if ("https".equals(savedDolScheme) && savedDolPort == 443) {
             includePort = false;
             this.savedDolRootUrl = this.savedDolRootUrl.replace(":443", "");
         }
         this.savedDolRootUrlWithSForced = "https:"+this.savedDolRootUrl.replace("http:", "").replace("https:", "");
-        this.savedDolBasedUrl = this.savedDolScheme+"://"+this.savedDolUserInfoEncoded+("".equals(this.savedDolUserInfoEncoded) ? "" : "@")+this.savedDolHost+(includePort ? ":"+this.savedDolPort : "");   // Example: http://user:pass@testldr1.with.dolicloud.com:xxx
+        this.savedDolBasedUrl = savedDolScheme +"://"+ savedDolUserInfoEncoded +("".equals(savedDolUserInfoEncoded) ? "" : "@")+ savedDolHost +(includePort ? ":"+ savedDolPort : "");   // Example: http://user:pass@testldr1.with.dolicloud.com:xxx
         this.savedDolBasedUrlWithSForced = "https:"+this.savedDolBasedUrl.replace("http:", "").replace("https:", "");
-        this.savedDolBasedUrlWithoutUserInfo = this.savedDolScheme+"://"+this.savedDolHost+(includePort ? ":"+this.savedDolPort : "");	// Example: http://testldr1.with.dolicloud.com
+        this.savedDolBasedUrlWithoutUserInfo = savedDolScheme +"://"+ savedDolHost +(includePort ? ":"+ savedDolPort : "");	// Example: http://testldr1.with.dolicloud.com
         this.savedDolBasedUrlWithoutUserInfoWithSForced = "https:"+this.savedDolBasedUrlWithoutUserInfo.replace("http:", "").replace("https:", "");
 
 		this.savedDolRootUrlRel = this.savedDolRootUrl.replace(this.savedDolBasedUrl, "");	// Rest of url, example: /
@@ -327,9 +323,13 @@ public class SecondActivity extends Activity {
         Log.d(LOG_TAG, "onCreate => savedDolBasedUrl=" + this.savedDolBasedUrl + " - savedDolBasedUrlWithSForced=" + this.savedDolBasedUrlWithSForced);
 
         String urlToGo;
-        if (! dolRequestUrl.contains("?") && ! dolRequestUrl.contains(".php")) urlToGo = dolRequestUrl+"index.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
-        else if (dolRequestUrl.contains("?")) urlToGo = dolRequestUrl+"&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
-        else urlToGo = dolRequestUrl+"?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
+        if (dolRequestUrl == null || (! dolRequestUrl.contains("?") && ! dolRequestUrl.contains(".php"))) {
+            urlToGo = dolRequestUrl+"index.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
+        } else if (dolRequestUrl.contains("?")) {
+            urlToGo = dolRequestUrl+"&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
+        } else {
+            urlToGo = dolRequestUrl+"?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
+        }
         
         Log.d(LOG_TAG, "onCreate isDownloadManagerAvailable="+Utils.isDownloadManagerAvailable(this));
         Log.d(LOG_TAG, "onCreate We are in onCreate and will load URL urlToGo=" + urlToGo);
@@ -386,7 +386,7 @@ public class SecondActivity extends Activity {
         myWebView.loadUrl(urlToGo);
 
         // Add handler for the Swipe
-        swipe = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipe = findViewById(R.id.swipeContainer);
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -575,35 +575,35 @@ public class SecondActivity extends Activity {
         MenuItem menuItemClearCache = menu.findItem(R.id.clearcache);
         if (menuItemClearCache != null) {
             menuItemClearCache.setVisible(true);
-            menuItemClearCache.setIcon(getDrawable(R.drawable.ic_baseline_clear_24));
+            menuItemClearCache.setIcon(AppCompatResources.getDrawable(this, R.drawable.ic_baseline_clear_24));
         }
 
         Log.d(LOG_TAG, "onCreateOptionsMenu Add menu Reload page");
         MenuItem menuItemReloadPage = menu.findItem(R.id.refresh);
         if (menuItemReloadPage != null) {
             menuItemReloadPage.setVisible(true);
-            menuItemReloadPage.setIcon(getDrawable(R.drawable.ic_baseline_refresh_24));
+            menuItemReloadPage.setIcon(AppCompatResources.getDrawable(this, R.drawable.ic_baseline_refresh_24));
         }
 
         Log.d(LOG_TAG, "onCreateOptionsMenu Add menu Copy url");
         MenuItem menuItemAddLink = menu.findItem(R.id.menu_copy_url);
         if (menuItemAddLink != null) {
             menuItemAddLink.setVisible(true);
-            menuItemAddLink.setIcon(getDrawable(R.drawable.ic_copy));
+            menuItemAddLink.setIcon(AppCompatResources.getDrawable(this, R.drawable.ic_copy));
         }
 
         Log.d(LOG_TAG, "onCreateOptionsMenu Add menu About instance");
         MenuItem menuItemAboutInstance = menu.findItem(R.id.menu_aboutinstance);
         if (menuItemAboutInstance != null) {
             menuItemAboutInstance.setVisible(true);
-            menuItemAboutInstance.setIcon(getDrawable(R.drawable.ic_baseline_question_mark_24));
+            menuItemAboutInstance.setIcon(AppCompatResources.getDrawable(this, R.drawable.ic_baseline_question_mark_24));
         }
 
         Log.d(LOG_TAG, "onCreateOptionsMenu Add menu Logout");
         MenuItem menuItemLogout = menu.findItem(R.id.menu_logout);
         if (menuItemLogout != null) {
             menuItemLogout.setVisible(true);
-            menuItemLogout.setIcon(getDrawable(R.drawable.ic_baseline_exit_to_app_24));
+            menuItemLogout.setIcon(AppCompatResources.getDrawable(this, R.drawable.ic_baseline_exit_to_app_24));
         }
 
         this.savMenu = menu;
@@ -1052,7 +1052,6 @@ public class SecondActivity extends Activity {
     private boolean codeForMenu() 
     {
         String urlToGo;
-        boolean allowCacheForMenuPage = false;
 
         urlToGo = this.savedDolRootUrl+"core/get_menudiv.php?cache=600&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
@@ -1088,7 +1087,6 @@ public class SecondActivity extends Activity {
     private boolean codeForQuickAccess() 
     {
         String urlToGo;
-        boolean allowCacheForQuickAccessPage = false;
 
         urlToGo = this.savedDolRootUrl+"core/search_page.php?cache=600&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
@@ -1097,6 +1095,7 @@ public class SecondActivity extends Activity {
         //myWebView = findViewById(R.id.webViewContent);
 
         /*
+        boolean allowCacheForQuickAccessPage = false;
         if (allowCacheForQuickAccessPage) {
             if (this.cacheForQuickAccess != null && this.cacheForQuickAccess.length() > 0)
             {
@@ -1126,7 +1125,6 @@ public class SecondActivity extends Activity {
      */
     private boolean codeForUploadFile() {
         String urlToGo;
-        boolean allowCacheForUploadFilePage = false;
 
         urlToGo = this.savedDolRootUrl+"core/upload_page.php?cache=600&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
@@ -1147,7 +1145,6 @@ public class SecondActivity extends Activity {
      */
     private boolean codeForBookmarks() {
         String urlToGo;
-        boolean allowCacheForBookmarkPage = false;
 
         urlToGo = this.savedDolRootUrl+"core/bookmarks_page.php?cache=600&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
@@ -1155,7 +1152,9 @@ public class SecondActivity extends Activity {
         Log.d(LOG_TAG, "We called codeForBookmarks after click on Bookmarks : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
         //myWebView = findViewById(R.id.webViewContent);
 
-        /*if (allowCacheForBookmarkPage) {
+        /*
+        boolean allowCacheForBookmarkPage = false;
+        if (allowCacheForBookmarkPage) {
             if (this.cacheForBookmarks != null && this.cacheForBookmarks.length() > 0) {
                 String historyUrl = urlToGo;
                 Log.d(LOG_TAG, "Got content from app cache this.cacheForBookmarks savedDolBasedUrl=" + this.savedDolBasedUrl + " historyUrl=" + historyUrl);
@@ -1183,7 +1182,6 @@ public class SecondActivity extends Activity {
      */
     private boolean codeForUserCard() {
         String urlToGo;
-        boolean allowCacheForUserCard = false;
 
         urlToGo = this.savedDolRootUrl+"user/card.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
@@ -1192,6 +1190,7 @@ public class SecondActivity extends Activity {
         //myWebView = findViewById(R.id.webViewContent);
 
         /*
+        boolean allowCacheForUserCard = false;
         if (allowCacheForVirtualCard) {
             if (this.cacheForVirtualCard != null && this.cacheForVirtualCard.length() > 0) {
                 String historyUrl = urlToGo;
@@ -1220,7 +1219,6 @@ public class SecondActivity extends Activity {
      */
     private boolean codeForVirtualCard() {
         String urlToGo;
-        boolean allowCacheForVirtualCard = false;
 
         urlToGo = this.savedDolRootUrl+"user/virtualcard.php?cache=600&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
 
@@ -1229,6 +1227,7 @@ public class SecondActivity extends Activity {
         //myWebView = findViewById(R.id.webViewContent);
 
         /*
+        boolean allowCacheForVirtualCard = false;
         if (allowCacheForVirtualCard) {
             if (this.cacheForVirtualCard != null && this.cacheForVirtualCard.length() > 0) {
                 String historyUrl = urlToGo;
@@ -1380,7 +1379,7 @@ public class SecondActivity extends Activity {
         }
 
         if (b) {
-            if (currentUrl.contains("data:text/html")) {
+            if (currentUrl != null && currentUrl.contains("data:text/html")) {
                 Log.d(LOG_TAG, "Previous Url may be a page with an history problem");
                 if (altHistoryStack.size() > 0) {   // Should be true
                     nextAltHistoryStack = altHistoryStack.get(altHistoryStack.size() - 1);
@@ -1584,7 +1583,6 @@ public class SecondActivity extends Activity {
     
     /**
      * WebViewClientDoliDroid
-     * 
      * Sequence of trigger called when we do myWebView.loadUrl(url):
      * 0) onPageStarted is called when we need to load a page (in cache or not)
      * 0) shouldInterceptRequest is called for all HTTP requests of pages and images (.php, .css, .js, .png, but not called when cache is used)
@@ -1651,6 +1649,9 @@ public class SecondActivity extends Activity {
                 String urltotest = view.getOriginalUrl();
                 if (urltotest == null) {
                     urltotest = view.getUrl();
+                }
+                if (urltotest == null) {
+                    urltotest = "";
                 }
                 String urltotestWithoutBasicAuth = urltotest.replaceAll("://[^:]+:[^:]+@", "://");
 
@@ -2409,8 +2410,6 @@ public class SecondActivity extends Activity {
                             myWebView.clearHistory();   // So it removes the login page history entry (we don't want to have it when making go back)
 				    	} else {
                             // This is a common page (no tag on login or version and not a page just after a login)
-                            WebBackForwardList tmpWebBackForwardList = myWebView.copyBackForwardList();
-                            //int currentindexinhistory = tmpWebBackForwardList.getCurrentIndex();
                             if (tagClearHistoryAfterFinished > 0) {
                                 tagClearHistoryAfterFinished = 0;
                                 myWebView.clearHistory();   // So it removes the login page history entry (we don't want to have it when making go back)

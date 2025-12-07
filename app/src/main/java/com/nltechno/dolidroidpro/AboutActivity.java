@@ -26,7 +26,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -43,7 +42,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.TextView;
 import android.widget.ImageView;
 
@@ -52,6 +50,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * About activity class
@@ -107,9 +106,8 @@ public class AboutActivity extends Activity {
 		super.onStart();
 		
         //SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		SharedPreferences sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
+		//SharedPreferences sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
 
-    	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
 		Intent intent = getIntent();
 
 		// Set image
@@ -275,7 +273,7 @@ public class AboutActivity extends Activity {
 		}
 		catch(Exception e)
 		{
-			Log.e(LOG_TAG, e.getMessage());
+			Log.e(LOG_TAG, Objects.requireNonNull(e.getMessage()));
 		}
 
 		textViewAboutVersion.setText(Html.fromHtml(sVersion, Html.FROM_HTML_MODE_LEGACY));

@@ -26,12 +26,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
+import androidx.annotation.NonNull;
+
 import com.nltechno.utils.Utils;
 
 
 /**
  * Main activity class
- *
  * TargetApi indicates that Lint should treat this type as targeting a given API level, no matter what the project target is.
  */
 public class MainActivityTest extends Activity implements OnItemSelectedListener {
@@ -78,7 +79,7 @@ public class MainActivityTest extends Activity implements OnItemSelectedListener
 	 * @param    MenuItem    item	Menu item selected
 	 * @return boolean                True if we selected a menu managed, False otherwise
 	 */
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 		return false;
 	}
 

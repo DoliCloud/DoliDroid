@@ -10,7 +10,6 @@ public class PredefinedUrl {
     public String   url;
     public String   logo;
     public String   basicauthlogin;
-    public String   basicauthpass;
     public int position = 100;
 
     public int getPosition() {

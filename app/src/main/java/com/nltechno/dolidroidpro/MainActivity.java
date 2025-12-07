@@ -36,13 +36,14 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -83,8 +84,6 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	static final int RESULT_ABOUT = RESULT_FIRST_USER;
 
 	static final int REQUEST_WEBVIEW = RESULT_FIRST_USER+1;
-
-    final Activity activity = this;
 
 
 	/**
@@ -156,7 +155,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 		// The array to contains the list of all predefined URLs
 		// This list is saved into a file named FILENAME
-    	this.listOfRootUrl = new ArrayList<>();
+    	listOfRootUrl = new ArrayList<>();
 
 		//ArrayAdapter <CharSequence> adapter = new ArrayAdapter <CharSequence> (this, android.R.layout.simple_spinner_item);
 		//adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -164,7 +163,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		// Set style for dropdown box (the font size of for the combo box of pre-defined URLs)
 		adapter.setDropDownViewResource(R.layout.select_url_item);
 
-		this.nbOfEntries=0;
+		nbOfEntries=0;
 		try {
 			FileInputStream fis = openFileInput(FILENAME);
 			Log.d(LOG_TAG, "Open the data file for Urls ("+FILENAME+") in directory "+getApplicationContext().getFilesDir().toString());
@@ -175,12 +174,12 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			// Read File Line By Line
 			while ((strLine = br.readLine()) != null) {
 				// Print the content on the console
-				Log.d(LOG_TAG, "Found entry " + this.nbOfEntries + " : " + strLine);
+				Log.d(LOG_TAG, "Found entry " + nbOfEntries + " : " + strLine);
 				// Check if entry already present
 				int count = 0;
 				boolean entryfound = false;
-				while (count < this.listOfRootUrl.size()) {
-					if (strLine.equals(this.listOfRootUrl.get(count).url)) {
+				while (count < listOfRootUrl.size()) {
+					if (strLine.equals(listOfRootUrl.get(count).url)) {
 						entryfound = true;
 						break;
 					}
@@ -188,8 +187,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				}
 
 				if (! entryfound) {
-					this.nbOfEntries++;
-					if (this.nbOfEntries == 1)
+					nbOfEntries++;
+					if (nbOfEntries == 1)
 					{
 						homeUrlFirstFound = strLine;
 					}
@@ -197,14 +196,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 					// Add new entry into the array this.listOfRootUrl
 					PredefinedUrl tmppredefinedurl = new PredefinedUrl();
 					tmppredefinedurl.url = strLine;
-					this.listOfRootUrl.add(tmppredefinedurl);
+					listOfRootUrl.add(tmppredefinedurl);
 				} else {
 					Log.d(LOG_TAG, "Duplicate");
 				}
 			}
 
 			// Sort the array list of URL
-			Collections.sort(this.listOfRootUrl, Comparator.comparing(PredefinedUrl::getSortOrder));
+			Collections.sort(listOfRootUrl, Comparator.comparing(PredefinedUrl::getSortOrder));
 
 			// Close the input stream
 			in.close();
@@ -220,29 +219,32 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		//}
 
 		// Set entries to the adapter
-		for (int i = 0; i < this.listOfRootUrl.size(); i++) {
-			String tmps = this.listOfRootUrl.get(i).getDomainUrl().replaceAll("/+$", "");
-			tmps += " ("+this.listOfRootUrl.get(i).getScheme();
-			if (! "".equals(this.listOfRootUrl.get(i).getBasicAuthLogin())) {
-				tmps += " - "+this.listOfRootUrl.get(i).getBasicAuthLogin();
+		for (int i = 0; i < listOfRootUrl.size(); i++) {
+			String line1 = listOfRootUrl.get(i).getDomainUrl().replaceAll("\\\\/+$", "");
+			String line2 = listOfRootUrl.get(i).getScheme();
+			line2 += "://";
+			if (! "".equals(listOfRootUrl.get(i).getBasicAuthLogin())) {
+				line2 += " - "+listOfRootUrl.get(i).getBasicAuthLogin();
 				//tmps += ":"+this.listOfRootUrl.get(i).getBasicAuthPass();
-				tmps += ":*****";
+				line2 += ":*****";
 			}
-			tmps += ")";
-			adapter.add(tmps);
+
+			SpannableString spannableLine2 = new SpannableString(line2);
+			spannableLine2.setSpan(new ForegroundColorSpan(Color.BLUE), 0, line2.length(), 0);
+
+			adapter.add(spannableLine2 + "\n" + line1);
 		}
 
 		// Show combo list if there is at least 1 choice
 		Spinner spinner_for_list_of_predefined_entries = findViewById(R.id.combo_list_of_urls);
 		TextView texViewLink = findViewById(R.id.textViewLink);
 
-		if (this.nbOfEntries > 0) {
+		if (nbOfEntries > 0) {
 			spinner_for_list_of_predefined_entries.setAdapter(adapter);
 			spinner_for_list_of_predefined_entries.setVisibility(View.VISIBLE);
 			texViewLink.setVisibility(View.INVISIBLE);
 
-			if (this.nbOfEntries == 1)
-			{
+			if (nbOfEntries == 1) {
 				Log.d(LOG_TAG, "Set selection to = "+homeUrlFirstFound);
 				// Only one URL known, we autoselect it
 				//spinner_for_list_of_predefined_entries.setSelection(1, false);
@@ -306,9 +308,9 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				menuItem4.setChecked(false);
 			}
 
-    		if (this.listOfRootUrl != null) {
+    		if (listOfRootUrl != null) {
 				MenuItem tmpItem = this.savMenu.findItem(R.id.manage_all_urls);
-				tmpItem.setTitle(getString(R.string.menu_manage_all_urls) + " (" + this.listOfRootUrl.size() + ")");
+				tmpItem.setTitle(getString(R.string.menu_manage_all_urls) + " (" + listOfRootUrl.size() + ")");
 			}
 		}
 	}
@@ -371,7 +373,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			}
 		}
 
-		if (this.listOfRootUrl != null) {
+		if (listOfRootUrl != null) {
 			MenuItem tmpItem = menu.findItem(R.id.manage_all_urls);
 			if (tmpItem != null) {
 				tmpItem.setTitle(getString(R.string.menu_manage_all_urls) + " (" + MainActivity.listOfRootUrl.size() + ")");
@@ -429,7 +431,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 	    		prefAlwaysAutoFill=!prefAlwaysAutoFill;
 
 	        	editor.putBoolean("prefAlwaysAutoFill", prefAlwaysAutoFill);
-	        	editor.commit();
+	        	editor.apply();
+
 	    		Log.d(LOG_TAG, "Switched value is now "+prefAlwaysAutoFill);
 	    		// Update men label
 	        	if (prefAlwaysAutoFill) {
@@ -452,7 +455,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 						);
 						Editor editorEncrypted = sharedPrefsEncrypted.edit();
 						editorEncrypted.clear();
-						editorEncrypted.commit();
+						editorEncrypted.apply();
 
 						Log.d(LOG_TAG, "The encrypted shared preferences file has been cleared");
 					}
@@ -482,13 +485,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				editor.commit();
 				Log.d(LOG_TAG, "Switched value is now "+prefAlwaysUseLocalResources);
 				// Update men label
-				if (prefAlwaysUseLocalResources) {
-					//this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_on));
-					this.savMenu.findItem(R.id.always_uselocalresources).setChecked(true);
-				} else {
-					//this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_off));
-					this.savMenu.findItem(R.id.always_uselocalresources).setChecked(false);
-				}
+				this.savMenu.findItem(R.id.always_uselocalresources).setChecked(prefAlwaysUseLocalResources);
 				invalidateOptionsMenu();
 				return true;
 			case R.id.manage_all_urls:
@@ -527,7 +524,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			//startButton.setEnabled(true);
 
 			// Get full URL selected
-			String dolRootUrl = this.listOfRootUrl.get(position - 1).url;
+			String dolRootUrl = listOfRootUrl.get(position - 1).url;
 			//String dolRootUrl = (spinnerUrl.getSelectedItem() == null ? "": spinnerUrl.getSelectedItem().toString());
 
 			freeUrl.setText(dolRootUrl);	// If not empty choice
@@ -607,9 +604,9 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			Log.d(LOG_TAG, "Open file " + MainActivity.FILENAME+ " in directory "+getApplicationContext().getFilesDir().toString());
 
 			fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-			for (int i = 0; i < this.listOfRootUrl.size(); i++)
+			for (int i = 0; i < listOfRootUrl.size(); i++)
 			{
-				String s = this.listOfRootUrl.get(i).url+"\n";
+				String s = listOfRootUrl.get(i).url+"\n";
 				Log.d(LOG_TAG, "write " + s);
 				fos.write(s.getBytes());
 			}
@@ -617,8 +614,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			// Check if entry already present
 			int count = 0;
 			boolean entryfound = false;
-			while (count < this.listOfRootUrl.size()) {
-				if (dolRootUrl.equals(this.listOfRootUrl.get(count).url)) {
+			while (count < listOfRootUrl.size()) {
+				if (dolRootUrl.equals(listOfRootUrl.get(count).url)) {
 					entryfound = true;
 					break;
 				}
@@ -635,7 +632,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				PredefinedUrl tmppredefinedurl = new PredefinedUrl();
 				tmppredefinedurl.url = dolRootUrl;
 				tmppredefinedurl.position = 100;
-				this.listOfRootUrl.add(tmppredefinedurl);
+				listOfRootUrl.add(tmppredefinedurl);
 			}
 			fos.close();
 		}
