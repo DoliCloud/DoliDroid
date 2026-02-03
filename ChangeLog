@@ -4,6 +4,10 @@ English DoliDroid ChangeLog
 
 ***** ChangeLog for 3.0 *****
 
+3.0-b68
+- Removed permission WRITE_EXTERNAL_STORAGE
+- Nicer page to select URL
+
 3.0-b67
 - NEW Add support for managedConfigurationDefaultURL managed by MDM.
 - Change version name from "Dolidrdoi Pro" to "3.0.67"
