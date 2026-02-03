@@ -147,47 +147,78 @@ public class AboutActivity extends Activity {
 			//}
 
             //s+= "PackageName = " + info.packageName + "\n";
-			s1+=getString(R.string.Web)+": <span style=\"color:#008888\"><a href=\"https://www.dolicloud.com?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile\">https://www.dolicloud.com</a></span><br />\n";
-			s1+=getString(R.string.Sources)+": <span style=\"color:#008888\"><a href=\"https://github.com/DoliCloud/DoliDroid.git\">https://github.com/DoliCloud/DoliDroid.git</a></span><br />\n";
-			s1+=getString(R.string.License)+": <b>GPL v3+</b><br />\n";
-			//s1+=getString(R.string.Sources)+": https://www.nltechno.com/services/<br />\n";
-			s1+=getString(R.string.Author)+": <span style=\"color:#008888\"><a href=\"https://www.github.com/eldy\">Laurent Destailleur</a>, ...</span><br />\n";
-			s1+=getString(R.string.PrivacyPolicy)+": <span style=\"color:#008888\"><a href=\"https://www.dolicloud.com/en-dolidroid-privacy-policy.php\">https://www.dolicloud.com/en-dolidroid-privacy-policy.php</a></span><br />\n";
+			s1+=getString(R.string.Web)+"<br /><span style=\"color:#008888\"><a href=\"https://www.dolicloud.com?origin=dolidroid&amp;utm_source=dolidroid&amp;utm_campaign=none&amp;utm_medium=mobile\">https://www.dolicloud.com</a></span><br />\n";
 
-			s1+="<br />\n";
+			s1 += "<br />";
+
+			s1+=getString(R.string.Sources)+"<br /><span style=\"color:#008888\"><a href=\"https://github.com/DoliCloud/DoliDroid.git\">https://github.com/DoliCloud/DoliDroid.git</a></span><br />\n";
+
+			s1 += "<br />";
+
+			s1+=getString(R.string.License)+"<br /><b>GPL v3+</b><br />\n";
+
+			s1 += "<br />";
+
+			s1+=getString(R.string.Author)+"<br /><span style=\"color:#008888\"><a href=\"https://www.github.com/eldy\">Laurent Destailleur</a>, ...</span><br />\n";
+
+			s1 += "<br />";
+
+			s1+=getString(R.string.PrivacyPolicy)+"<br /><span style=\"color:#008888\"><a href=\"https://www.dolicloud.com/en-dolidroid-privacy-policy.php\">https://www.dolicloud.com/en-dolidroid-privacy-policy.php</a></span><br />\n";
+
+			s1 += "<br />\n";
+			s1 += "<br />";
+			s1 += "<br />";
 
 			// This download key allow to download file with name src_dolidroid-info.versionName-downloadkey
 			//String downloadkey=Utils.MD5Hex("dolidroid"+info.versionName.replaceAll("[^0-9.]", "")+"saltnltechno").substring(0, 8);
 			//s1+=getString(R.string.Sources)+" Download Key: dolidroid-"+info.versionName.replaceAll("[^0-9.]", "")+"-"+downloadkey+"<br />\n";
-			s1+=getString(R.string.Compatibility)+": <b>Dolibarr 8+</b><br />\n";
-			s1+=getString(R.string.VersionStaticResources)+": <b>"+SecondActivity.VERSION_RESOURCES+"</b><br />\n";
+			s1+=getString(R.string.Compatibility)+"<br /><b>Dolibarr 8+</b><br />\n";
+
+			s1 += "<br />";
+
+			s1+=getString(R.string.VersionStaticResources)+"<br /><b>"+SecondActivity.VERSION_RESOURCES+"</b><br />\n";
+
+			s1 += "<br />";
+
 			String targetSdkVersion = String.valueOf(getApplicationContext().getApplicationInfo().targetSdkVersion);
-			s1+=getString(R.string.TargetSDKVersion)+": <b>"+targetSdkVersion+"</b><br />\n";
-
-			s1+="<br />\n";
-			
-			s1+=getString(R.string.NameOfSourceStore)+": <b>"+nameOfSourceStore+"</b><br />\n";
+			s1+=getString(R.string.TargetSDKVersion)+"<br /><b>"+targetSdkVersion+"</b><br />\n";
 
 			s1+="<br />\n";
 
-			s1+=getString(R.string.DeviceAPILevel)+": <b>"+Build.VERSION.SDK_INT+"</b><br />\n";
+			s1+=getString(R.string.NameOfSourceStore)+"<br /><b>"+nameOfSourceStore+"</b><br />\n";
+
+			s1+="<br />\n";
+			s1 += "<br />";
+			s1 += "<br />";
+
+
+			s1+=getString(R.string.DeviceAPILevel)+"<br /><b>"+Build.VERSION.SDK_INT+"</b><br />\n";
+
+			s1 += "<br />";
 
 			// Get display size
-            Display display = null;
+            Display display;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 display = getDisplay();
             } else {
 				display = getWindowManager().getDefaultDisplay();
 			}
 
-            Point size = new Point();
-			display.getSize(size);
-			int width = size.x;
-			int height = size.y;
-			s1+=getString(R.string.DeviceSize)+": <b>"+width+"x"+height+"</b><br />";
-			//s1+=getString(R.string.DeviceHasMenuHardware)+": <b>"+(Utils.hasMenuHardware(this)?getString(R.string.Yes):getString(R.string.No))+"</b><br />\n";
-			s1+=getString(R.string.DeviceHasDownloadManager)+": <b>"+(Utils.isDownloadManagerAvailable(this)?getString(R.string.Yes):getString(R.string.No))+"</b><br />\n";
+			int width = 0;
+			int height = 0;
+            if (display != null) {
+				Point size = new Point();
+                display.getSize(size);
+				width = size.x;
+				height = size.y;
+            }
+			s1+=getString(R.string.DeviceSize)+"<br /><b>"+width+"x"+height+"</b><br />";
 
+			s1 += "<br />";
+
+			s1+=getString(R.string.DeviceHasDownloadManager)+"<br /><b>"+(Utils.isDownloadManagerAvailable(this)?getString(R.string.Yes):getString(R.string.No))+"</b><br />\n";
+
+			s1 += "<br />";
 
 			// File[] Files = getExternalMediaDirs();
 			// Files[0].getAbsolutePath will return "/storage/emulated/0/Android/media/com.nltechno.dolidroidpro"
@@ -197,13 +228,15 @@ public class AboutActivity extends Activity {
 			String publicDownloadDirectory=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
 			// This return /storage/sdcard0 for example (we do not use this)
 			//String downloaddir="";
-			s1+=getString(R.string.DownloadDirectory)+": <b>"+publicDownloadDirectory+"</b><br />\n";
+			s1+=getString(R.string.DownloadDirectory)+"<br /><b>"+publicDownloadDirectory+"</b><br />\n";
 
-			Context context = getApplicationContext();
+			s1 += "<br />";
 
 			//String publicPhotosDirPath=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
 			String publicPhotosDirPath=getExternalFilesDir(Environment.DIRECTORY_PICTURES) + File.separator;
-			s1+=getString(R.string.PhotosDirectory)+": <b>"+publicPhotosDirPath+"</b><br />\n";
+			s1+=getString(R.string.PhotosDirectory)+"<br /><b>"+publicPhotosDirPath+"</b><br />\n";
+
+			s1 += "<br />";
 
 			//String documentdirpublic=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
 			//String documentdirpublic=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
@@ -235,7 +268,9 @@ public class AboutActivity extends Activity {
 					appNames2.append(appName2).append(" ");
 				}
 			}
-			s1+=getString(R.string.ApplicationAssociatedWithTelLink)+": <b>"+(resolveInfoList2.isEmpty() ? getString(R.string.None) : appNames2.toString())+"</b><br />\n";
+			s1+=getString(R.string.ApplicationAssociatedWithTelLink)+"<br /><b>"+(resolveInfoList2.isEmpty() ? getString(R.string.None) : appNames2.toString())+"</b><br />\n";
+
+			s1 += "<br />";
 
 			/*
 			ResolveInfo resolveInfo2 = packageManager.resolveActivity(intentTmp2, PackageManager.MATCH_DEFAULT_ONLY);
@@ -258,7 +293,9 @@ public class AboutActivity extends Activity {
 					appNames.append(appName).append(" ");
 				}
 			}
-			s1+=getString(R.string.ApplicationAssociatedWithMailToLink)+": <b>"+(resolveInfoList.isEmpty() ? getString(R.string.None) : appNames.toString())+"</b><br />\n";
+			s1+=getString(R.string.ApplicationAssociatedWithMailToLink)+"<br /><b>"+(resolveInfoList.isEmpty() ? getString(R.string.None) : appNames.toString())+"</b><br />\n";
+
+			s1 += "<br />";
 
 			/*ResolveInfo resolveInfo = packageManager.resolveActivity(intentTmp, PackageManager.MATCH_DEFAULT_ONLY);
 			CharSequence appName = "";
@@ -307,7 +344,7 @@ public class AboutActivity extends Activity {
 			Log.e(LOG_TAG, "Error");
 		}
 	}
-	
+
     /**
      *	Load Smartphone menu 
      */
@@ -328,14 +365,12 @@ public class AboutActivity extends Activity {
     {
         Log.d(LOG_TAG, "Click onto menu "+item.toString() + " from AboutActivity");
 
-    	switch (item.getItemId())
-    	{
-	    	case R.id.menu_back:
-	    		Log.d(LOG_TAG, "We finish activity resultCode = "+RESULT_ABOUT);
-	    		setResult(RESULT_ABOUT);
-	    		finish();
-	    		return true;
-    	}
+        if (item.getItemId() == R.id.menu_back) {
+            Log.d(LOG_TAG, "We finish activity resultCode = " + RESULT_ABOUT);
+            setResult(RESULT_ABOUT);
+            finish();
+            return true;
+        }
     	
     	return false;
     }

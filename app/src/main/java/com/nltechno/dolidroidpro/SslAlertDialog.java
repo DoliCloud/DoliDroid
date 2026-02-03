@@ -27,38 +27,38 @@ public class SslAlertDialog {
 
     private SslErrorHandler handler = null;
     private AlertDialog dialog = null;
-    public SecondActivity savedactivity;
+    public SecondActivity savedActivity;
     
     /**
      * Constructor
      * 
      * @param SslErrorHandler   errorHandler    Error handler
      * @param SecondActivity    activity        Activity
-     * @param String            errorcode       Error code
+     * @param String            errorCode       Error code
      */
-    public SslAlertDialog(SslErrorHandler errorHandler, SecondActivity activity, String errorcode) {
+    public SslAlertDialog(SslErrorHandler errorHandler, SecondActivity activity, String errorCode) {
 
         if (errorHandler == null || activity == null) return;
 
-        this.savedactivity = activity;
+        this.savedActivity = activity;
         
         handler = errorHandler;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setMessage(activity.getString(R.string.notification_error_ssl_cert_invalid) + "\n" + errorcode + "\n" + activity.getString(R.string.notification_error_ssl_cert_invalidbis));
+        builder.setMessage(activity.getString(R.string.notification_error_ssl_cert_invalid) + "\n" + errorCode + "\n" + activity.getString(R.string.notification_error_ssl_cert_invalidbis));
         builder.setPositiveButton(R.string.Yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 handler.proceed();	// Once we proceed, error will also no more be triggered
-                savedactivity.sslErrorWasAccepted = true;
+                savedActivity.sslErrorWasAccepted = true;
             }
         });
         builder.setNegativeButton(R.string.No, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 handler.cancel();
-                savedactivity.setResult(SecondActivity.RESULT_SECONDACTIVITY);
-                savedactivity.finish();
+                savedActivity.setResult(SecondActivity.RESULT_SECONDACTIVITY);
+                savedActivity.finish();
             }
         });
 

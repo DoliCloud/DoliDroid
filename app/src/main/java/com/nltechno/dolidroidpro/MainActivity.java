@@ -33,7 +33,6 @@ import com.nltechno.utils.Utils;
 
 import android.content.RestrictionsManager;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
@@ -47,7 +46,6 @@ import android.text.style.ForegroundColorSpan;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -101,6 +99,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
     	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
     	Log.d(LOG_TAG, "prefAlwaysAutoFill="+prefAlwaysAutoFill);
 
+		/*
 		Display display = getWindowManager().getDefaultDisplay();
 		Point size = new Point();
 		display.getSize(size);
@@ -112,6 +111,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			//ImageView img1 = findViewById(R.id.imageViewLogoBottom);
 			//img1.setVisibility(View.INVISIBLE);
 		}
+		 */
 
         // text2 has links specified by putting <a> tags in the string
         // resource.  By default these links will appear but not

@@ -28,17 +28,68 @@
         android:textSize="16sp"
         tools:ignore="TextContrastCheck" />
 
-    <TextView
-        android:id="@+id/textAboutAndroidClient"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/url_section"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/shape_gray_rectangle"
+        android:layout_below="@+id/textDolibarrURL"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:text="@string/dolibarr_for_android"
-        android:textColor="@color/grey"
-        android:textSize="12sp"
-        tools:context=".MainActivity"
+        android:layout_marginTop="8dp">
+
+
+        <EditText
+            android:id="@+id/url_of_instance"
+            style="@android:style/Widget.Holo.AutoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginRight="10dp"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="https://..."
+            android:importantForAutofill="no"
+            android:inputType="textUri"
+            android:minHeight="42dp"
+            android:singleLine="true"
+            android:textSize="16sp"
+            tools:ignore="HardcodedText,LabelFor,TextContrastCheck,TouchTargetSizeCheck"
+            android:background="@drawable/shape_edittext_border"
+            android:backgroundTint="@null">
+            <requestFocus />
+        </EditText>
+
+        <Spinner
+            android:id="@+id/combo_list_of_urls"
+            style="@android:style/Widget.Material.Spinner.Underlined"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/url_of_instance"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:spinnerMode="dialog" />
+
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/buttonStart"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_below="@id/url_section"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_rounded_button"
+        android:minWidth="120dip"
+        android:text="@string/open"
+        android:textColor="#FFFFFF"
         tools:ignore="TextContrastCheck" />
 
     <TextView
@@ -57,51 +108,18 @@
         android:textSize="12sp"
         tools:ignore="TextContrastCheck" />
 
-    <Spinner
-        android:id="@+id/combo_list_of_urls"
-        style="@android:style/Widget.Material.Spinner.Underlined"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_below="@+id/url_of_instance"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:spinnerMode="dialog" />
 
-    <Button
-        android:id="@+id/buttonStart"
+    <TextView
+        android:id="@+id/textAboutAndroidClient"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_below="@id/combo_list_of_urls"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        android:background="#009688"
-        android:minWidth="120dip"
-        android:text="@string/open"
-        android:textColor="#FFFFFF"
-        tools:ignore="TextContrastCheck" />
-
-    <EditText
-        android:id="@+id/url_of_instance"
-        style="@android:style/Widget.Holo.AutoCompleteTextView"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textDolibarrURL"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginRight="10dp"
-        android:ems="10"
-        android:gravity="top"
-        android:hint="https://..."
-        android:importantForAutofill="no"
-        android:inputType="textUri"
-        android:minHeight="42dp"
-        android:singleLine="true"
-        android:textSize="16sp"
-        tools:ignore="HardcodedText,LabelFor,TextContrastCheck,TouchTargetSizeCheck">
-
-        <requestFocus />
-    </EditText>
-
+        android:layout_marginBottom="10dp"
+        android:text="@string/dolibarr_for_android"
+        android:textColor="@color/grey"
+        android:textSize="12sp"
+        tools:context=".MainActivity"
+        tools:ignore="TextContrastCheck" />
 
 </RelativeLayout>

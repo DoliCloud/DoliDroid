@@ -34,7 +34,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/title_activity_main"
+            android:label=""
             android:theme="@style/DoliDroidThemeFirst"
             android:configChanges="orientation|screenSize">
             <!-- the tag to say that this is the activity to start on run -->

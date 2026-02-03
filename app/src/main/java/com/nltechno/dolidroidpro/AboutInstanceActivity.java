@@ -141,7 +141,9 @@ public class AboutInstanceActivity extends Activity {
 			Pattern regexPattern = Pattern.compile(pattern);
 			Matcher matcher = regexPattern.matcher(currentUrl);
 			String currentUrlWithoutPass = matcher.replaceFirst("$1:*****@");
-        	s3+="<font color='#440066'><b>"+getString(R.string.currentUrl)+"</b></font><br /><br />\n"+title+"<br />\n"+currentUrlWithoutPass;
+        	s3 += "<font color='#440066'><b>"+getString(R.string.currentUrl)+"</b></font><br /><br />\n";
+			s3 += title+"<br />\n<br />\n";
+			s3 += "<small>"+currentUrlWithoutPass+"</small>";
 		}
 		String lastversionfound = intent.getStringExtra("lastversionfound");
         if (lastversionfound != null && ! "".equals(lastversionfound)) {
@@ -153,7 +155,8 @@ public class AboutInstanceActivity extends Activity {
         String userAgent = intent.getStringExtra("userAgent");
         Log.d(LOG_TAG,"userAgent="+userAgent);
         if (userAgent != null && ! "".equals(userAgent)) {
-        	s3+="<br /><br />\n<font color='#440066'><b>"+getString(R.string.UserAgent)+"</b></font><br /><br />\n"+userAgent+"<br />\n";
+        	s3 += "<br /><br />\n<font color='#440066'><b>"+getString(R.string.UserAgent)+"</b></font><br /><br />\n";
+			s3 += "<small>"+userAgent+"</small><br />\n";
 		}
 
 		if (currentUrl != null && ! "".equals(currentUrl)) {
