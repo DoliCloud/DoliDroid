@@ -1515,7 +1515,6 @@ public class SecondActivity extends Activity {
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.allowScanningByMediaScanner();
 
-        //File path = Environment.getExternalStorageDirectory();  // getExternalStorageDirectory+DIRECTORY_DOWNLOADS should be similar to dir of setDestinationInExternalPublicDir
         //String fullPath = path.getAbsolutePath(), "/"+Environment.DIRECTORY_DOWNLOADS;
         //String fullPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
         String fullPath = String.valueOf(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS));
