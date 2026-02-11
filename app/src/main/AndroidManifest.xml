@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    android:versionCode="68"
-    android:versionName="3.0.68"
+    android:versionCode="69"
+    android:versionName="3.0.69"
     android:installLocation="auto"
     >
     <!-- Remove android:installLocation="preferExternal" to always install on external storage, use "auto" for default internal -->
@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- Dangerous permissions -->
-    <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:required="false" /> -->    <!-- Permission in group android.permission-group.STORAGE -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:required="false" />    <!-- Permission in group android.permission-group.STORAGE required for API 23 to 32 -->
     <!--<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>-->
     <!--<uses-permission android:name="android.permission.CAMERA"/>-->
     <!--<uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION"/>-->

@@ -4,6 +4,10 @@ English DoliDroid ChangeLog
 
 ***** ChangeLog for 3.0 *****
 
+3.0-b69
+- Restored permission WRITE_EXTERNAL_STORAGE for API 23to 32
+- Fix height too low in About page
+
 3.0-b68
 - Removed permission WRITE_EXTERNAL_STORAGE
 - Nicer page to select URL

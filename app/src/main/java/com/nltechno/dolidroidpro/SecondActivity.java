@@ -2025,7 +2025,7 @@ public class SecondActivity extends Activity {
                             //boolean needEducativeInfo = shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE);
                             //Log.d(LOG_TAG, "shouldOverrideUrlLoading hasWriteContactsPermission = " + hasWriteContactsPermission + " needEducativeInfo = " + needEducativeInfo);
 
-                            // Now request the permission
+                            // Now request the permission WRITE_EXTERNAL_STORAGE (for API level 23 to 32)
                             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS_WRITE_EXTERNAL_STORAGE);
 
                             Log.d(LOG_TAG, "shouldOverrideUrlLoading requestPermissions was called, so we exit. The run of putDownloadInQueue will be done by result handler onRequestPermissionsResult()");

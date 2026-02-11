@@ -75,7 +75,7 @@
             android:layout_marginStart="14dp"
             android:layout_marginTop="44dp"
             android:layout_marginEnd="14dp"
-            android:maxLines="30"
+            android:maxLines="100"
             android:textSize="14sp"
             tools:context=".AboutActivity" />
 
