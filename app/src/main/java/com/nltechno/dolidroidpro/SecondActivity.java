@@ -284,7 +284,7 @@ public class SecondActivity extends Activity {
             this.savedDolRootUrl = this.savedDolRootUrl.replace(":443", "");
         }
         this.savedDolRootUrlWithSForced = "https:"+this.savedDolRootUrl.replace("http:", "").replace("https:", "");
-        this.savedDolBasedUrl = savedDolScheme +"://"+ savedDolUserInfoEncoded +("".equals(savedDolUserInfoEncoded) ? "" : "@")+ savedDolHost +(includePort ? ":"+ savedDolPort : "");   // Example: http://user:pass@testldr1.with.dolicloud.com:xxx
+        this.savedDolBasedUrl = savedDolScheme +"://"+ savedDolUserInfoEncoded +(savedDolUserInfoEncoded.isEmpty() ? "" : "@")+ savedDolHost +(includePort ? ":"+ savedDolPort : "");   // Example: http://user:pass@testldr1.with.dolicloud.com:xxx
         this.savedDolBasedUrlWithSForced = "https:"+this.savedDolBasedUrl.replace("http:", "").replace("https:", "");
         this.savedDolBasedUrlWithoutUserInfo = savedDolScheme +"://"+ savedDolHost +(includePort ? ":"+ savedDolPort : "");	// Example: http://testldr1.with.dolicloud.com
         this.savedDolBasedUrlWithoutUserInfoWithSForced = "https:"+this.savedDolBasedUrlWithoutUserInfo.replace("http:", "").replace("https:", "");
@@ -626,199 +626,202 @@ public class SecondActivity extends Activity {
         String urlToGo;
 
         // On which menu entry did you click ?
-        switch (item.getItemId())
-        {
-            case R.id.menu_menu:
-                return this.codeForMenu();
-            case R.id.menu_search:
-                return this.codeForQuickAccess();
-            case R.id.menu_back:
-                return this.codeForBack();
-            case R.id.menu_bookmarks:
-                return this.codeForBookmarks();
-            case R.id.menu_multicompany:
-                return this.codeForMultiCompany();
-            case R.id.menu_uploadfile:
-                return this.codeForUploadFile();
-            case R.id.menu_usercard:
-                return this.codeForUserCard();
-            case R.id.menu_virtualcard:
-                return this.codeForVirtualCard();
-            case R.id.menu_copy_url:
-                return this.codeForCopyUrl();
-            case R.id.menu_aboutinstance:
-                Log.i(LOG_TAG, "Start activity About instances");
-                //myWebView = findViewById(R.id.webViewContent);
-                Intent intentaboutinstance = new Intent(SecondActivity.this, AboutInstanceActivity.class);
-                intentaboutinstance.putExtra("currentUrl", myWebView.getOriginalUrl());
-                intentaboutinstance.putExtra("userAgent", myWebView.getSettings().getUserAgentString());
-                intentaboutinstance.putExtra("savedDolRootUrl", this.savedDolRootUrl);
-                intentaboutinstance.putExtra("lastversionfound", this.lastVersionFound);
-                intentaboutinstance.putExtra("lastversionfoundforasset", this.lastVersionFoundForAsset);
-                intentaboutinstance.putExtra("title", myWebView.getTitle());
-                intentaboutinstance.putExtra("savedAuthuser", this.savedAuthuser);
-                intentaboutinstance.putExtra("savedAuthpass", this.savedAuthpass);
-                Log.d(LOG_TAG, "startActivityForResult with requestCode="+REQUEST_ABOUT_INSTANCE);
-                startActivityForResult(intentaboutinstance, REQUEST_ABOUT_INSTANCE);
-                return true;
-            case R.id.always_autofill:  // Switch menu bar on/off for "Save login/password"
-                sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                //sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_menu) {
+            return this.codeForMenu();
+        } else if (itemId == R.id.menu_search) {
+            return this.codeForQuickAccess();
+        } else if (itemId == R.id.menu_back) {
+            return this.codeForBack();
+        } else if (itemId == R.id.menu_bookmarks) {
+            return this.codeForBookmarks();
+        } else if (itemId == R.id.menu_multicompany) {
+            return this.codeForMultiCompany();
+        } else if (itemId == R.id.menu_uploadfile) {
+            return this.codeForUploadFile();
+        } else if (itemId == R.id.menu_usercard) {
+            return this.codeForUserCard();
+        } else if (itemId == R.id.menu_virtualcard) {
+            return this.codeForVirtualCard();
+        } else if (itemId == R.id.menu_copy_url) {
+            return this.codeForCopyUrl();
+        } else if (itemId == R.id.menu_aboutinstance) {
+            Log.i(LOG_TAG, "Start activity About instances");
+            //myWebView = findViewById(R.id.webViewContent);
+            Intent intentaboutinstance = new Intent(SecondActivity.this, AboutInstanceActivity.class);
+            intentaboutinstance.putExtra("currentUrl", myWebView.getOriginalUrl());
+            intentaboutinstance.putExtra("userAgent", myWebView.getSettings().getUserAgentString());
+            intentaboutinstance.putExtra("savedDolRootUrl", this.savedDolRootUrl);
+            intentaboutinstance.putExtra("lastversionfound", this.lastVersionFound);
+            intentaboutinstance.putExtra("lastversionfoundforasset", this.lastVersionFoundForAsset);
+            intentaboutinstance.putExtra("title", myWebView.getTitle());
+            intentaboutinstance.putExtra("savedAuthuser", this.savedAuthuser);
+            intentaboutinstance.putExtra("savedAuthpass", this.savedAuthpass);
+            Log.d(LOG_TAG, "startActivityForResult with requestCode=" + REQUEST_ABOUT_INSTANCE);
+            startActivityForResult(intentaboutinstance, REQUEST_ABOUT_INSTANCE);
+            return true;
+        } else if (itemId == R.id.always_autofill) {  // Switch menu bar on/off for "Save login/password"
+            sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            //sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
 
-                // Same code into MainActivity and SecondActivity
-                boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
+            // Same code into MainActivity and SecondActivity
+            boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
 
-                Log.i(LOG_TAG, "Click onto switch autofill, prefAlwaysAutoFill is "+prefAlwaysAutoFill);
-                prefAlwaysAutoFill=!prefAlwaysAutoFill;
+            Log.i(LOG_TAG, "Click onto switch autofill, prefAlwaysAutoFill is " + prefAlwaysAutoFill);
+            prefAlwaysAutoFill = !prefAlwaysAutoFill;
 
-                editor = sharedPrefs.edit();
-                editor.putBoolean("prefAlwaysAutoFill", prefAlwaysAutoFill);
-                editor.apply();
-                Log.d(LOG_TAG, "Switched value is now "+prefAlwaysAutoFill);
-                // Update show bar or not
-                if (prefAlwaysAutoFill) {
-                    this.savMenu.findItem(R.id.always_autofill).setTitle(getString(R.string.menu_autofill_on));
-                } else {
-                    this.savMenu.findItem(R.id.always_autofill).setTitle(getString(R.string.menu_autofill_off));
+            editor = sharedPrefs.edit();
+            editor.putBoolean("prefAlwaysAutoFill", prefAlwaysAutoFill);
+            editor.apply();
+            Log.d(LOG_TAG, "Switched value is now " + prefAlwaysAutoFill);
+            // Update show bar or not
+            if (prefAlwaysAutoFill) {
+                this.savMenu.findItem(R.id.always_autofill).setTitle(getString(R.string.menu_autofill_on));
+            } else {
+                this.savMenu.findItem(R.id.always_autofill).setTitle(getString(R.string.menu_autofill_off));
 
-                    // Clear saved login / pass
-                    try {
-                        String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
-                        SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
-                                "secret_shared_prefs",
-                                masterKeyAlias,
-                                getApplicationContext(),
-                                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-                        );
-                        Editor editorEncrypted = sharedPrefsEncrypted.edit();
-                        editorEncrypted.clear();
-                        editorEncrypted.commit();
+                // Clear saved login / pass
+                try {
+                    String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
+                    SharedPreferences sharedPrefsEncrypted = EncryptedSharedPreferences.create(
+                            "secret_shared_prefs",
+                            masterKeyAlias,
+                            getApplicationContext(),
+                            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+                    );
+                    Editor editorEncrypted = sharedPrefsEncrypted.edit();
+                    editorEncrypted.clear();
+                    editorEncrypted.commit();
 
-                        Log.d(LOG_TAG, "The encrypted shared preferences file has been cleared");
-                    }
-                    catch(Exception e) {
-                        Log.w(LOG_TAG, "Failed to clear encrypted shared preferences file, we try by deleting the file");
-                        File prefsFile = new File(getApplicationContext().getFilesDir(), "../shared_prefs/secret_shared_prefs.xml");
-                        if (prefsFile.exists()) {
-                            Log.d(LOG_TAG, "File "+prefsFile+" exists, we delete it");
-                            try {
-                                boolean deleted = prefsFile.delete();
-                                Log.d(LOG_TAG, "File " + prefsFile + " deleted = " + deleted);
-                            } catch(Exception e2) {
-                                // Keep empty
-                                Log.d(LOG_TAG, "Failed to delete file " + prefsFile);
-                            }
+                    Log.d(LOG_TAG, "The encrypted shared preferences file has been cleared");
+                } catch (Exception e) {
+                    Log.w(LOG_TAG, "Failed to clear encrypted shared preferences file, we try by deleting the file");
+                    File prefsFile = new File(getApplicationContext().getFilesDir(), "../shared_prefs/secret_shared_prefs.xml");
+                    if (prefsFile.exists()) {
+                        Log.d(LOG_TAG, "File " + prefsFile + " exists, we delete it");
+                        try {
+                            boolean deleted = prefsFile.delete();
+                            Log.d(LOG_TAG, "File " + prefsFile + " deleted = " + deleted);
+                        } catch (Exception e2) {
+                            // Keep empty
+                            Log.d(LOG_TAG, "Failed to delete file " + prefsFile);
                         }
-
                     }
+
                 }
-                invalidateOptionsMenu();
-                return true;
-            case R.id.always_uselocalresources:  // Switch menu bar on/off for "Use local static resources"
-                Log.i(LOG_TAG, "Click onto switch uselocalresources, prefAlwaysUseLocalResources is "+prefAlwaysUseLocalResources);
-                prefAlwaysUseLocalResources=!prefAlwaysUseLocalResources;
+            }
+            invalidateOptionsMenu();
+            return true;
+        } else if (itemId == R.id.always_uselocalresources) {  // Switch menu bar on/off for "Use local static resources"
+            Log.i(LOG_TAG, "Click onto switch uselocalresources, prefAlwaysUseLocalResources is " + prefAlwaysUseLocalResources);
+            prefAlwaysUseLocalResources = !prefAlwaysUseLocalResources;
 
-                sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                //sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
+            sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            //sharedPrefs = getApplicationContext().getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
 
-                editor = sharedPrefs.edit();
-                editor.putBoolean("prefAlwaysUseLocalResources", prefAlwaysUseLocalResources);
-                editor.apply();
+            editor = sharedPrefs.edit();
+            editor.putBoolean("prefAlwaysUseLocalResources", prefAlwaysUseLocalResources);
+            editor.apply();
 
-                Log.d(LOG_TAG, "Switched value is now "+prefAlwaysUseLocalResources);
-                // Update menu label
-                if (prefAlwaysUseLocalResources) {
-                    this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_on));
-                } else {
-                    this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_off));
+            Log.d(LOG_TAG, "Switched value is now " + prefAlwaysUseLocalResources);
+            // Update menu label
+            if (prefAlwaysUseLocalResources) {
+                this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_on));
+            } else {
+                this.savMenu.findItem(R.id.always_uselocalresources).setTitle(getString(R.string.menu_uselocalresources_off));
+            }
+            invalidateOptionsMenu();
+            return true;
+        } else if (itemId == R.id.manage_all_urls) {
+            Log.i(LOG_TAG, "Start activity Manage URLs");
+            //myWebView = findViewById(R.id.webViewContent);
+            Intent tmpintent1 = new Intent(SecondActivity.this, ManageURLActivity.class);
+            tmpintent1.putExtra("currentUrl", myWebView.getOriginalUrl());
+            tmpintent1.putExtra("userAgent", myWebView.getSettings().getUserAgentString());
+            tmpintent1.putExtra("savedDolRootUrl", this.savedDolRootUrl);
+            tmpintent1.putExtra("lastversionfound", this.lastVersionFound);
+            tmpintent1.putExtra("lastversionfoundforasset", this.lastVersionFoundForAsset);
+            tmpintent1.putExtra("title", myWebView.getTitle());
+            tmpintent1.putExtra("savedAuthuser", this.savedAuthuser);
+            tmpintent1.putExtra("savedAuthpass", this.savedAuthpass);
+            Log.d(LOG_TAG, "startActivityForResult with requestCode=" + REQUEST_ABOUT);
+            startActivityForResult(tmpintent1, REQUEST_ABOUT);
+            return true;
+        } else if (itemId == R.id.about) {
+            Log.i(LOG_TAG, "Start activity About DoliDroid");
+            //myWebView = findViewById(R.id.webViewContent);
+            Intent intent = new Intent(SecondActivity.this, AboutActivity.class);
+            intent.putExtra("currentUrl", myWebView.getOriginalUrl());
+            intent.putExtra("userAgent", myWebView.getSettings().getUserAgentString());
+            intent.putExtra("savedDolRootUrl", this.savedDolRootUrl);
+            intent.putExtra("lastversionfound", this.lastVersionFound);
+            intent.putExtra("lastversionfoundforasset", this.lastVersionFoundForAsset);
+            intent.putExtra("title", myWebView.getTitle());
+            intent.putExtra("savedAuthuser", this.savedAuthuser);
+            intent.putExtra("savedAuthpass", this.savedAuthpass);
+            Log.d(LOG_TAG, "startActivityForResult with requestCode=" + REQUEST_ABOUT);
+            startActivityForResult(intent, REQUEST_ABOUT);
+            return true;
+        } else if (itemId == R.id.menu_logout) {
+            tagToLogout = true;
+            //myWebView = findViewById(R.id.webViewContent);
+            urlToGo = this.savedDolRootUrl + "user/logout.php?noredirect=1&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
+            Log.i(LOG_TAG, "LoadUrl after select Logout : " + urlToGo);
+            lastLoadUrl = urlToGo;
+
+            myWebView.loadUrl(urlToGo);
+            Log.i(LOG_TAG, "Clear caches and history of webView");
+            myWebView.clearCache(true);
+            myWebView.clearHistory();
+            return true;
+        } else if (itemId == R.id.quit) {
+            Log.i(LOG_TAG, "Call finish activity, with setResult = " + RESULT_WEBVIEW);
+            setResult(RESULT_WEBVIEW);
+            finish();
+            return true;
+        } else if (itemId == R.id.clearcache) {   // Action to clear webview caches
+            //myWebView = findViewById(R.id.webViewContent);
+            Log.i(LOG_TAG, "Clear caches and history of webView");
+            myWebView.clearFormData();
+            myWebView.clearHistory();
+            myWebView.clearCache(true);
+            //WebStorage.getInstance().deleteAllData();
+            this.cacheForMenu = null;
+            this.cacheForQuickAccess = null;
+            this.cacheForBookmarks = null;
+            this.cacheForUploadFile = null;
+            this.cacheForMultiCompany = null;
+            this.cacheForVirtualCard = null;
+
+            Toast.makeText(activity, R.string.CacheAndHistoryCleared, Toast.LENGTH_LONG).show();
+
+            return true;
+        } else if (itemId == R.id.refresh) {
+            //myWebView = findViewById(R.id.webViewContent);
+            urlToGo = myWebView.getUrl();
+            Log.d(LOG_TAG, "urlToGo=" + urlToGo);
+            if (urlToGo != null) {
+                if (urlToGo.startsWith("data:text") || urlToGo.startsWith("about:blank")) {
+                    urlToGo = savedDolRootUrl;
                 }
-                invalidateOptionsMenu();
-                return true;
-            case R.id.manage_all_urls:
-                Log.i(LOG_TAG, "Start activity Manage URLs");
-                //myWebView = findViewById(R.id.webViewContent);
-                Intent tmpintent1 = new Intent(SecondActivity.this, ManageURLActivity.class);
-                tmpintent1.putExtra("currentUrl", myWebView.getOriginalUrl());
-                tmpintent1.putExtra("userAgent", myWebView.getSettings().getUserAgentString());
-                tmpintent1.putExtra("savedDolRootUrl", this.savedDolRootUrl);
-                tmpintent1.putExtra("lastversionfound", this.lastVersionFound);
-                tmpintent1.putExtra("lastversionfoundforasset", this.lastVersionFoundForAsset);
-                tmpintent1.putExtra("title", myWebView.getTitle());
-                tmpintent1.putExtra("savedAuthuser", this.savedAuthuser);
-                tmpintent1.putExtra("savedAuthpass", this.savedAuthpass);
-                Log.d(LOG_TAG, "startActivityForResult with requestCode="+REQUEST_ABOUT);
-                startActivityForResult(tmpintent1, REQUEST_ABOUT);
-                return true;
-            case R.id.about:
-                Log.i(LOG_TAG, "Start activity About DoliDroid");
-                //myWebView = findViewById(R.id.webViewContent);
-                Intent intent = new Intent(SecondActivity.this, AboutActivity.class);
-                intent.putExtra("currentUrl", myWebView.getOriginalUrl());
-                intent.putExtra("userAgent", myWebView.getSettings().getUserAgentString());
-                intent.putExtra("savedDolRootUrl", this.savedDolRootUrl);
-                intent.putExtra("lastversionfound", this.lastVersionFound);
-                intent.putExtra("lastversionfoundforasset", this.lastVersionFoundForAsset);
-                intent.putExtra("title", myWebView.getTitle());
-                intent.putExtra("savedAuthuser", this.savedAuthuser);
-                intent.putExtra("savedAuthpass", this.savedAuthpass);
-                Log.d(LOG_TAG, "startActivityForResult with requestCode="+REQUEST_ABOUT);
-                startActivityForResult(intent, REQUEST_ABOUT);
-                return true;
-            case R.id.menu_logout:
-                tagToLogout=true;
-                //myWebView = findViewById(R.id.webViewContent);
-                urlToGo = this.savedDolRootUrl+"user/logout.php?noredirect=1&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
-                Log.i(LOG_TAG, "LoadUrl after select Logout : "+urlToGo);
-                lastLoadUrl=urlToGo;
 
+                if (!urlToGo.contains("dol_hide_topmenu="))
+                    urlToGo = urlToGo + (urlToGo.contains("?") ? "&" : "?") + "dol_hide_topmenu=1";
+                if (!urlToGo.contains("dol_hide_leftmenu="))
+                    urlToGo = urlToGo + (urlToGo.contains("?") ? "&" : "?") + "dol_hide_leftmenu=1";
+                if (!urlToGo.contains("dol_optimize_smallscreen="))
+                    urlToGo = urlToGo + (urlToGo.contains("?") ? "&" : "?") + "dol_optimize_smallscreen=1";
+                if (!urlToGo.contains("dol_no_mouse_hover="))
+                    urlToGo = urlToGo + (urlToGo.contains("?") ? "&" : "?") + "dol_no_mouse_hover=1";
+                if (!urlToGo.contains("dol_use_jmobile="))
+                    urlToGo = urlToGo + (urlToGo.contains("?") ? "&" : "?") + "dol_use_jmobile=1";
+                Log.d(LOG_TAG, "LoadUrl after select Refresh : Load url " + urlToGo);
+                lastLoadUrl = urlToGo;
                 myWebView.loadUrl(urlToGo);
-                Log.i(LOG_TAG, "Clear caches and history of webView");
-                myWebView.clearCache(true);
-                myWebView.clearHistory();
-                return true;
-            case R.id.quit:
-                Log.i(LOG_TAG, "Call finish activity, with setResult = "+RESULT_WEBVIEW);
-                setResult(RESULT_WEBVIEW);
-                finish();
-                return true;
-            case R.id.clearcache:   // Action to clear webview caches
-                //myWebView = findViewById(R.id.webViewContent);
-                Log.i(LOG_TAG, "Clear caches and history of webView");
-                myWebView.clearFormData();
-                myWebView.clearHistory();
-                myWebView.clearCache(true);
-                //WebStorage.getInstance().deleteAllData();
-                this.cacheForMenu=null;
-                this.cacheForQuickAccess=null;
-                this.cacheForBookmarks=null;
-                this.cacheForUploadFile=null;
-                this.cacheForMultiCompany=null;
-                this.cacheForVirtualCard=null;
-
-                Toast.makeText(activity, R.string.CacheAndHistoryCleared, Toast.LENGTH_LONG).show();
-
-                return true;
-            case R.id.refresh:
-                //myWebView = findViewById(R.id.webViewContent);
-                urlToGo = myWebView.getUrl();
-                Log.d(LOG_TAG, "urlToGo="+urlToGo);
-                if (urlToGo != null) {
-                    if (urlToGo.startsWith("data:text") || urlToGo.startsWith("about:blank")) {
-                        urlToGo = savedDolRootUrl;
-                    }
-
-                    if (! urlToGo.contains("dol_hide_topmenu=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_hide_topmenu=1";
-                    if (! urlToGo.contains("dol_hide_leftmenu=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_hide_leftmenu=1";
-                    if (! urlToGo.contains("dol_optimize_smallscreen=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_optimize_smallscreen=1";
-                    if (! urlToGo.contains("dol_no_mouse_hover=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_no_mouse_hover=1";
-                    if (! urlToGo.contains("dol_use_jmobile=")) urlToGo = urlToGo + (urlToGo.contains("?")?"&":"?") + "dol_use_jmobile=1";
-                    Log.d(LOG_TAG, "LoadUrl after select Refresh : Load url "+urlToGo);
-                    lastLoadUrl=urlToGo;
-                    myWebView.loadUrl(urlToGo);
-                }
-                return true;
-         }
+            }
+            return true;
+        }
 
         Log.w(LOG_TAG, "Click onto unknown button "+item.getItemId());
         return false;
@@ -864,165 +867,6 @@ public class SecondActivity extends Activity {
         }
     }
 
-    /**
-     * Class to load an URL in background.
-     * Used to load menu, quick search page and more...
-     */
-    private class DownloadWebPageTask extends AsyncTask<String, Void, String>
-    {
-        String mode;
-        
-        DownloadWebPageTask(String mode)
-        {
-            super();
-            this.mode = mode;
-        }
-
-        /**
-         * Launch download of urls. Return content of response.
-         */
-        @Override
-        protected String doInBackground(String... urls) 
-        {
-            Log.d(LOG_TAG, "doInBackground");
-
-            StringBuilder response = new StringBuilder();
-
-            if (listOfCookiesAfterLogon != null) {      // We do not try to load url if cookies are not yet set
-                for (String url : urls) {
-                    //DefaultHttpClient client = new DefaultHttpClient();
-                    // TODO Replace this with java.net.HttpURLConnection
-                    HttpClient client = getNewHttpClient();
-                    HttpGet httpGet = new HttpGet(url);
-                    try {
-                        Log.i(LOG_TAG, "doInBackground get url mode="+this.mode+" url="+url+" savedAuthuser="+savedAuthuser+" cookies="+listOfCookiesAfterLogon);
-
-                        httpGet.setHeader("Cookie", listOfCookiesAfterLogon);
-                        //httpGet.setHeader("Connection", "keep-alive");
-                        httpGet.setHeader("User-Agent", savedUserAgent);
-                        if (savedAuthuser != null) {
-                            httpGet.setHeader("Authorization", "Basic " + Base64.encodeToString((savedAuthuser+":"+savedAuthpass).getBytes(), Base64.NO_WRAP));	// Add user/pass for basic authentication
-                        }
-                        String androlocale=Locale.getDefault().getLanguage();
-                        if (! "".equals(androlocale)) {
-                            httpGet.setHeader("Accept-Language", androlocale);
-                        }
-
-                        HttpResponse execute = client.execute(httpGet);
-                        InputStream content = execute.getEntity().getContent();
-
-                        BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-                        String s;
-                        while ((s = buffer.readLine()) != null) {
-                            response.append(s);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            return response.toString();
-        }
-
-        /**
-         * When an url has been downloaded.
-         * Used when download is done by the async Download manager after a DownloadWebPageTask.execute into codeForXXX for example.
-         * Not called for common navigation (see instead shouldInterceptRequest, onPageStarted, onPageFinished)
-         * 
-         * @param   String      content downloaded
-         */
-        @Override
-        protected void onPostExecute(String result) 
-        {
-            String stringforHistoryUrl = null;
-            String stringToCheckInResult = null;
-
-            if (result == null) {
-                Log.i(LOG_TAG, "onPostExecute mode="+this.mode+" result=null");
-            } else {
-                Log.i(LOG_TAG, "onPostExecute mode="+this.mode+" result="+result.length());
-            }
-
-            if ("menu".equals(this.mode)) {     // Test that result is a menu
-                stringforHistoryUrl = savedDolRootUrl+"core/get_menudiv.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
-                stringToCheckInResult = "<!-- Menu -->";
-            }
-            if ("quickaccess".equals(this.mode)) {     // Test that result is the search page
-                stringforHistoryUrl = savedDolRootUrl+"core/search_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
-                stringToCheckInResult = "<!-- Quick access -->";
-            }
-            if ("bookmarks".equals(this.mode)) {     // Test that result is a bookmark page
-                stringforHistoryUrl = savedDolRootUrl+"core/bookmarks_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
-                stringToCheckInResult = "<!-- Bookmarks -->";
-            }
-            if ("uploadfile".equals(this.mode)) {     // Test that result is a bookmark page
-                stringforHistoryUrl = savedDolRootUrl+"core/upload_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
-                stringToCheckInResult = "<!-- Upload file -->";
-            }
-            if ("multicompany".equals(this.mode)) {     // Test that result is a multicompany selection page
-                stringforHistoryUrl = savedDolRootUrl+"core/multicompany_page.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
-                stringToCheckInResult = "<!-- Multicompany selection  -->";
-            }
-            if ("virtualcard".equals(this.mode)) {     // Test that result is a multicompany selection page
-                stringforHistoryUrl = savedDolRootUrl+"user/virtualcard.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
-                stringToCheckInResult = "<!-- Virtual card -->";
-            }
-
-            if (result != null && ! "".equals(result))
-            {
-                Log.d(LOG_TAG, "onPostExecute Check result of doInBackground mode="+this.mode+" savedDolBasedUrl="+savedDolBasedUrl+" stringforHistoryUrl="+stringforHistoryUrl);
-
-                if (stringToCheckInResult != null) {     // Test that result is as expected
-                    if (result.contains(stringToCheckInResult)) {
-                        if (this.mode != null) {
-                            // TODO Do not add same history url twice
-                            nextAltHistoryStack = this.mode;       // this.mode is "menu", "quickaccess", ...
-                        }
-
-                        if ("menu".equals(this.mode)) {     // Test that result is a menu
-                            cacheForMenu = result;
-                        }
-                        if ("quickaccess".equals(this.mode)) {     // Test that result is the quickaccess page
-                            cacheForQuickAccess = result;
-                        }
-                        if ("bookmarks".equals(this.mode)) {     // Test that result is the quickaccess page
-                            cacheForBookmarks = result;
-                        }
-                        if ("uploadfile".equals(this.mode)) {     // Test that result is the quickaccess page
-                            cacheForUploadFile = result;
-                        }
-                        if ("virtualcard".equals(this.mode)) {     // Test that result is the quickaccess page
-                            cacheForVirtualCard = result;
-                        }
-                        if ("multicompany".equals(this.mode)) {     // Test that result is the quickaccess page
-                            cacheForMultiCompany = result;
-                        }
-
-                        // Generic download
-                        Log.d(LOG_TAG, "onPostExecute Load content from result of doInBackground mode=" + this.mode + " savedDolBasedUrl=" + savedDolBasedUrl + " stringforHistoryUrl=" + stringforHistoryUrl);
-
-                        myWebView.loadDataWithBaseURL(savedDolBasedUrl, result, "text/html", "UTF-8", stringforHistoryUrl);
-                        //myWebView.loadData(result, "text/html", "UTF-8");     // This does not work
-                    } else {
-                        Log.d(LOG_TAG, "onPostExecute Failed to get page. Are you logged ?");
-                        Toast.makeText(activity, getString(R.string.failedtogetpage), Toast.LENGTH_LONG).show();
-                        Log.d(LOG_TAG, result);
-                    }
-                } else {    // Generic download
-                    Log.d(LOG_TAG, "onPostExecute Load content from result of doInBackground mode=" + this.mode + " savedDolBasedUrl=" + savedDolBasedUrl + " stringforHistoryUrl=" + stringforHistoryUrl);
-                    myWebView.loadDataWithBaseURL(savedDolBasedUrl, result, "text/html", "UTF-8", stringforHistoryUrl);
-                    //myWebView.loadData(result, "text/html", "UTF-8");
-                }
-            }
-
-            Log.d(LOG_TAG, "end onPostExecute (toremove)");
-        }
-    }
-
-    
     /**
      * Once we click onto SmartPhone hardware key
      */
@@ -1290,7 +1134,7 @@ public class SecondActivity extends Activity {
      */
     private boolean codeForCopyUrl()
     {
-        String urlToGo;
+        //String urlToGo;
 
         String currentUrl = myWebView.getUrl();
 
@@ -1778,17 +1622,17 @@ public class SecondActivity extends Activity {
 
 						// Check if file need to be replaced by an asset file (if open file fails, throw exception and load from web).
 						if ((fileName.endsWith("favicon.ico") || fileName.startsWith("theme/") || fileName.startsWith("includes/") || fileName.startsWith("public/demo/"))) {
-							if (!versionimg.equals("") && (fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".gif") || fileName.endsWith(".ico"))) {
+							if (!versionimg.isEmpty() && (fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".gif") || fileName.endsWith(".ico"))) {
 								Log.d(LOG_TAG, "shouldInterceptRequest Filename " + fileName + " intercepted. Replaced with image assets file into " + versionimg);
 								return new WebResourceResponse(null, null, getAssets().open(versionimg + "/" + fileName));
-							} else if (!versionjscss.equals("") && fileName.endsWith(".js")) {
+							} else if (!versionjscss.isEmpty() && fileName.endsWith(".js")) {
 								Log.d(LOG_TAG, "shouldInterceptRequest Filename " + fileName + " intercepted. Replaced with js assets file into " + versionjscss);
 								return new WebResourceResponse("application/x-javascript", "UTF-8", getAssets().open(versionjscss + "/" + fileName));
-							} else if (!versionjscss.equals("") && fileName.endsWith(".css")) {
+							} else if (!versionjscss.isEmpty() && fileName.endsWith(".css")) {
 								Log.d(LOG_TAG, "shouldInterceptRequest Filename " + fileName + " intercepted. Replaced with css assets file into " + versionjscss);
 								return new WebResourceResponse("text/css", "UTF-8", getAssets().open(versionjscss + "/" + fileName));
 							}
-						} else if (fileName.startsWith("data:text/html") || fileName.equals("")) {
+						} else if (fileName.startsWith("data:text/html") || fileName.isEmpty()) {
 							Log.d(LOG_TAG, "shouldInterceptRequest We make a back to go to a bad history url fileName=" + fileName);
 
 							// Return last page that fails found into altHistoryStack
@@ -2316,15 +2160,15 @@ public class SecondActivity extends Activity {
                                         String username = sharedPrefsEncrypted.getString(savedDolRootUrl + "-username", "");
                                         String password = sharedPrefsEncrypted.getString(savedDolRootUrl + "-password", "");
 
-                                        if ((username != null && !"".equals(username)) || (password != null && !password.isEmpty())) {
+                                        if ((username != null && !username.isEmpty()) || (password != null && !password.isEmpty())) {
                                             tagToOverwriteLoginPass = false;  // So we autofill form only the first time.
                                             Log.d(LOG_TAG, "onPageFinished Prepare js to autofill login form with username=" + username + " password=" + password.replaceAll(".", "*"));
                                             //Log.d(LOG_TAG, "onPageFinished Prepare js to autofill login form with username="+username+" password="+password);
 
                                             // This call inject JavaScript into the page which just finished loading.
-                                            if (username != null && !"".equals(username))
+                                            if (username != null && !username.isEmpty())
                                                 jsInjectCodeForSetForm += "document.getElementById('username').value='" + username + "';";    // Warning: This line makes Webkit fails with 2.3
-                                            if (password != null && !"".equals(password))
+                                            if (password != null && !password.isEmpty())
                                                 jsInjectCodeForSetForm += "document.getElementById('password').value='" + password + "';";    // Warning: This line makes Webkit fails with 2.3
                                         } else {
                                             Log.d(LOG_TAG, "onPageFinished No predefined login/pass to autofill login form");
@@ -2384,7 +2228,7 @@ public class SecondActivity extends Activity {
 
                                     String username = sharedPrefsEncrypted.getString("lastsubmit-username", "");
                                     String password = sharedPrefsEncrypted.getString("lastsubmit-password", "");
-                                    if ((username != null && !"".equals(username)) || (password != null && !"".equals(password))) {
+                                    if ((username != null && !username.isEmpty()) || (password != null && !password.isEmpty())) {
                                         // Save username and password.
                                         SharedPreferences.Editor editor = sharedPrefsEncrypted.edit();
                                         Log.d(LOG_TAG, "onPageFinished Save " + savedDolRootUrl + "-username=" + username);
@@ -2421,9 +2265,8 @@ public class SecondActivity extends Activity {
 				if (url.contains("logout.php")) {
 					synchronized (this) 
 					{
-						if (tagToLogout)
-						{
-							Log.d(LOG_TAG, "onPageFinished End of logout page, tagToLogout="+tagToLogout);
+						if (tagToLogout) {
+							Log.d(LOG_TAG, "onPageFinished End of logout page, tagToLogout=true");
 							tagToLogout = false;	// Set to false to avoid infinite loop
 							tagToOverwriteLoginPass = true;
 							Log.i(LOG_TAG, "onPageFinished We finish activity resultCode="+RESULT_SECONDACTIVITY);
@@ -2759,11 +2602,7 @@ public class SecondActivity extends Activity {
                 //    startActivityForResult(Intent.createChooser(i, "Image Chooser"), REQUEST_CODE_ABC);
 
                 Intent intentDefault = fileChooserParams.createIntent();
-                if (multipleAttribute == FileChooserParams.MODE_OPEN_MULTIPLE) {
-                    intentDefault.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                } else {
-                    intentDefault.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
-                }
+                intentDefault.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multipleAttribute == FileChooserParams.MODE_OPEN_MULTIPLE);
                 // Intent to get photos from photo galleries app (Google photo, ...)
                 Intent chooserIntent = Intent.createChooser(intentDefault, "File Chooser");
                 //chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);

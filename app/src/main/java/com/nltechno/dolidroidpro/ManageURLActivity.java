@@ -288,14 +288,12 @@ public class ManageURLActivity extends Activity {
     {
         Log.d(LOG_TAG, "Click onto menu "+item.toString());
 
-    	switch (item.getItemId())
-    	{
-	    	case R.id.menu_back:
-	    		Log.d(LOG_TAG, "We finish activity resultCode = "+RESULT_ABOUT);
-	    		setResult(RESULT_ABOUT);
-	    		finish();
-	    		return true;
-    	}
+        if (item.getItemId() == R.id.menu_back) {
+            Log.d(LOG_TAG, "We finish activity resultCode = " + RESULT_ABOUT);
+            setResult(RESULT_ABOUT);
+            finish();
+            return true;
+        }
     	
     	return false;
     }

@@ -3,20 +3,22 @@
 buildscript {
 
     repositories {
-        jcenter()
+        //jcenter()
         // You need to add the following repository to download the new plugin.
         google()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.13.2'
+        classpath 'com.android.tools.build:gradle:9.1.0'
     }
 }
 
 allprojects {
     repositories {
-        jcenter()
+        //jcenter()
         // You need to add the following repository to download the new plugin.
         google()
+        mavenCentral()
     }
 }
 

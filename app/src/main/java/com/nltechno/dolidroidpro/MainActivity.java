@@ -421,9 +421,8 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
 		Editor editor = sharedPrefs.edit();
 
-    	switch (item.getItemId())
-    	{
-    		case R.id.always_autofill:
+        int itemId = item.getItemId();
+        if (itemId == R.id.always_autofill) {
 				// Same code into MainActivity and SecondActivity
 	        	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
 
@@ -452,59 +451,58 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 								getApplicationContext(),
 								EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
 								EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-						);
-						Editor editorEncrypted = sharedPrefsEncrypted.edit();
-						editorEncrypted.clear();
-						editorEncrypted.apply();
+                        );
+                        Editor editorEncrypted = sharedPrefsEncrypted.edit();
+                        editorEncrypted.clear();
+                        editorEncrypted.apply();
 
-						Log.d(LOG_TAG, "The encrypted shared preferences file has been cleared");
-					}
-					catch(Exception e) {
-						Log.w(LOG_TAG, "Failed to clear encrypted shared preferences file, we try by deleting the file");
-						File prefsFile = new File(getApplicationContext().getFilesDir(), "../shared_prefs/secret_shared_prefs.xml");
-						if (prefsFile.exists()) {
-							Log.d(LOG_TAG, "File "+prefsFile+" exists, we delete it");
-							try {
-								boolean deleted = prefsFile.delete();
-								Log.d(LOG_TAG, "File " + prefsFile + " deleted = " + deleted);
-							} catch(Exception e2) {
-								// Keep empty
-								Log.d(LOG_TAG, "Failed to delete file " + prefsFile);
-							}
-						}
+                        Log.d(LOG_TAG, "The encrypted shared preferences file has been cleared");
+                    } catch (Exception e) {
+                        Log.w(LOG_TAG, "Failed to clear encrypted shared preferences file, we try by deleting the file");
+                        File prefsFile = new File(getApplicationContext().getFilesDir(), "../shared_prefs/secret_shared_prefs.xml");
+                        if (prefsFile.exists()) {
+                            Log.d(LOG_TAG, "File " + prefsFile + " exists, we delete it");
+                            try {
+                                boolean deleted = prefsFile.delete();
+                                Log.d(LOG_TAG, "File " + prefsFile + " deleted = " + deleted);
+                            } catch (Exception e2) {
+                                // Keep empty
+                                Log.d(LOG_TAG, "Failed to delete file " + prefsFile);
+                            }
+                        }
 
-					}
-				}
-				invalidateOptionsMenu();
-	    		return true;
-			case R.id.always_uselocalresources:
-				boolean prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
-				Log.d(LOG_TAG, "Click onto switch uselocalresources, prefAlwaysUseLocalResources is "+prefAlwaysUseLocalResources);
-				prefAlwaysUseLocalResources=!prefAlwaysUseLocalResources;
-				editor.putBoolean("prefAlwaysUseLocalResources", prefAlwaysUseLocalResources);
-				editor.commit();
-				Log.d(LOG_TAG, "Switched value is now "+prefAlwaysUseLocalResources);
-				// Update men label
-				this.savMenu.findItem(R.id.always_uselocalresources).setChecked(prefAlwaysUseLocalResources);
-				invalidateOptionsMenu();
-				return true;
-			case R.id.manage_all_urls:
-				Log.d(LOG_TAG, "Click onto Manage all URLs");
-				Intent tmpintent = new Intent(MainActivity.this, ManageURLActivity.class);
-				Log.d(LOG_TAG, "onOptionsItemSelected startActivityForResult with requestCode="+REQUEST_ABOUT);
-				startActivityForResult(tmpintent, REQUEST_ABOUT);
-				return true;
-			case R.id.about:
-	    		Log.d(LOG_TAG, "Click onto Info");
-	    		Intent tmpintent2 = new Intent(MainActivity.this, AboutActivity.class);
-	    		Log.d(LOG_TAG, "onOptionsItemSelected startActivityForResult with requestCode="+REQUEST_ABOUT);
-	    		startActivityForResult(tmpintent2, REQUEST_ABOUT);
-	    		return true;
-    		case R.id.quit:
-    	        Log.d(LOG_TAG, "Click finish");
-    	        finish();
-    			return true;
-    	}
+                    }
+                }
+                invalidateOptionsMenu();
+                return true;
+        } else if (itemId == R.id.always_uselocalresources) {
+            boolean prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
+            Log.d(LOG_TAG, "Click onto switch uselocalresources, prefAlwaysUseLocalResources is " + prefAlwaysUseLocalResources);
+            prefAlwaysUseLocalResources = !prefAlwaysUseLocalResources;
+            editor.putBoolean("prefAlwaysUseLocalResources", prefAlwaysUseLocalResources);
+            editor.commit();
+            Log.d(LOG_TAG, "Switched value is now " + prefAlwaysUseLocalResources);
+            // Update men label
+            this.savMenu.findItem(R.id.always_uselocalresources).setChecked(prefAlwaysUseLocalResources);
+            invalidateOptionsMenu();
+            return true;
+        } else if (itemId == R.id.manage_all_urls) {
+            Log.d(LOG_TAG, "Click onto Manage all URLs");
+            Intent tmpintent = new Intent(MainActivity.this, ManageURLActivity.class);
+            Log.d(LOG_TAG, "onOptionsItemSelected startActivityForResult with requestCode=" + REQUEST_ABOUT);
+            startActivityForResult(tmpintent, REQUEST_ABOUT);
+            return true;
+        } else if (itemId == R.id.about) {
+            Log.d(LOG_TAG, "Click onto Info");
+            Intent tmpintent2 = new Intent(MainActivity.this, AboutActivity.class);
+            Log.d(LOG_TAG, "onOptionsItemSelected startActivityForResult with requestCode=" + REQUEST_ABOUT);
+            startActivityForResult(tmpintent2, REQUEST_ABOUT);
+            return true;
+        } else if (itemId == R.id.quit) {
+            Log.d(LOG_TAG, "Click finish");
+            finish();
+            return true;
+        }
 
     	Log.w(LOG_TAG, "Click onto unknown button "+item.getItemId());
     	return false;
