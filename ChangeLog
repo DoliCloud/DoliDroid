@@ -14,7 +14,7 @@ English DoliDroid ChangeLog
 
 3.0-b67
 - NEW Add support for managedConfigurationDefaultURL managed by MDM.
-- Change version name from "Dolidrdoi Pro" to "3.0.67"
+- Change version name from "DoliDroid Pro" to "3.0.67"
 
 3.0-b63
 - FIX Links in about pages are clickable
