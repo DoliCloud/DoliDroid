@@ -57,6 +57,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
 
@@ -289,24 +290,12 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			MenuItem menuItem2 = this.savMenu.findItem(R.id.always_autofill);
     		boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
     		Log.d(LOG_TAG, "prefAlwaysAutoFill value is "+prefAlwaysAutoFill);
-    		if (prefAlwaysAutoFill) {
-    			//menuItem2.setTitle(getString(R.string.menu_autofill_on));
-				menuItem2.setChecked(true);
-			} else {
-    			//menuItem2.setTitle(getString(R.string.menu_autofill_off));
-				menuItem2.setChecked(false);
-			}
+			menuItem2.setChecked(prefAlwaysAutoFill);
 
 			MenuItem menuItem4 = this.savMenu.findItem(R.id.always_uselocalresources);
 			boolean prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
 			Log.d(LOG_TAG, "prefAlwaysUseLocalResources value is "+prefAlwaysUseLocalResources);
-			if (prefAlwaysUseLocalResources) {
-				//menuItem4.setTitle(getString(R.string.menu_autofill_on));
-				menuItem4.setChecked(true);
-			} else {
-				//menuItem4.setTitle(getString(R.string.menu_autofill_off));
-				menuItem4.setChecked(false);
-			}
+			menuItem4.setChecked(prefAlwaysUseLocalResources);
 
     		if (listOfRootUrl != null) {
 				MenuItem tmpItem = this.savMenu.findItem(R.id.manage_all_urls);
@@ -364,13 +353,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
    		boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
    		Log.d(LOG_TAG, "prefAlwaysAutoFill value is "+prefAlwaysAutoFill);
 		if (menuItem2 != null) {
-			if (prefAlwaysAutoFill) {
-				//menuItem2.setTitle(getString(R.string.menu_autofill_on));
-				menuItem2.setChecked(true);
-			} else {
-				//menuItem2.setTitle(getString(R.string.menu_autofill_off));
-				menuItem2.setChecked(false);
-			}
+			menuItem2.setChecked(prefAlwaysAutoFill);
 		}
 
 		if (listOfRootUrl != null) {
@@ -384,18 +367,12 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		boolean prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
 		Log.d(LOG_TAG, "prefAlwaysUseLocalResources value is "+prefAlwaysUseLocalResources);
 		if (menuItem4 != null) {
-			if (prefAlwaysUseLocalResources) {
-				//menuItem4.setTitle(getString(R.string.menu_uselocalresources_on));
-				menuItem4.setChecked(true);
-			} else {
-				//menuItem4.setTitle(getString(R.string.menu_uselocalresources_off));
-				menuItem4.setChecked(false);
-			}
+			menuItem4.setChecked(prefAlwaysUseLocalResources);
 		}
 
 		MenuItem menuItemQuit = menu.findItem(R.id.quit);
 		if (menuItemQuit != null) {
-			menuItemQuit.setIcon(getDrawable(R.drawable.ic_baseline_exit_to_app_24));
+			menuItemQuit.setIcon(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.ic_baseline_exit_to_app_24));
 		}
 
 		MenuItem menuItemAbout = menu.findItem(R.id.about);
@@ -424,17 +401,17 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
         int itemId = item.getItemId();
         if (itemId == R.id.always_autofill) {
 				// Same code into MainActivity and SecondActivity
-	        	boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
+	    		boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
 
-	    		Log.i(LOG_TAG, "Click onto switch autofill, prefAlwaysAutoFill is "+prefAlwaysAutoFill);
-	    		prefAlwaysAutoFill=!prefAlwaysAutoFill;
+				Log.i(LOG_TAG, "Click onto switch autofill, prefAlwaysAutoFill is "+prefAlwaysAutoFill);
+				prefAlwaysAutoFill = !prefAlwaysAutoFill;
 
-	        	editor.putBoolean("prefAlwaysAutoFill", prefAlwaysAutoFill);
-	        	editor.apply();
+	    		editor.putBoolean("prefAlwaysAutoFill", prefAlwaysAutoFill);
+	    		editor.apply();
 
 	    		Log.d(LOG_TAG, "Switched value is now "+prefAlwaysAutoFill);
 	    		// Update men label
-	        	if (prefAlwaysAutoFill) {
+	    		if (prefAlwaysAutoFill) {
 	        		//this.savMenu.findItem(R.id.always_autofill).setTitle(getString(R.string.menu_autofill_on));
 					this.savMenu.findItem(R.id.always_autofill).setChecked(true);
 				} else {
