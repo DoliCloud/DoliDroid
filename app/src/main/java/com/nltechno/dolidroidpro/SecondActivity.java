@@ -2361,7 +2361,30 @@ public class SecondActivity extends Activity {
             }
 	    	//webview.setHttpAuthUsernamePassword(host, realm, username, password);
 	    }
-	      
+
+        /**
+         * onReceiveHttpError
+         *
+         * @param view The WebView that is initiating the callback.
+         * @param request The originating request.
+         * @param errorResponse Information about the error occurred.
+         */
+        @Override
+        public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+            Log.w(LOG_TAG, "onReceivedHttpError code: " + errorResponse.getStatusCode() + " on URL " + request.getUrl() + ": " + errorResponse.getReasonPhrase());
+            super.onReceivedHttpError(view, request, errorResponse);
+
+            /*
+            if (request.getUrl().toString().contains("objectonoff.php")) {
+                int statusCode = errorResponse.getStatusCode();
+                if (statusCode == 500) {
+                    Log.e("WebViewError", "Erreur 500 sur le script Dolibarr");
+                    // Action à effectuer (alerte, log, etc.)
+                }
+            }
+            */
+        }
+
 		/**
 		 * onReceivedError
 		 * This method is only called when network or webview errors occur, but never when a HTTP errors are received by WebView.
