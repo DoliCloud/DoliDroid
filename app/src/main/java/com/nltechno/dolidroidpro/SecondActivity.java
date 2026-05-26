@@ -16,12 +16,9 @@
  */
 package com.nltechno.dolidroidpro;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -37,12 +34,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 // This are classes found with the useLibrary 'org.apache.http.legacy' in the build.gradle file.
-import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-//import com.nltechno.utils.MySSLSocketFactory;
 import com.nltechno.utils.Utils;
 
 import android.Manifest;
@@ -54,7 +48,6 @@ import android.content.pm.PackageManager;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.net.http.SslError;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -94,14 +87,12 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.app.AlertDialog;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.FileProvider;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import androidx.activity.OnBackPressedCallback;
 
 /**
  * Second activity class
@@ -197,7 +188,7 @@ public class SecondActivity extends Activity {
     //final String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtKWPkZ1rys0aYT9qQ7gHytljus58x9ZNwFUabsXgRAua2RwVkHnFfc8L2p68ojIb2tNHiRvMV6hYH2qViylftEMSYLFoKnuHzpL4tc+Ic+cTv/KtubP+ehUfISPQfYrZrukp3E8y0zM795Agsy8mefc2mmuOFJny/IZFLNyM5J+vjhoE6mO2l3jBmo08zu/3tz8Mbo/VYqJSs+P9UTppwF8ovB6u3fGPFeqblAdGize9WQ1L4SXNYblIjCklYj0rbXHFN3aJCjV9sSo0U+qdi6i+mT+CZgj09W1+U7RpkNJ6OczspTwhFh7/1nEev3Zci17TIFXNyP2v5aGMoBuCPwIDAQAB";
     //public static final String ITEM_SKU = "android.test.purchased";
 
-    private final Pattern patternLoginHomePageForVersion = Pattern.compile(" (?:[@-]) (?:Doli[a-zA-Z]+ |)(\\d+)\\.(\\d+)\\.([^\\s]+)");     // Regex to extract version
+    private final Pattern patternLoginHomePageForVersion = Pattern.compile(" [@-] (?:Doli[a-zA-Z]+ |)(\\d+)\\.(\\d+)\\.([^\\s]+)");     // Regex to extract version
     private final Pattern patternLoginHomePageForMulticompany = Pattern.compile("multicompany");                                    // Regex to know if multicompany module is on
     private final Pattern patternLoginPage = Pattern.compile("Login Doli[a-zA-Z]+ (\\d+)\\.(\\d+)\\.([^\\s]+)"); // No more used                    // To know page is login page with dolibarr <= 3.6
     private final Pattern patternLoginPage2 = Pattern.compile(" @ (?:Doli[a-zA-Z]+ |)(\\d+)\\.(\\d+)\\.([^\\s]+)");                  // To know page is login page with dolibarr >= 3.7
@@ -617,6 +608,7 @@ public class SecondActivity extends Activity {
      *  @param  MenuItem    item    Menu item selected
      *  @return boolean             True if we selected a menu managed, False otherwise
      */
+    @SuppressLint("ApplySharedPref")
     public boolean onOptionsItemSelected(MenuItem item)
     {
         Log.i(LOG_TAG, "SecondActivity::onOptionsItemSelected Click onto menu: item="+item.toString());
@@ -1225,7 +1217,7 @@ public class SecondActivity extends Activity {
         if (b) {
             if (currentUrl != null && currentUrl.contains("data:text/html")) {
                 Log.d(LOG_TAG, "Previous Url may be a page with an history problem");
-                if (altHistoryStack.size() > 0) {   // Should be true
+                if (!altHistoryStack.isEmpty()) {   // Should be true
                     nextAltHistoryStack = altHistoryStack.get(altHistoryStack.size() - 1);
                     Log.d(LOG_TAG, "Current page has &ui-page, we set nextAltHistoryStack to "+nextAltHistoryStack+" and consume the history stack");
                     altHistoryStack.remove(altHistoryStack.size() - 1);
@@ -1592,7 +1584,7 @@ public class SecondActivity extends Activity {
 
             Log.v(LOG_TAG, "shouldInterceptRequest url="+url+", host="+host+", fileName="+fileName+", savedDolBasedUrl="+savedDolBasedUrl+" version in url param (for js or css pages)="+version);
 
-            Boolean isADownload = false;
+            boolean isADownload = false;
             if ((url != null && (url.endsWith(".pdf") || url.endsWith(".odt") || url.endsWith(".ods")) && ! url.contains("action=") && ! url.contains("section=")) 	// Old way to detect a download (we do not make a download of link to delete or print or presend a file)
                     || "document.php".equals(fileName)									                       			                // The default wrapper to download files
                     || (url != null && url.contains("output=file"))) {																	// The new recommended parameter for pages that are not document.php like export.php that generate a file output
@@ -1702,7 +1694,7 @@ public class SecondActivity extends Activity {
 
             // TODO Optimize performance by disabling loading of some url (ie: some jquery plugins)
 
-            if (url.startsWith("tel:")) {  // Intercept phone urls
+            if (url != null && url.startsWith("tel:")) {  // Intercept phone urls
                 Log.d(LOG_TAG, "Launch dialer : " + url);
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
                 try {
@@ -1711,12 +1703,12 @@ public class SecondActivity extends Activity {
                     Log.e(LOG_TAG, "No activity to manage Intent ACTION_DIAL");
                 }
                 return true;
-            } else if (url.startsWith("geo:")) {  // Intercept geoloc url (map)
+            } else if (url != null && url.startsWith("geo:")) {  // Intercept geoloc url (map)
                 Log.d(LOG_TAG, "Launch geo : " + url);
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(intent);
                 return true;
-            } else if (url.startsWith("mailto:")) {  // Intercept mailto urls
+            } else if (url != null && url.startsWith("mailto:")) {  // Intercept mailto urls
                 Log.d(LOG_TAG, "Launch mailto : " + url);
                 try {
                     String theEmail = "", theEmailCC = "", theEmailBCC = "", theSubject = "", theBody = "";
@@ -2928,10 +2920,9 @@ public class SecondActivity extends Activity {
                             }});
             }
 
+            Uri[] results = null;
             if (data == null || (uri == null && uris == null)) {
                 // Case we have taken a photo
-                Uri[] results = null;
-
                 Log.d(LOG_TAG, "onActivityResult data or (uri and uris is null), mCameraPhotoPathString="+mCameraPhotoPathString+" imageUri="+imageUri);
 
                 // If there is not data, then we may have taken a photo
@@ -2949,8 +2940,6 @@ public class SecondActivity extends Activity {
                 imageUri = null;
             } else {
                 // Case we have selected a file from file manager
-                Uri[] results = null;
-
                 Log.d(LOG_TAG, "onActivityResult data is not null");
 
                 if (uri != null) {
