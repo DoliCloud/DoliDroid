@@ -24,7 +24,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -115,7 +114,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 		 */
 
         // text2 has links specified by putting <a> tags in the string
-        // resource.  By default these links will appear but not
+        // resource.  By default, these links will appear but not
         // respond to user input.  To make them active, you need to
         // call setMovementMethod() on the TextView object.
         TextView t2 = findViewById(R.id.textViewLink);
@@ -204,7 +203,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			}
 
 			// Sort the array list of URL
-			Collections.sort(listOfRootUrl, Comparator.comparing(PredefinedUrl::getSortOrder));
+			listOfRootUrl.sort(Comparator.comparing(PredefinedUrl::getSortOrder));
 
 			// Close the input stream
 			in.close();
@@ -256,7 +255,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 			texViewLink.setVisibility(View.VISIBLE);
 		}
 
-		// Check if a default URL exists as a MDM Managed Configuration
+		// Check if a default URL exists as an MDM Managed Configuration
 		RestrictionsManager myManagedConfigurationMgr = (RestrictionsManager) getSystemService(Context.RESTRICTIONS_SERVICE);
 		Bundle myManagedConfiguration = myManagedConfigurationMgr.getApplicationRestrictions();
 		if (myManagedConfiguration.containsKey("managedConfigurationDefaultURL") && myManagedConfiguration.getString("managedConfigurationDefaultURL") != null && !"".equals(myManagedConfiguration.getString("managedConfigurationDefaultURL"))) {
@@ -406,7 +405,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 				Log.i(LOG_TAG, "Click onto switch autofill, prefAlwaysAutoFill is "+prefAlwaysAutoFill);
 				prefAlwaysAutoFill = !prefAlwaysAutoFill;
 
-	    		editor.putBoolean("prefAlwaysAutoFill", prefAlwaysAutoFill);
+				editor.putBoolean("prefAlwaysAutoFill", prefAlwaysAutoFill);
 	    		editor.apply();
 
 	    		Log.d(LOG_TAG, "Switched value is now "+prefAlwaysAutoFill);
@@ -486,7 +485,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
     }
 
 	/**
-	 * Handler to manage event onto the select of combobox
+	 * Handler to manage event onto the selection of combobox
 	 */
 	public void onItemSelected(AdapterView<?> parent, View v, int position, long id)
 	{

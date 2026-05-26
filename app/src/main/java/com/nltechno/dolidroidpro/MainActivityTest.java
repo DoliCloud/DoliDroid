@@ -84,7 +84,7 @@ public class MainActivityTest extends Activity implements OnItemSelectedListener
 	}
 
 	/**
-	 * Handler to manage event onto the select of combobox
+	 * Handler to manage event onto the selection of combobox
 	 */
 	public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 

@@ -107,7 +107,7 @@ public class ManageURLActivity extends Activity {
 		ManageURLAdapter adapter = new ManageURLAdapter(this, listofRootUrlString);
 		//ManageURLAdapter adapterempty = new ManageURLAdapter(this, listofRootUrlStringEmpty);
 
-		// Fill the list of Urls into the ArrayAdapter
+		// Fill with the list of Urls into the ArrayAdapter
 		ListView listViewOfUrls = (ListView) findViewById(R.id.listViewConnections);
 		listViewOfUrls.setAdapter(adapter);
 	}

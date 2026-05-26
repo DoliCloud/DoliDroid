@@ -1290,7 +1290,7 @@ public class SecondActivity extends Activity {
         switch (requestCode) {
             case REQUEST_CODE_ASK_PERMISSIONS_WRITE_EXTERNAL_STORAGE: {
                 Log.d(LOG_TAG, Integer.toString(grantResults[0]));
-                // If request is cancelled, the result arrays are empty.
+                // If request is canceled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted, yay! Do the task we need to do.
                     putDownloadInQueue(saveQueryForonRequestPermissionsResult, saveUrlForonRequestPermissionsResult, saveListOfCookiesForonRequestPermissionsResult);
@@ -2503,7 +2503,7 @@ public class SecondActivity extends Activity {
                 Log.w(LOG_TAG, "onConsoleMessage "+cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId());
             } else if (cm != null && cm.messageLevel() == ConsoleMessage.MessageLevel.ERROR) {
                 Log.e(LOG_TAG, "onConsoleMessage "+cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId());
-                // I don't know why we get this error with DoliDroid on web site ACE edit page. ACE seems to work correctly and we
+                // I don't know why we get this error with DoliDroid on website ACE edit page. ACE seems to work correctly and we
                 // don't have error on full browser mode. So i discard alert on this error message.
                 if (cm.message() != null && !cm.message().contains("Failed to execute 'importScripts' on 'WorkerGlobalScope'")) {
                     tagToShowMessage = "Javascript error detected on page url = " + lastLoadUrl + " -- " + cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId();

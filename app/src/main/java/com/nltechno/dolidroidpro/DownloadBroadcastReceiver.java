@@ -38,7 +38,7 @@ public class DownloadBroadcastReceiver extends BroadcastReceiver {
 
         if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action))
         {
-        	Log.d(LOG_TAG, "onReceive ACTION_DOWNLOAD_COMPLETE");   // success or error (may be a timetout error)
+        	Log.d(LOG_TAG, "onReceive ACTION_DOWNLOAD_COMPLETE");   // success or error (maybe a timeout error)
             //Show a notification
 			//Toast.makeText(context, context.getString(R.string.downloadComplete), Toast.LENGTH_LONG).show();
         }

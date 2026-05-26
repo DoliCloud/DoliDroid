@@ -87,7 +87,7 @@ public class AboutActivity extends Activity {
 		setContentView(R.layout.activity_about);
 
 		// text2 has links specified by putting <a> tags in the string
-		// resource.  By default these links will appear but not
+		// resource.  By default, these links will appear but not
 		// respond to user input.  To make them active, you need to
 		// call setMovementMethod() on the TextView object.
 		TextView t1 = findViewById(R.id.textAboutVersion);

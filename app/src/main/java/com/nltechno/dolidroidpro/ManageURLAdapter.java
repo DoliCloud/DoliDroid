@@ -18,9 +18,6 @@ package com.nltechno.dolidroidpro;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -33,7 +33,7 @@ public class SslAlertDialog {
      * Constructor
      * 
      * @param SslErrorHandler   errorHandler    Error handler
-     * @param SecondActivity    activity        Activity
+     * @param SecondActivity    activity        Object activity
      * @param String            errorCode       Error code
      */
     public SslAlertDialog(SslErrorHandler errorHandler, SecondActivity activity, String errorCode) {
