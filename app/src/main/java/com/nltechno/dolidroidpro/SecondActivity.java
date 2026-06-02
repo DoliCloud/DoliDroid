@@ -338,7 +338,13 @@ public class SecondActivity extends Activity {
         this.savedUserAgent = myWebView.getSettings().getUserAgentString() + " - " + getString(R.string.dolidroidUserAgent);
 
         myWebView.getSettings().setAllowContentAccess(true);
-        myWebView.getSettings().setAllowFileAccess(true);
+        // The WebView only ever loads the user's configured Dolibarr
+        // server URL (urlToGo, an http/https URL). It does not need
+        // file:// access, and the HTMLOUT JS bridge attached below
+        // would be reachable from any file:// document if a stray load
+        // ever landed in this WebView. file:///android_asset/ remains
+        // reachable regardless of the flag.
+        myWebView.getSettings().setAllowFileAccess(false);
         //myWebView.getSettings().setAllowFileAccessFromFileURLs(true);
         //myWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
         myWebView.getSettings().setDomStorageEnabled(true);
