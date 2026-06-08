@@ -6,6 +6,7 @@
     >
     <!-- Remove android:installLocation="preferExternal" to always install on external storage, use "auto" for default internal -->
 
+
     <!-- Some Chromebooks don't support touch. Although not essential,
          it's a good idea to explicitly include this declaration. -->
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
