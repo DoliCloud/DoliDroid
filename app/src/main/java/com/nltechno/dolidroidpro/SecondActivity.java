@@ -192,7 +192,7 @@ public class SecondActivity extends Activity {
     private final Pattern patternLoginHomePageForMulticompany = Pattern.compile("multicompany");                                    // Regex to know if multicompany module is on
     private final Pattern patternLoginPage = Pattern.compile("Login Doli[a-zA-Z]+ (\\d+)\\.(\\d+)\\.([^\\s]+)"); // No more used                    // To know page is login page with dolibarr <= 3.6
     private final Pattern patternLoginPage2 = Pattern.compile(" @ (?:Doli[a-zA-Z]+ |)(\\d+)\\.(\\d+)\\.([^\\s]+)");                  // To know page is login page with dolibarr >= 3.7
-    
+
     private String nextAltHistoryStack = "";
     private String nextAltHistoryStackBis = "";
     ArrayList<String> altHistoryStack = new ArrayList<>();
@@ -241,7 +241,7 @@ public class SecondActivity extends Activity {
         boolean prefAlwaysAutoFill = sharedPrefs.getBoolean("prefAlwaysAutoFill", true);
         prefAlwaysUseLocalResources = sharedPrefs.getBoolean("prefAlwaysUseLocalResources", true);
         Log.d(LOG_TAG, "onCreate Read the non encrypted shared preferences file: prefAlwaysAutoFill="+prefAlwaysAutoFill+" prefAlwaysUseLocResouces="+prefAlwaysUseLocalResources);
-        
+
         tagToOverwriteLoginPass=prefAlwaysAutoFill;
 
         // Define kind of menu we want to use
@@ -250,7 +250,7 @@ public class SecondActivity extends Activity {
 
         Intent intent = getIntent();
         String dolRootUrl = intent.getStringExtra("dolRootUrl");
-        String dolRequestUrl = intent.getStringExtra("dolRequestUrl");        
+        String dolRequestUrl = intent.getStringExtra("dolRequestUrl");
 
         this.savedDolRootUrl = dolRootUrl;      // this include user:pass of http basic urls. Always end with /. Example: hTtP://user:pass@testldr1.with.dolicloud.com:xxx/
         if (this.savedDolRootUrl != null) {
@@ -321,7 +321,7 @@ public class SecondActivity extends Activity {
         } else {
             urlToGo = dolRequestUrl+"?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
         }
-        
+
         Log.d(LOG_TAG, "onCreate isDownloadManagerAvailable="+Utils.isDownloadManagerAvailable(this));
         Log.d(LOG_TAG, "onCreate We are in onCreate and will load URL urlToGo=" + urlToGo);
 
@@ -378,7 +378,7 @@ public class SecondActivity extends Activity {
         myWebView.setWebViewClient(this.myWebViewClientDoliDroid);
         this.myWebChromeClientDoliDroid = new WebChromeClientDoliDroid();
         myWebView.setWebChromeClient(this.myWebChromeClientDoliDroid);
-        
+
         lastLoadUrl=urlToGo;
         myWebView.loadUrl(urlToGo);
 
@@ -419,8 +419,8 @@ public class SecondActivity extends Activity {
 	 * Called when activity start
 	 */
 	@Override
-    public void onStart() 
-	{	
+    public void onStart()
+	{
     	Log.i(LOG_TAG, "onStart");
 
     	super.onStart();
@@ -604,7 +604,7 @@ public class SecondActivity extends Activity {
         }
 
         this.savMenu = menu;
-        
+
         return true;
     }
 
@@ -870,7 +870,7 @@ public class SecondActivity extends Activity {
      */
     @SuppressLint("GestureBackNavigation")
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) 
+    public boolean onKeyDown(int keyCode, KeyEvent event)
     {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             // Check if the key event was the Back button
@@ -882,16 +882,16 @@ public class SecondActivity extends Activity {
         // If it wasn't the Back key or there's no web page history, bubble up to the default
         // system behavior (probably exit the activity)
         return super.onKeyDown(keyCode, event);
-    } 
+    }
 
 
     /**
      * Common code for Menu
      * codeForMenu is in a UI thread
-     * 
+     *
      * @return  boolean     true
      */
-    private boolean codeForMenu() 
+    private boolean codeForMenu()
     {
         String urlToGo;
 
@@ -926,7 +926,7 @@ public class SecondActivity extends Activity {
      *
      * @return  boolean     true
      */
-    private boolean codeForQuickAccess() 
+    private boolean codeForQuickAccess()
     {
         String urlToGo;
 
@@ -1171,17 +1171,17 @@ public class SecondActivity extends Activity {
 
             Toast.makeText(activity, R.string.UrlCopied, Toast.LENGTH_LONG).show();
         }
-        
+
         return true;
     }
 
     /**
      * Common code for Back. Called for example by onOptionsItemSelected().
      * codeForBack is in a UI thread
-     * 
+     *
      * @return  boolean             True
      */
-    private boolean codeForBack() 
+    private boolean codeForBack()
     {
         // Check if there is history
         String currentUrl;
@@ -1229,7 +1229,7 @@ public class SecondActivity extends Activity {
                     altHistoryStack.remove(altHistoryStack.size() - 1);
                 }
             } else {
-                Log.d(LOG_TAG, "We clear nextAltHistoryStack"); 
+                Log.d(LOG_TAG, "We clear nextAltHistoryStack");
                 nextAltHistoryStack="";
             }
 
@@ -1250,7 +1250,7 @@ public class SecondActivity extends Activity {
                 setResult(RESULT_SECONDACTIVITY);   // We don't want to quit completely
                 WebViewDatabase.getInstance(getBaseContext()).clearHttpAuthUsernamePassword();
                 finish();
-            }           
+            }
         }
 
         return true;
@@ -1259,7 +1259,7 @@ public class SecondActivity extends Activity {
     /**
      * Dump content of backforward webview list
      */
-    public void dumpBackForwardList(WebView myWebView) 
+    public void dumpBackForwardList(WebView myWebView)
     {
         // FOR DEBUG ONLY
         /*
@@ -1273,7 +1273,7 @@ public class SecondActivity extends Activity {
                     Log.v(LOG_TAG, "BackForward i="+i+(mWebBackForwardList.getCurrentIndex()==i?"*":"")+" url="+mWebBackForwardList.getItemAtIndex(i).getUrl());
                 }
             }
-            
+
             for (int i=0; i < altHistoryStack.size(); i++)
             {
                 Log.v(LOG_TAG, "altHistoryStack i="+i+" "+altHistoryStack.get(i));
@@ -1420,14 +1420,14 @@ public class SecondActivity extends Activity {
 
     /* ************************* */
     /* SUB-CLASSES WEBVIEW       */
-    /* ************************* */ 
-    
+    /* ************************* */
+
     /**
      * WebViewClientDoliDroid
      * Sequence of trigger called when we do myWebView.loadUrl(url):
      * 0) onPageStarted is called when we need to load a page (in cache or not)
      * 0) shouldInterceptRequest is called for all HTTP requests of pages and images (.php, .css, .js, .png, but not called when cache is used)
-     * 1) shouldOverrideUrlLoading is called for HTTP requests of pages only (.php, .css, .js, but not called when cache is used). Also note that a redirect triggers this method but not if redirect is done with javascript window.location. 
+     * 1) shouldOverrideUrlLoading is called for HTTP requests of pages only (.php, .css, .js, but not called when cache is used). Also note that a redirect triggers this method but not if redirect is done with javascript window.location.
      * 2) onLoadResource is called for all HTTP requests, even Ajax (but not called when cache is used)
      * 3) onReceivedError or onReceivedSslError
      * 4) onPageFinished is called when page with its resources are loaded (in cache or not)
@@ -1442,11 +1442,11 @@ public class SecondActivity extends Activity {
                 "console.log('Execute jsInjectCodeForLoginSubmit');" +
 		        "function dolidroidParseFormAfterSubmit(event) {" +
 		        "    var form = this;" +
-		        "    if (this.tagName.toLowerCase() != 'form') form = this.form;" +    
+		        "    if (this.tagName.toLowerCase() != 'form') form = this.form;" +
 		        "    if (!form.method) form.method = 'get';" +
                 "    var data = '';" +
 		        "    data += 'method=' + form.method;" +
-		        "    data += '&action=' + form.action;" +        
+		        "    data += '&action=' + form.action;" +
 		        "    var inputs = document.forms[0].getElementsByTagName('input');" +
                 "    for (var i = 0; i < inputs.length; i++) {" +
 		        "         var field = inputs[i];" +
@@ -1473,16 +1473,16 @@ public class SecondActivity extends Activity {
 		{
 			this.secondActivity = secondActivity;
 		}
-		
+
 		/**
 		 * onPageStarted
-		 * 
+		 *
 		 * @param view		View
 		 * @param url		URL
 		 * @param favicon	Favicon
          * @see onPageFinished()
 		 */
-		@Override  
+		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon)
 		{
 		    try {
@@ -1543,7 +1543,7 @@ public class SecondActivity extends Activity {
 		/**
 		 * Return if we must intercept HTTP Request for pages (not called when cache is used)
 		 * This method is called into a non-UI Thread (Android >= 3.0) so UI Thread function are not allowed.
-		 * 
+		 *
 		 * @param 	WebView		        view
 		 * @param 	WebResourceRequest	wrr     Object with	url. For example "http://192.168.0.1/xxx" or "data:image/png;base64,..."
 		 * @return	boolean					    True or false if we must send request or not
@@ -1573,7 +1573,7 @@ public class SecondActivity extends Activity {
 					fileName=uri.getPath();	// Return relative path of page (without params)
 					host=uri.getHost();
 				}
-				
+
 				// Format fileName to have a relative URL from root
 				if (fileName != null) {
 				    fileName=fileName.replaceFirst(this.secondActivity.savedDolRootUrlRel, "");
@@ -1848,7 +1848,7 @@ public class SecondActivity extends Activity {
     			if (! url.contains("dol_use_jmobile=")) {
                     url = url + (url.contains("?")?"&":"?") + "dol_use_jmobile=0";
                 }
-    			
+
 				String listOfCookies=this.listCookies();
 
 				// This call url and save content into a file
@@ -1902,7 +1902,7 @@ public class SecondActivity extends Activity {
                     Log.d(LOG_TAG, "shouldOverrideUrlLoading Set output dirType=" + Environment.DIRECTORY_DOWNLOADS + " subPath="+query);
                     request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, query);
                     //request.setDestinationInExternalFilesDir(getApplicationContext(), null, query);
-                    
+
                     // Get download service and enqueue file
                     // Complete tutorial on download manager on http://www.101apps.co.za/index.php/articles/using-the-downloadmanager-to-manage-your-downloads.html
                     DownloadManager dmanager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
@@ -1939,7 +1939,7 @@ public class SecondActivity extends Activity {
 
 		/**
 		 * Called when a HTTP request is done (not called when cache is used)
-		 * 
+		 *
 		 * @param	WebView		view		Web view
 		 * @param	String		url			Url
 		 */
@@ -1961,7 +1961,7 @@ public class SecondActivity extends Activity {
 	    public void onPageFinished(WebView view, String url)
 	    {
 			// super.onPageFinished(view, url);
-			
+
 			if (listOfCookiesAfterLogon == null)
 			{
 				Log.d(LOG_TAG, "onPageFinished Save session cookies for the download manager into var listOfCookiesAfterLogon");
@@ -1976,10 +1976,10 @@ public class SecondActivity extends Activity {
             WebBackForwardList mWebBackForwardList;
 
             Log.d(LOG_TAG, "onPageFinished Begin url="+url+" canGoBack="+b);
-	        
+
 		    if (tagToShowInterruptMessage.length() > 0 && tagToShowInterruptCounter > 0)	//onConsoleMessage is increased by onConsoleMessage function (javascript error)
 			{
-		    	// We should not go here. This manage loading errors when JMobile was not implemented correctly (no data-role defined into page). 
+		    	// We should not go here. This manage loading errors when JMobile was not implemented correctly (no data-role defined into page).
 		    	String myErrorNum="JSERR001";
 		    	String myMessage0="Error "+myErrorNum;
 		    	String myMessage1="An error loading page was detected into some javascript part of your page.";
@@ -1993,7 +1993,7 @@ public class SecondActivity extends Activity {
 				Log.d(LOG_TAG, "Show user message "+myMessage0+"\n"+myMessage1+"\n"+myMessage1b+"\n"+myMessage2+"\n"+myMessage3+"\n"+myMessage4);
 
 				tagToShowInterruptMessage="";
-				
+
 				myWebView.loadData(myMessage0+"<br><br>\n"+myMessage1+"<br>\n"+myMessage1b+"<br>\n"+myMessage2+"<br>\n<br>\n"+myMessage5+"<br><br><br>\n"+myMessage6, "text/html", "UTF-8");
 			}
 		    else if (tagToShowMessage.length() > 0 && tagToShowCounter > 0)	// tagToShowCounter is increased by onConsoleMessage function (javascript error)
@@ -2110,7 +2110,7 @@ public class SecondActivity extends Activity {
 				    	if (url.equals(savedDolRootUrl)) {
 							Log.w(LOG_TAG, "onPageFinished We ignore page since url is not a special page (not /index.php, not /mypage.php, ...)");
 				    	} else {
-							synchronized (this) 
+							synchronized (this)
 							{
 								boolean versionOk = true;	// Will be false if Dolibarr is < 6.0.*
 								if (foundVersion) {
@@ -2136,9 +2136,9 @@ public class SecondActivity extends Activity {
 									{
 									    public void onTick(long millisUntilFinished) {aToast.show();}
 									    public void onFinish() {aToast.show();}
-									}.start();								
+									}.start();
 								}
-	
+
 								String jsInjectCodeForSetForm="";
 								if (tagToOverwriteLoginPass)	// If we are allowed to overwrite username/pass into fields
 								{
@@ -2261,7 +2261,7 @@ public class SecondActivity extends Activity {
 
 				// If we loaded the page logout.php, we finished activity
 				if (url.contains("logout.php")) {
-					synchronized (this) 
+					synchronized (this)
 					{
 						if (tagToLogout) {
 							Log.d(LOG_TAG, "onPageFinished End of logout page, tagToLogout=true");
@@ -2277,9 +2277,9 @@ public class SecondActivity extends Activity {
 
 				// If we loaded page get_menudiv.php, we trigger code to save content into cache
 				/*
-				if (url.contains("get_menudiv.php")) 
+				if (url.contains("get_menudiv.php"))
 				{
-					synchronized (this) 
+					synchronized (this)
 					{
 						if (tagToGetCacheForMenu)
 						{
@@ -2291,9 +2291,9 @@ public class SecondActivity extends Activity {
 					}
 				}
 				// If we loaded page search_page.php, we trigger code to save content into cache
-				if (url.contains("search_page.php")) 
+				if (url.contains("search_page.php"))
 				{
-					synchronized (this) 
+					synchronized (this)
 					{
 						if (tagToGetCacheForQuickAccess)
 						{
@@ -2314,12 +2314,12 @@ public class SecondActivity extends Activity {
                         nextAltHistoryStack="menu";
                     }
 				}
-				
+
 				if (url.contains("data:text/html"))	{
 					Log.d(LOG_TAG, "onPageFinished We finished to load a page with a bad history "+url);
 					// If we go from a back, nextAltHistoryStack is ""
 					//nextAltHistoryStackBis=(("".equals(nextAltHistoryStack) && url.contains("data:text/html"))?"menu":nextAltHistoryStack);
-					nextAltHistoryStackBis=nextAltHistoryStack;	
+					nextAltHistoryStackBis=nextAltHistoryStack;
 					nextAltHistoryStack="";
 				}
 
@@ -2328,17 +2328,48 @@ public class SecondActivity extends Activity {
 				dumpBackForwardList(myWebView);
 			}
 	    }
-		
+
 		/**
 		 * onReceivedHttpAuthRequest
+		 *
+		 * This method is called only when we try to enter a page that ask for Basic Authentication by sending a header
+		 * HTTP/1.1 401 Unauthorized
+		 * WWW-Authenticate: Basic realm="..."
+		 *
+		 * To reproduce, try to use a Dolibarr URL that has a HTTP Basic Authentication and enter an URL without the user@pass.
 		 */
 	    @SuppressLint("AuthLeak")
 		@Override
 	    public void onReceivedHttpAuthRequest  (WebView view, HttpAuthHandler handler, String host, String realm)
-	    { 
-	    	Log.i(LOG_TAG, "A request to send http basic auth has been received");
+	    {
+	    	Log.i(LOG_TAG, "A request to send http basic auth has been received for host: " + host + " realm: " + realm);
 
-	    	//String[] up = view.getHttpAuthUsernamePassword(host, realm); 
+			// Security fix: Only send credentials to the original configured host
+			// Extract host from the original configured URL (without user info)
+			String configuredHost = null;
+			try {
+				if (savedDolBasedUrlWithoutUserInfo != null && !savedDolBasedUrlWithoutUserInfo.isEmpty()) {
+					configuredHost = Uri.parse(savedDolBasedUrlWithoutUserInfo).getHost();
+				}
+			} catch (Exception e) {
+				Log.e(LOG_TAG, "Failed to parse configured URL: " + e.getMessage());
+			}
+
+			// Check if the auth request is for the same host as our configured ERP host
+			boolean isSameHost = configuredHost != null && host != null && host.equalsIgnoreCase(configuredHost);
+
+			Log.d(LOG_TAG, "onReceivedHttpAuthRequest - configuredHost: " + configuredHost + ", requestedHost: " + host
+					+ ", isSameHost: " + isSameHost);
+
+			if (!isSameHost) {
+				// Security: Do not send credentials to different hosts
+				Log.w(LOG_TAG, "onReceivedHttpAuthRequest - CROSS-ORIGIN AUTH REQUEST BLOCKED. Requested host " + host
+						+ " does not match configured host " + configuredHost);
+				handler.cancel();
+				return;
+			}
+
+	    	//String[] up = view.getHttpAuthUsernamePassword(host, realm);
 
     		counthttpauth++;
             if (counthttpauth >= 3)
@@ -2351,7 +2382,7 @@ public class SecondActivity extends Activity {
             {
                 counthttpauth++;
             }
-            if (counthttpauth == 2) 
+            if (counthttpauth == 2)
             {
                 //Log.d(LOG_TAG, "We try to proceed with info from URL username="+savedAuthuser+" password="+savedAuthpass);
                 Log.d(LOG_TAG, "We try to proceed with info from URL username="+savedAuthuser+" password=hidden");
@@ -2399,7 +2430,7 @@ public class SecondActivity extends Activity {
                 Toast.makeText(activity, "Your Internet Connection may not be active Or " + error.getDescription() + ".", Toast.LENGTH_LONG).show();
             }
 	    }
-		
+
 		/**
 		 * onReceivedSslError
 		 */
@@ -2441,15 +2472,15 @@ public class SecondActivity extends Activity {
 			}
 
 		}
-		
 
-		
+
+
 		/**
 		 * listCookies
-		 * 
+		 *
 		 * @return	string		Return list of cookies with format name=value;name2=value2
 		 */
-		public String listCookies() 
+		public String listCookies()
 		{
 		    //CookieSyncManager.getInstance().sync();	// No more required with API 21
 		    CookieManager cookie_manager = CookieManager.getInstance();
@@ -2459,12 +2490,12 @@ public class SecondActivity extends Activity {
 
 		    return cookie_string;
 		}
-		
+
 		/**
 		 * deleteSessionCookies.
 		 * Can be used to clear cookies to have a clean context for debug.
 		 */
-		public void deleteSessionCookies() 
+		public void deleteSessionCookies()
 		{
 		    //CookieSyncManager.getInstance().sync();	// No more required with API 21
 		    CookieManager cookie_manager = CookieManager.getInstance();
@@ -2473,10 +2504,10 @@ public class SecondActivity extends Activity {
 		    //cookie_manager.removeSessionCookie();
             cookie_manager.removeSessionCookies(null);
             //CookieSyncManager.getInstance().sync();	// No more required with API 21
-	    
+
 		    String cookie_string = cookie_manager.getCookie(savedDolRootUrl);
 		    Log.v(LOG_TAG, "cookie_string (path " + savedDolRootUrl + ") = " + cookie_string);
-		}		
+		}
 	}
 
 
@@ -2486,20 +2517,20 @@ public class SecondActivity extends Activity {
 	class WebChromeClientDoliDroid extends WebChromeClient
 	{
 		@Override
-		public boolean onJsAlert(WebView view, String url, String message, final android.webkit.JsResult result)  
+		public boolean onJsAlert(WebView view, String url, String message, final android.webkit.JsResult result)
 		{
 			Log.d(LOG_TAG, message);
 			//Toast.makeText(context, message, 3000).show();
 			return true;
 		}
-		
+
 		/**
 		 * This can be called before of after the onPageFinished
-		 * 
+		 *
 		 * @return		boolean		True if message is handled by client, false otherwise
 		 */
 		@Override
-		public boolean onConsoleMessage(ConsoleMessage cm) 
+		public boolean onConsoleMessage(ConsoleMessage cm)
 		{
             if (cm != null && (cm.messageLevel() == ConsoleMessage.MessageLevel.TIP || cm.messageLevel() == ConsoleMessage.MessageLevel.LOG))	{
                 Log.v(LOG_TAG, "onConsoleMessage "+cm.message() + " -- From line " + cm.lineNumber() + " of " + cm.sourceId());
@@ -2523,12 +2554,12 @@ public class SecondActivity extends Activity {
             }
 
 			return false;
-		}		
-		
+		}
+
 		/**
 		 * Called during loading of page
 		 */
-		public void onProgressChanged (WebView view, int newProgress) 
+		public void onProgressChanged (WebView view, int newProgress)
 		{
 			//Log.i(LOG_TAG, "setProgress to "+(newProgress)+" current visibility="+(progress != null?progress.getVisibility():""));
 			if (newProgress < 100 && progress.getVisibility() == ProgressBar.GONE)
@@ -2536,7 +2567,7 @@ public class SecondActivity extends Activity {
                 progress.setVisibility(ProgressBar.VISIBLE);
             }
             progress.setProgress(newProgress);
-            if (newProgress >= 100) 
+            if (newProgress >= 100)
             {
                 progress.setVisibility(ProgressBar.GONE);
             }
@@ -2719,7 +2750,7 @@ public class SecondActivity extends Activity {
         //CookieSyncManager.getInstance().startSync();    // No more required with API 21
         super.onResume();
     }
-    
+
     /**
      * onPause
      */
@@ -2730,26 +2761,26 @@ public class SecondActivity extends Activity {
         //CookieSyncManager.getInstance().stopSync(); // No more required with API 21
         super.onPause();
     }
-    
+
     /**
      * onStop
      */
     @Override
-    protected void onStop() 
+    protected void onStop()
     {
         setResult(RESULT_WEBVIEW);
         super.onStop();
     }
-    
+
     /**
      * onDestroy
      */
     @Override
-    protected void onDestroy() 
+    protected void onDestroy()
     {
         // Delete iabHelper for InApp management
         //iabHelper.dispose();
-        
+
         setResult(RESULT_WEBVIEW);
         super.onDestroy();
     }
@@ -2764,7 +2795,7 @@ public class SecondActivity extends Activity {
         Context mContext;
         Activity activity;
 
-        MyJavaScriptInterface(Context c) 
+        MyJavaScriptInterface(Context c)
         {
              mContext = c;
         }
@@ -2794,7 +2825,7 @@ public class SecondActivity extends Activity {
             }
         }
         */
-        
+
         /*
          * Example of data:
          * method=post&action=http://192.168.0.1/index.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1&mainmenu=home&token=cf51a99cad2639a6f2da61753748dc16&loginfunction=loginfunction&tz=0&tz_string=GMT&dst_observed=0&dst_first=&dst_second=&screenwidth=320&screenheight=460&dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1&username=admin&password=admin
@@ -2857,7 +2888,7 @@ public class SecondActivity extends Activity {
      * For example, when we go back after selecting a file from the file selector
      */
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) 
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         Log.i(LOG_TAG, "onActivityResult requestCode = "+requestCode+" resultCode = "+resultCode + " mFilePathCallback = " + mFilePathCallback);
 
@@ -2887,7 +2918,7 @@ public class SecondActivity extends Activity {
 
 
         // Check that the response is a good one
-        if (resultCode == Activity.RESULT_OK) 
+        if (resultCode == Activity.RESULT_OK)
         {
             Log.d(LOG_TAG, "onActivityResult result code is ok");
 
