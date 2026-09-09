@@ -1,0 +1,25 @@
+# Add all files of vendor dirs (To rename into .claudeignore or .vibeignore, ...)
+.agents
+.git
+.github/tmp
+.svn
+.idea
+.phan
+.settings
+.txs
+.vscode
+*.lock
+*.map
+*.min.js
+vendor
+documents
+node_modules
+cache
+dev
+doc
+tmp
+bin
+logs
+dev
+fastlane
+img
