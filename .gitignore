@@ -53,3 +53,6 @@ obj/
 /app/release/output.json
 /app/release/output-metadata.json
 /build/reports/problems/problems-report.html
+/.vibe
+/.vibeignore
+/AGENTS.md
