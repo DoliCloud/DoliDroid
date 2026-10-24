@@ -39,6 +39,11 @@
 		android:orderInCategory="52"
 		android:title="@string/menu_uploadfile" />
 	<item
+		android:id="@+id/menu_aiassistant"
+		android:icon="@android:drawable/ic_menu_help"
+		android:orderInCategory="53"
+		android:title="@string/menu_aiassistant" />
+	<item
 		android:id="@+id/menu_back"
 		android:icon="@mipmap/ic_action_back"
 		android:orderInCategory="55"

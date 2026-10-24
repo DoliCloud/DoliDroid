@@ -156,6 +156,7 @@ public class SecondActivity extends Activity {
     private boolean	isBookmarkOn=true;
 	private boolean	isMulticompanyOn=false;     // Not visible by default
     private boolean	isUploadFileOn=false;     // Not visible by default
+    private boolean	isAiAssistantOn=false;     // Not visible by default
     private boolean	isUserCardOn=false;      // Not visible by default
     private boolean	isVirtualCardOn=false;      // Not visible by default
 
@@ -454,6 +455,7 @@ public class SecondActivity extends Activity {
         menu.findItem(R.id.menu_multicompany).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);   // Not enough room so we force it on dropdown menu.
         menu.findItem(R.id.menu_usercard).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);  // Not enough room so we force it on dropdown menu.
         menu.findItem(R.id.menu_virtualcard).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);  // Not enough room so we force it on dropdown menu.
+        menu.findItem(R.id.menu_aiassistant).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);  // Not enough room so we force it on dropdown menu.
 
         //menu.findItem(R.id.menu_photo).setVisible(false);
         //menu.findItem(R.id.menu_scan).setVisible(false);
@@ -525,6 +527,12 @@ public class SecondActivity extends Activity {
             if (menuItem6 != null) {
                 menuItem6.setVisible(false);
             }
+        }
+
+        MenuItem menuItemAiAssistant = menu.findItem(R.id.menu_aiassistant);
+        if (menuItemAiAssistant != null) {
+            Log.d(LOG_TAG, "onCreateOptionsMenu AI assistant feature enabled = " + isAiAssistantOn);
+            menuItemAiAssistant.setVisible(isAiAssistantOn);
         }
 
         if (isUserCardOn) {
@@ -637,6 +645,8 @@ public class SecondActivity extends Activity {
             return this.codeForMultiCompany();
         } else if (itemId == R.id.menu_uploadfile) {
             return this.codeForUploadFile();
+        } else if (itemId == R.id.menu_aiassistant) {
+            return this.codeForAiAssistant();
         } else if (itemId == R.id.menu_usercard) {
             return this.codeForUserCard();
         } else if (itemId == R.id.menu_virtualcard) {
@@ -974,6 +984,24 @@ public class SecondActivity extends Activity {
         Log.d(LOG_TAG, "We called codeForUploadFile after click on Uploadfile : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
 
         //myWebView = findViewById(R.id.webViewContent);
+        myWebView.loadUrl(urlToGo);
+
+        return true;
+    }
+
+    /**
+     * Common code for AI assistant
+     * codeForAiAssistant is in a UI thread
+     *
+     * @return  boolean             True
+     */
+    private boolean codeForAiAssistant() {
+        String urlToGo;
+
+        urlToGo = this.savedDolRootUrl+"ai/assistant/index.php?dol_hide_topmenu=1&dol_hide_leftmenu=1&dol_optimize_smallscreen=1&dol_no_mouse_hover=1&dol_use_jmobile=1";
+
+        Log.d(LOG_TAG, "We called codeForAiAssistant after click on AI assistant : savedDolBasedUrl="+this.savedDolBasedUrl+" urlToGo="+urlToGo);
+
         myWebView.loadUrl(urlToGo);
 
         return true;
@@ -2020,6 +2048,7 @@ public class SecondActivity extends Activity {
                         MenuItem menuItemUserCard = savMenu.findItem(R.id.menu_usercard);
                         MenuItem menuItemVirtualCard = savMenu.findItem(R.id.menu_virtualcard);
                         MenuItem menuItemUploadFile = savMenu.findItem(R.id.menu_uploadfile);
+                        MenuItem menuItemAiAssistant = savMenu.findItem(R.id.menu_aiassistant);
 
                         if (foundVersion)    // if title ends with " Dolibarr x.y.z" or " Dolibarr x.y.z - multicompany or anytext from module hook setTitleHtml", this is login page or home page
                         {
@@ -2059,6 +2088,18 @@ public class SecondActivity extends Activity {
                             } catch (Exception e) {
                                 Log.d(LOG_TAG, "onPageFinished Failed to parse version found = " + m.group(1));
                                 menuItemUploadFile.setVisible(false);
+                            }
+
+                            // Enable or disable menu entry for AI assistant (available from Dolibarr v25)
+                            try {
+                                isAiAssistantOn = (m.group(1) != null && Integer.parseInt(m.group(1)) >= 25);
+                            } catch (Exception e) {
+                                Log.d(LOG_TAG, "onPageFinished Failed to parse version found = " + m.group(1));
+                                isAiAssistantOn = false;
+                            }
+                            Log.d(LOG_TAG, "onPageFinished AI assistant menu entry enabled = " + isAiAssistantOn);
+                            if (menuItemAiAssistant != null) {
+                                menuItemAiAssistant.setVisible(isAiAssistantOn);
                             }
 
                             // Enable or disable menu entry for Bookmarks (available from Dolibarr v15)
