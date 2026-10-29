@@ -35,12 +35,12 @@
         android:visible="false" />
 	<item
 		android:id="@+id/menu_uploadfile"
-		android:icon="@android:drawable/ic_menu_upload"
+		android:icon="@drawable/ic_baseline_upload_24"
 		android:orderInCategory="52"
 		android:title="@string/menu_uploadfile" />
 	<item
 		android:id="@+id/menu_aiassistant"
-		android:icon="@android:drawable/ic_menu_help"
+		android:icon="@drawable/ic_baseline_help_outline_white_24"
 		android:orderInCategory="53"
 		android:title="@string/menu_aiassistant" />
 	<item

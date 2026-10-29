@@ -190,7 +190,8 @@ public class SecondActivity extends Activity {
     //public static final String ITEM_SKU = "android.test.purchased";
 
     private final Pattern patternLoginHomePageForVersion = Pattern.compile(" [@-] (?:Doli[a-zA-Z]+ |)(\\d+)\\.(\\d+)\\.([^\\s]+)");     // Regex to extract version
-    private final Pattern patternLoginHomePageForMulticompany = Pattern.compile("multicompany");                                    // Regex to know if multicompany module is on
+    private final Pattern patternLoginHomePageForMulticompany = Pattern.compile("\\bmulticompany\\b", Pattern.CASE_INSENSITIVE);                                    // Regex to know if multicompany module is on
+    private final Pattern patternLoginHomePageForAi = Pattern.compile("\\+\\s*ai\\b", Pattern.CASE_INSENSITIVE);                                                     // Regex to know if AI module is on
     private final Pattern patternLoginPage = Pattern.compile("Login Doli[a-zA-Z]+ (\\d+)\\.(\\d+)\\.([^\\s]+)"); // No more used                    // To know page is login page with dolibarr <= 3.6
     private final Pattern patternLoginPage2 = Pattern.compile(" @ (?:Doli[a-zA-Z]+ |)(\\d+)\\.(\\d+)\\.([^\\s]+)");                  // To know page is login page with dolibarr >= 3.7
 
@@ -460,6 +461,7 @@ public class SecondActivity extends Activity {
         //menu.findItem(R.id.menu_photo).setVisible(false);
         //menu.findItem(R.id.menu_scan).setVisible(false);
         menu.findItem(R.id.menu_multicompany).setVisible(false);
+        menu.findItem(R.id.menu_uploadfile).setVisible(false);
         menu.findItem(R.id.menu_usercard).setVisible(false);
         menu.findItem(R.id.menu_virtualcard).setVisible(false);
 
@@ -2042,6 +2044,8 @@ public class SecondActivity extends Activity {
 				{
                     Matcher m = patternLoginHomePageForVersion.matcher(this.webViewtitle);
                     boolean foundVersion = m.find();
+                    boolean foundAi = patternLoginHomePageForAi.matcher(this.webViewtitle).find();
+                    boolean foundMulticompany = patternLoginHomePageForMulticompany.matcher(this.webViewtitle).find();
 
 				    if (savMenu != null) {
                         MenuItem menuItemBookmarks = savMenu.findItem(R.id.menu_bookmarks);
@@ -2049,58 +2053,13 @@ public class SecondActivity extends Activity {
                         MenuItem menuItemVirtualCard = savMenu.findItem(R.id.menu_virtualcard);
                         MenuItem menuItemUploadFile = savMenu.findItem(R.id.menu_uploadfile);
                         MenuItem menuItemAiAssistant = savMenu.findItem(R.id.menu_aiassistant);
+                        MenuItem menuItemMultiCompany = savMenu.findItem(R.id.menu_multicompany);
 
                         if (foundVersion)    // if title ends with " Dolibarr x.y.z" or " Dolibarr x.y.z - multicompany or anytext from module hook setTitleHtml", this is login page or home page
                         {
                             lastVersionFound = m.group(1) + ", " + m.group(2) + ", " + m.group(3);
                             lastVersionFoundForAsset = m.group(1) + "." + m.group(2);
                             Log.i(LOG_TAG, "onPageFinished Page title=" + this.webViewtitle + " - url=" + url + " - Found login or home page + version: " + lastVersionFound + " - Suggest to use asset: " + lastVersionFoundForAsset);
-
-                            MenuItem menuItemMultiCompany = savMenu.findItem(R.id.menu_multicompany);
-                            if (menuItemMultiCompany != null) {
-                                // Enable or disable menu entry for Multicompany
-                                Matcher multicompanyRegex = patternLoginHomePageForMulticompany.matcher(this.webViewtitle);
-
-                                if (multicompanyRegex.find() && m.group(1) != null && Integer.parseInt(m.group(1)) >= 15) {
-                                    menuItemMultiCompany.setVisible(true);
-                                    Log.d(LOG_TAG, "onPageFinished Module multicompany was found and Version major found >= 15, we enable the multicompany menu entry");
-                                    isMulticompanyOn = true;
-                                } else {
-                                    menuItemMultiCompany.setVisible(false);
-                                    Log.d(LOG_TAG, "onPageFinished Module multicompany was NOT found or major version < 15, we disable the multicompany menu entry");
-                                    isMulticompanyOn = false;
-                                }
-                            } else {
-                                isMulticompanyOn = false;
-                            }
-
-                            // Enable or disable menu entry for Upload File (available from Dolibarr v21)
-                            try {
-                                if (m.group(1) != null && Integer.parseInt(m.group(1)) >= 21 && !isInstalledFromPlayStore) {
-                                    Log.d(LOG_TAG, "onPageFinished Version major found >= 21 and not installed from PlayStore , we enable the upload file entry");
-                                    menuItemUploadFile.setVisible(true);
-                                    isUploadFileOn = true;
-                                } else {
-                                    Log.d(LOG_TAG, "onPageFinished Version major found < 21 or installed from PlayStore, we disable the upload file entry");
-                                    menuItemUploadFile.setVisible(false);
-                                    isUploadFileOn = false;
-                                }
-                            } catch (Exception e) {
-                                Log.d(LOG_TAG, "onPageFinished Failed to parse version found = " + m.group(1));
-                                menuItemUploadFile.setVisible(false);
-                            }
-
-                            // Enable or disable menu entry for AI assistant (available from Dolibarr v25)
-                            try {
-                                isAiAssistantOn = (m.group(1) != null && Integer.parseInt(m.group(1)) >= 25);
-                            } catch (Exception e) {
-                                Log.d(LOG_TAG, "onPageFinished Failed to parse version found = " + m.group(1));
-                                isAiAssistantOn = false;
-                            }
-                            Log.d(LOG_TAG, "onPageFinished AI assistant menu entry enabled = " + isAiAssistantOn);
-                            if (menuItemAiAssistant != null) {
-                                menuItemAiAssistant.setVisible(isAiAssistantOn);
-                            }
 
                             // Enable or disable menu entry for Bookmarks (available from Dolibarr v15)
                             try {
@@ -2141,6 +2100,35 @@ public class SecondActivity extends Activity {
                             Log.d(LOG_TAG, "Failed to find version");
                             menuItemBookmarks.setVisible(false);
                         }*/
+
+                        // Enable or disable menu entry for Multicompany (if "multicompany" is in title, and version >= 15 when version is found)
+                        if (foundVersion || foundAi || foundMulticompany) {
+                            isMulticompanyOn = foundMulticompany;
+                            if (foundMulticompany && foundVersion) {
+                                try {
+                                    isMulticompanyOn = (Integer.parseInt(m.group(1)) >= 15);
+                                } catch (Exception e) {
+                                    Log.d(LOG_TAG, "onPageFinished Failed to parse version found = " + m.group(1));
+                                }
+                            }
+                            Log.d(LOG_TAG, "onPageFinished Multicompany found = " + foundMulticompany + ", multicompany menu entry enabled = " + isMulticompanyOn);
+                            if (menuItemMultiCompany != null) {
+                                menuItemMultiCompany.setVisible(isMulticompanyOn);
+                            }
+                        }
+
+                        // Enable or disable menu entries for Upload File and AI assistant (only if "+ ai" is in title)
+                        if (foundVersion || foundAi || foundMulticompany) {
+                            isUploadFileOn = foundAi;
+                            isAiAssistantOn = foundAi;
+                            Log.d(LOG_TAG, "onPageFinished AI found = " + foundAi + ", upload file menu entry enabled = " + isUploadFileOn + ", AI assistant menu entry enabled = " + isAiAssistantOn);
+                            if (menuItemUploadFile != null) {
+                                menuItemUploadFile.setVisible(isUploadFileOn);
+                            }
+                            if (menuItemAiAssistant != null) {
+                                menuItemAiAssistant.setVisible(isAiAssistantOn);
+                            }
+                        }
                     }
 
                     // If title match pattern, this is a special page (login page or home page)
